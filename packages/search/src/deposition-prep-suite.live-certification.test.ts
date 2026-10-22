@@ -19,6 +19,7 @@ import {
   messages,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import {
   MockAIProvider,
@@ -48,7 +49,8 @@ import { askNyayaAboutMatter } from "./nyaya";
 import type { RetrievalHit, Retriever, RetrievalQuery } from "./hybrid";
 
 const runDbTests = process.env.RUN_DB_TESTS === "1";
-const dbUrl = process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid";
+const dbUrl =
+  process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid";
 
 const provenance = {
   documentId: null,
@@ -66,8 +68,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -197,7 +198,12 @@ describe("Phase 2 factuality + router static certification gates", () => {
       question: "Is this case still good law?",
       record: {
         authorities: [
-          { id: "a1", resolution: "AUTHORITY_RESOLVED", treatmentVerified: false, hasFullText: false },
+          {
+            id: "a1",
+            resolution: "AUTHORITY_RESOLVED",
+            treatmentVerified: false,
+            hasFullText: false,
+          },
         ],
       },
     });
@@ -273,7 +279,7 @@ describe.runIf(runDbTests)("Phase 2 live certification (local DB — lock grante
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -494,7 +500,8 @@ describe.runIf(runDbTests)("Phase 2 live certification (local DB — lock grante
         matterId: ids.matterA!,
         page: 3,
         segmentRef: "¶40",
-        quote: "In a later statement the same witness said the delivery occurred on February 10, 2025.",
+        quote:
+          "In a later statement the same witness said the delivery occurred on February 10, 2025.",
         score: 0.84,
       },
     ]);
@@ -556,9 +563,9 @@ describe.runIf(runDbTests)("Phase 2 live certification (local DB — lock grante
 
   function assertPayload(validation: Record<string, unknown>) {
     const contract = asRecord(validation.factualityContract);
-    expect(Array.isArray(validation.selectedDomains) || Array.isArray(contract.selectedDomains)).toBe(
-      true,
-    );
+    expect(
+      Array.isArray(validation.selectedDomains) || Array.isArray(contract.selectedDomains),
+    ).toBe(true);
     expect(Array.isArray(contract.assertions)).toBe(true);
     expect(validation.premiseCheck != null || contract.premiseCheck != null).toBe(true);
     expect(Array.isArray(contract.sourceRefs)).toBe(true);
@@ -636,7 +643,9 @@ describe.runIf(runDbTests)("Phase 2 live certification (local DB — lock grante
     const premise = asRecord(validation.premiseCheck);
     expect(premise.detected).toBe(true);
     expect(["UNSUPPORTED", "UNKNOWN", "CONFLICTED"]).toContain(premise.result);
-    expect(result.answer.answer).not.toMatch(/\b(lied|dishonest|unreliable witness|false testimony)\b/i);
+    expect(result.answer.answer).not.toMatch(
+      /\b(lied|dishonest|unreliable witness|false testimony)\b/i,
+    );
     expect(countCredibilityLeaps(result.answer.answer)).toBe(0);
     const contract = asRecord(validation.factualityContract);
     const assertions = Array.isArray(contract.assertions) ? contract.assertions : [];
@@ -723,7 +732,9 @@ describe.runIf(runDbTests)("Phase 2 live certification (local DB — lock grante
     const premise = asRecord(validation.premiseCheck);
     expect(premise.detected).toBe(true);
     expect(["UNKNOWN", "UNSUPPORTED"]).toContain(premise.result);
-    expect(result.answer.answer).toMatch(/not establish|Unsupported|NOT VERIFIED|UNKNOWN|does not establish/i);
+    expect(result.answer.answer).toMatch(
+      /not establish|Unsupported|NOT VERIFIED|UNKNOWN|does not establish/i,
+    );
     expect(result.answer.answer).not.toMatch(/^Yes/i);
     // Distinct resolution buckets remain represented in seeded working state path.
     expect(["IDENTITY_UNRESOLVED", "AUTHORITY_RESOLVED", "CORPUS_COMPLETE"]).toContain(

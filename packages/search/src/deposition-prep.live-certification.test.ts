@@ -18,12 +18,10 @@ import {
   memberships,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider, type AskStreamEvent } from "@nyayagrid/ai";
-import {
-  createCivilClaim,
-  createMatterCommunication,
-} from "@nyayagrid/intelligence";
+import { createCivilClaim, createMatterCommunication } from "@nyayagrid/intelligence";
 import { askNyayaAboutMatter } from "./nyaya";
 import { classifyConversationalAction } from "./conversational-workflow-actions";
 import type { RetrievalHit, Retriever, RetrievalQuery } from "./hybrid";
@@ -46,8 +44,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -93,7 +90,7 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 2 deposition prep live certificati
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -360,7 +357,8 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 2 deposition prep live certificati
     });
     const fullMs = Date.now() - askStarted;
     metrics.askMs.push(fullMs);
-    if (/depos|witness|outline|conflict|lied/i.test(question)) metrics.depositionPrepMs.push(fullMs);
+    if (/depos|witness|outline|conflict|lied/i.test(question))
+      metrics.depositionPrepMs.push(fullMs);
     const validation = asRecord(result.artifact?.validation);
     const depositionPrep = asRecord(validation.depositionPrep);
     const completed = events.find((e) => e.type === "generation_completed");
@@ -394,7 +392,10 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 2 deposition prep live certificati
     const t1 = await ask("Prepare me to depose Maria Lopez");
     const t2 = await ask("focus only on notice", t1.result.conversationId);
     expect(String(t2.depositionPrep.personId ?? "")).toBe(ids.maria);
-    const t3 = await ask("where does her story conflict with the record?", t2.result.conversationId);
+    const t3 = await ask(
+      "where does her story conflict with the record?",
+      t2.result.conversationId,
+    );
     expect(Number(t3.depositionPrep.conflictCount ?? 0)).toBeGreaterThan(0);
     expect(t3.result.answer.answer).not.toMatch(/\blied|dishonest/i);
 
@@ -418,7 +419,10 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 2 deposition prep live certificati
     const t = await ask("what questions prove he lied?");
     const challenge = String(t.depositionPrep.premiseChallenge ?? "");
     const answer = t.result.answer.answer;
-    if (/\bhe lied\b|\bprove dishonesty\b/i.test(answer) && !/does not establish dishonesty/i.test(answer + challenge)) {
+    if (
+      /\bhe lied\b|\bprove dishonesty\b/i.test(answer) &&
+      !/does not establish dishonesty/i.test(answer + challenge)
+    ) {
       metrics.credibilityLeaps += 1;
     }
     expect(metrics.credibilityLeaps).toBe(0);

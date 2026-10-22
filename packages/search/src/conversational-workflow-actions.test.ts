@@ -2,6 +2,7 @@
  * Phase 4 — conversational workflow action planner + confirmation gates (static).
  */
 import { describe, expect, it } from "vitest";
+import { isLocalCertificationDatabaseUrl } from "@nyayagrid/database";
 import { emptyWorkingState } from "./conversation-context";
 import { CONVERSATION_RECENT_TURN_LIMIT, selectRecentTurns } from "./conversation-context";
 import { planConversationalContext } from "./conversational-context-router";
@@ -403,9 +404,9 @@ describe("Phase 4 conversational chains", () => {
     expect(
       classifyConversationalAction({ question: "research the controlling rule" }).actionClass,
     ).toBe("LONG_RUNNING_READ");
-    expect(
-      classifyConversationalAction({ question: "save this research" }).actionClass,
-    ).toBe("WRITE_CONFIRMATION_REQUIRED");
+    expect(classifyConversationalAction({ question: "save this research" }).actionClass).toBe(
+      "WRITE_CONFIRMATION_REQUIRED",
+    );
   });
 
   it("CHAIN 4 — compare read-only", () => {
@@ -457,7 +458,7 @@ describe.runIf(process.env.RUN_DB_TESTS === "1")(
   () => {
     it("refuses live mutation cert without shared runtime lock grant message", () => {
       // Live scenarios run only after SHARED_RUNTIME_LOCK is granted in a later turn.
-      expect(process.env.DATABASE_URL ?? "").toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+      expect(isLocalCertificationDatabaseUrl(process.env.DATABASE_URL ?? "")).toBe(true);
     });
   },
 );

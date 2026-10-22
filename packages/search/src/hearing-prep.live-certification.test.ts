@@ -18,6 +18,7 @@ import {
   memberships,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider, type AskStreamEvent } from "@nyayagrid/ai";
 import {
@@ -47,8 +48,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -92,7 +92,7 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 1 hearing prep live certification"
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -337,9 +337,10 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 1 hearing prep live certification"
   }
 
   it("live: hearing prep from explicit motion", async () => {
-    expect(classifyConversationalAction({ question: "prepare me for the motion to compel hearing" }).actionType).toBe(
-      "HEARING_PREP_READ",
-    );
+    expect(
+      classifyConversationalAction({ question: "prepare me for the motion to compel hearing" })
+        .actionType,
+    ).toBe("HEARING_PREP_READ");
     const t = await ask("Prepare me for the motion to compel hearing");
     expect(t.hearingPrep.posture).toBeTruthy();
     expect(String(t.hearingPrep.motionId ?? "")).toBe(ids.compel);
@@ -402,7 +403,11 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 1 hearing prep live certification"
 
   it("live: no invented deadline language when posture known", async () => {
     const t = await ask("Prepare me for the motion to compel hearing");
-    if (/\btomorrow at \d|invented hearing date|assume the hearing is Friday/i.test(t.result.answer.answer)) {
+    if (
+      /\btomorrow at \d|invented hearing date|assume the hearing is Friday/i.test(
+        t.result.answer.answer,
+      )
+    ) {
       metrics.inventedDeadlines += 1;
     }
     expect(metrics.inventedDeadlines).toBe(0);

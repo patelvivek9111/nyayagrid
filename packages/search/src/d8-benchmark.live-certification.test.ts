@@ -24,6 +24,7 @@ import {
   timelineEvents,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider, type AskStreamEvent } from "@nyayagrid/ai";
 import {
@@ -65,8 +66,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -117,7 +117,7 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -456,7 +456,11 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
     const sources = result.answer.sources ?? [];
     for (const s of sources) {
       if (s.documentId === ids.docForeign) metrics.foreignSources += 1;
-      if (s.documentId && s.documentId !== ids.docNotice && !String(s.documentId).startsWith("web:")) {
+      if (
+        s.documentId &&
+        s.documentId !== ids.docNotice &&
+        !String(s.documentId).startsWith("web:")
+      ) {
         // Scale docs may appear; only foreign matter doc is a security failure.
         if (s.documentId === ids.docForeign) metrics.foreignSources += 1;
       }
@@ -487,7 +491,7 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
   ): D8TurnObservation {
     const factualityTypes =
       pack.completed && pack.completed.type === "generation_completed"
-        ? pack.completed.ux?.factualityTypes ?? []
+        ? (pack.completed.ux?.factualityTypes ?? [])
         : [];
     const referent = asRecord(pack.validation.referentResolution);
     const preview = asRecord(pack.action.previewPayload);
@@ -526,9 +530,13 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       const t1 = await ask(spec.turns[0]!.question);
       const t2 = await ask(spec.turns[1]!.question, t1.result.conversationId);
       grades.push(
-        gradeD8Assignment(spec, [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)], {
-          allowedDocumentIds: allowedDocs,
-        }),
+        gradeD8Assignment(
+          spec,
+          [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)],
+          {
+            allowedDocumentIds: allowedDocs,
+          },
+        ),
       );
     }
 
@@ -538,9 +546,13 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       const t1 = await ask(spec.turns[0]!.question);
       const t2 = await ask(spec.turns[1]!.question, t1.result.conversationId);
       grades.push(
-        gradeD8Assignment(spec, [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)], {
-          allowedDocumentIds: allowedDocs,
-        }),
+        gradeD8Assignment(
+          spec,
+          [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)],
+          {
+            allowedDocumentIds: allowedDocs,
+          },
+        ),
       );
     }
 
@@ -550,7 +562,10 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       const t1 = await ask(spec.turns[0]!.question);
       const t2 = await ask(spec.turns[1]!.question, t1.result.conversationId);
       grades.push(
-        gradeD8Assignment(spec, [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)]),
+        gradeD8Assignment(spec, [
+          toObservation(spec.turns[0]!.question, t1),
+          toObservation(spec.turns[1]!.question, t2),
+        ]),
       );
     }
 
@@ -616,7 +631,10 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       const t1 = await ask(spec.turns[0]!.question);
       const t2 = await ask(spec.turns[1]!.question, t1.result.conversationId);
       grades.push(
-        gradeD8Assignment(spec, [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)]),
+        gradeD8Assignment(spec, [
+          toObservation(spec.turns[0]!.question, t1),
+          toObservation(spec.turns[1]!.question, t2),
+        ]),
       );
     }
 
@@ -641,10 +659,7 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       grades.push(
         gradeD8Assignment(
           spec,
-          [
-            toObservation(spec.turns[0]!.question, t1),
-            toObservation(spec.turns[1]!.question, t2),
-          ],
+          [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)],
           { discoveryDeadlineSupported: false },
         ),
       );
@@ -669,7 +684,10 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       const t1 = await ask(spec.turns[0]!.question);
       const t2 = await ask(spec.turns[1]!.question, t1.result.conversationId);
       grades.push(
-        gradeD8Assignment(spec, [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)]),
+        gradeD8Assignment(spec, [
+          toObservation(spec.turns[0]!.question, t1),
+          toObservation(spec.turns[1]!.question, t2),
+        ]),
       );
     }
 
@@ -681,10 +699,7 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       grades.push(
         gradeD8Assignment(
           spec,
-          [
-            toObservation(spec.turns[0]!.question, t1),
-            toObservation(spec.turns[1]!.question, t2),
-          ],
+          [toObservation(spec.turns[0]!.question, t1), toObservation(spec.turns[1]!.question, t2)],
           { treatmentVerified: false },
         ),
       );
@@ -835,12 +850,14 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
       metrics.foreignSources += foreign;
       expect(t1.result.answer.answer).not.toMatch(/Foreign matter secret/i);
       grades.push(
-        gradeD8Assignment(spec, [
-          toObservation(spec.turns[0]!.question, t1, { foreignSourceCount: foreign }),
-        ], {
-          allowedDocumentIds: allowedDocs,
-          foreignMatterId: ids.matterB,
-        }),
+        gradeD8Assignment(
+          spec,
+          [toObservation(spec.turns[0]!.question, t1, { foreignSourceCount: foreign })],
+          {
+            allowedDocumentIds: allowedDocs,
+            foreignMatterId: ids.matterB,
+          },
+        ),
       );
     }
 
@@ -968,7 +985,9 @@ describe.runIf(runDbTests)("Phase 6 D8 live certification (local DB — lock gra
     expect(["PREVIEW", "AWAITING_CONFIRMATION"]).toContain(t1.action.actionStatus);
     await ask("What about Claim B?", t1.result.conversationId);
     const stale = await ask("yes save it", t1.result.conversationId);
-    expect(stale.result.answer.answer).toMatch(/stale|no longer current|rejected|regenerate|drift/i);
+    expect(stale.result.answer.answer).toMatch(
+      /stale|no longer current|rejected|regenerate|drift/i,
+    );
     expect(await countDrafts()).toBe(before);
     if (stale.action.actionStatus === "COMPLETED") metrics.staleExecutions += 1;
     expect(metrics.staleExecutions).toBe(0);

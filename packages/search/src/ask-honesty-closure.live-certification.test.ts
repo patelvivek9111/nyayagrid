@@ -18,6 +18,7 @@ import {
   memberships,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import {
   MockAIProvider,
@@ -74,8 +75,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -148,7 +148,7 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -472,7 +472,11 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
     expect(synth.conflicts.length).toBeGreaterThan(0);
     expect(synth.coreIssues.length).toBeGreaterThan(0);
 
-    for (const q of ["Who should we believe?", "Which witness is lying?", "What conflicts exist?"]) {
+    for (const q of [
+      "Who should we believe?",
+      "Which witness is lying?",
+      "What conflicts exist?",
+    ]) {
       const detected = detectUserPremise(q);
       if (/believe|lying/i.test(q)) {
         expect(detected.detected).toBe(true);
@@ -536,7 +540,9 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
     expect(hearing.hearingTarget.motionId).toBe(ids.motion!);
     expect(hearing.hearingTarget.posture).toBe("HEARING_SCHEDULED");
     // Honesty limitation may say "what any judge will ask" — forbid preference/outcome invention only.
-    expect(JSON.stringify(hearing)).not.toMatch(/\bjudge (prefers|always|is likely to|will grant|will deny)\b/i);
+    expect(JSON.stringify(hearing)).not.toMatch(
+      /\bjudge (prefers|always|is likely to|will grant|will deny)\b/i,
+    );
     expect(hearing.limitations.join(" ")).toMatch(/not predictions of what any judge will ask/i);
     if (
       /\bdue (date|by)\b.+\d{4}/i.test(JSON.stringify(hearing)) &&
@@ -647,9 +653,9 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
       research,
       facts: [disputed],
     });
-    expect(classifyConversationalAction({ question: "Turn this into an argument section" }).actionClass).toBe(
-      "DRAFT_PREVIEW",
-    );
+    expect(
+      classifyConversationalAction({ question: "Turn this into an argument section" }).actionClass,
+    ).toBe("DRAFT_PREVIEW");
     const stronger = strengthenWithoutOverstatement(draft.paragraphs);
     expect(
       stronger.paragraphs.every(
@@ -659,7 +665,9 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
       ),
     ).toBe(true);
     expect(
-      stronger.paragraphs.some((p) => /knowingly concealed/i.test(p.text) && p.factuality === "FACT"),
+      stronger.paragraphs.some(
+        (p) => /knowingly concealed/i.test(p.text) && p.factuality === "FACT",
+      ),
     ).toBe(false);
 
     draft = reviseDraftAuthorityOnly(draft, [authMeta, authFull], "drop_unverified");
@@ -770,7 +778,12 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
       matterId: ids.matterA!,
       persons: [
         { id: ids.johnA!, label: "John Smith", roleHint: "counterparty", matterId: ids.matterA! },
-        { id: ids.johnB!, label: "John Smith", roleHint: "former employee", matterId: ids.matterA! },
+        {
+          id: ids.johnB!,
+          label: "John Smith",
+          roleHint: "former employee",
+          matterId: ids.matterA!,
+        },
       ],
       ambiguousPersonIds: [ids.johnA!, ids.johnB!],
     });
@@ -825,7 +838,8 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
         },
       ],
     });
-    if (foreignDraft.sourceMap.some((s) => s.id.startsWith("foreign:"))) metrics.crossMatterLeak += 1;
+    if (foreignDraft.sourceMap.some((s) => s.id.startsWith("foreign:")))
+      metrics.crossMatterLeak += 1;
     expect(foreignDraft.previewText).not.toMatch(/Foreign-only allegation/i);
     expect(metrics.guestBypass).toBe(0);
     expect(metrics.crossMatterLeak).toBe(0);
@@ -833,7 +847,9 @@ describe.runIf(runDbTests)("Week 3 FINAL closure mixed-matter live certification
 
     const sorted = [...metrics.askMs].sort((a, b) => a - b);
     const p95 =
-      sorted.length === 0 ? 0 : sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))]!;
+      sorted.length === 0
+        ? 0
+        : sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))]!;
     expect(p95).toBeLessThan(60_000);
   }, 240_000);
 });

@@ -12,6 +12,7 @@ import {
   matters,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider } from "@nyayagrid/ai";
 import { askNyayaAboutMatter } from "./nyaya";
@@ -29,8 +30,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -46,7 +46,7 @@ describe.runIf(runDbTests)("Phase 2 Ask A/B race + cancel (single-instance)", ()
   let retriever: FixtureRetriever;
 
   beforeAll(async () => {
-    expect(new URL(dbUrl).host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
     const [owner] = await db
       .insert(users)
       .values({

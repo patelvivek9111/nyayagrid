@@ -16,6 +16,7 @@ import {
   memberships,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider, type AskStreamEvent } from "@nyayagrid/ai";
 import { createCivilClaim, createCivilDefense, createMatterMotion } from "@nyayagrid/intelligence";
@@ -41,8 +42,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -88,7 +88,7 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 5 cross-workflow live certificatio
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -321,12 +321,18 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 5 cross-workflow live certificatio
   it("CHAIN A: hearing → investigate-next → task preview", async () => {
     const t1 = await ask("Prepare me for the motion to compel hearing");
     const v1 = asRecord(t1.result.artifact?.validation);
-    expect(v1.hearingPrep || /hearing|motion|INVESTIGATE/i.test(t1.result.answer.answer)).toBeTruthy();
+    expect(
+      v1.hearingPrep || /hearing|motion|INVESTIGATE/i.test(t1.result.answer.answer),
+    ).toBeTruthy();
 
     const t2 = await ask("what should I investigate next?", t1.result.conversationId);
     const v2 = asRecord(t2.result.artifact?.validation);
     const inv = asRecord(v2.investigateNext);
-    expect(inv.posture === "RESOLVED" || inv.posture === "NO_MATERIAL_GAP" || /INVESTIGATE_NEXT/i.test(t2.result.answer.answer)).toBeTruthy();
+    expect(
+      inv.posture === "RESOLVED" ||
+        inv.posture === "NO_MATERIAL_GAP" ||
+        /INVESTIGATE_NEXT/i.test(t2.result.answer.answer),
+    ).toBeTruthy();
 
     const cls = classifyConversationalAction({ question: "turn #1 into a task" });
     expect(cls.actionClass).toBe("WRITE_CONFIRMATION_REQUIRED");
@@ -345,7 +351,10 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 5 cross-workflow live certificatio
         /deposition|Maria|OUTLINE|question/i.test(t1.result.answer.answer),
     ).toBeTruthy();
 
-    const t2 = await ask("research whether the notice evidence supports deposing Maria", t1.result.conversationId);
+    const t2 = await ask(
+      "research whether the notice evidence supports deposing Maria",
+      t1.result.conversationId,
+    );
     expect(t2.result.answer.answer.length).toBeGreaterThan(0);
 
     const t3 = await ask("turn that research into an argument section", t2.result.conversationId);
@@ -391,14 +400,19 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 5 cross-workflow live certificatio
     const t1 = await ask("Prepare me for the motion to compel hearing");
     expect(t1.result.answer.answer.length).toBeGreaterThan(0);
 
-    const t2 = await ask("research authorities relevant to the motion to compel hearing", t1.result.conversationId);
+    const t2 = await ask(
+      "research authorities relevant to the motion to compel hearing",
+      t1.result.conversationId,
+    );
     expect(t2.result.answer.answer.length).toBeGreaterThan(0);
 
     const t3 = await ask("turn that into a draft opposition outline", t2.result.conversationId);
     const v3 = asRecord(t3.result.artifact?.validation);
     expect(
       v3.matterDraft ||
-        /DRAFT PREVIEW|outline|Ambiguous transform|Confirm with|opposition/i.test(t3.result.answer.answer),
+        /DRAFT PREVIEW|outline|Ambiguous transform|Confirm with|opposition/i.test(
+          t3.result.answer.answer,
+        ),
     ).toBeTruthy();
   });
 
@@ -423,7 +437,9 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 5 cross-workflow live certificatio
     // Create second artifact path so bare transform can be ambiguous
     await ask("what should I investigate next?", t1.result.conversationId);
     const amb = await ask("turn that into", t1.result.conversationId);
-    expect(amb.result.answer.answer).toMatch(/Ambiguous|Sources:|Targets:|NO_AUTO_PICK|which source/i);
+    expect(amb.result.answer.answer).toMatch(
+      /Ambiguous|Sources:|Targets:|NO_AUTO_PICK|which source/i,
+    );
 
     expect(classifyConversationalAction({ question: "turn #1 into a task" }).actionClass).toBe(
       "WRITE_CONFIRMATION_REQUIRED",

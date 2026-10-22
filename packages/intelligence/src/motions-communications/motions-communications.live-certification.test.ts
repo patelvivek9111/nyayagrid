@@ -22,6 +22,7 @@ import {
   timelineEvents,
   tasks,
   users,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { AuthorizationError } from "@nyayagrid/permissions";
 import { createCivilClaim } from "../civil/postgres";
@@ -66,10 +67,11 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
   let guestRoleId = "";
 
   beforeAll(async () => {
-    const host = new URL(
-      process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid",
-    ).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(
+      isLocalCertificationDatabaseUrl(
+        process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid",
+      ),
+    ).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -189,7 +191,12 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
       },
     ]);
 
-    async function entity(displayName: string, organizationId: string, matterId: string, userId: string) {
+    async function entity(
+      displayName: string,
+      organizationId: string,
+      matterId: string,
+      userId: string,
+    ) {
       const [row] = await db
         .insert(matterEntities)
         .values({
@@ -219,10 +226,20 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
     }
 
     ids.docMotion = await doc(`Motion to Compel ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
-    ids.docExhibit = await doc(`Exhibit A cure notice ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
+    ids.docExhibit = await doc(
+      `Exhibit A cure notice ${suffix}`,
+      ids.orgA!,
+      ids.matterA!,
+      ids.owner!,
+    );
     ids.docOpposition = await doc(`Opposition ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     ids.docReply = await doc(`Reply ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
-    ids.docOrder = await doc(`Order granted in part ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
+    ids.docOrder = await doc(
+      `Order granted in part ${suffix}`,
+      ids.orgA!,
+      ids.matterA!,
+      ids.owner!,
+    );
     ids.docMac = await doc(`MAC letter ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     ids.docFollow = await doc(`Follow-up letter ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     ids.docB = await doc(`Foreign Doc ${suffix}`, ids.orgB!, ids.matterB!, ids.outsider!);
@@ -745,9 +762,9 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
       question: "What deadline is currently explicit for the motion?",
     });
     expect(deadlines.explicitDeadlines.some((d) => d.label === "hearing")).toBe(true);
-    expect(deadlines.limitations.some((l) => /No jurisdictional deadline was calculated/i.test(l))).toBe(
-      true,
-    );
+    expect(
+      deadlines.limitations.some((l) => /No jurisdictional deadline was calculated/i.test(l)),
+    ).toBe(true);
 
     const ruling = answerMotionsCommunicationsQuestion({
       review,
@@ -776,9 +793,11 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
       matterId: ids.matterA!,
       userId: ids.owner!,
     });
-    expect(first.plan.nodes.some((n) => n.nodeType === "motion" && n.canonicalEntityId === ids.motionCompel)).toBe(
-      true,
-    );
+    expect(
+      first.plan.nodes.some(
+        (n) => n.nodeType === "motion" && n.canonicalEntityId === ids.motionCompel,
+      ),
+    ).toBe(true);
     expect(
       first.plan.nodes.some(
         (n) => n.nodeType === "communication" && n.canonicalEntityId === ids.macComm,
@@ -824,17 +843,15 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
     const nodeKeys = nodes.map((n) => `${n.canonicalEntityType}:${n.canonicalEntityId}`);
     expect(new Set(nodeKeys).size).toBe(nodeKeys.length);
     // Same real communication must not also appear as a document node.
-    expect(
-      nodes.filter((n) => n.canonicalEntityId === ids.macComm).map((n) => n.nodeType),
-    ).toEqual(["communication"]);
+    expect(nodes.filter((n) => n.canonicalEntityId === ids.macComm).map((n) => n.nodeType)).toEqual(
+      ["communication"],
+    );
 
     const edges = await db
       .select()
       .from(graphEdges)
       .where(and(eq(graphEdges.matterId, ids.matterA!), eq(graphEdges.organizationId, ids.orgA!)));
-    const edgeKeys = edges.map(
-      (e) => `${e.fromNodeId}|${e.relationshipType}|${e.toNodeId}`,
-    );
+    const edgeKeys = edges.map((e) => `${e.fromNodeId}|${e.relationshipType}|${e.toNodeId}`);
     expect(new Set(edgeKeys).size).toBe(edgeKeys.length);
 
     const secondGraph = await materializeMotionsCommunicationsGraph({
@@ -856,7 +873,10 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
       .select({ n: count() })
       .from(timelineEvents)
       .where(
-        and(eq(timelineEvents.matterId, ids.matterA!), eq(timelineEvents.organizationId, ids.orgA!)),
+        and(
+          eq(timelineEvents.matterId, ids.matterA!),
+          eq(timelineEvents.organizationId, ids.orgA!),
+        ),
       );
     await materializeMotionsCommunicationsTimeline({
       db,
@@ -868,7 +888,10 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
       .select({ n: count() })
       .from(timelineEvents)
       .where(
-        and(eq(timelineEvents.matterId, ids.matterA!), eq(timelineEvents.organizationId, ids.orgA!)),
+        and(
+          eq(timelineEvents.matterId, ids.matterA!),
+          eq(timelineEvents.organizationId, ids.orgA!),
+        ),
       );
     expect(Number(countAfterSecond[0]!.n)).toBe(Number(countAfterFirst[0]!.n));
 
@@ -876,15 +899,18 @@ describe.runIf(runDbTests)("Pass 6 motions/communications live certification (lo
       .select()
       .from(timelineEvents)
       .where(
-        and(eq(timelineEvents.matterId, ids.matterA!), eq(timelineEvents.organizationId, ids.orgA!)),
+        and(
+          eq(timelineEvents.matterId, ids.matterA!),
+          eq(timelineEvents.organizationId, ids.orgA!),
+        ),
       );
     const dedupe = events.map((e) => e.dedupeKey).filter(Boolean);
     expect(new Set(dedupe).size).toBe(dedupe.length);
     expect(events.some((e) => e.eventType === "motion_filed")).toBe(true);
     expect(events.some((e) => e.eventType === "motion_ruled")).toBe(true);
-    expect(events.some((e) => e.eventType === "meet_and_confer" || e.eventType === "communication_sent")).toBe(
-      true,
-    );
+    expect(
+      events.some((e) => e.eventType === "meet_and_confer" || e.eventType === "communication_sent"),
+    ).toBe(true);
     expect(events.every((e) => e.eventDate != null)).toBe(true);
   }, 180_000);
 

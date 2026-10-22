@@ -17,6 +17,7 @@ import {
   memberships,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider, type AskStreamEvent } from "@nyayagrid/ai";
 import { createCivilClaim, createMatterMotion } from "@nyayagrid/intelligence";
@@ -42,8 +43,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -89,7 +89,7 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 3 draft+research live certificatio
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -321,8 +321,10 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 3 draft+research live certificatio
     expect(
       t.draft.posture === "RESOLVED" || /DRAFT PREVIEW|factual/i.test(t.result.answer.answer),
     ).toBe(true);
-    if (/\bDefendant knowingly concealed the defect\b/.test(t.result.answer.answer) &&
-      !/contends|conflict|allegation/i.test(t.result.answer.answer)) {
+    if (
+      /\bDefendant knowingly concealed the defect\b/.test(t.result.answer.answer) &&
+      !/contends|conflict|allegation/i.test(t.result.answer.answer)
+    ) {
       metrics.inventedFacts += 1;
     }
     expect(metrics.inventedFacts).toBe(0);

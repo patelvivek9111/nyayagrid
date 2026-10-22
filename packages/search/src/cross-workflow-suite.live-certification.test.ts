@@ -23,6 +23,7 @@ import {
   messages,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider, type AskStreamEvent } from "@nyayagrid/ai";
 import {
@@ -57,8 +58,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -105,7 +105,7 @@ describe.runIf(runDbTests)("Phase 5 live certification (local DB — lock grante
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -412,7 +412,7 @@ describe.runIf(runDbTests)("Phase 5 live certification (local DB — lock grante
     expect(t1.result.answer.answer).not.toMatch(/\b(yes,?\s+you won|you definitely won)\b/i);
     const types =
       t1.completed && t1.completed.type === "generation_completed"
-        ? t1.completed.ux?.factualityTypes ?? []
+        ? (t1.completed.ux?.factualityTypes ?? [])
         : [];
     const evidence = t1.result.answer.evidenceState;
     expect(
@@ -535,7 +535,9 @@ describe.runIf(runDbTests)("Phase 5 live certification (local DB — lock grante
     const pendingId = t1.action.pendingActionId;
     await ask("What about Claim B?", t1.result.conversationId);
     const stale = await ask("yes save it", t1.result.conversationId);
-    expect(stale.result.answer.answer).toMatch(/stale|no longer current|rejected|regenerate|drift/i);
+    expect(stale.result.answer.answer).toMatch(
+      /stale|no longer current|rejected|regenerate|drift/i,
+    );
     expect(await countDrafts()).toBe(before);
     if (stale.action.actionStatus === "COMPLETED" && stale.action.pendingActionId === pendingId) {
       metrics.staleExecutions += 1;

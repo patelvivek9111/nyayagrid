@@ -18,6 +18,7 @@ import {
   memberships,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import {
   MockAIProvider,
@@ -75,8 +76,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -128,7 +128,7 @@ describe.runIf(runDbTests)("Week 3 Slice 4 honesty live certification", () => {
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -589,9 +589,9 @@ describe.runIf(runDbTests)("Week 3 Slice 4 honesty live certification", () => {
     expect(stale.status).not.toBe("RESOLVED");
     if (stale.status === "RESOLVED") metrics.wrongStalePick += 1;
 
-    expect(
-      classifyConversationalAction({ question: "turn #2 into a task" }).actionClass,
-    ).toBe("WRITE_CONFIRMATION_REQUIRED");
+    expect(classifyConversationalAction({ question: "turn #2 into a task" }).actionClass).toBe(
+      "WRITE_CONFIRMATION_REQUIRED",
+    );
 
     const pending = createPendingActionRecord({
       actionType: "TASK_CREATE",
@@ -623,7 +623,10 @@ describe.runIf(runDbTests)("Week 3 Slice 4 honesty live certification", () => {
 
     const { result } = await ask("what should I investigate next?");
     expect(result.answer.answer.length).toBeGreaterThan(0);
-    if (/\bdue (date|by)\b.+\d{4}/i.test(result.answer.answer) && !/UNKNOWN|not invent/i.test(result.answer.answer)) {
+    if (
+      /\bdue (date|by)\b.+\d{4}/i.test(result.answer.answer) &&
+      !/UNKNOWN|not invent/i.test(result.answer.answer)
+    ) {
       metrics.inventedDeadlines += 1;
     }
     expect(metrics.inventedDeadlines).toBe(0);
@@ -699,7 +702,10 @@ describe.runIf(runDbTests)("Week 3 Slice 4 honesty live certification", () => {
     expect(metrics.coverageOverclaim).toBe(0);
     expect(metrics.clRequests).toBe(0);
     const sorted = [...metrics.askMs].sort((a, b) => a - b);
-    const p95 = sorted.length === 0 ? 0 : sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))]!;
+    const p95 =
+      sorted.length === 0
+        ? 0
+        : sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))]!;
     expect(p95).toBeLessThan(60_000);
   }, 180_000);
 });

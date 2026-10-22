@@ -18,6 +18,7 @@ import {
   messages,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import {
   MockAIProvider,
@@ -124,8 +125,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -306,7 +306,7 @@ describe.runIf(runDbTests)("Phase 3 live certification (local DB — lock grante
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -502,7 +502,8 @@ describe.runIf(runDbTests)("Phase 3 live certification (local DB — lock grante
       title: `Motion to Compel ${suffix}`,
       status: "GRANTED",
       disposition: "GRANTED",
-      rulingSummary: "Court granted the motion to compel production of the cure-notice attachments.",
+      rulingSummary:
+        "Court granted the motion to compel production of the cure-notice attachments.",
       judgeName: "Judge SYNTH",
       filedAt: new Date("2025-05-04T15:00:00.000Z"),
       rulingAt: new Date("2025-06-01T15:00:00.000Z"),
@@ -706,9 +707,9 @@ describe.runIf(runDbTests)("Phase 3 live certification (local DB — lock grante
     expect(candidates.some((c) => c.entityId === ids.claimB)).toBe(true);
     expect(candidates.some((c) => c.entityId === ids.compel)).toBe(true);
     expect(candidates.some((c) => c.entityId === ids.deficiency)).toBe(true);
-    expect(candidates.every((c) => c.matterId === ids.matterA && c.organizationId === ids.orgA)).toBe(
-      true,
-    );
+    expect(
+      candidates.every((c) => c.matterId === ids.matterA && c.organizationId === ids.orgA),
+    ).toBe(true);
     expect(candidates.every((c) => c.entityId !== ids.foreignClaim)).toBe(true);
     expect(candidates.every((c) => c.entityId !== ids.docForeign)).toBe(true);
   }, 60_000);
@@ -756,7 +757,11 @@ describe.runIf(runDbTests)("Phase 3 live certification (local DB — lock grante
       JSON.stringify({
         scenario1: {
           activeClaim: t3.ws.activeClaimIds,
-          referentMethods: [t1.diag.resolutionMethod, t2.diag.resolutionMethod, t3.diag.resolutionMethod],
+          referentMethods: [
+            t1.diag.resolutionMethod,
+            t2.diag.resolutionMethod,
+            t3.diag.resolutionMethod,
+          ],
         },
       }),
     );
@@ -792,8 +797,9 @@ describe.runIf(runDbTests)("Phase 3 live certification (local DB — lock grante
 
     const t3 = await ask("what motion did that lead to?", t1.result.conversationId);
     expect(t3.rr.status).toBe("RESOLVED");
-    const resolvedMotion = (t3.rr.referents as Array<{ entityType: string; entityId: string | null }> | undefined)
-      ?.find((r) => r.entityType === "motion");
+    const resolvedMotion = (
+      t3.rr.referents as Array<{ entityType: string; entityId: string | null }> | undefined
+    )?.find((r) => r.entityType === "motion");
     expect(resolvedMotion?.entityId).toBe(ids.compel);
     // No synthesized SJ contamination.
     expect(
@@ -906,7 +912,9 @@ describe.runIf(runDbTests)("Phase 3 live certification (local DB — lock grante
     const premise = asRecord(t3.validation.premiseCheck);
     expect(premise.detected).toBe(true);
     expect(["UNSUPPORTED", "UNKNOWN"]).toContain(premise.result);
-    expect(t3.result.answer.answer).toMatch(/NOT VERIFIED|UNKNOWN|not verified|Unsupported|does not establish/i);
+    expect(t3.result.answer.answer).toMatch(
+      /NOT VERIFIED|UNKNOWN|not verified|Unsupported|does not establish/i,
+    );
     // Must not affirm treatment from model memory.
     expect(t3.result.answer.answer).not.toMatch(
       /\b(is still good law|remains good law|negative treatment confirmed|was overruled)\b/i,
@@ -979,9 +987,9 @@ describe.runIf(runDbTests)("Phase 3 live certification (local DB — lock grante
     const ambiguous = await ask("what happened with that motion?", conv!.id);
     expect(ambiguous.rr.status).toBe("AMBIGUOUS");
     expect(Number(ambiguous.diag.candidateCount ?? 0)).toBeGreaterThanOrEqual(2);
-    expect(ambiguous.diag.resolvedEntityId == null || ambiguous.diag.resolvedEntityId === null).toBe(
-      true,
-    );
+    expect(
+      ambiguous.diag.resolvedEntityId == null || ambiguous.diag.resolvedEntityId === null,
+    ).toBe(true);
     const refs = (ambiguous.rr.referents as Array<{ entityId: string | null }> | undefined) ?? [];
     expect(refs.every((r) => r.entityId == null)).toBe(true);
     metrics.autoPickWhenAmbiguous = refs.filter((r) => r.entityId != null).length;

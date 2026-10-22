@@ -27,6 +27,7 @@ import {
   tasks,
   deadlineCandidates,
   users,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { AuthorizationError } from "@nyayagrid/permissions";
 import { loadCivilClaimsReview } from "../civil/adapter";
@@ -83,10 +84,11 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
   const timings: Record<string, number> = {};
 
   beforeAll(async () => {
-    const host = new URL(
-      process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid",
-    ).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(
+      isLocalCertificationDatabaseUrl(
+        process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid",
+      ),
+    ).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -224,7 +226,12 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
       },
     ]);
 
-    async function entity(displayName: string, organizationId: string, matterId: string, userId: string) {
+    async function entity(
+      displayName: string,
+      organizationId: string,
+      matterId: string,
+      userId: string,
+    ) {
       const [row] = await db
         .insert(matterEntities)
         .values({
@@ -254,14 +261,29 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     }
 
     ids.docMotion = await doc(`Motion to Compel ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
-    ids.docExhibit = await doc(`Exhibit A cure notice ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
+    ids.docExhibit = await doc(
+      `Exhibit A cure notice ${suffix}`,
+      ids.orgA!,
+      ids.matterA!,
+      ids.owner!,
+    );
     ids.docLog = await doc(`Delivery log ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     ids.docOpposition = await doc(`Opposition ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     ids.docReply = await doc(`Reply ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
-    ids.docOrder = await doc(`Order granted in part ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
+    ids.docOrder = await doc(
+      `Order granted in part ${suffix}`,
+      ids.orgA!,
+      ids.matterA!,
+      ids.owner!,
+    );
     ids.docMac = await doc(`MAC letter ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     ids.docFollow = await doc(`Follow-up letter ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
-    ids.docProd = await doc(`Incomplete production cover ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
+    ids.docProd = await doc(
+      `Incomplete production cover ${suffix}`,
+      ids.orgA!,
+      ids.matterA!,
+      ids.owner!,
+    );
     ids.docB = await doc(`Foreign Doc ${suffix}`, ids.orgB!, ids.matterB!, ids.outsider!);
 
     // 500+ source/document references for performance realism.
@@ -1097,19 +1119,25 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     expect(wm.contradictions.some((c) => c.kind === "DIRECT_CONFLICT")).toBe(true);
     expect(wm.contradictions.every((c) => c.credibilityConclusion === null)).toBe(true);
     expect(wm.openDeficiencyIds).toContain(ids.deficiency);
-    expect(wm.discoveryChains.some((c) => c.deficiencyId === ids.deficiency && c.motionId === ids.motionCompel)).toBe(
-      true,
-    );
+    expect(
+      wm.discoveryChains.some(
+        (c) => c.deficiencyId === ids.deficiency && c.motionId === ids.motionCompel,
+      ),
+    ).toBe(true);
     expect(wm.communications.some((c) => c.id === ids.macComm)).toBe(true);
-    expect(wm.motions.some((m) => m.motionId === ids.motionCompel && m.disposition === "GRANTED_IN_PART")).toBe(
-      true,
-    );
+    expect(
+      wm.motions.some(
+        (m) => m.motionId === ids.motionCompel && m.disposition === "GRANTED_IN_PART",
+      ),
+    ).toBe(true);
     expect(wm.motions.some((m) => m.motionId === ids.motionPending && m.pending)).toBe(true);
     expect(wm.motions.every((m) => m.disposesEntireClaim === false)).toBe(true);
     expect(wm.tasks.some((t) => t.id === ids.taskOpen && t.status === "open")).toBe(true);
     expect(wm.tasks.some((t) => t.id === ids.taskDone && t.status === "completed")).toBe(true);
     expect(wm.deadlines.some((d) => d.id === ids.deadline && d.explicit)).toBe(true);
-    expect(wm.timeline.some((e) => e.dateKind === "filing" || e.eventType === "motion_filed")).toBe(true);
+    expect(wm.timeline.some((e) => e.dateKind === "filing" || e.eventType === "motion_filed")).toBe(
+      true,
+    );
     expect(wm.timeline.some((e) => e.eventType === "motion_ruled")).toBe(true);
     expect(wm.timeline.every((e) => e.eventDate != null)).toBe(true);
 
@@ -1128,12 +1156,19 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     expect(byId.get(ids.authProcessing!)?.resolution).not.toBe("AUTHORITY_RESOLVED");
     expect(byId.get(ids.authFailed!)?.resolution).not.toBe("AUTHORITY_RESOLVED");
     expect(wm.investigateNext.length).toBeGreaterThan(0);
-    expect(wm.investigateNext.every((i) => i.why && i.resolvesIf && i.predictiveOutcome === null)).toBe(true);
+    expect(
+      wm.investigateNext.every((i) => i.why && i.resolvesIf && i.predictiveOutcome === null),
+    ).toBe(true);
     expect(wm.sourceRefs.some((s) => s.kind === "claim" && s.id === ids.claimA)).toBe(true);
     expect(wm.liabilityConclusion).toBeNull();
     expect(wm.predictiveOutcome).toBeNull();
     expect(wm.status.flags).toEqual(
-      expect.arrayContaining(["CLAIMS_ACTIVE", "DEFICIENCIES_OUTSTANDING", "MOTION_RULED", "EVIDENCE_GAP"]),
+      expect.arrayContaining([
+        "CLAIMS_ACTIVE",
+        "DEFICIENCIES_OUTSTANDING",
+        "MOTION_RULED",
+        "EVIDENCE_GAP",
+      ]),
     );
 
     console.log(
@@ -1217,9 +1252,9 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
       intelligence: wm,
       question: "What did the court actually rule?",
     });
-    expect(ruling.motions.some((m) => m.id === ids.motionCompel && m.disposition === "GRANTED_IN_PART")).toBe(
-      true,
-    );
+    expect(
+      ruling.motions.some((m) => m.id === ids.motionCompel && m.disposition === "GRANTED_IN_PART"),
+    ).toBe(true);
 
     const deadlines = answerWholeMatterQuestion({
       intelligence: wm,
@@ -1232,9 +1267,11 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
       question: "What authorities apply to the unresolved issues?",
     });
     expect(auths.authorities.some((a) => a.id === ids.authResolved)).toBe(true);
-    expect(auths.authorities.some((a) => a.id === ids.authUnresolved && a.resolution === "IDENTITY_UNRESOLVED")).toBe(
-      true,
-    );
+    expect(
+      auths.authorities.some(
+        (a) => a.id === ids.authUnresolved && a.resolution === "IDENTITY_UNRESOLVED",
+      ),
+    ).toBe(true);
 
     const next = answerWholeMatterQuestion({
       intelligence: wm,
@@ -1254,7 +1291,12 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     expect(text.length).toBeLessThan(80_000);
     expect(text).toMatch(/bounded|drill down/i);
 
-    console.log(JSON.stringify({ pass7_live_ask_ms: Math.round(timings.askMs), ask_context_chars: text.length }));
+    console.log(
+      JSON.stringify({
+        pass7_live_ask_ms: Math.round(timings.askMs),
+        ask_context_chars: text.length,
+      }),
+    );
   }, 120_000);
 
   it("materializes Graph/Timeline without duplicates or unresolved-authority promotion", async () => {
@@ -1328,7 +1370,12 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     const foreignNodes = await db
       .select()
       .from(graphNodes)
-      .where(and(eq(graphNodes.matterId, ids.matterA!), eq(graphNodes.canonicalEntityId, ids.foreignEntity!)));
+      .where(
+        and(
+          eq(graphNodes.matterId, ids.matterA!),
+          eq(graphNodes.canonicalEntityId, ids.foreignEntity!),
+        ),
+      );
     expect(foreignNodes.length).toBe(0);
 
     const tTl = performance.now();
@@ -1349,7 +1396,12 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     const events = await db
       .select()
       .from(timelineEvents)
-      .where(and(eq(timelineEvents.matterId, ids.matterA!), eq(timelineEvents.organizationId, ids.orgA!)));
+      .where(
+        and(
+          eq(timelineEvents.matterId, ids.matterA!),
+          eq(timelineEvents.organizationId, ids.orgA!),
+        ),
+      );
     const dedupe = events.map((e) => e.dedupeKey).filter(Boolean);
     expect(new Set(dedupe).size).toBe(dedupe.length);
     expect(events.every((e) => e.eventDate != null)).toBe(true);
@@ -1498,7 +1550,9 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     // Whole-matter Ask block only — no duplicate legacy domain headers.
     expect(ctx).toContain("WHOLE_MATTER_INTELLIGENCE");
     expect((ctx.match(/WHOLE_MATTER_INTELLIGENCE/g) ?? []).length).toBe(1);
-    expect(ctx).not.toMatch(/CIVIL_CLAIMS_CONTEXT|DISCOVERY_LEDGER_CONTEXT|MOTIONS_COMMUNICATIONS_CONTEXT/);
+    expect(ctx).not.toMatch(
+      /CIVIL_CLAIMS_CONTEXT|DISCOVERY_LEDGER_CONTEXT|MOTIONS_COMMUNICATIONS_CONTEXT/,
+    );
 
     const tGraph = performance.now();
     const graph = planWholeMatterGraph(wm);
@@ -1542,10 +1596,16 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
   }, 420_000);
 
   it("certifies authority-state honesty for processing/failed/corpus/resolved", async () => {
-    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "processing" })).toBe("IDENTITY_UNRESOLVED");
-    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "failed" })).toBe("IDENTITY_UNRESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "processing" })).toBe(
+      "IDENTITY_UNRESOLVED",
+    );
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "failed" })).toBe(
+      "IDENTITY_UNRESOLVED",
+    );
     expect(resolveAuthorityResolutionBucket({ ingestionStatus: null })).toBe("IDENTITY_UNRESOLVED");
-    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "ready" })).toBe("AUTHORITY_RESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "ready" })).toBe(
+      "AUTHORITY_RESOLVED",
+    );
     expect(
       resolveAuthorityResolutionBucket({
         ingestionStatus: "pending",
@@ -1598,7 +1658,9 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     expect(linkedIds.has(ids.authResolved!)).toBe(true);
     expect(linkedIds.has(ids.authCorpus!)).toBe(true);
     // Noise authorities must not appear in civil review merely because they exist globally.
-    expect([...linkedIds].every((id) => id === ids.authResolved || id === ids.authCorpus)).toBe(true);
+    expect([...linkedIds].every((id) => id === ids.authResolved || id === ids.authCorpus)).toBe(
+      true,
+    );
     expect(civilMs).toBeLessThan(8_000);
 
     console.log(

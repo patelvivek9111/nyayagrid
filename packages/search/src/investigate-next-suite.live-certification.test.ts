@@ -23,6 +23,7 @@ import {
   tasks,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider } from "@nyayagrid/ai";
 import {
@@ -56,8 +57,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -106,7 +106,7 @@ describe.runIf(runDbTests)("Phase 4 live certification (local DB — lock grante
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -365,11 +365,7 @@ describe.runIf(runDbTests)("Phase 4 live certification (local DB — lock grante
     await closeDb(db);
   });
 
-  async function ask(
-    question: string,
-    conversationId?: string | null,
-    userId?: string,
-  ) {
+  async function ask(question: string, conversationId?: string | null, userId?: string) {
     const classStarted = Date.now();
     classifyConversationalAction({ question });
     metrics.classificationMs.push(Date.now() - classStarted);
@@ -418,7 +414,10 @@ describe.runIf(runDbTests)("Phase 4 live certification (local DB — lock grante
       .select({ n: count() })
       .from(matterMemories)
       .where(
-        and(eq(matterMemories.organizationId, ids.orgA!), eq(matterMemories.matterId, ids.matterA!)),
+        and(
+          eq(matterMemories.organizationId, ids.orgA!),
+          eq(matterMemories.matterId, ids.matterA!),
+        ),
       );
     return Number(row?.n ?? 0);
   }
@@ -509,16 +508,15 @@ describe.runIf(runDbTests)("Phase 4 live certification (local DB — lock grante
 
   it("SCENARIO 5 live: compare without credibility leap", async () => {
     const t1 = await ask("What supports Claim A?");
-    const t2 = await ask(
-      "Compare this statement with her deposition.",
-      t1.result.conversationId,
-    );
+    const t2 = await ask("Compare this statement with her deposition.", t1.result.conversationId);
     expect(asRecord(t2.validation.workflowClassification).actionType ?? t2.action.actionType).toBe(
       "COMPARE_READ",
     );
     expect(t2.result.answer.assumptions.join(" ")).toMatch(/Conflict ≠ dishonesty|conflict/i);
     expect(t2.result.answer.answer).not.toMatch(/\b(lied|dishonest|false testimony)\b/i);
-    metrics.credibilityLeaps = (t2.result.answer.answer.match(/\b(lied|dishonest)\b/gi) ?? []).length;
+    metrics.credibilityLeaps = (
+      t2.result.answer.answer.match(/\b(lied|dishonest)\b/gi) ?? []
+    ).length;
     expect(metrics.credibilityLeaps).toBe(0);
   }, 120_000);
 
@@ -571,10 +569,7 @@ describe.runIf(runDbTests)("Phase 4 live certification (local DB — lock grante
 
     const task = await ask("Create a task to follow up on RFP 14.", conv!.id);
     expect(task.action.actionStatus).toBe("AWAITING_CONFIRMATION");
-    const mem = await ask(
-      "Remember that opposing counsel promised supplementation.",
-      conv!.id,
-    );
+    const mem = await ask("Remember that opposing counsel promised supplementation.", conv!.id);
     expect(mem.action.actionStatus).toBe("AWAITING_CONFIRMATION");
 
     const artifacts = await db
@@ -605,9 +600,11 @@ describe.runIf(runDbTests)("Phase 4 live certification (local DB — lock grante
     expect(preview.action.actionStatus).toBe("AWAITING_CONFIRMATION");
     const guestSave = await ask("save it", preview.result.conversationId, ids.guest);
     expect(guestSave.action.actionStatus).toBe("FAILED");
-    expect(guestSave.result.answer.answer).toMatch(/could not|Authorization|Missing capability|failed/i);
+    expect(guestSave.result.answer.answer).toMatch(
+      /could not|Authorization|Missing capability|failed/i,
+    );
     expect(await countDrafts()).toBe(beforeDrafts);
-    metrics.unauthorizedWrites += await countDrafts() > beforeDrafts ? 1 : 0;
+    metrics.unauthorizedWrites += (await countDrafts()) > beforeDrafts ? 1 : 0;
 
     const taskPreview = await ask("Create a task to follow up on RFP 14.");
     const guestTask = await ask("confirm", taskPreview.result.conversationId, ids.guest);
@@ -633,9 +630,7 @@ describe.runIf(runDbTests)("Phase 4 live certification (local DB — lock grante
     const [approval] = await db
       .select()
       .from(agentApprovals)
-      .where(
-        and(eq(agentApprovals.id, approvalId!), eq(agentApprovals.organizationId, ids.orgA!)),
-      )
+      .where(and(eq(agentApprovals.id, approvalId!), eq(agentApprovals.organizationId, ids.orgA!)))
       .limit(1);
     expect(approval?.status).toBe("pending");
     expect(approval?.actionType).toBe("CREATE_DRAFT");

@@ -13,6 +13,7 @@ import {
   matters,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { CORRELATION_ID_HEADER } from "@nyayagrid/observability";
 import {
@@ -35,7 +36,7 @@ describe.runIf(runDbTests)("Phase 3 ops live certification", () => {
   const ids: Record<string, string> = {};
 
   beforeAll(async () => {
-    expect(new URL(dbUrl).host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
     const [owner] = await db
       .insert(users)
       .values({

@@ -16,6 +16,7 @@ import {
   matters,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { storageKeyForOrganization } from "@nyayagrid/permissions";
 import { MockEmbeddingProvider } from "@nyayagrid/ai";
@@ -91,7 +92,7 @@ describe.runIf(runDbTests)("Week 3 Slice 1 OCR ingest live certification", () =>
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -154,11 +155,7 @@ describe.runIf(runDbTests)("Week 3 Slice 1 OCR ingest live certification", () =>
     await closeDb(db);
   });
 
-  async function seedDocument(params: {
-    filename: string;
-    body: Buffer;
-    contentType?: string;
-  }) {
+  async function seedDocument(params: { filename: string; body: Buffer; contentType?: string }) {
     const documentId = crypto.randomUUID();
     const versionId = crypto.randomUUID();
     const key = storageKeyForOrganization({
@@ -444,8 +441,9 @@ describe.runIf(runDbTests)("Week 3 Slice 1 OCR ingest live certification", () =>
     expect(result.ok).toBe(true);
     expect(result.state).toBe("ready");
     expect(ocr.extractText).not.toHaveBeenCalled();
-    metrics.ocrInvocationsOnNative += (ocr.extractText as ReturnType<typeof vi.fn>).mock.calls
-      .length;
+    metrics.ocrInvocationsOnNative += (
+      ocr.extractText as ReturnType<typeof vi.fn>
+    ).mock.calls.length;
     expect(metrics.ocrInvocationsOnNative).toBe(0);
     const chunks = await db
       .select()

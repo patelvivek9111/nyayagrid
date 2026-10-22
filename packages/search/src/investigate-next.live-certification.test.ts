@@ -15,6 +15,7 @@ import {
   memberships,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider, type AskStreamEvent } from "@nyayagrid/ai";
 import { createCivilClaim, createCivilDefense, createMatterMotion } from "@nyayagrid/intelligence";
@@ -40,8 +41,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -88,7 +88,7 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 4 investigate-next live certificat
 
   beforeAll(async () => {
     const host = new URL(dbUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -231,7 +231,8 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 4 investigate-next live certificat
         matterId: ids.matterA!,
         page: 1,
         segmentRef: "¶1",
-        quote: "Cure notice emailed March 1, 2025. Attachment inspection-report.pdf was referenced but not located.",
+        quote:
+          "Cure notice emailed March 1, 2025. Attachment inspection-report.pdf was referenced but not located.",
         score: 0.9,
       },
     ]);
@@ -325,7 +326,9 @@ describe.runIf(runDbTests)("Oct 19–25 Phase 4 investigate-next live certificat
   it("live: guest denied write; large matter remains bounded; CL=0", async () => {
     const t1 = await ask("what should I investigate next?");
     const guestTry = await ask("turn #1 into a task", t1.result.conversationId, ids.guest);
-    const guestAction = asRecord(asRecord(guestTry.result.artifact?.validation).conversationalAction);
+    const guestAction = asRecord(
+      asRecord(guestTry.result.artifact?.validation).conversationalAction,
+    );
     // Guest may receive preview but confirmation execution must not bypass — classification still confirmation-required.
     expect(classifyConversationalAction({ question: "turn #1 into a task" }).actionClass).toBe(
       "WRITE_CONFIRMATION_REQUIRED",

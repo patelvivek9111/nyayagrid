@@ -1,5 +1,5 @@
-﻿/**
- * Phase 2 reliability — confirmation at-most-once live repro.
+/**
+ * Phase 2 reliability � confirmation at-most-once live repro.
  * RUN_DB_TESTS=1 DATABASE_URL=...localhost:5433/...
  * CourtListener: 0. Shared schema: none.
  */
@@ -16,6 +16,7 @@ import {
   tasks,
   users,
   type Database,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import { MockAIProvider } from "@nyayagrid/ai";
 import { askNyayaAboutMatter } from "./nyaya";
@@ -37,8 +38,7 @@ class FixtureRetriever implements Retriever {
     return this.chunks
       .filter(
         (c) =>
-          c.organizationId === query.scope.organizationId &&
-          c.matterId === query.scope.matterId,
+          c.organizationId === query.scope.organizationId && c.matterId === query.scope.matterId,
       )
       .slice(0, query.limit ?? 8);
   }
@@ -54,7 +54,7 @@ describe.runIf(runDbTests)("Phase 2 confirmation at-most-once stress", () => {
   let retriever: FixtureRetriever;
 
   beforeAll(async () => {
-    expect(new URL(dbUrl).host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(dbUrl)).toBe(true);
     const [owner] = await db
       .insert(users)
       .values({
@@ -122,7 +122,7 @@ describe.runIf(runDbTests)("Phase 2 confirmation at-most-once stress", () => {
     return Number(row?.n ?? 0);
   }
 
-  it("A sequential Ask confirm twice — TASK_CREATE", async () => {
+  it("A sequential Ask confirm twice � TASK_CREATE", async () => {
     const before = await countTasks();
     const t1 = await askNyayaAboutMatter({
       db,
@@ -186,7 +186,7 @@ describe.runIf(runDbTests)("Phase 2 confirmation at-most-once stress", () => {
     console.log(JSON.stringify({ sequential_task: { before, after: await countTasks(), dup: 0 } }));
   }, 180_000);
 
-  it("B concurrent executeConfirmed — same TASK pendingActionId", async () => {
+  it("B concurrent executeConfirmed � same TASK pendingActionId", async () => {
     const before = await countTasks();
     const pending = createPendingActionRecord({
       actionType: "TASK_CREATE",
@@ -237,7 +237,7 @@ describe.runIf(runDbTests)("Phase 2 confirmation at-most-once stress", () => {
     expect(r1.executionResult?.taskId).toBe(r2.executionResult?.taskId);
   }, 120_000);
 
-  it("C concurrent executeConfirmed — same DRAFT pendingActionId", async () => {
+  it("C concurrent executeConfirmed � same DRAFT pendingActionId", async () => {
     const before = await countDrafts();
     const pending = createPendingActionRecord({
       actionType: "DRAFT_SAVE",
@@ -286,7 +286,7 @@ describe.runIf(runDbTests)("Phase 2 confirmation at-most-once stress", () => {
     expect(r1.executionResult?.draftId).toBe(r2.executionResult?.draftId);
   }, 120_000);
 
-  it("D concurrent Ask confirm twice — same conversation TASK", async () => {
+  it("D concurrent Ask confirm twice � same conversation TASK", async () => {
     const before = await countTasks();
     const t1 = await askNyayaAboutMatter({
       db,

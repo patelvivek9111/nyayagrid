@@ -23,6 +23,7 @@ import {
   matters,
   matterMembers,
   users,
+  isLocalCertificationDatabaseUrl,
 } from "@nyayagrid/database";
 import {
   extractGraphRelationshipCandidates,
@@ -67,8 +68,7 @@ describe.runIf(runDbTests)("Week 3 Slice 2 graph relevance live certification (l
   let largeDocCount = 0;
 
   beforeAll(async () => {
-    const host = new URL(databaseUrl).host;
-    expect(host).toMatch(/localhost:5433|127\.0\.0\.1:5433/);
+    expect(isLocalCertificationDatabaseUrl(databaseUrl)).toBe(true);
 
     const [owner] = await db
       .insert(users)
@@ -307,10 +307,7 @@ describe.runIf(runDbTests)("Week 3 Slice 2 graph relevance live certification (l
     // so createdAt-ordered "old blind first 24" cannot include preferred chunks.
     largeDocCount = 510;
     const BATCH = 50;
-    async function insertDocBatch(
-      indices: number[],
-      opts: { preferred?: boolean },
-    ): Promise<void> {
+    async function insertDocBatch(indices: number[], opts: { preferred?: boolean }): Promise<void> {
       const docs = await db
         .insert(documents)
         .values(
@@ -497,7 +494,11 @@ describe.runIf(runDbTests)("Week 3 Slice 2 graph relevance live certification (l
 
     // Beyond-old-cap NODE proof: measure createdAt order (insertion order proxy).
     const orderedByCreated = await db
-      .select({ id: graphNodes.id, displayName: graphNodes.displayName, nodeType: graphNodes.nodeType })
+      .select({
+        id: graphNodes.id,
+        displayName: graphNodes.displayName,
+        nodeType: graphNodes.nodeType,
+      })
       .from(graphNodes)
       .where(
         and(
