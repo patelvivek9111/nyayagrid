@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray, or, sql } from "@nyayagrid/database";
+import { and, asc, desc, eq, inArray, or, sql } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
 import {
   graphNodes,
@@ -27,6 +27,7 @@ import {
   GraphFocusRejectedError,
   buildGraphExtractionCoverage,
   degreeMapFromEdges,
+  isEvidenceLinkedNode,
   neighborhoodIdsFromFocus,
   preferredDocumentIdsFromNodes,
   selectChunksForGraphExtraction,
@@ -44,6 +45,7 @@ export {
   GRAPH_EXTRACT_NODE_CAP,
   GraphFocusRejectedError,
   buildGraphExtractionCoverage,
+  isEvidenceLinkedNode,
   selectChunksForGraphExtraction,
   selectNodesForGraphExtraction,
   scoreGraphNodeForExtraction,
@@ -182,6 +184,24 @@ export async function extractGraphRelationshipCandidates(params: {
   const nodes = eligibleNodes.filter((n) => selectedNodeIdSet.has(n.id));
 
   const preferredDocIds = preferredDocumentIdsFromNodes(selectedNodeRefs);
+  const evidenceDocIds = new Set<string>();
+
+  // Evidence-linked document nodes must influence chunk preference even when the
+  // node cap omits them — and must outrank generic selected documents under the
+  // chunk cap (equal preferred scores previously caused UUID-order omission).
+  for (const n of eligibleNodes) {
+    if (
+      (n.nodeType === "document" || n.canonicalEntityType === "document") &&
+      isEvidenceLinkedNode({
+        nodeType: n.nodeType,
+        displayName: n.displayName,
+        canonicalEntityType: n.canonicalEntityType,
+      })
+    ) {
+      evidenceDocIds.add(n.canonicalEntityId);
+      preferredDocIds.add(n.canonicalEntityId);
+    }
+  }
 
   // Batched: documents that already source edges touching selected nodes.
   if (selectedNodeRefs.length > 0) {
@@ -215,7 +235,8 @@ export async function extractGraphRelationshipCandidates(params: {
     );
   const candidateChunkCount = Number(chunkCountRow?.count) || 0;
 
-  // Bounded candidate pull: prefer preferred docs, else soft-capped whole-matter scan.
+  // Bounded candidate pull: preferred docs first, then soft-capped recency scan.
+  // Recency (not documentId) avoids UUID-order omission of late evidence chunks.
   let chunkCandidatesRaw: Array<{
     id: string;
     documentId: string;
@@ -244,7 +265,7 @@ export async function extractGraphRelationshipCandidates(params: {
       .limit(GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP);
   }
 
-  if (chunkCandidatesRaw.length < GRAPH_EXTRACT_CHUNK_CAP) {
+  if (chunkCandidatesRaw.length < GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP) {
     const extra = await params.db
       .select({
         id: documentChunks.id,
@@ -259,7 +280,7 @@ export async function extractGraphRelationshipCandidates(params: {
           eq(documentChunks.matterId, params.matterId),
         ),
       )
-      .orderBy(asc(documentChunks.documentId), asc(documentChunks.chunkIndex))
+      .orderBy(desc(documentChunks.createdAt), asc(documentChunks.id))
       .limit(GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP);
     const seen = new Set(chunkCandidatesRaw.map((c) => c.id));
     for (const row of extra) {
@@ -274,6 +295,7 @@ export async function extractGraphRelationshipCandidates(params: {
   const selectedChunks = selectChunksForGraphExtraction({
     candidates: selectableChunks,
     preferredDocumentIds: preferredDocIds,
+    evidenceDocumentIds: evidenceDocIds,
     cap: GRAPH_EXTRACT_CHUNK_CAP,
   });
   const chunks = selectedChunks;

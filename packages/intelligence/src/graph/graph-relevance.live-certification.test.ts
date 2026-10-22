@@ -397,6 +397,21 @@ describe.runIf(runDbTests)("Week 3 Slice 2 graph relevance live certification (l
       .update(graphNodes)
       .set({ createdAt: new Date(Date.now() + 60_000) })
       .where(eq(graphNodes.id, lateClaimNodeId));
+
+    // Seed must expose the evidence document node; without it preferred-chunk
+    // selection relies on soft-cap UUID luck and flakes under CI load.
+    const preferredNodes = await db
+      .select({ id: graphNodes.id, displayName: graphNodes.displayName })
+      .from(graphNodes)
+      .where(
+        and(
+          eq(graphNodes.matterId, largeMatterId),
+          eq(graphNodes.organizationId, organizationId),
+          eq(graphNodes.canonicalEntityId, preferredDocId),
+        ),
+      );
+    expect(preferredNodes.length).toBe(1);
+    expect(preferredNodes[0]!.displayName).toMatch(/evidence|exhibit/i);
   }, 300_000);
 
   afterAll(async () => {

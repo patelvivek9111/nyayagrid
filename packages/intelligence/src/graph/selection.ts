@@ -198,7 +198,10 @@ export function selectNodesForGraphExtraction(params: {
 export function scoreChunkForGraphExtraction(params: {
   chunk: SelectableChunk;
   preferredDocumentIds: ReadonlySet<string>;
+  /** Evidence-titled / evidence-linked docs outrank generic preferred docs under the chunk cap. */
+  evidenceDocumentIds?: ReadonlySet<string>;
 }): number {
+  if (params.evidenceDocumentIds?.has(params.chunk.documentId)) return 2_000;
   return params.preferredDocumentIds.has(params.chunk.documentId) ? 1_000 : 0;
 }
 
@@ -206,10 +209,19 @@ function compareChunksStable(
   a: SelectableChunk,
   b: SelectableChunk,
   preferredDocumentIds: ReadonlySet<string>,
+  evidenceDocumentIds?: ReadonlySet<string>,
 ): number {
   const scoreDiff =
-    scoreChunkForGraphExtraction({ chunk: b, preferredDocumentIds }) -
-    scoreChunkForGraphExtraction({ chunk: a, preferredDocumentIds });
+    scoreChunkForGraphExtraction({
+      chunk: b,
+      preferredDocumentIds,
+      evidenceDocumentIds,
+    }) -
+    scoreChunkForGraphExtraction({
+      chunk: a,
+      preferredDocumentIds,
+      evidenceDocumentIds,
+    });
   if (scoreDiff !== 0) return scoreDiff;
   const docCmp = a.documentId.localeCompare(b.documentId);
   if (docCmp !== 0) return docCmp;
@@ -220,19 +232,25 @@ function compareChunksStable(
 /**
  * Rank chunks by association to preferred documents, then diversify by documentId
  * so one document cannot monopolize the bounded set.
+ *
+ * Evidence-linked document IDs (when provided) outrank generic preferred IDs so a
+ * bounded cap cannot drop the evidence packet via UUID tie-break among dozens of
+ * equally preferred selected documents.
  */
 export function selectChunksForGraphExtraction(params: {
   candidates: SelectableChunk[];
   preferredDocumentIds: ReadonlySet<string>;
+  evidenceDocumentIds?: ReadonlySet<string>;
   cap?: number;
   maxPerDocument?: number;
 }): SelectableChunk[] {
   const cap = params.cap ?? GRAPH_EXTRACT_CHUNK_CAP;
   const maxPerDocument = params.maxPerDocument ?? GRAPH_EXTRACT_MAX_CHUNKS_PER_DOC;
+  const evidenceDocumentIds = params.evidenceDocumentIds ?? new Set<string>();
   if (params.candidates.length === 0 || cap <= 0) return [];
 
   const ranked = [...params.candidates].sort((a, b) =>
-    compareChunksStable(a, b, params.preferredDocumentIds),
+    compareChunksStable(a, b, params.preferredDocumentIds, evidenceDocumentIds),
   );
 
   const selected: SelectableChunk[] = [];
@@ -247,7 +265,12 @@ export function selectChunksForGraphExtraction(params: {
     perDoc.set(chunk.documentId, count + 1);
   };
 
-  // Prefer preferred docs first under per-doc cap.
+  // Evidence-linked preferred docs first (highest score tier).
+  for (const chunk of ranked) {
+    if (!evidenceDocumentIds.has(chunk.documentId)) continue;
+    tryTake(chunk, maxPerDocument);
+  }
+  // Then remaining preferred docs under per-doc cap.
   for (const chunk of ranked) {
     if (!params.preferredDocumentIds.has(chunk.documentId)) continue;
     tryTake(chunk, maxPerDocument);
@@ -264,7 +287,9 @@ export function selectChunksForGraphExtraction(params: {
     }
   }
 
-  return selected.sort((a, b) => compareChunksStable(a, b, params.preferredDocumentIds));
+  return selected.sort((a, b) =>
+    compareChunksStable(a, b, params.preferredDocumentIds, evidenceDocumentIds),
+  );
 }
 
 export function buildGraphExtractionCoverage(params: {

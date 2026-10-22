@@ -4,6 +4,7 @@ import {
   GRAPH_EXTRACT_NODE_CAP,
   GraphFocusRejectedError,
   buildGraphExtractionCoverage,
+  isEvidenceLinkedNode,
   preferredDocumentIdsFromNodes,
   scoreGraphNodeForExtraction,
   selectChunksForGraphExtraction,
@@ -225,6 +226,65 @@ describe("graph extraction selection", () => {
     // Preferred matter docs outrank the incidental unrelated first-24.
     const preferredSelected = selected.filter((c) => c.documentId.startsWith("preferred-doc"));
     expect(preferredSelected.length).toBeGreaterThan(selected.filter((c) => c.documentId === "unrelated-doc").length);
+  });
+
+  it("12b. evidence-linked preferred docs survive when node cap omitted the document node", () => {
+    // Mirrors live-cert failure: selected nodes have no document domain, but an
+    // evidence-titled document still exists among eligible nodes.
+    const selectedNodes = [
+      node({ id: "claim-1", nodeType: "claim", displayName: "Late Claim" }),
+      ...padNodes(39, "filler", "other"),
+    ];
+    const evidenceEligible = node({
+      id: "ev-node",
+      nodeType: "document",
+      displayName: "Exhibit Evidence Packet",
+      canonicalEntityType: "document",
+      canonicalEntityId: "preferred-doc-id",
+    });
+    expect(isEvidenceLinkedNode(evidenceEligible)).toBe(true);
+    const preferred = preferredDocumentIdsFromNodes(selectedNodes);
+    expect(preferred.has("preferred-doc-id")).toBe(false);
+    preferred.add(evidenceEligible.canonicalEntityId);
+    const incidental = Array.from({ length: 480 }, (_, i) =>
+      chunk({ id: `inc-${i}`, documentId: `early-${i}`, chunkIndex: 0 }),
+    );
+    const evidenceChunks = Array.from({ length: 5 }, (_, i) =>
+      chunk({ id: `ev-c-${i}`, documentId: "preferred-doc-id", chunkIndex: i }),
+    );
+    const selected = selectChunksForGraphExtraction({
+      candidates: [...evidenceChunks, ...incidental.slice(0, 475)],
+      preferredDocumentIds: preferred,
+      evidenceDocumentIds: new Set(["preferred-doc-id"]),
+    });
+    expect(selected.some((c) => c.documentId === "preferred-doc-id")).toBe(true);
+  });
+
+  it("12c. evidence docs outrank equally preferred selected documents under chunk cap", () => {
+    // 35 equally preferred docs + 1 evidence doc: without evidence tiering, UUID
+    // order among preferred IDs can omit the evidence packet from the cap of 24.
+    const preferredIds = Array.from({ length: 35 }, (_, i) => `pref-doc-${String(i).padStart(2, "0")}`);
+    const evidenceId = "zzz-evidence-doc"; // sorts after all pref-doc-* by UUID/name
+    const candidates = [
+      ...preferredIds.map((documentId, i) => chunk({ id: `p-${i}`, documentId, chunkIndex: 0 })),
+      ...Array.from({ length: 5 }, (_, i) =>
+        chunk({ id: `ev-${i}`, documentId: evidenceId, chunkIndex: i }),
+      ),
+    ];
+    const preferredDocumentIds = new Set([...preferredIds, evidenceId]);
+    const withoutTier = selectChunksForGraphExtraction({
+      candidates,
+      preferredDocumentIds,
+    });
+    expect(withoutTier.some((c) => c.documentId === evidenceId)).toBe(false);
+
+    const withTiers = selectChunksForGraphExtraction({
+      candidates,
+      preferredDocumentIds,
+      evidenceDocumentIds: new Set([evidenceId]),
+    });
+    expect(withTiers.some((c) => c.documentId === evidenceId)).toBe(true);
+    expect(withTiers.filter((c) => c.documentId === evidenceId).length).toBeGreaterThan(0);
   });
 
   it("13. multiple node types represented in whole-matter mode", () => {
