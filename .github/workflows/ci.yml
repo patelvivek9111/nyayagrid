@@ -117,13 +117,14 @@ jobs:
 
       # document-ingest / professional upload E2E and seed:golden-matter require object storage.
       # GitHub Actions `services:` cannot pass MinIO's required `server` command, so start it here.
+      # Pull from Quay — Docker Hub `minio/minio` pulls are denied/rate-limited on GHA runners.
       - name: Start MinIO for E2E
         run: |
           docker run -d --name nyayagrid-ci-minio \
             -p 9000:9000 \
             -e MINIO_ROOT_USER=nyayagrid \
             -e MINIO_ROOT_PASSWORD=nyayagridsecret \
-            minio/minio:latest server /data
+            quay.io/minio/minio:RELEASE.2025-04-22T22-12-26Z server /data
           for i in 1 2 3 4 5 6 7 8 9 10; do
             if curl -sf http://127.0.0.1:9000/minio/health/live >/dev/null; then
               break
@@ -133,7 +134,7 @@ jobs:
           curl -sf http://127.0.0.1:9000/minio/health/live
           docker run --rm --network host \
             -e MC_HOST_local=http://nyayagrid:nyayagridsecret@127.0.0.1:9000 \
-            minio/mc:latest \
+            quay.io/minio/mc:RELEASE.2025-04-16T18-13-26Z \
             mb --ignore-existing local/nyayagrid-documents
 
       - name: Seed golden matter for Case workspace E2E
