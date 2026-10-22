@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { sql } from "drizzle-orm";
 import {
@@ -432,8 +433,9 @@ describe.runIf(runDbTests)("discovery production ledger integration", () => {
       responsiblePartyEntityId: ids.defendant!,
       provenance,
     });
+    const meetAndConferCommunicationId = randomUUID();
     await db.insert(matterCommunications).values({
-      id: "00000000-0000-4000-8000-0000000000aa",
+      id: meetAndConferCommunicationId,
       organizationId: ids.orgA!,
       matterId: ids.matterA!,
       communicationType: "MEET_AND_CONFER",
@@ -452,7 +454,7 @@ describe.runIf(runDbTests)("discovery production ledger integration", () => {
       occurredAt: new Date("2026-03-10T00:00:00Z"),
       deficiencyIds: [deficiency.id],
       taskId: ids.task!,
-      communicationId: "00000000-0000-4000-8000-0000000000aa",
+      communicationId: meetAndConferCommunicationId,
       outcomeNotes: "Parties discussing supplemental production",
       provenance,
     });
@@ -491,7 +493,7 @@ describe.runIf(runDbTests)("discovery production ledger integration", () => {
     expect(review.meetAndConferIssues.some((row) => row.deficiencyIds.length > 0)).toBe(true);
     expect(
       review.meetAndConferIssues.some(
-        (row) => row.communicationId === "00000000-0000-4000-8000-0000000000aa",
+        (row) => row.communicationId === meetAndConferCommunicationId,
       ),
     ).toBe(true);
     expect(review.sanctionsConclusion).toBeNull();

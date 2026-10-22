@@ -86,6 +86,10 @@ describe("production configuration gate (pure, no database required)", () => {
       REDIS_URL: "redis://redis.internal:6379",
       DATABASE_URL: "postgresql://user:pass@db.internal:5432/nyayagrid",
       S3_BUCKET: "nyayagrid-prod-documents",
+      // Required by collectProductionConfigProblems (kept in sync with SAFE_PRODUCTION_ENV).
+      INNGEST_SIGNING_KEY: "signkey-prod-nyayagrid-not-a-placeholder",
+      INNGEST_EVENT_KEY: "eventkey-prod-nyayagrid-not-a-placeholder",
+      NEXT_PUBLIC_APP_URL: "https://app.example.com",
     };
     expect(collectProductionConfigProblems(fullyConfiguredEnv)).toEqual([]);
     expect(() => validateProductionConfig(fullyConfiguredEnv)).not.toThrow();
