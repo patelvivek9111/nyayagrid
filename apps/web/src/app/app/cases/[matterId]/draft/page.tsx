@@ -3,9 +3,18 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
-import { EmptyState, ErrorState, LoadingState, SuggestedBadge, VersionHistoryPanel } from "@/components/ux";
+import {
+  EmptyState,
+  ErrorState,
+  LoadingState,
+  SuggestedBadge,
+  VersionHistoryPanel,
+} from "@/components/ux";
 import { humanizeKey } from "@/lib/plain-labels";
-import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
+import {
+  ExecutionStrategyControl,
+  type ExecutionStrategyValue,
+} from "@/components/ux/execution-strategy-control";
 
 const DRAFT_TYPES = [
   "demand_letter",
@@ -525,6 +534,7 @@ export default function CaseDraftPage() {
 
               <div>
                 <VersionHistoryPanel
+                  key={`${selectedDraftId}-${selectedDraft?.currentVersionNumber ?? 0}`}
                   matterId={matterId}
                   objectType="draft"
                   objectId={selectedDraftId}

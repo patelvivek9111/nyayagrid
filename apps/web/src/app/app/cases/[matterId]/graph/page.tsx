@@ -215,9 +215,7 @@ export default function CaseGraphPage() {
     const match = (json.edges ?? []).find((item) => item.id === edge.id);
     const sources = match?.sources;
     if (!sources?.length) return;
-    setSelectedEdge((current) =>
-      current?.id === edge.id ? { ...current, sources } : current,
-    );
+    setSelectedEdge((current) => (current?.id === edge.id ? { ...current, sources } : current));
   }
 
   async function selectNode(node: GraphNode) {
@@ -264,9 +262,9 @@ export default function CaseGraphPage() {
         body: JSON.stringify(selected?.id ? { focusNodeId: selected.id } : {}),
       });
       if (!res.ok) {
-        const body = (await res.json().catch(() => null)) as
-          | { error?: { code?: string; message?: string } }
-          | null;
+        const body = (await res.json().catch(() => null)) as {
+          error?: { code?: string; message?: string };
+        } | null;
         if (body?.error?.code === "GRAPH_FOCUS_REJECTED") {
           throw new Error("That focus is not part of this matter.");
         }
@@ -516,7 +514,9 @@ export default function CaseGraphPage() {
                 <section>
                   <h3 className="mb-2 font-display text-lg text-ink">Verified connections</h3>
                   {visibleEdges.length === 0 ? (
-                    <p className="text-sm text-ink/60">No verified connections yet.</p>
+                    <ul aria-label="Verified connections" className="text-sm text-ink/60">
+                      <li>No verified connections yet.</li>
+                    </ul>
                   ) : (
                     <ul aria-label="Verified connections" className="space-y-2 text-sm">
                       {visibleEdges.map((edge) => (
