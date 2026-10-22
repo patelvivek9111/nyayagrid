@@ -53,6 +53,8 @@ function trackPageHealth(page: Page) {
   });
 }
 
+let organizationId = "";
+
 async function ensureOrgClientMatter(page: Page) {
   // Mirror professional.spec.ts setup — proven against this local runtime.
   await page.goto("/app/onboarding");
@@ -65,20 +67,29 @@ async function ensureOrgClientMatter(page: Page) {
     await expect(page.getByText(new RegExp(`Created ${ORG_NAME}`))).toBeVisible({
       timeout: 15_000,
     });
+    const orgs = await page.request.get("/api/v1/organizations");
+    const list = ((await orgs.json()).organizations ?? []) as Array<{ id: string; name: string }>;
+    organizationId = list.find((org) => org.name === ORG_NAME)?.id ?? list[0]?.id ?? "";
   } else {
     const res = await page.request.post("/api/v1/organizations", {
       data: { name: ORG_NAME, slug: ORG_SLUG, type: "firm" },
     });
     expect(res.ok(), await res.text()).toBeTruthy();
+    organizationId = (await res.json()).organization.id as string;
   }
+  expect(organizationId.length).toBeGreaterThan(0);
   await page.goto("/app/cases");
   await page.waitForLoadState("networkidle");
-  await selectWorkspace(page, ORG_NAME);
+  await selectWorkspace(page, ORG_NAME, organizationId);
 
   await page.goto("/app/clients");
   await page.waitForLoadState("networkidle");
-  await selectWorkspace(page, ORG_NAME);
-  await page.getByRole("button", { name: /New client/ }).first().click();
+  await selectWorkspace(page, ORG_NAME, organizationId);
+  await page
+    .getByRole("heading", { name: "Clients", exact: true })
+    .locator("xpath=ancestor::div[contains(@class,'justify-between')][1]")
+    .getByRole("button", { name: "+ New client" })
+    .click();
   await page.getByPlaceholder("Display name").fill(CLIENT_NAME);
   await page.getByRole("button", { name: "Create client" }).click();
   await expect(
@@ -90,7 +101,7 @@ async function ensureOrgClientMatter(page: Page) {
 
   await page.goto("/app/cases/new");
   await page.waitForLoadState("networkidle");
-  await selectWorkspace(page, ORG_NAME);
+  await selectWorkspace(page, ORG_NAME, organizationId);
   const clientSelect = page.locator("main select").first();
   await expect(clientSelect.locator("option", { hasText: CLIENT_NAME })).toHaveCount(1, {
     timeout: 15_000,
@@ -110,7 +121,7 @@ async function openCommandCenter(page: Page) {
   const started = Date.now();
   await page.goto(`/app/cases/${matterId}/chats`);
   await page.waitForLoadState("networkidle");
-  await selectWorkspace(page, ORG_NAME);
+  await selectWorkspace(page, ORG_NAME, organizationId);
   metrics.threadLoadMs = Date.now() - started;
   await expect(page.getByRole("heading", { name: "Nyaya Command Center" })).toBeVisible({
     timeout: 30_000,
@@ -123,7 +134,7 @@ async function ensureThread(page: Page) {
   if (conversationId) {
     await page.goto(`/app/cases/${matterId}/chats/${conversationId}`);
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
+    await selectWorkspace(page, ORG_NAME, organizationId);
   } else {
     const createRes = await page.request.post(`/api/v1/matters/${matterId}/conversations`, {
       data: { title: "Phase 5 cert chat" },
@@ -134,7 +145,7 @@ async function ensureThread(page: Page) {
     expect(conversationId).toBeTruthy();
     await page.goto(`/app/cases/${matterId}/chats/${conversationId}`);
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
+    await selectWorkspace(page, ORG_NAME, organizationId);
   }
   await expect(page.getByText("Loading conversation…")).toHaveCount(0, { timeout: 30_000 });
   await expect(page.getByPlaceholder(/Ask Nyaya about this Case/)).toBeVisible();
@@ -223,7 +234,7 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
     );
     await page.goto(`/app/cases/${matterId}/documents`);
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
+    await selectWorkspace(page, ORG_NAME, organizationId);
     const addMore = page.getByRole("button", { name: "+ Upload documents" });
     if (await addMore.isVisible().catch(() => false)) {
       await addMore.click();
@@ -242,7 +253,9 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
       timeout: 90_000,
     });
 
-    const openSource = page.getByRole("button", { name: /Open source 1|View sources|Sources \(\d+\)/i }).first();
+    const openSource = page
+      .getByRole("button", { name: /Open source 1|View sources|Sources \(\d+\)/i })
+      .first();
     if (await openSource.isVisible({ timeout: 15_000 }).catch(() => false)) {
       const drawerStarted = Date.now();
       await openSource.click();
@@ -302,13 +315,11 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
     await expect(stop).toBeVisible({ timeout: 10_000 });
     await stop.click();
     await expect(
-      page
-        .getByText(/Cancelled — not used as authoritative|Cancelled|Generation stopped/i)
-        .first(),
+      page.getByText(/Cancelled — not used as authoritative|Cancelled|Generation stopped/i).first(),
     ).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByLabel("Ask progress").getByText("COMPLETED", { exact: true })).toHaveCount(
-      0,
-    );
+    await expect(
+      page.getByLabel("Ask progress").getByText("COMPLETED", { exact: true }),
+    ).toHaveCount(0);
     // Composer must unlock after cancel so the same conversation can continue.
     await expect(page.getByRole("button", { name: "Stop generating" })).toHaveCount(0, {
       timeout: 15_000,

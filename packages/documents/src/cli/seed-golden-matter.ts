@@ -26,6 +26,7 @@ import {
   createOrganizationWithDefaults,
   documents,
   documentVersions,
+  matterEntities,
   matterMembers,
   matters,
   organizations,
@@ -43,10 +44,7 @@ const ORG_SLUG = "synth-golden-demo";
 const ORG_NAME = "SYNTH Golden Demo Firm";
 
 function fixturesDir(): string {
-  return join(
-    dirname(fileURLToPath(import.meta.url)),
-    "../../../ai/src/evals/golden-fixtures",
-  );
+  return join(dirname(fileURLToPath(import.meta.url)), "../../../ai/src/evals/golden-fixtures");
 }
 
 async function main() {
@@ -200,6 +198,44 @@ async function main() {
       },
     );
     uploaded.push({ title: fixture.title, processingState: processed.state });
+  }
+
+  // Case Intelligence E2E expects a non-empty People roster. Document pipeline alone does not
+  // guarantee matter_entities under mock providers — seed a small approved SYNTH cast.
+  const seedPeople = [
+    {
+      displayName: "SYNTH Property Manager",
+      entityType: "person" as const,
+      normalizedName: "synth property manager",
+    },
+    {
+      displayName: "SYNTH Golden Tenant Co",
+      entityType: "organization" as const,
+      normalizedName: "synth golden tenant co",
+    },
+  ];
+  for (const person of seedPeople) {
+    const existing = await db.query.matterEntities.findFirst({
+      where: and(
+        eq(matterEntities.organizationId, org.id),
+        eq(matterEntities.matterId, matter.id),
+        eq(matterEntities.displayName, person.displayName),
+      ),
+    });
+    if (existing) continue;
+    await db.insert(matterEntities).values({
+      organizationId: org.id,
+      matterId: matter.id,
+      entityType: person.entityType,
+      displayName: person.displayName,
+      normalizedName: person.normalizedName,
+      status: "approved",
+      confidence: "high",
+      origin: "manual",
+      createdByUserId: user.id,
+      approvedByUserId: user.id,
+      approvedAt: new Date(),
+    });
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";

@@ -1,34 +1,83 @@
 import { expect, type Page } from "@playwright/test";
 
-/** Secondary workspace switcher — only rendered when the user can access more than one org. */
-export async function selectWorkspace(page: Page, organizationName: string) {
+/** Matches apps/web ACTIVE_ORG_STORAGE_KEY — drives ActiveOrganizationProvider selection. */
+const ACTIVE_ORG_STORAGE_KEY = "nyayagrid.activeOrganizationId";
+
+export type SelectWorkspaceOptions = {
+  organizationId: string;
+  organizationName?: string;
+  matterId?: string;
+};
+
+/**
+ * Prefer an explicit organization id when known (API create path). Falls back to switching by name.
+ * Always persists the active org id so later API/UI calls stay on the intended tenant.
+ *
+ * ActiveOrganizationProvider only reads localStorage on mount, so a storage write alone does not
+ * update React state. When the workspace switcher is unavailable (or already shows the target),
+ * reload so the provider re-reads the pinned id — but only when the pinned id actually changed.
+ */
+export async function selectWorkspace(
+  page: Page,
+  organizationNameOrOptions: string | SelectWorkspaceOptions,
+  organizationId?: string,
+) {
+  const options: SelectWorkspaceOptions =
+    typeof organizationNameOrOptions === "string"
+      ? { organizationName: organizationNameOrOptions, organizationId: organizationId ?? "" }
+      : organizationNameOrOptions;
+
+  let storageChanged = false;
+  if (options.organizationId) {
+    const previous = await page.evaluate(
+      (key) => localStorage.getItem(key),
+      ACTIVE_ORG_STORAGE_KEY,
+    );
+    storageChanged = previous !== options.organizationId;
+    await page.evaluate(
+      ({ key, id }) => {
+        localStorage.setItem(key, id);
+      },
+      { key: ACTIVE_ORG_STORAGE_KEY, id: options.organizationId },
+    );
+  }
+
+  const organizationName = options.organizationName?.trim() ?? "";
   const other = page.getByText("Other workspaces");
   const switcher = page.getByRole("button", { name: "Switch workspace" });
 
-  // Narrow layouts / single-org sessions may omit the secondary switcher entirely.
-  const hasOther = await other.isVisible({ timeout: 8_000 }).catch(() => false);
-  if (!hasOther || (await switcher.count()) === 0) {
-    return;
+  const hasOther = await other.isVisible({ timeout: 2_000 }).catch(() => false);
+  let switchedViaUi = false;
+
+  if (hasOther && (await switcher.count()) > 0 && organizationName) {
+    const currentLabel = (
+      (await switcher
+        .first()
+        .innerText()
+        .catch(() => "")) ?? ""
+    ).trim();
+    if (!currentLabel.includes(organizationName)) {
+      await switcher.click();
+      const dialog = page.getByRole("dialog", { name: "Switch workspace" });
+      await expect(dialog).toBeVisible();
+      const option = dialog.getByRole("button", { name: organizationName, exact: true }).or(
+        dialog.getByRole("button", {
+          name: new RegExp(organizationName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
+        }),
+      );
+      await expect(option.first()).toBeVisible({ timeout: 15_000 });
+      await option
+        .first()
+        .scrollIntoViewIfNeeded()
+        .catch(() => undefined);
+      await option.first().click();
+      await expect(dialog).toBeHidden();
+      switchedViaUi = true;
+    }
   }
 
-  // Already on the requested workspace — do not open the dialog.
-  const currentLabel = ((await switcher.first().innerText().catch(() => "")) ?? "").trim();
-  if (currentLabel.includes(organizationName)) {
-    return;
+  if (options.organizationId && storageChanged && !switchedViaUi) {
+    await page.reload();
+    await page.waitForLoadState("networkidle");
   }
-
-  await switcher.click();
-  const dialog = page.getByRole("dialog", { name: "Switch workspace" });
-  await expect(dialog).toBeVisible();
-  const option = dialog
-    .getByRole("button", { name: organizationName, exact: true })
-    .or(
-      dialog.getByRole("button", {
-        name: new RegExp(organizationName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")),
-      }),
-    );
-  await expect(option.first()).toBeVisible({ timeout: 15_000 });
-  await option.first().scrollIntoViewIfNeeded().catch(() => undefined);
-  await option.first().click();
-  await expect(dialog).toBeHidden();
 }
