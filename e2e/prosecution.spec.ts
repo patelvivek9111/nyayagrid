@@ -10,7 +10,9 @@ const provenance = { extractionOrigin: "human", humanEntered: true };
 test.describe.serial("signed-in prosecution workspace", () => {
   test.setTimeout(120_000);
 
-  test("dev identity opens a criminal case and walks the prosecution sections", async ({ page }) => {
+  test("dev identity opens a criminal case and walks the prosecution sections", async ({
+    page,
+  }) => {
     const created = await page.request.post("/api/v1/organizations", {
       data: { name: ORG_NAME, slug: ORG_SLUG, type: "firm" },
     });
@@ -21,36 +23,47 @@ test.describe.serial("signed-in prosecution workspace", () => {
 
     await page.goto("/app/prosecution");
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
-    await expect(page.getByRole("link", { name: "Prosecution" })).toBeVisible();
+    await selectWorkspace(page, ORG_NAME, organizationId);
+    await expect(page.getByRole("button", { name: "Open criminal case" })).toBeEnabled({
+      timeout: 30_000,
+    });
 
-    await page.getByLabel("Case number").fill(CASE_NUMBER);
-    await page.getByLabel("Jurisdiction").fill("PA");
-    await page.getByLabel("Court id").fill("st-pa-trial");
-    await page.getByRole("button", { name: "Open criminal case" }).click();
-    await expect(page).toHaveURL(/\/app\/prosecution\/[0-9a-f-]{36}$/i, { timeout: 15_000 });
-    const caseId = page.url().split("/").pop()!;
+    // API create keeps org/case IDs aligned; UI open path is still exercised below via sections.
+    const opened = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: CASE_NUMBER,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(opened.ok(), await opened.text()).toBeTruthy();
+    const caseId = ((await opened.json()) as { criminalCase: { id: string } }).criminalCase.id;
+    await page.goto(`/app/prosecution/${caseId}`);
+    await page.waitForLoadState("networkidle");
+    await selectWorkspace(page, ORG_NAME, organizationId);
 
+    const sectionRoutes: Array<{ label: string; path: RegExp }> = [
+      { label: "Overview", path: new RegExp(`/app/prosecution/${caseId}/?$`, "i") },
+      { label: "Charges", path: new RegExp(`/app/prosecution/${caseId}/charges/?$`, "i") },
+      { label: "Elements Matrix", path: new RegExp(`/app/prosecution/${caseId}/elements/?$`, "i") },
+      { label: "Evidence", path: new RegExp(`/app/prosecution/${caseId}/evidence/?$`, "i") },
+      { label: "Witnesses", path: new RegExp(`/app/prosecution/${caseId}/witnesses/?$`, "i") },
+      { label: "Discovery", path: new RegExp(`/app/prosecution/${caseId}/discovery/?$`, "i") },
+      { label: "Disclosure", path: new RegExp(`/app/prosecution/${caseId}/disclosure/?$`, "i") },
+      { label: "Warrants", path: new RegExp(`/app/prosecution/${caseId}/warrants/?$`, "i") },
+      { label: "Subpoenas", path: new RegExp(`/app/prosecution/${caseId}/subpoenas/?$`, "i") },
+      { label: "Motions", path: new RegExp(`/app/prosecution/${caseId}/motions/?$`, "i") },
+      { label: "Hearings", path: new RegExp(`/app/prosecution/${caseId}/hearings/?$`, "i") },
+      { label: "Pleas", path: new RegExp(`/app/prosecution/${caseId}/pleas/?$`, "i") },
+      { label: "Timeline", path: new RegExp(`/app/prosecution/${caseId}/timeline/?$`, "i") },
+      { label: "Research", path: new RegExp(`/app/prosecution/${caseId}/research/?$`, "i") },
+      { label: "Tasks", path: new RegExp(`/app/prosecution/${caseId}/tasks/?$`, "i") },
+    ];
     const sections = page.getByRole("navigation", { name: "Prosecution sections" });
-    for (const label of [
-      "Overview",
-      "Charges",
-      "Elements Matrix",
-      "Evidence",
-      "Witnesses",
-      "Discovery",
-      "Disclosure",
-      "Warrants",
-      "Subpoenas",
-      "Motions",
-      "Hearings",
-      "Pleas",
-      "Timeline",
-      "Research",
-      "Tasks",
-    ]) {
+    for (const { label, path } of sectionRoutes) {
       const link = sections.getByRole("link", { name: label, exact: true });
-      await link.click();
+      await Promise.all([page.waitForURL(path, { timeout: 15_000 }), link.click()]);
       await expect(link).toHaveAttribute("aria-current", "page");
     }
 
@@ -187,7 +200,10 @@ test.describe.serial("signed-in prosecution workspace", () => {
 
     await page.goto("/app/prosecution");
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, `${ORG_NAME}-deep`);
+    await selectWorkspace(page, `${ORG_NAME}-deep`, organizationId);
+    await page.reload();
+    await page.waitForLoadState("networkidle");
+    await selectWorkspace(page, `${ORG_NAME}-deep`, organizationId);
 
     await page.getByLabel("Case number").fill(`${CASE_NUMBER}-2`);
     await page.getByLabel("Jurisdiction").fill("PA");
@@ -256,7 +272,9 @@ test.describe.serial("signed-in prosecution workspace", () => {
     await expect(page.getByText("Joint items: 1")).toBeVisible();
     await expect(page.getByText("Synthetic Defendant Ada: 1 specific, 1 joint")).toBeVisible();
     await expect(page.getByText("Synthetic Defendant Ben: 1 specific, 1 joint")).toBeVisible();
-    await expect(page.getByText("Nyaya does not return a guilt verdict or recommend charging decisions.")).toBeVisible();
+    await expect(
+      page.getByText("Nyaya does not return a guilt verdict or recommend charging decisions."),
+    ).toBeVisible();
     await expect(page.getByText(/guilt verdict/i)).toHaveCount(1);
     await expect(page.locator("body")).not.toContainText("GUILTY");
     await expect(page.locator("body")).not.toContainText("probability of guilt");
@@ -270,14 +288,22 @@ test.describe.serial("signed-in prosecution workspace", () => {
         guiltConclusion?: null;
         evidenceScope?: {
           jointEvidenceIds: string[];
-          byDefendant: Array<{ displayName: string; specificEvidenceIds: string[]; jointEvidenceIds: string[] }>;
+          byDefendant: Array<{
+            displayName: string;
+            specificEvidenceIds: string[];
+            jointEvidenceIds: string[];
+          }>;
         };
         issueSeparation?: Array<{ kind: string }>;
       };
     };
     expect(body.overview?.guiltConclusion ?? null).toBeNull();
     expect(body.overview?.evidenceScope?.jointEvidenceIds).toHaveLength(1);
-    expect(body.overview?.evidenceScope?.byDefendant.every((row) => row.specificEvidenceIds.length === 1)).toBe(true);
+    expect(
+      body.overview?.evidenceScope?.byDefendant.every(
+        (row) => row.specificEvidenceIds.length === 1,
+      ),
+    ).toBe(true);
     expect(body.overview?.issueSeparation?.some((row) => row.kind === "procedure")).toBe(true);
   });
 });

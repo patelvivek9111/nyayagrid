@@ -20,14 +20,24 @@ test.describe.serial("pass2 signed-in warrant suppression flow", () => {
 
     await page.goto("/app/prosecution");
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
+    await selectWorkspace(page, ORG_NAME, organizationId);
+    await expect(page.getByRole("button", { name: "Open criminal case" })).toBeEnabled({
+      timeout: 30_000,
+    });
 
-    await page.getByLabel("Case number").fill(CASE_NUMBER);
-    await page.getByLabel("Jurisdiction").fill("US");
-    await page.getByLabel("Court id").fill("us-d-pa-ed");
-    await page.getByRole("button", { name: "Open criminal case" }).click();
-    await expect(page).toHaveURL(/\/app\/prosecution\/[0-9a-f-]{36}$/i, { timeout: 15_000 });
-    const caseId = page.url().split("/").pop()!;
+    const opened = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: CASE_NUMBER,
+        jurisdiction: "US",
+        court: "us-d-pa-ed",
+      },
+    });
+    expect(opened.ok(), await opened.text()).toBeTruthy();
+    const caseId = ((await opened.json()) as { criminalCase: { id: string } }).criminalCase.id;
+    await page.goto(`/app/prosecution/${caseId}`);
+    await page.waitForLoadState("networkidle");
+    await selectWorkspace(page, ORG_NAME, organizationId);
 
     const ada = await page.request.post(
       `/api/v1/prosecution/cases/${caseId}/defendants?organizationId=${organizationId}`,
@@ -162,7 +172,11 @@ test.describe.serial("pass2 signed-in warrant suppression flow", () => {
             warrantId: string | null;
             dimension: string;
             missingFacts: string[];
-            authorities: Array<{ citation: string | null; treatment: string; authorityStatus: string }>;
+            authorities: Array<{
+              citation: string | null;
+              treatment: string;
+              authorityStatus: string;
+            }>;
             linkedEvidence: Array<{ evidenceId: string }>;
           }>;
         };
@@ -174,35 +188,56 @@ test.describe.serial("pass2 signed-in warrant suppression flow", () => {
     expect(overview.overview.suppressionReview.validityConclusion).toBeNull();
     expect(overview.overview.suppressionReview.warrants).toHaveLength(2);
 
-    const adaView = overview.overview.suppressionReview.warrants.find((w) => w.id === warrantAdaId)!;
-    const jointView = overview.overview.suppressionReview.warrants.find((w) => w.id === warrantJointId)!;
+    const adaView = overview.overview.suppressionReview.warrants.find(
+      (w) => w.id === warrantAdaId,
+    )!;
+    const jointView = overview.overview.suppressionReview.warrants.find(
+      (w) => w.id === warrantJointId,
+    )!;
     expect(adaView.evidence.every((e) => e.evidenceId === evAdaId)).toBeTruthy();
     expect(jointView.evidence.every((e) => e.evidenceId === evJointId)).toBeTruthy();
 
-    const adaIssues = overview.overview.suppressionReview.issues.filter((i) => i.warrantId === warrantAdaId);
-    const jointIssues = overview.overview.suppressionReview.issues.filter((i) => i.warrantId === warrantJointId);
+    const adaIssues = overview.overview.suppressionReview.issues.filter(
+      (i) => i.warrantId === warrantAdaId,
+    );
+    const jointIssues = overview.overview.suppressionReview.issues.filter(
+      (i) => i.warrantId === warrantJointId,
+    );
     expect(adaIssues.length).toBeGreaterThan(0);
     expect(jointIssues.length).toBeGreaterThan(0);
     expect(adaIssues.some((i) => i.missingFacts.length > 0)).toBeTruthy();
-    expect(adaIssues.every((i) => i.linkedEvidence.every((e) => e.evidenceId !== evJointId))).toBeTruthy();
-    expect(jointIssues.every((i) => i.linkedEvidence.every((e) => e.evidenceId !== evAdaId))).toBeTruthy();
+    expect(
+      adaIssues.every((i) => i.linkedEvidence.every((e) => e.evidenceId !== evJointId)),
+    ).toBeTruthy();
+    expect(
+      jointIssues.every((i) => i.linkedEvidence.every((e) => e.evidenceId !== evAdaId)),
+    ).toBeTruthy();
 
     const gates = overview.overview.suppressionReview.issues.flatMap((i) =>
-      i.authorities.filter((a) => a.citation === "462 U.S. 213").map((a) => ({ dimension: i.dimension, ...a })),
+      i.authorities
+        .filter((a) => a.citation === "462 U.S. 213")
+        .map((a) => ({ dimension: i.dimension, ...a })),
     );
     expect(gates.some((a) => a.dimension === "PROBABLE_CAUSE")).toBeTruthy();
     expect(gates.every((a) => a.treatment === "UNVERIFIED")).toBeTruthy();
     expect(gates.every((a) => a.dimension === "PROBABLE_CAUSE")).toBeTruthy();
 
-    await page.getByRole("navigation", { name: "Prosecution sections" }).getByRole("link", { name: "Warrants", exact: true }).click();
-    await expect(page.getByText(/does not decide whether a warrant is valid|does not decide suppression/i)).toBeVisible();
+    await page
+      .getByRole("navigation", { name: "Prosecution sections" })
+      .getByRole("link", { name: "Warrants", exact: true })
+      .click();
+    await expect(page.getByText(/Nyaya does not decide suppression/i).first()).toBeVisible();
     await expect(page.getByText("Probable Cause").first()).toBeVisible();
     await expect(page.getByText("462 U.S. 213").first()).toBeVisible();
     await expect(page.getByText(/Treatment unverified/i).first()).toBeVisible();
     await expect(page.getByText(/Missing facts/i).first()).toBeVisible();
     await expect(page.getByText(`ADA-${suffix}`)).toBeVisible();
     await expect(page.getByText(`JOINT-${suffix}`)).toBeVisible();
-    await expect(page.getByText(/The warrant was valid|evidence should be suppressed|The defendant is guilty/i)).toHaveCount(0);
+    await expect(
+      page.getByText(
+        /The warrant was valid|evidence should be suppressed|The defendant is guilty/i,
+      ),
+    ).toHaveCount(0);
 
     const pageText = await page.locator("body").innerText();
     expect(pageText).not.toMatch(/The warrant was valid/i);
