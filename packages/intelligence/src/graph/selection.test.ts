@@ -14,7 +14,8 @@ import {
 } from "./selection";
 
 function node(
-  partial: Partial<SelectableGraphNode> & Pick<SelectableGraphNode, "id" | "nodeType" | "displayName">,
+  partial: Partial<SelectableGraphNode> &
+    Pick<SelectableGraphNode, "id" | "nodeType" | "displayName">,
 ): SelectableGraphNode {
   return {
     canonicalEntityType: partial.canonicalEntityType ?? partial.nodeType,
@@ -214,18 +215,18 @@ describe("graph extraction selection", () => {
     const relevant = chunk({ id: "relevant-late", documentId: "preferred-doc-0", chunkIndex: 99 });
     const selected = selectChunksForGraphExtraction({
       candidates: [...earlyChunks, ...preferredPool, relevant],
-      preferredDocumentIds: new Set(
-        Array.from({ length: 10 }, (_, i) => `preferred-doc-${i}`),
-      ),
+      preferredDocumentIds: new Set(Array.from({ length: 10 }, (_, i) => `preferred-doc-${i}`)),
     });
-    expect(selected.some((c) => c.id === "relevant-late" || c.documentId.startsWith("preferred-doc"))).toBe(
-      true,
-    );
+    expect(
+      selected.some((c) => c.id === "relevant-late" || c.documentId.startsWith("preferred-doc")),
+    ).toBe(true);
     expect(selected.some((c) => c.documentId.startsWith("preferred-doc"))).toBe(true);
     expect(selected.length).toBe(GRAPH_EXTRACT_CHUNK_CAP);
     // Preferred matter docs outrank the incidental unrelated first-24.
     const preferredSelected = selected.filter((c) => c.documentId.startsWith("preferred-doc"));
-    expect(preferredSelected.length).toBeGreaterThan(selected.filter((c) => c.documentId === "unrelated-doc").length);
+    expect(preferredSelected.length).toBeGreaterThan(
+      selected.filter((c) => c.documentId === "unrelated-doc").length,
+    );
   });
 
   it("12b. evidence-linked preferred docs survive when node cap omitted the document node", () => {
@@ -263,7 +264,10 @@ describe("graph extraction selection", () => {
   it("12c. evidence docs outrank equally preferred selected documents under chunk cap", () => {
     // 35 equally preferred docs + 1 evidence doc: without evidence tiering, UUID
     // order among preferred IDs can omit the evidence packet from the cap of 24.
-    const preferredIds = Array.from({ length: 35 }, (_, i) => `pref-doc-${String(i).padStart(2, "0")}`);
+    const preferredIds = Array.from(
+      { length: 35 },
+      (_, i) => `pref-doc-${String(i).padStart(2, "0")}`,
+    );
     const evidenceId = "zzz-evidence-doc"; // sorts after all pref-doc-* by UUID/name
     const candidates = [
       ...preferredIds.map((documentId, i) => chunk({ id: `p-${i}`, documentId, chunkIndex: 0 })),

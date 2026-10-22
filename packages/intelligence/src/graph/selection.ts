@@ -79,7 +79,9 @@ const EVIDENCE_NAME_RE = /\b(evidence|exhibit|attachment|proof)\b/i;
 const HEARING_DEPO_INVESTIGATE_RE =
   /\b(hearing|deposition|deponent|investigate|investigation|exam(?:ination)?)\b/i;
 
-export function isEvidenceLinkedNode(node: Pick<SelectableGraphNode, "nodeType" | "displayName" | "canonicalEntityType">): boolean {
+export function isEvidenceLinkedNode(
+  node: Pick<SelectableGraphNode, "nodeType" | "displayName" | "canonicalEntityType">,
+): boolean {
   if (node.canonicalEntityType.toLowerCase().includes("evidence")) return true;
   if (node.nodeType === "document" && EVIDENCE_NAME_RE.test(node.displayName)) return true;
   if (node.nodeType === "fact" && EVIDENCE_NAME_RE.test(node.displayName)) return true;

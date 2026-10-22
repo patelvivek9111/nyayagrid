@@ -98,10 +98,7 @@ export async function extractGraphRelationshipCandidates(params: {
       focusRow.matterId !== params.matterId
     ) {
       throw new GraphFocusRejectedError("Focus node is not in this matter");
-    } else if (
-      focusRow.status === "approved" ||
-      focusRow.status === "edited_and_approved"
-    ) {
+    } else if (focusRow.status === "approved" || focusRow.status === "edited_and_approved") {
       selectionMode = "FOCUSED";
       focusNodeId = focusRow.id;
     } else {
@@ -156,10 +153,7 @@ export async function extractGraphRelationshipCandidates(params: {
         row.fromNodeId,
         (sourceSupportByNodeId.get(row.fromNodeId) ?? 0) + n,
       );
-      sourceSupportByNodeId.set(
-        row.toNodeId,
-        (sourceSupportByNodeId.get(row.toNodeId) ?? 0) + n,
-      );
+      sourceSupportByNodeId.set(row.toNodeId, (sourceSupportByNodeId.get(row.toNodeId) ?? 0) + n);
     }
   }
 
@@ -549,7 +543,8 @@ export async function reviewGraphEdge(params: {
     actorUserId: params.userId,
     objectType: "graph_edge",
     objectId: params.edgeId,
-    operation: params.action === "reject" ? "reject" : params.action === "approve" ? "approve" : "review",
+    operation:
+      params.action === "reject" ? "reject" : params.action === "approve" ? "approve" : "review",
     source: "user",
   });
   return updated;
