@@ -53,7 +53,6 @@ jobs:
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -116,14 +115,46 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      # Playwright starts its own `next dev` server (see playwright.config.ts webServer) against
-      # the same Postgres service used above. MinIO/S3 is intentionally not provisioned in CI:
-      # none of the E2E specs upload a document, and /api/health/ready treats storage as an
-      # advisory (non-fatal) check, so the app boots and serves every page these tests touch
-      # without object storage being reachable.
+      # document-ingest / professional upload E2E and seed:golden-matter require object storage.
+      # GitHub Actions `services:` cannot pass MinIO's required `server` command, so start it here.
+      - name: Start MinIO for E2E
+        run: |
+          docker run -d --name nyayagrid-ci-minio \
+            -p 9000:9000 \
+            -e MINIO_ROOT_USER=nyayagrid \
+            -e MINIO_ROOT_PASSWORD=nyayagridsecret \
+            minio/minio:latest server /data
+          for i in 1 2 3 4 5 6 7 8 9 10; do
+            if curl -sf http://127.0.0.1:9000/minio/health/live >/dev/null; then
+              break
+            fi
+            sleep 2
+          done
+          curl -sf http://127.0.0.1:9000/minio/health/live
+          docker run --rm --network host \
+            -e MC_HOST_local=http://nyayagrid:nyayagridsecret@127.0.0.1:9000 \
+            minio/mc:latest \
+            mb --ignore-existing local/nyayagrid-documents
+
+      - name: Seed golden matter for Case workspace E2E
+        id: seed_golden
+        run: |
+          set -euo pipefail
+          OUTPUT=$(npm run seed:golden-matter)
+          echo "$OUTPUT"
+          MATTER_ID=$(echo "$OUTPUT" | node -e "let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{const m=s.match(/\"matterId\":\\s*\"([^\"]+)\"/); if(!m){console.error('matterId missing from seed output'); process.exit(1)}; console.log(m[1]);})")
+          echo "GOLDEN_MATTER_ID=$MATTER_ID" >> "$GITHUB_ENV"
+          echo "Seeded GOLDEN_MATTER_ID=$MATTER_ID"
+
+      # Playwright starts its own `next dev` + Inngest (see playwright.config.ts webServer) against
+      # the Postgres service and MinIO started above. GOLDEN_MATTER_ID comes from the seed step.
       - name: End-to-end tests (Playwright)
         run: npm run test:e2e
         continue-on-error: false
+        env:
+          GOLDEN_MATTER_ID: ${{ env.GOLDEN_MATTER_ID }}
+          S3_ENDPOINT: http://127.0.0.1:9000
+          INNGEST_DEV: http://127.0.0.1:8288
 
       - name: Upload Playwright report
         if: always()

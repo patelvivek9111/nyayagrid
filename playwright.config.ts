@@ -71,7 +71,9 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: "npm run dev -w @nyayagrid/web",
+      // CI already runs `npm run build` before Playwright. Prefer `next start` there so
+      // cold compile storms cannot abort navigations mid-suite (ERR_ABORTED / missing headings).
+      command: process.env.CI ? "npm run start -w @nyayagrid/web" : "npm run dev -w @nyayagrid/web",
       url: APP_HEALTH_URL,
       reuseExistingServer: !process.env.CI,
       timeout: 240_000,
