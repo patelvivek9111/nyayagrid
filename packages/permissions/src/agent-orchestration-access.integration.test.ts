@@ -674,6 +674,8 @@ describe.runIf(runDbTests)("phase 7 agent orchestration integration", () => {
       expect(saveMemoryApproval).toBeDefined();
       createTaskApprovalId = createTaskApproval!.id;
       saveMemoryApprovalId = saveMemoryApproval!.id;
+      expect(createTaskApprovalId.length).toBeGreaterThan(0);
+      expect(saveMemoryApprovalId.length).toBeGreaterThan(0);
 
       const memoryId = (saveMemoryApproval!.proposedData as { memoryId?: string }).memoryId;
       expect(memoryId).toBeTruthy();
@@ -685,6 +687,7 @@ describe.runIf(runDbTests)("phase 7 agent orchestration integration", () => {
     });
 
     it("approves the CREATE_TASK proposal, creating exactly the proposed task", async () => {
+      expect(createTaskApprovalId.length).toBeGreaterThan(0);
       const result = await reviewApproval({
         db,
         organizationId: orgId,
@@ -703,6 +706,7 @@ describe.runIf(runDbTests)("phase 7 agent orchestration integration", () => {
     });
 
     it("rejects a separate CREATE_TASK proposal without ever writing a task", async () => {
+      expect(multiStepRunId.length).toBeGreaterThan(0);
       const proposal = await createActionProposal({
         db,
         organizationId: orgId,
@@ -733,6 +737,7 @@ describe.runIf(runDbTests)("phase 7 agent orchestration integration", () => {
     });
 
     it("keeps a proposed memory inert until approved, then activates it", async () => {
+      expect(saveMemoryApprovalId.length).toBeGreaterThan(0);
       const approval = await getApproval({
         db,
         organizationId: orgId,

@@ -98,7 +98,8 @@ const TEMPLATES: Record<AgentIntent, Template> = {
         {
           stepId: "contract-compare-2",
           agentType: "memory_agent",
-          objective: "Propose matter memory entries capturing material changes from the comparison.",
+          objective:
+            "Propose matter memory entries capturing material changes from the comparison.",
           dependencies: ["contract-compare-1"],
           requiredTools: ["proposeMemory"],
           approvalRequirement: "medium",
@@ -213,7 +214,9 @@ const TEMPLATES: Record<AgentIntent, Template> = {
         "Research the legal standards the request turns on (read only; propose save for approval).",
       dependencies: ["task-1"],
       requiredTools: ["searchLegalAuthorities"],
-      approvalRequirement: "high",
+      // Low: research may propose a non-mutating SAVE_RESEARCH_ARTIFACT without blocking draft/memory.
+      // High-risk write proposals from later steps still pause the run for attorney approval.
+      approvalRequirement: "low",
     },
     {
       stepId: "task-3",
@@ -222,7 +225,9 @@ const TEMPLATES: Record<AgentIntent, Template> = {
         "Prepare a draft preview grounded in the gathered material and propose CREATE_DRAFT.",
       dependencies: ["task-2"],
       requiredTools: ["retrieveMatterChunks"],
-      approvalRequirement: "high",
+      // Low: preview + CREATE_DRAFT proposal must not block memory/task proposals.
+      // Persistence still requires human approval of the CREATE_DRAFT row.
+      approvalRequirement: "low",
     },
     {
       stepId: "task-4",

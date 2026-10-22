@@ -492,6 +492,7 @@ describe.runIf(runDbTests)("phase 5 professional analysis integration", () => {
         expect(item.sources.length).toBeGreaterThan(0);
       }
       contractAnalysisId = result.analysis.analysis.id;
+      expect(contractAnalysisId.length).toBeGreaterThan(0);
 
       const reviewed = await reviewAnalysisItem({
         db,
@@ -505,6 +506,7 @@ describe.runIf(runDbTests)("phase 5 professional analysis integration", () => {
     });
 
     it("generates redline suggestions, accepts one, and leaves the original document version unchanged", async () => {
+      expect(contractAnalysisId.length).toBeGreaterThan(0);
       const [before] = await db
         .select()
         .from(documentVersions)
@@ -628,6 +630,7 @@ describe.runIf(runDbTests)("phase 5 professional analysis integration", () => {
       expect(result.skipped).toBe(false);
       expect(result.findings.length).toBeGreaterThan(0);
       contradictionFindingId = result.findings[0]!.id;
+      expect(contradictionFindingId.length).toBeGreaterThan(0);
 
       const sources = await db
         .select()
@@ -639,6 +642,8 @@ describe.runIf(runDbTests)("phase 5 professional analysis integration", () => {
     });
 
     it("reviews findings as reviewed or dismissed", async () => {
+      expect(depositionFindingId.length).toBeGreaterThan(0);
+      expect(contradictionFindingId.length).toBeGreaterThan(0);
       const reviewed = await reviewFinding({
         db,
         organizationId: orgId,

@@ -332,7 +332,7 @@ export class MockAIProvider implements AIProvider {
       };
     }
 
-    if (/analyze contract documents/i.test(system)) {
+    if (/analyze THIS instrument|analyze contract documents/i.test(system)) {
       return {
         provider: "mock",
         model: "mock-1",
@@ -529,10 +529,8 @@ export class MockAIProvider implements AIProvider {
         .filter((p): p is GroundingPassage => Boolean(p))
         .slice(0, 3);
       const abstain =
-        boundAssessment.status === "not_established" ||
-        boundAssessment.status === "insufficient";
-      const fallback =
-        cited.length > 0 ? cited : abstain ? [] : passages.slice(0, 1);
+        boundAssessment.status === "not_established" || boundAssessment.status === "insufficient";
+      const fallback = cited.length > 0 ? cited : abstain ? [] : passages.slice(0, 1);
       const evidenceState =
         boundAssessment.status === "established" || boundAssessment.status === "supported"
           ? "grounded"
@@ -564,10 +562,14 @@ export class MockAIProvider implements AIProvider {
       )?.[1]
       ?.trim();
     const graphBlock = user
-      .match(/VerifiedGraph:([\s\S]*?)(?:\nVerifiedMemory:|\nProfessionalAnalysis:|\nEvidenceAssessment:|\nSources:|$)/i)?.[1]
+      .match(
+        /VerifiedGraph:([\s\S]*?)(?:\nVerifiedMemory:|\nProfessionalAnalysis:|\nEvidenceAssessment:|\nSources:|$)/i,
+      )?.[1]
       ?.trim();
     const memoryBlock = user
-      .match(/VerifiedMemory:([\s\S]*?)(?:\nProfessionalAnalysis:|\nEvidenceAssessment:|\nSources:|$)/i)?.[1]
+      .match(
+        /VerifiedMemory:([\s\S]*?)(?:\nProfessionalAnalysis:|\nEvidenceAssessment:|\nSources:|$)/i,
+      )?.[1]
       ?.trim();
     const question = extractQuestionFromPrompt(user).toLowerCase();
 
@@ -1226,9 +1228,7 @@ export function createDirectProvider(params: {
   }
   const apiKey = googleApiKey(env);
   if (!apiKey) {
-    throw new Error(
-      "GOOGLE_GENERATIVE_AI_API_KEY (or GEMINI_API_KEY / GOOGLE_API_KEY) is missing",
-    );
+    throw new Error("GOOGLE_GENERATIVE_AI_API_KEY (or GEMINI_API_KEY / GOOGLE_API_KEY) is missing");
   }
   return { provider: new GoogleProvider({ apiKey, model: modelId }), modelId };
 }
@@ -1362,9 +1362,10 @@ export function buildNyayaUserPrompt(
   const qualifiers = formatSourceQualifierBlock(passages);
   const qualifierBlock = qualifiers ? `\n${qualifiers}` : "";
   const assessmentBlock = evidenceAssessment?.trim() ? `\n\n${evidenceAssessment.trim()}` : "";
-  const emptySources = passages.length === 0
-    ? "\nMissingSourceIndicator: no source-document chunks were retrieved for this question.\n"
-    : "";
+  const emptySources =
+    passages.length === 0
+      ? "\nMissingSourceIndicator: no source-document chunks were retrieved for this question.\n"
+      : "";
   return `Question: ${question}\nSources:\n${sourceLines.join("\n") || "(none)"}${emptySources}${qualifierBlock}${assessmentBlock}\n\n${verified}${graph}${memory}${analysis}`.trim();
 }
 
@@ -1495,7 +1496,14 @@ export {
   newRunId,
   newUsageActionId,
 } from "./router";
-export type { DirectProviderId, SubsystemMeasurement, CredentialFailureClass, ModelRegistryEntry, CertificationEvidence, RoutingAuditRecord } from "./router";
+export type {
+  DirectProviderId,
+  SubsystemMeasurement,
+  CredentialFailureClass,
+  ModelRegistryEntry,
+  CertificationEvidence,
+  RoutingAuditRecord,
+} from "./router";
 export type { RoutingOptions, RoutingOptionModel } from "./router";
 export {
   loadCanonicalLocalEnv,
@@ -1792,8 +1800,7 @@ export function validateCitedAnswerAgainstPassages(
   // corpus/Web miss solely because Case grounding passages are empty — authority/web
   // grounding is checked on separate paths.
   if (sourceScope === "legal_research" || sourceScope === "web") {
-    const modelInsufficient =
-      parsed.evidenceState === "insufficient" || !parsed.answer.trim();
+    const modelInsufficient = parsed.evidenceState === "insufficient" || !parsed.answer.trim();
     if (modelInsufficient) {
       return {
         answer: {
@@ -1851,11 +1858,7 @@ export function validateCitedAnswerAgainstPassages(
     answer: {
       ...parsed,
       sources,
-      answer: ensureSourceScopedAbstentionAnswer(
-        parsed.answer,
-        sourceScope,
-        parsed.evidenceState,
-      ),
+      answer: ensureSourceScopedAbstentionAnswer(parsed.answer, sourceScope, parsed.evidenceState),
       evidenceState:
         parsed.evidenceState === "insufficient" || parsed.evidenceState === "partial"
           ? "partial"

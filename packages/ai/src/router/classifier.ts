@@ -10,10 +10,7 @@ import type {
   RouterSubsystem,
 } from "../provider-contract";
 import { CERTIFICATION_SUBSYSTEMS } from "../provider-contract";
-import {
-  namedInstrumentFromQuestion,
-  instrumentMentionedInText,
-} from "../operative-facts";
+import { namedInstrumentFromQuestion, instrumentMentionedInText } from "../operative-facts";
 
 const SCHEMA_TO_SUBSYSTEM: Record<string, RouterSubsystem> = {
   evidence_assessment: "evidence",
@@ -56,7 +53,8 @@ export function classifyTask(request: AiGenerateRequest): RouterSubsystem {
     return "research";
   }
   if (/generate legal draft content/i.test(system)) return "draft";
-  if (/analyze contract documents|propose contract redline/i.test(system)) return "contract";
+  if (/analyze THIS instrument|analyze contract documents|propose contract redline/i.test(system))
+    return "contract";
   if (/analyze deposition transcripts/i.test(system)) return "deposition";
   if (/identify potential contradictions/i.test(system)) return "contradiction";
   if (/propose graph relationships/i.test(system)) return "graph";
@@ -72,9 +70,7 @@ export function classifyTask(request: AiGenerateRequest): RouterSubsystem {
   return "ask";
 }
 
-export function toCertificationSubsystem(
-  subsystem: RouterSubsystem,
-): CertificationSubsystem {
+export function toCertificationSubsystem(subsystem: RouterSubsystem): CertificationSubsystem {
   if ((CERTIFICATION_SUBSYSTEMS as readonly string[]).includes(subsystem)) {
     return subsystem as CertificationSubsystem;
   }
@@ -108,10 +104,7 @@ export function classifyRisk(params: {
   }
 
   const critical = signals.some(
-    (s) =>
-      s === "unsupported_proposition" ||
-      s === "missing_exhibit" ||
-      s === "critical_deadline",
+    (s) => s === "unsupported_proposition" || s === "missing_exhibit" || s === "critical_deadline",
   );
   if (critical) return { level: "CRITICAL", signals };
 
@@ -151,7 +144,9 @@ function uniqueSignals(signals: RiskSignal[]): RiskSignal[] {
 
 function userAndSourceText(request: AiGenerateRequest): { question: string; sources: string } {
   const user = [...request.messages].reverse().find((m) => m.role === "user")?.content ?? "";
-  const questionMatch = user.match(/Question:\s*([\s\S]*?)(?:\nSources:|\nMatterSources:|\nLegalAuthority:|$)/i);
+  const questionMatch = user.match(
+    /Question:\s*([\s\S]*?)(?:\nSources:|\nMatterSources:|\nLegalAuthority:|$)/i,
+  );
   const question =
     questionMatch?.[1]?.trim() ||
     user
@@ -160,9 +155,9 @@ function userAndSourceText(request: AiGenerateRequest): { question: string; sour
       .trim() ||
     user;
   const sources =
-    user.split(/\nSources:\s*|\nMatterSources:\s*/i)[1]?.split(
-      /\n+EvidenceAssessment:|\n\nVerified|\nLegalAuthority:/i,
-    )[0] ?? "";
+    user
+      .split(/\nSources:\s*|\nMatterSources:\s*/i)[1]
+      ?.split(/\n+EvidenceAssessment:|\n\nVerified|\nLegalAuthority:/i)[0] ?? "";
   return { question, sources };
 }
 
