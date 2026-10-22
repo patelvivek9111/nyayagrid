@@ -1,6 +1,19 @@
 import { createHash } from "node:crypto";
 import type { Database } from "@nyayagrid/database";
-import { conversations, messages, aiArtifacts, documents, documentVersions, criminalCases, matterEntities, and, desc, eq, or, sql } from "@nyayagrid/database";
+import {
+  conversations,
+  messages,
+  aiArtifacts,
+  documents,
+  documentVersions,
+  criminalCases,
+  matterEntities,
+  and,
+  desc,
+  eq,
+  or,
+  sql,
+} from "@nyayagrid/database";
 import {
   assembleConversationAskContext,
   buildNextWorkingState,
@@ -273,7 +286,10 @@ export function buildSuppressionAskContextBlock(params: {
   if (params.workspaceType !== "prosecution") return null;
   if (!params.suppressionReview) return null;
   if (!isSuppressionAskQuestion(params.question)) return null;
-  if (params.suppressionReview.issues.length === 0 && params.suppressionReview.warrants.length === 0) {
+  if (
+    params.suppressionReview.issues.length === 0 &&
+    params.suppressionReview.warrants.length === 0
+  ) {
     return null;
   }
   return formatSuppressionAnswer(
@@ -381,8 +397,15 @@ async function loadProsecutionSuppressionReviewForMatter(params: {
         eq(criminalCases.id, params.criminalCaseId),
         eq(criminalCases.matterId, params.matterId),
       )
-    : and(eq(criminalCases.organizationId, params.organizationId), eq(criminalCases.matterId, params.matterId));
-  const [row] = await params.db.select({ id: criminalCases.id }).from(criminalCases).where(caseFilter).limit(1);
+    : and(
+        eq(criminalCases.organizationId, params.organizationId),
+        eq(criminalCases.matterId, params.matterId),
+      );
+  const [row] = await params.db
+    .select({ id: criminalCases.id })
+    .from(criminalCases)
+    .where(caseFilter)
+    .limit(1);
   if (!row) return null;
   const overview = await getProsecutionOverview(params.db, {
     userId: params.userId,
@@ -490,11 +513,10 @@ async function loadNyayaLegalAuthorityContext(params: {
   );
   const warnings = [...saved.warnings];
 
+  // Corpus search is gated by forceCorpusSearch (Legal Research / Case+Legal). Saved matter
+  // authorities are always loaded above and must not alone trigger a shared-corpus search.
   const shouldSearchCorpus =
-    (params.doctrineQuestion ||
-      params.forceCorpusSearch ||
-      saved.items.length > 0) &&
-    Boolean(params.authorityRetriever ?? params.embeddings);
+    Boolean(params.forceCorpusSearch) && Boolean(params.authorityRetriever ?? params.embeddings);
 
   let corpusHits: AuthoritySearchHit[] = [];
   let corpusChunks: ResearchAuthorityChunk[] = [];
@@ -639,7 +661,11 @@ export function categorizeAskSource(params: {
 
 function isAbortError(error: unknown, signal?: AbortSignal): boolean {
   if (signal?.aborted) return true;
-  if (typeof DOMException !== "undefined" && error instanceof DOMException && error.name === "AbortError") {
+  if (
+    typeof DOMException !== "undefined" &&
+    error instanceof DOMException &&
+    error.name === "AbortError"
+  ) {
     return true;
   }
   if (error instanceof Error) {
@@ -706,15 +732,16 @@ export async function askNyayaAboutMatter(params: {
 
   // Fail closed: Case / Legal must never enable web mid-flight.
   if (flags.webEnabled && sourceScope !== "web") {
-    throw new SourceScopeViolationError("webEnabled=true is only valid for explicit web sourceScope");
+    throw new SourceScopeViolationError(
+      "webEnabled=true is only valid for explicit web sourceScope",
+    );
   }
   if (!flags.webEnabled && sourceScope === "web") {
     throw new SourceScopeViolationError("WEB RESEARCH requires webEnabled=true");
   }
 
-  const includeLegalAuthority = flags.legalCorpusEnabled
-    ? params.includeLegalAuthority !== false
-    : false;
+  // Corpus search follows legalCorpusEnabled. Saved matter authorities still load in Case mode.
+  const includeLegalAuthority = flags.legalCorpusEnabled && params.includeLegalAuthority !== false;
 
   const ai = params.ai ?? createAIProviderFromEnv();
   const startedAsk = Date.now();
@@ -839,7 +866,8 @@ export async function askNyayaAboutMatter(params: {
       const followUpQuery = buildFollowUpRetrievalQuery(params.question);
       const followUpDiffers = Boolean(followUpQuery && followUpQuery !== params.question.trim());
       const noticeExpand =
-        /\bnotice\b/i.test(params.question) && /\b(on 20\d{2}-|will apply)\b/i.test(params.question);
+        /\bnotice\b/i.test(params.question) &&
+        /\b(on 20\d{2}-|will apply)\b/i.test(params.question);
       const amendmentExpand =
         /\b(on 20\d{2}-|will apply|supersed|modified provision)\b/i.test(params.question) &&
         /\b(notice|terminat|amend|obligation|cap|provision)\b/i.test(params.question);
@@ -879,7 +907,8 @@ export async function askNyayaAboutMatter(params: {
 
       if (needsRelated) {
         const reasonParts: string[] = [];
-        if (followUpDiffers || (followUpQuery && primaryHits.length < 3)) reasonParts.push("follow-up");
+        if (followUpDiffers || (followUpQuery && primaryHits.length < 3))
+          reasonParts.push("follow-up");
         if (noticeExpand || amendmentExpand) reasonParts.push("amendment");
         if (conflictExpand) reasonParts.push("conflict");
         const reason = reasonParts.join(", ") || "related";
@@ -1028,47 +1057,48 @@ export async function askNyayaAboutMatter(params: {
 
     const loadCaseIntel = flags.caseRetrievalEnabled || flags.legalCorpusEnabled;
     const contextStarted = Date.now();
-    const [verifiedText, graphText, memoryText, analysisText, jurisdictionContext] = await Promise.all([
-      !loadCaseIntel || params.includeVerifiedIntelligence === false || flags.webEnabled
-        ? Promise.resolve(null)
-        : loadVerifiedMatterIntelligence({
-            db: params.db,
-            organizationId: params.organizationId,
-            matterId: params.matterId,
-          }).then((verified) => formatVerifiedIntelligenceForPrompt(verified) || null),
-      !loadCaseIntel || params.includeGraph === false || flags.webEnabled
-        ? Promise.resolve(null)
-        : loadVerifiedGraphContext({
-            db: params.db,
-            organizationId: params.organizationId,
-            matterId: params.matterId,
-            question: params.question,
-            limit: 10,
-          }).then((graph) => graph.text || null),
-      !loadCaseIntel || params.includeMemory === false || flags.webEnabled
-        ? Promise.resolve(null)
-        : retrieveActiveMatterMemories({
-            db: params.db,
-            organizationId: params.organizationId,
-            matterId: params.matterId,
-            question: params.question,
-            limit: 6,
-          }).then((memories) => formatActiveMemoryForPrompt(memories) || null),
-      !loadCaseIntel || params.includeProfessionalAnalysis === false || flags.webEnabled
-        ? Promise.resolve(null)
-        : loadProfessionalAnalysisContext({
-            db: params.db,
-            organizationId: params.organizationId,
-            matterId: params.matterId,
-            question: params.question,
-            limit: 12,
-          }).then((analysis) => formatProfessionalAnalysisForPrompt(analysis) || null),
-      resolveMatterJurisdictionContext({
-        db: params.db,
-        organizationId: params.organizationId,
-        matterId: params.matterId,
-      }),
-    ]);
+    const [verifiedText, graphText, memoryText, analysisText, jurisdictionContext] =
+      await Promise.all([
+        !loadCaseIntel || params.includeVerifiedIntelligence === false || flags.webEnabled
+          ? Promise.resolve(null)
+          : loadVerifiedMatterIntelligence({
+              db: params.db,
+              organizationId: params.organizationId,
+              matterId: params.matterId,
+            }).then((verified) => formatVerifiedIntelligenceForPrompt(verified) || null),
+        !loadCaseIntel || params.includeGraph === false || flags.webEnabled
+          ? Promise.resolve(null)
+          : loadVerifiedGraphContext({
+              db: params.db,
+              organizationId: params.organizationId,
+              matterId: params.matterId,
+              question: params.question,
+              limit: 10,
+            }).then((graph) => graph.text || null),
+        !loadCaseIntel || params.includeMemory === false || flags.webEnabled
+          ? Promise.resolve(null)
+          : retrieveActiveMatterMemories({
+              db: params.db,
+              organizationId: params.organizationId,
+              matterId: params.matterId,
+              question: params.question,
+              limit: 6,
+            }).then((memories) => formatActiveMemoryForPrompt(memories) || null),
+        !loadCaseIntel || params.includeProfessionalAnalysis === false || flags.webEnabled
+          ? Promise.resolve(null)
+          : loadProfessionalAnalysisContext({
+              db: params.db,
+              organizationId: params.organizationId,
+              matterId: params.matterId,
+              question: params.question,
+              limit: 12,
+            }).then((analysis) => formatProfessionalAnalysisForPrompt(analysis) || null),
+        resolveMatterJurisdictionContext({
+          db: params.db,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+        }),
+      ]);
     mark("contextMs", contextStarted);
     const jurisdictionHints = preferredSearchHints(jurisdictionContext);
     const jurisdictionBlock = jurisdictionContext?.promptBlock?.trim()
@@ -1079,10 +1109,7 @@ export async function askNyayaAboutMatter(params: {
     const questionStateHints = preferredStatesFromQuestion(params.question);
     const searchOptions = {
       preferredStateCodes: [
-        ...new Set([
-          ...(jurisdictionHints.preferredStateCodes ?? []),
-          ...questionStateHints,
-        ]),
+        ...new Set([...(jurisdictionHints.preferredStateCodes ?? []), ...questionStateHints]),
       ],
       preferredCircuitIds: jurisdictionHints.preferredCircuitIds ?? [],
     };
@@ -1091,22 +1118,21 @@ export async function askNyayaAboutMatter(params: {
       type: "amendment_check_started",
       at: nowIso(),
     });
-    const authority =
-      !includeLegalAuthority || flags.webEnabled
-        ? null
-        : await loadNyayaLegalAuthorityContext({
-            db: params.db,
-            organizationId: params.organizationId,
-            matterId: params.matterId,
-            question: params.question,
-            doctrineQuestion,
-            forceCorpusSearch: flags.legalCorpusEnabled,
-            embeddings: params.embeddings,
-            authorityRetriever: params.authorityRetriever,
-            authorityFilters: params.authorityFilters,
-            authorityLimit: params.authorityLimit,
-            searchOptions,
-          });
+    const authority = flags.webEnabled
+      ? null
+      : await loadNyayaLegalAuthorityContext({
+          db: params.db,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          question: params.question,
+          doctrineQuestion,
+          forceCorpusSearch: includeLegalAuthority,
+          embeddings: params.embeddings,
+          authorityRetriever: params.authorityRetriever,
+          authorityFilters: params.authorityFilters,
+          authorityLimit: params.authorityLimit,
+          searchOptions,
+        });
     mark("authorityMs", authorityStarted);
     const authorityText = authority?.text ?? null;
 
@@ -1118,7 +1144,8 @@ export async function askNyayaAboutMatter(params: {
           organizationId: params.organizationId,
           workspaceType: "professional",
           matterId: params.matterId,
-          jurisdiction: jurisdictionContext?.governingLawState ?? jurisdictionContext?.primaryState ?? null,
+          jurisdiction:
+            jurisdictionContext?.governingLawState ?? jurisdictionContext?.primaryState ?? null,
           forumCourt: jurisdictionContext?.courtId ?? null,
           userQuestion: params.question,
           subjectMatter: "general",
@@ -1235,9 +1262,8 @@ export async function askNyayaAboutMatter(params: {
       .reverse()
       .find((t) => t.role === "assistant" && t.completionStatus === "completed");
     let candidateLookupLatencyMs = 0;
-    let matterCandidates: Awaited<
-      ReturnType<typeof loadMatterReferentCandidates>
-    >["candidates"] = [];
+    let matterCandidates: Awaited<ReturnType<typeof loadMatterReferentCandidates>>["candidates"] =
+      [];
     try {
       const loaded = await loadMatterReferentCandidates(params.db, {
         organizationId: params.organizationId,
@@ -1629,8 +1655,7 @@ export async function askNyayaAboutMatter(params: {
     // Typed save phrases confirm only matching pending previews (not unrelated pendings).
     if (workflowClassification.actionType === "DRAFT_SAVE") {
       const draftPendings = priorPendingActions.filter(
-        (a) =>
-          a.actionType === "DRAFT_SAVE" || a.actionType === "DRAFT_GENERATE_PREVIEW",
+        (a) => a.actionType === "DRAFT_SAVE" || a.actionType === "DRAFT_GENERATE_PREVIEW",
       );
       if (draftPendings.length > 0) return await tryConfirmPending(draftPendings);
     }
@@ -1645,12 +1670,14 @@ export async function askNyayaAboutMatter(params: {
       if (memoryPendings.length > 0) return await tryConfirmPending(memoryPendings);
     }
 
-    if (workflowClassification.actionClass === "NAVIGATION" && workflowClassification.navigationKind) {
+    if (
+      workflowClassification.actionClass === "NAVIGATION" &&
+      workflowClassification.navigationKind
+    ) {
       const allowed = new Set(
         matterCandidates
           .filter(
-            (c) =>
-              c.organizationId === params.organizationId && c.matterId === params.matterId,
+            (c) => c.organizationId === params.organizationId && c.matterId === params.matterId,
           )
           .map((c) => c.entityId),
       );
@@ -1747,7 +1774,10 @@ export async function askNyayaAboutMatter(params: {
                 organizationId: params.organizationId,
                 matterId: params.matterId,
                 workingState: conversationWorkingState,
-                previewPayload: { ambiguous: true, candidates: resolved.candidates.map((c) => c.id) },
+                previewPayload: {
+                  ambiguous: true,
+                  candidates: resolved.candidates.map((c) => c.id),
+                },
                 classificationLatencyMs: workflowClassification.latencyMs,
               }),
             });
@@ -2146,7 +2176,8 @@ export async function askNyayaAboutMatter(params: {
                   contradictsClaimIds: [],
                   documentId: null,
                 };
-                if (!prior.supportsClaimIds.includes(claim.id)) prior.supportsClaimIds.push(claim.id);
+                if (!prior.supportsClaimIds.includes(claim.id))
+                  prior.supportsClaimIds.push(claim.id);
                 byId.set(id, prior);
               }
               for (const rel of el.contraryEvidence ?? []) {
@@ -2159,7 +2190,8 @@ export async function askNyayaAboutMatter(params: {
                   contradictsClaimIds: [],
                   documentId: null,
                 };
-                if (!prior.contradictsClaimIds.includes(claim.id)) prior.contradictsClaimIds.push(claim.id);
+                if (!prior.contradictsClaimIds.includes(claim.id))
+                  prior.contradictsClaimIds.push(claim.id);
                 byId.set(id, prior);
               }
             }
@@ -2466,7 +2498,11 @@ export async function askNyayaAboutMatter(params: {
         isSourceOnlyRevision(params.question) ||
         isAuthorityOnlyRevision(params.question)
       ) {
-        if (!matterResearchResult && (isResearchToDraftRequest(params.question) || /argument|research memo/i.test(params.question))) {
+        if (
+          !matterResearchResult &&
+          (isResearchToDraftRequest(params.question) ||
+            /argument|research memo/i.test(params.question))
+        ) {
           matterResearchResult = buildMatterResearchResult({
             question: params.question,
             matterId: params.matterId,
@@ -2493,8 +2529,14 @@ export async function askNyayaAboutMatter(params: {
             issues: allIssues,
             authorities: authorityInputs,
             research: matterResearchResult,
-            hearingOutline: hearingPrepResult?.outlinePreview ?? hearingPrepResult?.compressedOralArgument ?? null,
-            depositionOutline: depositionPrepResult?.outlinePreview ?? depositionPrepResult?.compressedQuestionList ?? null,
+            hearingOutline:
+              hearingPrepResult?.outlinePreview ??
+              hearingPrepResult?.compressedOralArgument ??
+              null,
+            depositionOutline:
+              depositionPrepResult?.outlinePreview ??
+              depositionPrepResult?.compressedQuestionList ??
+              null,
             resolvedDraftId:
               conversationWorkingState.activeDraftIds.length === 1
                 ? conversationWorkingState.activeDraftIds[0]!
@@ -3486,12 +3528,14 @@ export async function askNyayaAboutMatter(params: {
       ? formatFactualityContractForPrompt(factualityContract)
       : null;
     const userPromptBase = flags.webEnabled
-      ? `${jurisdictionBlock}Question: ${params.question}\n${webAuthorityBlock}\nSources:\n${passages
-          .map(
-            (p) =>
-              `- chunkId=${p.chunkId} documentId=${p.documentId} documentVersionId=${p.documentVersionId} quote=|${p.quote.slice(0, 800)}|`,
-          )
-          .join("\n") || "(none)"}`
+      ? `${jurisdictionBlock}Question: ${params.question}\n${webAuthorityBlock}\nSources:\n${
+          passages
+            .map(
+              (p) =>
+                `- chunkId=${p.chunkId} documentId=${p.documentId} documentVersionId=${p.documentVersionId} quote=|${p.quote.slice(0, 800)}|`,
+            )
+            .join("\n") || "(none)"
+        }`
       : useResearchPrompt
         ? `${jurisdictionBlock}${askStructuredContextText ? `${askStructuredContextText}\n\n` : ""}${buildNyayaUserPromptWithResearch(
             params.question,
@@ -3754,7 +3798,10 @@ export async function askNyayaAboutMatter(params: {
       at: nowIso(),
     });
 
-    if (!flags.webEnabled && shouldAbstainForUnknownJurisdiction(params.question, jurisdictionContext)) {
+    if (
+      !flags.webEnabled &&
+      shouldAbstainForUnknownJurisdiction(params.question, jurisdictionContext)
+    ) {
       if (validated.answer.evidenceState !== "grounded") {
         validated.answer.answer = UNKNOWN_JURISDICTION_ABSTENTION;
         validated.answer.evidenceState = "insufficient";
@@ -3788,7 +3835,8 @@ export async function askNyayaAboutMatter(params: {
         [...passages.map((passage) => passage.quote), ...(authority?.sourceTexts ?? [])].join("\n"),
       );
     }
-    const authorityMissingForDoctrine = !flags.webEnabled && doctrineQuestion && includeLegalAuthority && !authorityText;
+    const authorityMissingForDoctrine =
+      !flags.webEnabled && doctrineQuestion && includeLegalAuthority && !authorityText;
     if (authorityMissingForDoctrine) {
       validated.answer.answer = `${validated.answer.answer.trim()}\n\n${NO_AUTHORITY_CORPUS_NOTICE}`;
       validated.answer.assumptions.push(NO_AUTHORITY_CORPUS_NOTICE);
@@ -3803,8 +3851,9 @@ export async function askNyayaAboutMatter(params: {
     }
 
     const caseSourceCount = flags.caseRetrievalEnabled
-      ? new Set(validated.answer.sources.map((s) => s.documentId).filter((id) => !id.startsWith("web:"))).size ||
-        passages.filter((p) => !p.documentId.startsWith("web:")).length
+      ? new Set(
+          validated.answer.sources.map((s) => s.documentId).filter((id) => !id.startsWith("web:")),
+        ).size || passages.filter((p) => !p.documentId.startsWith("web:")).length
       : 0;
     const authoritySourceCount = authority?.authorityIds.size ?? 0;
     const webSourceCount = flags.webEnabled ? (webResearch?.sources.length ?? 0) : 0;
@@ -3823,12 +3872,12 @@ export async function askNyayaAboutMatter(params: {
     if (workflowClassification.actionClass === "DRAFT_PREVIEW") {
       const sourceRefs = validated.answer.sources
         .map((s) => s.documentId)
-        .filter((id): id is string => typeof id === "string" && id.length > 0 && !id.startsWith("web:"));
+        .filter(
+          (id): id is string => typeof id === "string" && id.length > 0 && !id.startsWith("web:"),
+        );
       // Prefer deterministic Phase 1–3 records over model prose.
       const hearingDraftText =
-        hearingPrepResult?.outlinePreview ??
-        hearingPrepResult?.compressedOralArgument ??
-        null;
+        hearingPrepResult?.outlinePreview ?? hearingPrepResult?.compressedOralArgument ?? null;
       const deterministicDraftText =
         matterDraftResult?.previewText ??
         hearingDraftText ??
@@ -3842,9 +3891,8 @@ export async function askNyayaAboutMatter(params: {
         answerText: deterministicDraftText ?? validated.answer.answer,
         sourceRefs: [
           ...sourceRefs,
-          ...(matterDraftResult?.sourceMap
-            .filter((s) => s.kind === "document")
-            .map((s) => s.id) ?? []),
+          ...(matterDraftResult?.sourceMap.filter((s) => s.kind === "document").map((s) => s.id) ??
+            []),
         ],
         authorityRefs: [
           ...(authority?.authorityIds ?? []),
@@ -4038,7 +4086,8 @@ export async function askNyayaAboutMatter(params: {
           unverifiedQuoteCount: authorityValidation?.unverifiedQuotes.length ?? 0,
           assumptions: validated.answer.assumptions,
           unresolvedQuestions: validated.answer.unresolvedQuestions,
-          needsMoreDocuments: needMore.needsMoreDocuments && !flags.webEnabled && flags.caseRetrievalEnabled,
+          needsMoreDocuments:
+            needMore.needsMoreDocuments && !flags.webEnabled && flags.caseRetrievalEnabled,
           needMoreDocumentReasons: flags.webEnabled ? [] : needMore.reasons,
           usedFollowUpRetrieval,
           evidenceAssessmentStatus: assessmentResult.assessment?.status ?? "skipped",
@@ -4191,7 +4240,10 @@ export async function askNyayaAboutMatter(params: {
             : null,
           // Oct 19–25 Phase 5 — cross-workflow + matter synthesis (no schema).
           crossWorkflow: {
-            lastWorkflowKind: workflowIntent !== "UNKNOWN" ? workflowIntent : conversationWorkingState.lastWorkflowKind,
+            lastWorkflowKind:
+              workflowIntent !== "UNKNOWN"
+                ? workflowIntent
+                : conversationWorkingState.lastWorkflowKind,
             matterSynthesis: matterSynthesisResult
               ? toMatterSynthesisValidationSnapshot(matterSynthesisResult)
               : null,
@@ -4291,7 +4343,8 @@ export async function askNyayaAboutMatter(params: {
       provenance,
       sourceScope,
       usageActionId,
-      needsMoreDocuments: needMore.needsMoreDocuments && !flags.webEnabled && flags.caseRetrievalEnabled,
+      needsMoreDocuments:
+        needMore.needsMoreDocuments && !flags.webEnabled && flags.caseRetrievalEnabled,
       needMoreDocumentReasons: flags.webEnabled ? [] : needMore.reasons,
       usedFollowUpRetrieval,
       usedVerifiedIntelligence: Boolean(verifiedText),
