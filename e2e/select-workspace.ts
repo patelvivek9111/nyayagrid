@@ -27,6 +27,13 @@ export async function selectWorkspace(
       ? { organizationName: organizationNameOrOptions, organizationId: organizationId ?? "" }
       : organizationNameOrOptions;
 
+  // localStorage throws SecurityError on about:blank / opaque origins. Several specs
+  // call selectWorkspace before the first goto; land on the app origin first.
+  if (!/^https?:\/\//i.test(page.url())) {
+    await page.goto("/app");
+    await page.waitForLoadState("domcontentloaded");
+  }
+
   let storageChanged = false;
   if (options.organizationId) {
     const previous = await page.evaluate(
