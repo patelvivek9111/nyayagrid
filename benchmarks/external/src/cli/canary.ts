@@ -7,8 +7,10 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { getRegistryDir } from "../paths.js";
 import { checkCredentialPresence, allCredentialsPresent } from "../live/credentials.js";
+import { loadExternalBenchLocalEnv } from "../live/load-local-env.js";
 
 function main(): void {
+  loadExternalBenchLocalEnv();
   const plan = JSON.parse(
     readFileSync(path.join(getRegistryDir(), "canary-plan.json"), "utf8"),
   ) as {

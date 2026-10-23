@@ -146,6 +146,7 @@ export {
   DEFAULT_PROVIDER_CONCURRENCY,
 } from "./live/concurrency.js";
 export { checkCredentialPresence, allCredentialsPresent } from "./live/credentials.js";
+export { loadExternalBenchLocalEnv, providerKeyPresenceFromEnv } from "./live/load-local-env.js";
 export type { CredentialPresenceReport, CredentialName } from "./live/credentials.js";
 export { classifyModelAccessFromCredentials } from "./live/model-access.js";
 export {

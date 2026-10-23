@@ -2,6 +2,7 @@ import { execSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { checkCredentialPresence, allCredentialsPresent } from "../live/credentials.js";
+import { loadExternalBenchLocalEnv } from "../live/load-local-env.js";
 import { classifyModelAccessFromCredentials } from "../live/model-access.js";
 import { buildStage1RunId, hashFileContents } from "../live/stage1-manifest-builder.js";
 import { getRegistryDir, getCacheDir } from "../paths.js";
@@ -19,6 +20,7 @@ function gitSha(): string {
 }
 
 function main(): void {
+  loadExternalBenchLocalEnv();
   const credentials = checkCredentialPresence();
   const access = classifyModelAccessFromCredentials(credentials);
   const sha = gitSha();
