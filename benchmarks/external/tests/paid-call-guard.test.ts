@@ -6,19 +6,28 @@ describe("paid-call-guard", () => {
     expect(isPaidCallsAuthorized({ argv: ["node", "script"], env: {} })).toBe(false);
   });
 
-  it("allows argv flag", () => {
+  it("requires budget with argv flag", () => {
     expect(
       isPaidCallsAuthorized({
         argv: ["node", "script", "--allow-paid-model-calls"],
         env: {},
       }),
+    ).toBe(false);
+  });
+
+  it("allows two-step argv authorization", () => {
+    expect(
+      isPaidCallsAuthorized({
+        argv: ["node", "script", "--allow-paid-model-calls", "--max-cost-usd", "10"],
+        env: {},
+      }),
     ).toBe(true);
   });
 
-  it("allows dedicated env var", () => {
+  it("allows env plus budget flag", () => {
     expect(
       isPaidCallsAuthorized({
-        argv: ["node"],
+        argv: ["node", "--max-cost-usd", "1"],
         env: { EXTERNAL_BENCH_ALLOW_PAID_MODEL_CALLS: "1" },
       }),
     ).toBe(true);
@@ -26,7 +35,7 @@ describe("paid-call-guard", () => {
 
   it("throws when asserting without authorization", () => {
     expect(() => assertPaidCallsAuthorized({ argv: ["node"], env: {} }, "test")).toThrow(
-      /EXTERNAL_BENCH_ALLOW_PAID_MODEL_CALLS/,
+      /--max-cost-usd/,
     );
   });
 });

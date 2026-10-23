@@ -1,36 +1,40 @@
-export const LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED =
-  "Live model or judge API calls require --allow-paid-model-calls or EXTERNAL_BENCH_ALLOW_PAID_MODEL_CALLS=1";
+import {
+  LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED,
+  buildLiveModelAuthorizationRequiredMessage,
+  isLivePaidExecutionAuthorized,
+} from "../live/authorization.js";
+import { parseMaxCostUsd } from "../live/budget.js";
+
+export {
+  LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED,
+  buildLiveModelAuthorizationRequiredMessage,
+};
 
 export type PaidCallAuthorizationContext = {
   argv?: readonly string[];
   env?: NodeJS.ProcessEnv;
 };
 
-function argvIncludesAllowPaid(argv: readonly string[]): boolean {
-  return argv.includes("--allow-paid-model-calls");
-}
-
-function envAllowsPaid(env: NodeJS.ProcessEnv): boolean {
-  const flag = env.EXTERNAL_BENCH_ALLOW_PAID_MODEL_CALLS;
-  return flag === "1" || flag === "true";
-}
-
+/**
+ * @deprecated Prefer isLivePaidExecutionAuthorized for live benchmark paths.
+ * Kept for compatibility: returns true only when two-step live authorization passes.
+ */
 export function isPaidCallsAuthorized(context: PaidCallAuthorizationContext = {}): boolean {
-  const argv = context.argv ?? process.argv;
-  const env = context.env ?? process.env;
-  return argvIncludesAllowPaid(argv) || envAllowsPaid(env);
-}
-
-export function buildLiveModelAuthorizationRequiredMessage(detail?: string): string {
-  const base = LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED;
-  return detail ? `${base}: ${detail}` : base;
+  return isLivePaidExecutionAuthorized(context);
 }
 
 export function assertPaidCallsAuthorized(
   context: PaidCallAuthorizationContext = {},
   detail?: string,
 ): void {
-  if (!isPaidCallsAuthorized(context)) {
+  const argv = context.argv ?? process.argv;
+  const maxUsd = parseMaxCostUsd(argv);
+  if (maxUsd === null || maxUsd <= 0) {
+    throw new Error(
+      buildLiveModelAuthorizationRequiredMessage(detail ?? "missing --max-cost-usd"),
+    );
+  }
+  if (!isLivePaidExecutionAuthorized(context)) {
     throw new Error(buildLiveModelAuthorizationRequiredMessage(detail));
   }
 }

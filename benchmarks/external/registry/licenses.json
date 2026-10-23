@@ -27,7 +27,8 @@
     "runtime_distribution_allowed": false,
     "attribution_required": true,
     "notes": "LegalBench tasks carry heterogeneous licenses; several subsets are CC-BY-NC or task-specific. Per-task license map required before commercial eval or redistribution.",
-    "review_status": "LICENSE_REVIEW_REQUIRED"
+    "review_status": "PARTIAL_CLEARED_PER_TASK_MAP",
+    "commercial_eval_note": "132 tasks COMMERCIAL_INTERNAL_EVAL_OK; 30 INTERNAL_NONCOMMERCIAL_ONLY — use legalbench-task-licenses.json and commercial screening filter."
   },
   {
     "benchmark_id": "legalbench-rag",
@@ -49,8 +50,9 @@
     "runtime_distribution_allowed": false,
     "attribution_required": true,
     "notes": "Code repo MIT at 431bc8f; published data mirror awinml/legalbench-rag@2b9c248 with license=other/per-source. Corpora from CUAD/MAUD/ContractNLI/PrivacyQA may impose separate terms. Do not redistribute until matrix reviewed.",
-    "review_status": "LICENSE_REVIEW_REQUIRED",
-    "data_mirror_revision": "2b9c248bc8179ef0908fd6ba01d50b156facd48b"
+    "review_status": "PARTIAL_CLEARED_CUAD_MAUD_CONTRACTNLI",
+    "data_mirror_revision": "2b9c248bc8179ef0908fd6ba01d50b156facd48b",
+    "commercial_eval_note": "cuad, maud, contractnli COMMERCIAL_INTERNAL_EVAL_OK; privacy_qa RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION — see legalbench-rag-source-licenses.json."
   },
   {
     "benchmark_id": "plawbench",

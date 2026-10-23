@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "effective_date": "2026-10-23",
+  "pinning_policy": "PINNED_STABLE exactModelId required for production benchmark runs",
+  "candidates": {
+    "openai": {
+      "primary": {
+        "provider": "openai",
+        "displayName": "GPT-6.1 Sol",
+        "exactModelId": "gpt-6.1-sol",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 1050000,
+        "maxOutput": 128000,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": true,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 2,
+          "outputPer1M": 10,
+          "cachedInputPer1M": 0.2,
+          "currency": "USD",
+          "source": "OpenAI docs 2026-10-23"
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "stage_1_primary"
+      },
+      "secondary": {
+        "provider": "openai",
+        "displayName": "GPT-6 Luna",
+        "exactModelId": "gpt-6-luna",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 1050000,
+        "maxOutput": 128000,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": false,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 0.1,
+          "outputPer1M": 0.5,
+          "currency": "USD",
+          "tier": "fast"
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "stage_1_secondary"
+      },
+      "optional_stage_2": {
+        "provider": "openai",
+        "displayName": "GPT-6 Astra",
+        "exactModelId": "gpt-6-astra",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 1050000,
+        "maxOutput": 128000,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": true,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 10,
+          "outputPer1M": 50,
+          "cachedInputPer1M": 1.0,
+          "currency": "USD",
+          "source": "OpenAI docs 2026-10-23"
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "optional_stage_2_candidate_only",
+        "notes": "Too expensive for Stage-1 primary; optional Stage-2 deep reasoning candidate."
+      }
+    },
+    "anthropic": {
+      "primary": {
+        "provider": "anthropic",
+        "displayName": "Claude Opus 5.5",
+        "exactModelId": "claude-opus-5-5",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 1000000,
+        "maxOutput": 128000,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": true,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 4,
+          "outputPer1M": 20,
+          "currency": "USD",
+          "source": "Anthropic docs 2026-10-23"
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "stage_1_primary"
+      },
+      "secondary": {
+        "provider": "anthropic",
+        "displayName": "Claude Sonnet 5.5",
+        "exactModelId": "claude-sonnet-5-5",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 1000000,
+        "maxOutput": 64000,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": true,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 2,
+          "outputPer1M": 10,
+          "currency": "USD"
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "stage_1_secondary_and_judge"
+      }
+    },
+    "google": {
+      "primary": {
+        "provider": "google",
+        "displayName": "Gemini 4 Argon",
+        "exactModelId": "gemini-4-argon",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 1000000,
+        "maxOutput": 65536,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": true,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 2,
+          "outputPer1M": 10,
+          "currency": "USD",
+          "promo_through": "2026-11-30",
+          "post_promo_inputPer1M": 4,
+          "post_promo_outputPer1M": 20,
+          "post_promo_effective": "2026-12-01"
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "stage_1_primary"
+      },
+      "secondary": {
+        "provider": "google",
+        "displayName": "Gemini 3.8 Flash",
+        "exactModelId": "gemini-3.8-flash",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 1000000,
+        "maxOutput": 65536,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": false,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 0.75,
+          "outputPer1M": 3.75,
+          "currency": "USD",
+          "pricing_status": "PROMO_DOCUMENTED"
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "stage_1_secondary"
+      }
+    },
+    "xai": {
+      "primary": {
+        "provider": "xai",
+        "displayName": "Grok 4.7",
+        "exactModelId": "grok-4.7",
+        "stability": "PINNED_STABLE",
+        "mutableAlias": null,
+        "contextWindow": 500000,
+        "maxOutput": 32000,
+        "structuredOutput": true,
+        "tools": true,
+        "reasoning": true,
+        "vision": true,
+        "pricing": {
+          "inputPer1M": 2,
+          "outputPer1M": 6,
+          "currency": "USD",
+          "long_context_higher": true
+        },
+        "apiAvailability": "production_api",
+        "deprecation": null,
+        "stage_role": "stage_1_primary"
+      },
+      "secondary": null
+    }
+  },
+  "stage_1_response_models": [
+    "gpt-6.1-sol",
+    "claude-opus-5-5",
+    "gemini-4-argon",
+    "grok-4.7"
+  ]
+}

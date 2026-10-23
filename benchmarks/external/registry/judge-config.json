@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "stage_1": {
+    "prbench": {
+      "mode": "dual_independent_llm_judges",
+      "judges": [
+        {
+          "provider": "anthropic",
+          "exactModelId": "claude-sonnet-5-5",
+          "role": "primary_judge_a"
+        },
+        {
+          "provider": "openai",
+          "exactModelId": "gpt-6.1-sol",
+          "role": "primary_judge_b"
+        }
+      ],
+      "bias_control": {
+        "self_grade_forbidden": true,
+        "allowSelfGrade": false,
+        "notes": "Candidate model must not judge its own PRBench responses unless allowSelfGrade is explicitly enabled."
+      }
+    },
+    "legalbench": {
+      "mode": "deterministic_classification",
+      "grading": "exact_match_or_normalized_string",
+      "llm_judge": false
+    },
+    "legalbench_rag": {
+      "mode": "deterministic_retrieval_metrics",
+      "generation": false,
+      "llm_judge": false,
+      "notes": "Production selection score uses retrieval metrics only; no paid generation."
+    }
+  },
+  "stage_2": {
+    "auto_start_from_stage_1": false,
+    "notes": "Stage 2 requires explicit gate; Stage 1 completion does not auto-start Stage 2."
+  }
+}

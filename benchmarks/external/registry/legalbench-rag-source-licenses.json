@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "sources": {
+    "cuad": {
+      "display_name": "CUAD (Contract Understanding Atticus Dataset)",
+      "license": "CC-BY-4.0",
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "redistribution_requires_attribution": true,
+      "attribution_holder": "Atticus Project",
+      "notes": "Contract corpus; commercial internal evaluation permitted with attribution."
+    },
+    "maud": {
+      "display_name": "MAUD (Merger Agreement Understanding Dataset)",
+      "license": "CC-BY-4.0",
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "redistribution_requires_attribution": true,
+      "attribution_holder": "Atticus Project",
+      "notes": "Merger agreement corpus; commercial internal evaluation permitted with attribution."
+    },
+    "contractnli": {
+      "display_name": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "redistribution_requires_attribution": true,
+      "attribution_holder": "Koreeda and Manning",
+      "notes": "Natural language inference over contracts; commercial internal evaluation permitted with attribution."
+    },
+    "privacy_qa": {
+      "display_name": "PrivacyQA / OPP-115-linked privacy policy QA",
+      "license": "MIT (repo code); corpus commercial status ambiguous",
+      "status": "RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "redistribution_requires_attribution": true,
+      "attribution_holder": "See upstream PrivacyQA and OPP-115 terms",
+      "notes": "MIT on GitHub repo but OPP-115-linked privacy policy commercial status ambiguous. Exclude from production model selection; research-only screening allowed with NOT_FOR_PRODUCTION_SELECTION tag."
+    }
+  }
+}

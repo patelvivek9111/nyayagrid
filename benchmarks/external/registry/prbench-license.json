@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "benchmark_id": "prbench",
+  "upstream_repo": "ScaleAI/PRBench",
+  "license": "CC-BY-4.0",
+  "status": "COMMERCIAL_INTERNAL_EVAL_OK",
+  "commercial_internal_eval": true,
+  "attribution_required": true,
+  "redistribution": true,
+  "redistribution_requires_attribution": true,
+  "attribution_holder": "Scale AI",
+  "runtime_distribution_allowed": false,
+  "disclaimer": "PRBench evaluates professional legal task execution; benchmark content is not legal advice.",
+  "notes": "Commercial internal evaluation and redistribution with attribution permitted under CC-BY-4.0. Cache eval copies only; do not ship dataset in runtime artifacts."
+}

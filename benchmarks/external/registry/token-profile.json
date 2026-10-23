@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "method": "ceil(chars/4) from cached PRBench parquet and LegalBench TSV for screening IDs",
+  "sample_count": 56,
+  "aggregate": {
+    "inputTokens": {
+      "p50": 709,
+      "p90": 7152,
+      "p95": 14990,
+      "max": 16003
+    }
+  }
+}

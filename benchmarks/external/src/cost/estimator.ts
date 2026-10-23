@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
@@ -32,7 +32,15 @@ export type CostBreakdown = {
 const moduleDir = path.dirname(fileURLToPath(import.meta.url));
 
 export function loadDefaultPricingTable(): PricingTable {
-  const raw = readFileSync(path.join(moduleDir, "pricing.default.json"), "utf8");
+  const currentPath = path.join(moduleDir, "pricing.current.json");
+  const fallbackPath = path.join(moduleDir, "pricing.default.json");
+  const raw = readFileSync(existsSync(currentPath) ? currentPath : fallbackPath, "utf8");
+  return PricingTableSchema.parse(JSON.parse(raw));
+}
+
+export function loadCurrentPricingTable(): PricingTable {
+  const currentPath = path.join(moduleDir, "pricing.current.json");
+  const raw = readFileSync(currentPath, "utf8");
   return PricingTableSchema.parse(JSON.parse(raw));
 }
 

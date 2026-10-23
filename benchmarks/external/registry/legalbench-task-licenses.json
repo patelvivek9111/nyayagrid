@@ -1,0 +1,1468 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "tasks": [
+    {
+      "task_id": "abercrombie",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "canada_tax_court_outcomes",
+      "source_dataset": "Sean Rehaag",
+      "license": "CC-BY-NC",
+      "license_raw": "CC BY-NC 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "citation_prediction_classification",
+      "source_dataset": "Michael Livermore, Daniel N. Rockmore",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "citation_prediction_open",
+      "source_dataset": "Michael Livermore, Daniel N. Rockmore",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "consumer_contracts_qa",
+      "source_dataset": "Noam Kolt",
+      "license": "CC-BY-NC",
+      "license_raw": "CC BY-NC 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "contract_nli_confidentiality_of_agreement",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_explicit_identification",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_inclusion_of_verbally_conveyed_information",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_limited_use",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_no_licensing",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_notice_on_compelled_disclosure",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_permissible_acquirement_of_similar_information",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_permissible_copy",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_permissible_development_of_similar_information",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_permissible_post-agreement_possession",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_return_of_confidential_information",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_sharing_with_employees",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_sharing_with_third-parties",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_nli_survival_of_obligations",
+      "source_dataset": "ContractNLI",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "contract_qa",
+      "source_dataset": "Nikon Rasumov-Rahe, Aditya Narayana, and Dmitry Talisman",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "corporate_lobbying",
+      "source_dataset": "John Nay",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_affiliate_license-licensee",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_affiliate_license-licensor",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_anti-assignment",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_audit_rights",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_cap_on_liability",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_change_of_control",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_competitive_restriction_exception",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_covenant_not_to_sue",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_effective_date",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_exclusivity",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_expiration_date",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_governing_law",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_insurance",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_ip_ownership_assignment",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_irrevocable_or_perpetual_license",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_joint_ip_ownership",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_license_grant",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_liquidated_damages",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_minimum_commitment",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_most_favored_nation",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_no-solicit_of_customers",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_no-solicit_of_employees",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_non-compete",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_non-disparagement",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_non-transferable_license",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_notice_period_to_terminate_renewal",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_post-termination_services",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_price_restrictions",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_renewal_term",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_revenue-profit_sharing",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_rofr-rofo-rofn",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_source_code_escrow",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_termination_for_convenience",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_third_party_beneficiary",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_uncapped_liability",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_unlimited-all-you-can-eat-license",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_volume_restriction",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "cuad_warranty_duration",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "definition_classification",
+      "source_dataset": "Kevin Tobia",
+      "license": "CC-BY-SA-4.0",
+      "license_raw": "CC BY-SA 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": false,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "definition_extraction",
+      "source_dataset": "Kevin Tobia",
+      "license": "CC-BY-SA-4.0",
+      "license_raw": "CC BY-SA 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": false,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "diversity_1",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "diversity_2",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "diversity_3",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "diversity_4",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "diversity_5",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "diversity_6",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "function_of_decision_section",
+      "source_dataset": "Gregory M. Dickinson",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "hearsay",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "insurance_policy_interpretation",
+      "source_dataset": "Vague Contracts",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "international_citizenship_questions",
+      "source_dataset": "GLOBALCIT Citizenship Law Dataset",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "jcrew_blocker",
+      "source_dataset": "Enam Hoque",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "learned_hands_benefits",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_business",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_consumer",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_courts",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_crime",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_divorce",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_domestic_violence",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_education",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_employment",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_estates",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_family",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_health",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_housing",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_immigration",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_torts",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "learned_hands_traffic",
+      "source_dataset": "Learned Hands",
+      "license": "CC-BY-NC-SA-4.0",
+      "license_raw": "CC BY-NC-SA 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "legal_reasoning_causality",
+      "source_dataset": "Haggai Porat, Tom Zur",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_ability_to_consummate_concept_is_subject_to_mae_carveouts",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_accuracy_of_fundamental_target_rws_bringdown_standard",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_accuracy_of_target_capitalization_rw_(outstanding_shares)_bringdown_standard_answer",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_accuracy_of_target_general_rw_bringdown_timing_answer",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_additional_matching_rights_period_for_modifications_(cor)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_application_of_buyer_consent_requirement_(negative_interim_covenant)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_buyer_consent_requirement_(ordinary_course)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_change_in_law__subject_to_disproportionate_impact_modifier",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_changes_in_gaap_or_other_accounting_principles__subject_to_disproportionate_impact_modifier",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_cor_permitted_in_response_to_intervening_event",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_cor_permitted_with_board_fiduciary_determination_only",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_cor_standard_(intervening_event)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_cor_standard_(superior_offer)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_definition_contains_knowledge_requirement_-_answer",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_definition_includes_asset_deals",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_definition_includes_stock_deals",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_fiduciary_exception__board_determination_standard",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_fiduciary_exception_board_determination_trigger_(no_shop)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_financial_point_of_view_is_the_sole_consideration",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_fls_(mae)_standard",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_general_economic_and_financial_conditions_subject_to_disproportionate_impact_modifier",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_includes_consistent_with_past_practice",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_initial_matching_rights_period_(cor)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_initial_matching_rights_period_(ftr)",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_intervening_event_-_required_to_occur_after_signing_-_answer",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_knowledge_definition",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_liability_standard_for_no-shop_breach_by_target_non-do_representatives",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_ordinary_course_efforts_standard",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_pandemic_or_other_public_health_event__subject_to_disproportionate_impact_modifier",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_pandemic_or_other_public_health_event_specific_reference_to_pandemic-related_governmental_responses_or_measures",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_relational_language_(mae)_applies_to",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_specific_performance",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_tail_period_length",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "maud_type_of_consideration",
+      "source_dataset": "Atticus Project",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "nys_judicial_ethics",
+      "source_dataset": "Peter Henderson",
+      "license": "MIT",
+      "license_raw": "MIT",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "opp115_data_retention",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_data_security",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_do_not_track",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_first_party_collection_use",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_international_and_specific_audiences",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_policy_change",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_third_party_sharing_collection",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_user_access,_edit_and_deletion",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "opp115_user_choice_control",
+      "source_dataset": "OPP-115",
+      "license": "CC-BY-NC",
+      "license_raw": "Creative Commons Attribution-NonCommercial License",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "oral_argument_question_purpose",
+      "source_dataset": "Gregory M. Dickinson",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "overruling",
+      "source_dataset": "CaseHOLD",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "personal_jurisdiction",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "privacy_policy_entailment",
+      "source_dataset": "APP-350 Corpus",
+      "license": "CC-BY-NC-3.0",
+      "license_raw": "CC BY-NC 3.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "privacy_policy_qa",
+      "source_dataset": "Privacy Q&A Corpus",
+      "license": "MIT",
+      "license_raw": "MIT",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "proa",
+      "source_dataset": "Neel Guha, Diego Zambrano",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "rule_qa",
+      "source_dataset": "Neel Guha",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "sara_entailment",
+      "source_dataset": "<https://nlp.jhu.edu/law/>",
+      "license": "MIT",
+      "license_raw": "MIT",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "sara_numeric",
+      "source_dataset": "<https://nlp.jhu.edu/law/>",
+      "license": "MIT",
+      "license_raw": "MIT",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "scalr",
+      "source_dataset": "SCALR",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "ssla_company_defendants",
+      "source_dataset": "SSLA",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "ssla_individual_defendants",
+      "source_dataset": "SSLA",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "ssla_plaintiff",
+      "source_dataset": "SSLA",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "successor_liability",
+      "source_dataset": "Frank Fagan",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_best_practice_accountability",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_best_practice_audits",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_best_practice_certification",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_best_practice_training",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_best_practice_verification",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_disclosed_accountability",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_disclosed_audits",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_disclosed_certification",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_disclosed_training",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "supply_chain_disclosure_disclosed_verification",
+      "source_dataset": "Adam Chilton & Galit Sarfaty",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "telemarketing_sales_rule",
+      "source_dataset": "Jonathan H. Choi",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC BY 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "textualism_tool_dictionaries",
+      "source_dataset": "Austin Peters",
+      "license": "CC-BY-NC",
+      "license_raw": "CC BY-NC 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "textualism_tool_plain",
+      "source_dataset": "Austin Peters",
+      "license": "CC-BY-NC",
+      "license_raw": "CC BY-NC 4.0",
+      "commercial_internal_eval": false,
+      "redistribution": false,
+      "status": "INTERNAL_NONCOMMERCIAL_ONLY"
+    },
+    {
+      "task_id": "ucc_v_common_law",
+      "source_dataset": "Spencer Williams",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC By 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    },
+    {
+      "task_id": "unfair_tos",
+      "source_dataset": "Claudette",
+      "license": "CC-BY-4.0",
+      "license_raw": "CC by 4.0",
+      "commercial_internal_eval": true,
+      "redistribution": true,
+      "status": "COMMERCIAL_INTERNAL_EVAL_OK"
+    }
+  ],
+  "summary": {
+    "COMMERCIAL_INTERNAL_EVAL_OK": 132,
+    "INTERNAL_NONCOMMERCIAL_ONLY": 30
+  }
+}

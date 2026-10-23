@@ -168,6 +168,8 @@ describe("license registry + scorecard + safe extract", () => {
           "VERIFIED_OK",
           "INTERNAL_EVAL_ONLY",
           "LICENSE_REVIEW_REQUIRED",
+          "PARTIAL_CLEARED_PER_TASK_MAP",
+          "PARTIAL_CLEARED_CUAD_MAUD_CONTRACTNLI",
           "DO_NOT_DISTRIBUTE",
         ].includes(l.review_status),
       ),

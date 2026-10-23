@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "production_attribution": [
+    {
+      "benchmark_id": "prbench",
+      "cite": "Scale AI PRBench (CC-BY-4.0)",
+      "holder": "Scale AI",
+      "license": "CC-BY-4.0",
+      "url": "https://huggingface.co/datasets/ScaleAI/PRBench"
+    },
+    {
+      "benchmark_id": "legalbench",
+      "cite": "Guha et al., LegalBench: A Collaboratively Built Benchmark for Measuring Legal Reasoning in Large Language Models (NeurIPS 2023 Datasets and Benchmarks)",
+      "holder": "LegalBench consortium",
+      "license": "mixed-per-task",
+      "url": "https://github.com/HazyResearch/legalbench",
+      "per_task_creators": "See legalbench-task-licenses.json for per-task source_dataset and license."
+    },
+    {
+      "benchmark_id": "legalbench-rag",
+      "source": "cuad",
+      "cite": "Hendrycks et al., CUAD: An Expert-Annotated NLP Dataset for Contract Review (Atticus Project, CC-BY-4.0)",
+      "holder": "Atticus Project",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "benchmark_id": "legalbench-rag",
+      "source": "maud",
+      "cite": "MAUD merger agreement understanding dataset (Atticus Project, CC-BY-4.0)",
+      "holder": "Atticus Project",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "benchmark_id": "legalbench-rag",
+      "source": "contractnli",
+      "cite": "Koreeda and Manning, ContractNLI (CC-BY-4.0)",
+      "holder": "Koreeda and Manning",
+      "license": "CC-BY-4.0"
+    }
+  ],
+  "research_only_attribution": [
+    {
+      "benchmark_id": "legalbench-rag",
+      "source": "privacy_qa",
+      "cite": "PrivacyQA / OPP-115-linked privacy policy QA (research-only; not for production selection)",
+      "holder": "See upstream PrivacyQA repository",
+      "license": "LICENSE_REVIEW_REQUIRED",
+      "status": "RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION"
+    }
+  ]
+}

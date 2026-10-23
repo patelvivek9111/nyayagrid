@@ -60,9 +60,66 @@ export {
   LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED,
 } from "./guards/paid-call-guard.js";
 
+export {
+  LICENSE_STATUSES,
+  assertCommercialEvalAllowed,
+  loadLegalBenchTaskLicense,
+  loadRagSourceLicense,
+  isCommercialInternalEvalOk,
+  resetLicenseFirewallCachesForTests,
+} from "./license/firewall.js";
+export type { LicenseStatus, LicenseEvalMode, LicenseAssertionResult } from "./license/firewall.js";
+
+export {
+  buildCommercialScreeningSuite,
+  rebuildCommercialLegalBenchIds,
+  rebuildCommercialRagIds,
+  isLegalBenchTaskCommercialCleared,
+  isRagTaskProductionCleared,
+  COMMERCIAL_SCREENING_LICENSE_FILTER,
+} from "./selectors/commercial-screening.js";
+
+export { loadDefaultPricingTable, loadCurrentPricingTable, estimateRunCost } from "./cost/estimator.js";
+export { computeStage1Plan, computeStagePlans } from "./cost/plan-stage1.js";
+
+export {
+  LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED as LIVE_AUTH_MESSAGE,
+  assertLivePaidExecutionAuthorized,
+  isLivePaidExecutionAuthorized,
+} from "./live/authorization.js";
+export {
+  parseMaxCostUsd,
+  assertBudgetConfigured,
+  assertNextCallWithinBudget,
+  recordSpend,
+  remainingBudgetUsd,
+  worstCaseCallCostUsd,
+  BudgetLimitError,
+} from "./live/budget.js";
+export { buildCacheKey, contentHashFromText } from "./live/cache-key.js";
+export { appendCompletedCall, writeCacheEntryFile, runArtifactsDir } from "./live/persistence.js";
+export { isResponseCacheHit, readResponseCache } from "./live/response-cache.js";
+export { isJudgeCacheHit, readJudgeCache } from "./live/judge-cache.js";
+export {
+  freezeRunManifest,
+  loadRunManifest,
+  assertManifestImmutable,
+  hashRunConfig,
+} from "./live/manifest.js";
+export { runPaidBenchmarkPreflight, PAID_BENCHMARK_PREFLIGHT_PASS } from "./live/preflight.js";
+export { evaluateResumeSkip, parseResumeRunId } from "./live/resume.js";
+export { assessContextFit, assertNoSilentTruncate } from "./live/context-fit.js";
+export { findDuplicateInputHashes } from "./live/duplicate-tasks.js";
+export { assertSameModelPinned, ModelSwapForbiddenError } from "./live/no-fallback.js";
+export { mayStartStage, autoStartStage2FromStage1 } from "./live/stage-gate.js";
+export { createRunProgress, bumpProgress, formatProgressLine } from "./live/progress.js";
+export { resolveBatchSize, chunk, DEFAULT_BATCH_SIZE_MIN } from "./live/batch.js";
+export { shouldRetry, computeBackoffMs, UnknownCompletionError } from "./live/retry.js";
+export { buildCanaryPlan, shouldStopAfterCanary } from "./live/canary.js";
+export { scoreFromSavedResponses } from "./live/offline-score.js";
+
 export { assertJudgeSeparation, JudgeSeparationError } from "./guards/judge-separation.js";
 
-export { loadDefaultPricingTable, estimateRunCost } from "./cost/estimator.js";
 export type {
   PricingTable,
   TokenEstimate,

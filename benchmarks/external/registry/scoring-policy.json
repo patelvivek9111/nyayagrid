@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "composite_winner_forbidden": true,
+  "axes": {
+    "LEGAL_REASONING": {
+      "sources": ["legalbench", "prbench_legal_hard"],
+      "weighting": "documented_per_stage_plan"
+    },
+    "PROFESSIONAL_TASK_EXECUTION": {
+      "sources": ["prbench_legal_hard"],
+      "weighting": "documented_per_stage_plan"
+    },
+    "RETRIEVAL": {
+      "sources": ["legalbench_rag"],
+      "weighting": "deterministic_metrics_only"
+    },
+    "CRITICAL_FAILURE_RATE": {
+      "sources": ["all_benchmarks"],
+      "weighting": "disqualifier_first"
+    },
+    "RELIABILITY": {
+      "sources": ["all_benchmarks"],
+      "weighting": "completion_and_retry_success"
+    },
+    "LATENCY": {
+      "sources": ["live_runs"],
+      "weighting": "p50_p95_reported_separately"
+    },
+    "COST": {
+      "sources": ["live_runs"],
+      "weighting": "actual_spend_from_manifest"
+    }
+  },
+  "production_selection_tags": {
+    "NOT_FOR_PRODUCTION_SELECTION": "Applied when research-only or license-review-required tasks contribute to a score axis."
+  }
+}

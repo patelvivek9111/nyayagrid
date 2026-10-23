@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-23",
+  "bench_id": "NYAYA_AUTHORITY_CORPUS_BENCH",
+  "status": "PLANNED",
+  "court_listener_required": false,
+  "uses_existing_corpus": true,
+  "notes": "Future NyayaGrid authority corpus benchmark; will use existing NyayaGrid corpus infrastructure when implemented. CourtListener integration optional, not required for initial definition."
+}

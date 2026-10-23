@@ -18,6 +18,6 @@ describe("prbench-rubric", () => {
   });
 
   it("blocks LLM judge without paid auth", () => {
-    expect(() => invokeLlmJudge()).toThrow(/EXTERNAL_BENCH_ALLOW_PAID_MODEL_CALLS/);
+    expect(() => invokeLlmJudge()).toThrow(/--max-cost-usd/);
   });
 });
