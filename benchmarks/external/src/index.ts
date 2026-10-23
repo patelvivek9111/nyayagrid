@@ -97,7 +97,13 @@ export {
   BudgetLimitError,
 } from "./live/budget.js";
 export { buildCacheKey, contentHashFromText } from "./live/cache-key.js";
-export { appendCompletedCall, writeCacheEntryFile, runArtifactsDir } from "./live/persistence.js";
+export {
+  appendCompletedCall,
+  writeCacheEntryFile,
+  persistPaidCallImmediately,
+  runArtifactsDir,
+} from "./live/persistence.js";
+export type { PersistedPaidCallRecord, PersistedCallRecord } from "./live/persistence.js";
 export { isResponseCacheHit, readResponseCache } from "./live/response-cache.js";
 export { isJudgeCacheHit, readJudgeCache } from "./live/judge-cache.js";
 export {
@@ -117,6 +123,24 @@ export { resolveBatchSize, chunk, DEFAULT_BATCH_SIZE_MIN } from "./live/batch.js
 export { shouldRetry, computeBackoffMs, UnknownCompletionError } from "./live/retry.js";
 export { buildCanaryPlan, shouldStopAfterCanary } from "./live/canary.js";
 export { scoreFromSavedResponses } from "./live/offline-score.js";
+export {
+  parseProviderCaps,
+  assertWithinProviderCaps,
+  recordProviderSpend,
+  emptyProviderSpend,
+  ProviderCapError,
+} from "./live/provider-caps.js";
+export type {
+  ProviderId,
+  ProviderCapLimits,
+  ProviderCapsConfig,
+  ProviderSpendState,
+} from "./live/provider-caps.js";
+export {
+  parseConcurrency,
+  mapWithConcurrency,
+  DEFAULT_PROVIDER_CONCURRENCY,
+} from "./live/concurrency.js";
 
 export { assertJudgeSeparation, JudgeSeparationError } from "./guards/judge-separation.js";
 

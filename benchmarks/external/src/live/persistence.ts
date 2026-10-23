@@ -2,12 +2,38 @@ import { appendFileSync, mkdirSync, renameSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { getCacheDir } from "../paths.js";
 
+/** Full paid-call persistence schema (A). Persist immediately after each successful call. */
+export type PersistedPaidCallRecord = {
+  runId: string;
+  benchmarkId: string;
+  taskId: string;
+  provider: string;
+  exactModelId: string;
+  modelConfiguration: unknown;
+  promptVersionHash: string;
+  datasetRevision: string;
+  inputHash: string;
+  response: unknown;
+  structuredParsedResponse: unknown;
+  usage: unknown;
+  inputTokens: number;
+  outputTokens: number;
+  latencyMs: number;
+  providerRequestId: string | null;
+  timestamp: string;
+  attemptNumber: number;
+  costEstimateUsd: number;
+  completionStatus: "success" | "failed" | "unknown_completion_review_required";
+  cacheKey: string;
+  kind: "response" | "judge";
+};
+
 export type PersistedCallRecord = {
   cacheKey: string;
   runId: string;
   kind: "response" | "judge";
   recordedAt: string;
-  payload: unknown;
+  payload: PersistedPaidCallRecord | unknown;
 };
 
 export function runArtifactsDir(runId: string): string {
@@ -27,7 +53,20 @@ export function appendCompletedCall(record: PersistedCallRecord): void {
   appendFileSync(jsonlPath, `${JSON.stringify(record)}\n`, "utf8");
 }
 
-/** Write one cache entry atomically (temp + rename). */
+/** Persist a full paid-call record immediately (temp cache file + JSONL). */
+export function persistPaidCallImmediately(record: PersistedPaidCallRecord): string {
+  const cachePath = writeCacheEntryFile(record.runId, record.kind, record.cacheKey, record);
+  appendCompletedCall({
+    cacheKey: record.cacheKey,
+    runId: record.runId,
+    kind: record.kind,
+    recordedAt: record.timestamp,
+    payload: record,
+  });
+  return cachePath;
+}
+
+/** Write one cache entry atomically (temp + rename). Never delete raw responses. */
 export function writeCacheEntryFile(
   runId: string,
   kind: "response" | "judge",
