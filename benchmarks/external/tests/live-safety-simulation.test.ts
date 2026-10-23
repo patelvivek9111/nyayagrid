@@ -8,11 +8,7 @@ import { buildCacheKey } from "../src/live/cache-key.js";
 import { persistPaidCallImmediately, writeCacheEntryFile } from "../src/live/persistence.js";
 import { isResponseCacheHit } from "../src/live/response-cache.js";
 import { isJudgeCacheHit } from "../src/live/judge-cache.js";
-import {
-  assertNextCallWithinBudget,
-  BudgetLimitError,
-  recordSpend,
-} from "../src/live/budget.js";
+import { assertNextCallWithinBudget, BudgetLimitError, recordSpend } from "../src/live/budget.js";
 import { assertCompletionKnown, UnknownCompletionError } from "../src/live/retry.js";
 import { autoStartStage2FromStage1, mayStartStage } from "../src/live/stage-gate.js";
 import { scoreFromSavedResponses } from "../src/live/offline-score.js";

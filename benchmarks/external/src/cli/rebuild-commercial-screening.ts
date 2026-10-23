@@ -1,6 +1,10 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { classifyLegalBenchTask, inventoryLegalBenchTasks, loadLegalBenchTaskDir } from "../adapters/legalbench.js";
+import {
+  classifyLegalBenchTask,
+  inventoryLegalBenchTasks,
+  loadLegalBenchTaskDir,
+} from "../adapters/legalbench.js";
 import { loadLegalBenchRagBenchmarkFile } from "../adapters/legalbench-rag.js";
 import { loadPrbenchParquet, normalizePrbenchRow } from "../adapters/prbench.js";
 import { isCommercialInternalEvalOk, loadLegalBenchTaskLicense } from "../license/firewall.js";
@@ -30,7 +34,10 @@ function stubLegalBenchPoolFromLicenses(): ReturnType<typeof NormalizedTaskSchem
         conversation: [{ role: "user", content: "stub" }],
         supportingDocuments: null,
         expectedAnswer: null,
-        metadata: { upstreamTask: entry.task_id, nyayaCategory: classifyLegalBenchTask(entry.task_id) },
+        metadata: {
+          upstreamTask: entry.task_id,
+          nyayaCategory: classifyLegalBenchTask(entry.task_id),
+        },
       }),
     );
   }
@@ -191,7 +198,9 @@ async function main(): Promise<void> {
 
   const dest = path.join(registryDir, "screening-suite.json");
   writeFileSync(dest, `${JSON.stringify(out, null, 2)}\n`, "utf8");
-  console.log(JSON.stringify({ written: dest, actual: suite.actual, dropped: suite.dropped }, null, 2));
+  console.log(
+    JSON.stringify({ written: dest, actual: suite.actual, dropped: suite.dropped }, null, 2),
+  );
 }
 
 main().catch((err: unknown) => {

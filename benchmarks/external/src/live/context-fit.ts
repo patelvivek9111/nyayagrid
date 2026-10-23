@@ -1,4 +1,5 @@
-export type ContextFit = "FULL_CONTEXT_SUPPORTED" | "REQUIRES_DEFINED_TRUNCATION_POLICY" | "INELIGIBLE";
+export type ContextFit =
+  "FULL_CONTEXT_SUPPORTED" | "REQUIRES_DEFINED_TRUNCATION_POLICY" | "INELIGIBLE";
 
 export function assessContextFit(input: {
   inputTokensEstimate: number;

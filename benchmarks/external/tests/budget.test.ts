@@ -14,9 +14,9 @@ describe("budget", () => {
   });
 
   it("stops when next call exceeds budget", () => {
-    expect(() =>
-      assertNextCallWithinBudget({ maxUsd: 1, spentUsd: 0.9 }, 0.2),
-    ).toThrow(BudgetLimitError);
+    expect(() => assertNextCallWithinBudget({ maxUsd: 1, spentUsd: 0.9 }, 0.2)).toThrow(
+      BudgetLimitError,
+    );
   });
 
   it("tracks spend and remaining", () => {

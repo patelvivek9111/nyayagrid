@@ -23,7 +23,10 @@ export function manifestPath(runId: string): string {
   return path.join(runArtifactsDir(runId), MANIFEST_NAME);
 }
 
-export function freezeRunManifest(runId: string, manifest: Omit<RunManifest, "immutable" | "frozenAt">): RunManifest {
+export function freezeRunManifest(
+  runId: string,
+  manifest: Omit<RunManifest, "immutable" | "frozenAt">,
+): RunManifest {
   ensureRunDir(runId);
   const filePath = manifestPath(runId);
   if (existsSync(filePath)) {
@@ -52,6 +55,8 @@ export function assertManifestImmutable(runId: string, attemptedConfigHash: stri
     throw new Error(`Run manifest for ${runId} is not marked immutable.`);
   }
   if (manifest.configHash !== attemptedConfigHash) {
-    throw new Error(`Config hash mismatch for ${runId}; refuse mutation or resume with changed config.`);
+    throw new Error(
+      `Config hash mismatch for ${runId}; refuse mutation or resume with changed config.`,
+    );
   }
 }

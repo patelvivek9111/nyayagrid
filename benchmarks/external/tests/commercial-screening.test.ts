@@ -23,24 +23,34 @@ describe("commercial screening", () => {
   it("rebuilds legalbench to 24 commercial tasks", () => {
     const screening = JSON.parse(
       readFileSync(path.join(getRegistryDir(), "screening-suite.json"), "utf8"),
-    ) as { upstream_ids: { legalbench: string[]; legalbench_rag: string[]; prbench_legal_hard: string[] } };
+    ) as {
+      upstream_ids: {
+        legalbench: string[];
+        legalbench_rag: string[];
+        prbench_legal_hard: string[];
+      };
+    };
 
-    const lbPool = ["abercrombie", "sara_numeric", "cuad_insurance", "definition_classification"].map(
-      (task) =>
-        NormalizedTaskSchema.parse({
-          benchmarkId: "legalbench",
-          taskId: `${task}::train::0`,
-          split: "train",
-          jurisdiction: null,
-          practiceArea: null,
-          difficulty: null,
-          taskType: task,
-          input: {},
-          conversation: [{ role: "user", content: "q" }],
-          supportingDocuments: null,
-          expectedAnswer: "a",
-          metadata: { upstreamTask: task },
-        }),
+    const lbPool = [
+      "abercrombie",
+      "sara_numeric",
+      "cuad_insurance",
+      "definition_classification",
+    ].map((task) =>
+      NormalizedTaskSchema.parse({
+        benchmarkId: "legalbench",
+        taskId: `${task}::train::0`,
+        split: "train",
+        jurisdiction: null,
+        practiceArea: null,
+        difficulty: null,
+        taskType: task,
+        input: {},
+        conversation: [{ role: "user", content: "q" }],
+        supportingDocuments: null,
+        expectedAnswer: "a",
+        metadata: { upstreamTask: task },
+      }),
     );
 
     const suite = buildCommercialScreeningSuite({

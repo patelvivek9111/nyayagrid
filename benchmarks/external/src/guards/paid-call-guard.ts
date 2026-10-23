@@ -5,10 +5,7 @@ import {
 } from "../live/authorization.js";
 import { parseMaxCostUsd } from "../live/budget.js";
 
-export {
-  LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED,
-  buildLiveModelAuthorizationRequiredMessage,
-};
+export { LIVE_MODEL_BENCHMARK_AUTHORIZATION_REQUIRED, buildLiveModelAuthorizationRequiredMessage };
 
 export type PaidCallAuthorizationContext = {
   argv?: readonly string[];
@@ -30,9 +27,7 @@ export function assertPaidCallsAuthorized(
   const argv = context.argv ?? process.argv;
   const maxUsd = parseMaxCostUsd(argv);
   if (maxUsd === null || maxUsd <= 0) {
-    throw new Error(
-      buildLiveModelAuthorizationRequiredMessage(detail ?? "missing --max-cost-usd"),
-    );
+    throw new Error(buildLiveModelAuthorizationRequiredMessage(detail ?? "missing --max-cost-usd"));
   }
   if (!isLivePaidExecutionAuthorized(context)) {
     throw new Error(buildLiveModelAuthorizationRequiredMessage(detail));

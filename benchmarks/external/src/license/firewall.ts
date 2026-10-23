@@ -57,9 +57,7 @@ function loadRagSourceMap(): Map<string, LicenseStatus> {
     "utf8",
   );
   const parsed = JSON.parse(raw) as RagSourceLicenseFile;
-  ragSourceCache = new Map(
-    Object.entries(parsed.sources).map(([k, v]) => [k, v.status]),
-  );
+  ragSourceCache = new Map(Object.entries(parsed.sources).map(([k, v]) => [k, v.status]));
   return ragSourceCache;
 }
 
@@ -111,10 +109,7 @@ export function assertCommercialEvalAllowed(
     return { allowed: true, status };
   }
 
-  if (
-    status === "EXCLUDE" ||
-    status === "INTERNAL_NONCOMMERCIAL_ONLY"
-  ) {
+  if (status === "EXCLUDE" || status === "INTERNAL_NONCOMMERCIAL_ONLY") {
     return {
       allowed: false,
       status,

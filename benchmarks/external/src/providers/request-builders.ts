@@ -68,7 +68,9 @@ export function buildAnthropicMessagesRequest(input: {
     messages: input.messages,
     max_tokens: input.maxTokens ?? 4096,
     thinking: { type: "adaptive" },
-    output_config: { effort: input.effort ?? (input.model === "claude-sonnet-5-5" ? "medium" : "high") },
+    output_config: {
+      effort: input.effort ?? (input.model === "claude-sonnet-5-5" ? "medium" : "high"),
+    },
   };
 }
 

@@ -1,7 +1,10 @@
 /** Conservative default concurrency for paid provider calls. */
 export const DEFAULT_PROVIDER_CONCURRENCY = 2;
 
-export function parseConcurrency(argv: readonly string[], fallback = DEFAULT_PROVIDER_CONCURRENCY): number {
+export function parseConcurrency(
+  argv: readonly string[],
+  fallback = DEFAULT_PROVIDER_CONCURRENCY,
+): number {
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
     if (arg === "--concurrency") {

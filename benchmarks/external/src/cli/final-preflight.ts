@@ -26,12 +26,13 @@ function main(): void {
   const stagePlans = computeStagePlans();
   const screening = JSON.parse(
     readFileSync(path.join(getRegistryDir(), "screening-suite.json"), "utf8"),
-  ) as { actual: { prbenchHard: number; legalbench: number; legalbenchRag: number }; frozen: boolean };
+  ) as {
+    actual: { prbenchHard: number; legalbench: number; legalbenchRag: number };
+    frozen: boolean;
+  };
 
   const freeRagPath = path.join(getRegistryDir(), "free-rag-preflight-result.json");
-  const freeRag = existsSync(freeRagPath)
-    ? JSON.parse(readFileSync(freeRagPath, "utf8"))
-    : null;
+  const freeRag = existsSync(freeRagPath) ? JSON.parse(readFileSync(freeRagPath, "utf8")) : null;
 
   const manifestPath = path.join(getCacheDir(), "runs", runId, "manifest.json");
   const manifestFrozen = existsSync(manifestPath);
@@ -77,8 +78,8 @@ function main(): void {
     blockedReasons: ready
       ? []
       : [
-          ...(!allCredentialsPresent(credentials) ? ["credentials_missing"] as const : []),
-          ...(!manifestFrozen ? ["manifest_not_frozen"] as const : []),
+          ...(!allCredentialsPresent(credentials) ? (["credentials_missing"] as const) : []),
+          ...(!manifestFrozen ? (["manifest_not_frozen"] as const) : []),
         ],
   };
 

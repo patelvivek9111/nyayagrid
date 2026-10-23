@@ -48,10 +48,7 @@ export function worstCaseCallCostUsd(input: {
   );
 }
 
-export function assertNextCallWithinBudget(
-  state: BudgetState,
-  worstCaseNextUsd: number,
-): void {
+export function assertNextCallWithinBudget(state: BudgetState, worstCaseNextUsd: number): void {
   if (state.spentUsd + worstCaseNextUsd > state.maxUsd + 1e-9) {
     throw new BudgetLimitError(
       `STOP_BUDGET_LIMIT: spent=${state.spentUsd.toFixed(4)} worstCaseNext=${worstCaseNextUsd.toFixed(4)} max=${state.maxUsd.toFixed(4)}`,

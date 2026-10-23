@@ -79,7 +79,11 @@ export {
   COMMERCIAL_SCREENING_LICENSE_FILTER,
 } from "./selectors/commercial-screening.js";
 
-export { loadDefaultPricingTable, loadCurrentPricingTable, estimateRunCost } from "./cost/estimator.js";
+export {
+  loadDefaultPricingTable,
+  loadCurrentPricingTable,
+  estimateRunCost,
+} from "./cost/estimator.js";
 export { computeStage1Plan, computeStagePlans } from "./cost/plan-stage1.js";
 
 export {

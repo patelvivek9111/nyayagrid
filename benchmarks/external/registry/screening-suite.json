@@ -244,21 +244,9 @@
     ]
   },
   "fixture_ids": {
-    "prbench": [
-      "prbench-synth-001",
-      "prbench-synth-002",
-      "prbench-synth-003"
-    ],
-    "legalbench": [
-      "legalbench-synth-001",
-      "legalbench-synth-002",
-      "legalbench-synth-003"
-    ],
-    "legalbench_rag": [
-      "lbrag-synth-001",
-      "lbrag-synth-002",
-      "lbrag-synth-003"
-    ]
+    "prbench": ["prbench-synth-001", "prbench-synth-002", "prbench-synth-003"],
+    "legalbench": ["legalbench-synth-001", "legalbench-synth-002", "legalbench-synth-003"],
+    "legalbench_rag": ["lbrag-synth-001", "lbrag-synth-002", "lbrag-synth-003"]
   },
   "notes": "Commercial license filter applied; NC LegalBench and privacy_qa RAG excluded from production selection."
 }

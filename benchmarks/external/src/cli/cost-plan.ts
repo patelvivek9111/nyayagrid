@@ -65,9 +65,7 @@ async function buildTokenProfile(): Promise<unknown> {
   const tasksRoot = path.join(cache, "lb/tasks");
   if (existsSync(tasksRoot)) {
     const inv = inventoryLegalBenchTasks(tasksRoot);
-    const wanted = new Set(
-      screening.upstream_ids.legalbench.map((id) => id.split("::")[0]),
-    );
+    const wanted = new Set(screening.upstream_ids.legalbench.map((id) => id.split("::")[0]));
     for (const item of inv) {
       if (!wanted.has(item.taskName)) continue;
       try {

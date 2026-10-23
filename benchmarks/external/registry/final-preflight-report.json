@@ -52,7 +52,5 @@
     "judge": 0,
     "courtlistener": 0
   },
-  "blockedReasons": [
-    "credentials_missing"
-  ]
+  "blockedReasons": ["credentials_missing"]
 }

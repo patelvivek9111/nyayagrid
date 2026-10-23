@@ -26,7 +26,8 @@ export function classifyModelAccessFromCredentials(
     if (id.startsWith("gpt-") || id === "gpt-6.1-sol") {
       map[id] = credentials.OPENAI_API_KEY === "PRESENT" ? "ACCESS_NOT_CONFIRMED" : "KEY_MISSING";
     } else if (id.startsWith("claude-")) {
-      map[id] = credentials.ANTHROPIC_API_KEY === "PRESENT" ? "ACCESS_NOT_CONFIRMED" : "KEY_MISSING";
+      map[id] =
+        credentials.ANTHROPIC_API_KEY === "PRESENT" ? "ACCESS_NOT_CONFIRMED" : "KEY_MISSING";
     } else if (id.startsWith("gemini-")) {
       map[id] = credentials.GOOGLE_API_KEY === "PRESENT" ? "ACCESS_NOT_CONFIRMED" : "KEY_MISSING";
     } else if (id.startsWith("grok-")) {

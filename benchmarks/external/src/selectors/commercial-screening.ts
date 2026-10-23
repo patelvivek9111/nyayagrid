@@ -114,7 +114,9 @@ export function buildCommercialScreeningSuite(input: {
 } {
   const seed = input.seed ?? SCREENING_SEED;
 
-  const droppedNc = input.currentLegalbenchIds.filter((id) => !isLegalBenchTaskCommercialCleared(id));
+  const droppedNc = input.currentLegalbenchIds.filter(
+    (id) => !isLegalBenchTaskCommercialCleared(id),
+  );
   const droppedPrivacy = input.currentRagIds.filter(
     (id) => ragSourceFromTaskId(id) === "privacy_qa" || !isRagTaskProductionCleared(id),
   );

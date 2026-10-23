@@ -7,7 +7,11 @@ import path from "node:path";
 import { loadLegalBenchRagBenchmarkFile } from "../adapters/legalbench-rag.js";
 import { getCacheDir, getRegistryDir } from "../paths.js";
 import { documentHit, topKDocumentRecall } from "../scorers/rag-metrics.js";
-import { hashRetrievalConfig, loadCorpusDocuments, retrieveTopKDocuments } from "../retrieval/lexical.js";
+import {
+  hashRetrievalConfig,
+  loadCorpusDocuments,
+  retrieveTopKDocuments,
+} from "../retrieval/lexical.js";
 import { isCommercialInternalEvalOk, loadRagSourceLicense } from "../license/firewall.js";
 
 type Screening = {
@@ -63,7 +67,7 @@ async function main(): Promise<void> {
     const query =
       typeof task.input === "object" && task.input && "query" in task.input
         ? String((task.input as { query: string }).query)
-        : task.conversation?.[0]?.content ?? "";
+        : (task.conversation?.[0]?.content ?? "");
     const goldDocs = [
       ...new Set(
         (task.goldEvidence ?? [])
@@ -101,16 +105,18 @@ async function main(): Promise<void> {
     meanRecallAtK: queries === 0 ? 0 : recallSum / queries,
     corpusDocsLoaded: [...docsBySource.entries()].map(([s, d]) => ({ source: s, docs: d.length })),
     note: "Baseline lexical retrieval only; not production embedding/RAG pipeline. Separated from model-selection generation scores.",
-    corpusStatus:
-      [...docsBySource.values()].every((d) => d.length === 0)
-        ? "COMMERCIAL_CORPUS_NOT_CACHED_LOCALLY"
-        : "LOADED",
+    corpusStatus: [...docsBySource.values()].every((d) => d.length === 0)
+      ? "COMMERCIAL_CORPUS_NOT_CACHED_LOCALLY"
+      : "LOADED",
     sample: perQuery.slice(0, 5),
   };
 
   const outDir = path.join(getCacheDir(), "runs", "free-rag-preflight");
   mkdirSync(outDir, { recursive: true });
-  writeFileSync(path.join(outDir, "legalbench-rag-lexical.json"), `${JSON.stringify(result, null, 2)}\n`);
+  writeFileSync(
+    path.join(outDir, "legalbench-rag-lexical.json"),
+    `${JSON.stringify(result, null, 2)}\n`,
+  );
   writeFileSync(
     path.join(getRegistryDir(), "free-rag-preflight-result.json"),
     `${JSON.stringify({ ...result, perQueryCount: perQuery.length }, null, 2)}\n`,

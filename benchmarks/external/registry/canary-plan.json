@@ -54,7 +54,11 @@
   ],
   "execution": {
     "allowed_now": false,
-    "blocked_reasons": ["credentials_missing", "awaiting_explicit_user_authorization", "live_executor_scaffold_refuses_until_keys"],
+    "blocked_reasons": [
+      "credentials_missing",
+      "awaiting_explicit_user_authorization",
+      "live_executor_scaffold_refuses_until_keys"
+    ],
     "runId": "stage1-screening-v1-eb9305739f4f",
     "exact_command_when_authorized": "npm run canary --workspace=@nyayagrid/external-bench -- --allow-paid-model-calls --max-cost-usd 1 --run-id stage1-screening-v1-eb9305739f4f"
   }

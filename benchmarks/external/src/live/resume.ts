@@ -29,9 +29,7 @@ export function evaluateResumeSkip(input: {
   assertManifestImmutable(input.runId, hashRunConfig(input.config));
   const skipResponse = isResponseCacheHit(input.runId, input.responseCacheKey);
   const skipJudge =
-    input.judgeCacheKey !== undefined
-      ? isJudgeCacheHit(input.runId, input.judgeCacheKey)
-      : false;
+    input.judgeCacheKey !== undefined ? isJudgeCacheHit(input.runId, input.judgeCacheKey) : false;
   return { skipResponse, skipJudge };
 }
 

@@ -46,9 +46,7 @@ export function assertLivePaidExecutionAuthorized(
     assertBudgetConfigured(maxUsd);
   } catch (err) {
     throw new Error(
-      buildLiveModelAuthorizationRequiredMessage(
-        detail ?? "missing or invalid --max-cost-usd",
-      ),
+      buildLiveModelAuthorizationRequiredMessage(detail ?? "missing or invalid --max-cost-usd"),
       { cause: err },
     );
   }

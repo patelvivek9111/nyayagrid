@@ -28,7 +28,12 @@ export type PreflightOptions = {
   env?: NodeJS.ProcessEnv;
   dryRun?: boolean;
   budgetState?: BudgetState;
-  tasks?: Array<{ benchmarkId: string; taskId: string; metadata?: Record<string, unknown> | null; inputChars?: number }>;
+  tasks?: Array<{
+    benchmarkId: string;
+    taskId: string;
+    metadata?: Record<string, unknown> | null;
+    inputChars?: number;
+  }>;
   models?: Array<{ exactModelId: string; contextWindow: number }>;
 };
 

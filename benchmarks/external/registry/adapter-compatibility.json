@@ -15,7 +15,13 @@
       "status": "COMPATIBLE_WITH_EXTERNAL_BUILDER",
       "required_api": "messages",
       "required_controls": ["thinking.adaptive", "effort"],
-      "forbidden": ["temperature", "top_p", "top_k", "thinking.disabled", "thinking.enabled+budget_tokens"],
+      "forbidden": [
+        "temperature",
+        "top_p",
+        "top_k",
+        "thinking.disabled",
+        "thinking.enabled+budget_tokens"
+      ],
       "external_bench_builder": "buildAnthropicMessagesRequest",
       "packages_ai_gap": "packages/ai AnthropicProvider currently sends temperature=0 — incompatible with Opus 5.5. Do not use that path for Stage-1; use external-bench builder."
     },

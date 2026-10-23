@@ -15,9 +15,7 @@ describe("license firewall", () => {
 
   it("loads rag source license", () => {
     expect(loadRagSourceLicense("cuad")).toBe("COMMERCIAL_INTERNAL_EVAL_OK");
-    expect(loadRagSourceLicense("privacy_qa")).toBe(
-      "RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION",
-    );
+    expect(loadRagSourceLicense("privacy_qa")).toBe("RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION");
   });
 
   it("fail-closed production-selection for NC tasks", () => {
@@ -30,7 +28,11 @@ describe("license firewall", () => {
 
   it("tags research-only in research mode", () => {
     const result = assertCommercialEvalAllowed(
-      { benchmarkId: "legalbench-rag", taskId: "privacy_qa::1", metadata: { upstreamSource: "privacy_qa" } },
+      {
+        benchmarkId: "legalbench-rag",
+        taskId: "privacy_qa::1",
+        metadata: { upstreamSource: "privacy_qa" },
+      },
       "research",
     );
     expect(result.allowed).toBe(true);

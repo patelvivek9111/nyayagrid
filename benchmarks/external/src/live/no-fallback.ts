@@ -5,10 +5,7 @@ export class ModelSwapForbiddenError extends Error {
   }
 }
 
-export function assertSameModelPinned(
-  plannedModelId: string,
-  actualModelId: string,
-): void {
+export function assertSameModelPinned(plannedModelId: string, actualModelId: string): void {
   if (plannedModelId !== actualModelId) {
     throw new ModelSwapForbiddenError(plannedModelId, actualModelId);
   }

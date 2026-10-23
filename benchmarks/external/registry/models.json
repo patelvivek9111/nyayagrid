@@ -194,10 +194,5 @@
       "secondary": null
     }
   },
-  "stage_1_response_models": [
-    "gpt-6.1-sol",
-    "claude-opus-5-5",
-    "gemini-4-argon",
-    "grok-4.7"
-  ]
+  "stage_1_response_models": ["gpt-6.1-sol", "claude-opus-5-5", "gemini-4-argon", "grok-4.7"]
 }

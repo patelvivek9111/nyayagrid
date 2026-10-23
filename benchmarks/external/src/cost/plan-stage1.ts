@@ -65,12 +65,7 @@ export type Stage3Plan = {
   cost: StageCostBand;
 };
 
-const STAGE1_MODELS = [
-  "gpt-6.1-sol",
-  "claude-opus-5-5",
-  "gemini-4-argon",
-  "grok-4.7",
-] as const;
+const STAGE1_MODELS = ["gpt-6.1-sol", "claude-opus-5-5", "gemini-4-argon", "grok-4.7"] as const;
 
 const JUDGE_MODELS = ["claude-sonnet-5-5", "gpt-6.1-sol"] as const;
 
@@ -156,11 +151,9 @@ export function computeStage1Plan(): Stage1Plan {
       const inTok = inputByScenario[scenario];
       const prOut = prbenchOut[scenario];
       const lbOut = legalbenchOut[scenario];
-      const prCost =
-        counts.prbenchHard * costUsd(inTok, prOut, p.inputPer1M, p.outputPer1M);
+      const prCost = counts.prbenchHard * costUsd(inTok, prOut, p.inputPer1M, p.outputPer1M);
       const lbCost =
-        counts.legalbench *
-        costUsd(Math.ceil(inTok * 0.5), lbOut, p.inputPer1M, p.outputPer1M);
+        counts.legalbench * costUsd(Math.ceil(inTok * 0.5), lbOut, p.inputPer1M, p.outputPer1M);
       bands[`${scenario}Usd`] = prCost + lbCost;
     }
     perModelResponseCost[modelId] = bands;
@@ -181,8 +174,7 @@ export function computeStage1Plan(): Stage1Plan {
     for (const scenario of ["low", "expected", "high"] as const) {
       const out = judgeOut[scenario];
       const inTok = inputByScenario[scenario] + prbenchOut[scenario];
-      const jCost =
-        judgeCallsPerModel * costUsd(inTok, out, jp.inputPer1M, jp.outputPer1M);
+      const jCost = judgeCallsPerModel * costUsd(inTok, out, jp.inputPer1M, jp.outputPer1M);
       judgeCost[`${scenario}Usd`] += jCost;
     }
   }
@@ -293,10 +285,7 @@ export function computeStage3Plan(stage1: Stage1Plan): Stage3Plan {
   for (const scenario of ["low", "expected", "high"] as const) {
     const inTok = inputByScenario[scenario];
     const responseCost =
-      repeats *
-      finalistCount *
-      tasks *
-      costUsd(inTok, prbenchOut[scenario], avgInput, avgOutput);
+      repeats * finalistCount * tasks * costUsd(inTok, prbenchOut[scenario], avgInput, avgOutput);
     const judgeIn = inTok + prbenchOut[scenario];
     const jCost =
       repeats *
