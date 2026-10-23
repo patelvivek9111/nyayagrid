@@ -7,7 +7,8 @@ export type OpenAiResponsesRequest = {
   model: "gpt-6.1-sol";
   input: unknown;
   reasoning: { effort: "low" | "medium" | "high" | "xhigh" | "max" };
-  service_tier: "standard";
+  /** OpenAI standard processing tier (API enum: default). */
+  service_tier: "default";
   max_output_tokens: number;
 };
 
@@ -42,7 +43,7 @@ export function buildOpenAiResponsesRequest(input: {
     model: "gpt-6.1-sol",
     input: input.input,
     reasoning: { effort: input.effort ?? "high" },
-    service_tier: "standard",
+    service_tier: "default",
     max_output_tokens: input.maxOutputTokens ?? 4096,
   };
 }

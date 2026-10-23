@@ -82,11 +82,12 @@ export function classifyHttpStatus(
       status !== 403 &&
       status !== 404)
   ) {
+    const snippet = bodyText.replace(/\s+/g, " ").slice(0, 400);
     return new LiveProviderError({
       code: "BAD_REQUEST",
       provider,
       status,
-      message: `${provider} bad request (${status})`,
+      message: `${provider} bad request (${status}): ${snippet}`,
       retryable: false,
     });
   }

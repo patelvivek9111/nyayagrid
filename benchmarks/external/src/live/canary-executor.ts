@@ -305,7 +305,7 @@ export async function runLiveCanary(input: {
   const systemPrompt =
     "You are NyayaGrid external-bench canary. Produce a careful legal analysis response.";
   const contentHash = contentHashFromText(userPrompt);
-  const responseSettings = { effort: "high", service_tier: "standard", max_output_tokens: 4096 };
+  const responseSettings = { effort: "high", service_tier: "default", max_output_tokens: 4096 };
   const responseSettingsHash = hashObj(responseSettings);
   const promptHashes = [contentHashFromText(systemPrompt), contentHashFromText(userPrompt)];
 

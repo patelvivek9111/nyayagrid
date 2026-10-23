@@ -9,10 +9,10 @@
       "api": "responses",
       "exactModelId": "gpt-6.1-sol",
       "reasoning": { "effort": "high" },
-      "service_tier": "standard",
+      "service_tier": "default",
       "temperature": null,
       "max_output_tokens": 4096,
-      "notes": "reasoning.effort=high; none/minimal unsupported on gpt-6.1-sol."
+      "notes": "reasoning.effort=high; service_tier=default (OpenAI standard processing); none/minimal unsupported on gpt-6.1-sol."
     },
     "claude-opus-5-5": {
       "provider": "anthropic",

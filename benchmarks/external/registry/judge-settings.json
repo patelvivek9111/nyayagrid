@@ -20,7 +20,7 @@
       "exactModelId": "gpt-6.1-sol",
       "api": "responses",
       "reasoning": { "effort": "medium" },
-      "service_tier": "standard",
+      "service_tier": "default",
       "temperature": null,
       "max_output_tokens": 2048
     }
