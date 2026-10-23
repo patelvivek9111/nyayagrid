@@ -1,0 +1,110 @@
+{
+  "benchmarkId": "prbench",
+  "synthetic": true,
+  "prefilledResponses": {
+    "prbench-synth-001": "Under the synthetic PRBench scenario, the contractor may terminate for material breach after written notice and cure period.",
+    "prbench-synth-002": "The limitation-of-liability cap applies to direct damages but excludes indemnification obligations as stated in Section 9.",
+    "prbench-synth-003": "Choice of law is Delaware; forum selection clause is enforceable absent undue inconvenience."
+  },
+  "tasks": [
+    {
+      "benchmarkId": "prbench",
+      "taskId": "prbench-synth-001",
+      "split": "synthetic",
+      "jurisdiction": "US-DE",
+      "practiceArea": "contracts",
+      "difficulty": "medium",
+      "taskType": "issue_spotting",
+      "input": { "prompt": "Identify termination rights after vendor delay." },
+      "conversation": [
+        {
+          "role": "user",
+          "content": "Does the customer have termination rights if the vendor misses the SLA for 60 days?"
+        }
+      ],
+      "supportingDocuments": [
+        {
+          "documentId": "msa-001",
+          "title": "Master Services Agreement (synthetic)",
+          "text": "Section 12: Termination for material breach after 30-day cure."
+        }
+      ],
+      "expectedAnswer": "termination for material breach",
+      "rubric": {
+        "criteria": [
+          {
+            "id": "identify-breach-ground",
+            "description": "termination for material breach",
+            "weight": 2,
+            "maxScore": 1
+          },
+          {
+            "id": "notice-cure",
+            "description": "written notice and cure period",
+            "weight": 1,
+            "maxScore": 1
+          }
+        ]
+      },
+      "goldEvidence": [
+        {
+          "documentId": "msa-001",
+          "start": 0,
+          "end": 48,
+          "text": "Section 12: Termination for material breach"
+        }
+      ],
+      "metadata": { "fixture": true },
+      "contaminationRisk": "PRIVATE_LOW"
+    },
+    {
+      "benchmarkId": "prbench",
+      "taskId": "prbench-synth-002",
+      "split": "synthetic",
+      "jurisdiction": "US-NY",
+      "practiceArea": "contracts",
+      "difficulty": "hard",
+      "taskType": "clause_analysis",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "Does the liability cap cover indemnification claims?"
+        }
+      ],
+      "expectedAnswer": "excludes indemnification",
+      "rubric": {
+        "criteria": [
+          {
+            "id": "cap-scope",
+            "description": "limitation-of-liability cap",
+            "weight": 1,
+            "maxScore": 1
+          },
+          {
+            "id": "indemnity-carveout",
+            "description": "excludes indemnification",
+            "weight": 2,
+            "maxScore": 1
+          }
+        ]
+      },
+      "contaminationRisk": "PUBLIC_MEDIUM"
+    },
+    {
+      "benchmarkId": "prbench",
+      "taskId": "prbench-synth-003",
+      "split": "synthetic",
+      "jurisdiction": "US-DE",
+      "practiceArea": "contracts",
+      "taskType": "choice_of_law",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "Which state's law governs and is the forum clause likely enforceable?"
+        }
+      ],
+      "expectedAnswer": "Delaware",
+      "contaminationRisk": "UNKNOWN"
+    }
+  ]
+}

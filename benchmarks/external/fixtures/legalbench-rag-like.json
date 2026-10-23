@@ -1,0 +1,66 @@
+{
+  "benchmarkId": "legalbench-rag",
+  "synthetic": true,
+  "prefilledResponses": {
+    "lbrag-synth-001": "The retrieved clause limits audit rights to once per calendar year with 30 days notice.",
+    "lbrag-synth-002": "Assignment requires consent except for change of control to an affiliate.",
+    "lbrag-synth-003": "Confidentiality survives termination for three years for trade secrets."
+  },
+  "tasks": [
+    {
+      "benchmarkId": "legalbench-rag",
+      "taskId": "lbrag-synth-001",
+      "split": "synthetic",
+      "jurisdiction": "US",
+      "taskType": "rag_qa",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "How often may the customer audit and what notice is required?"
+        }
+      ],
+      "supportingDocuments": [
+        {
+          "documentId": "doc-audit",
+          "title": "SaaS Agreement §7 (synthetic)",
+          "text": "Customer may audit no more than once per calendar year upon thirty (30) days prior written notice."
+        }
+      ],
+      "expectedAnswer": "once per calendar year with 30 days notice",
+      "goldEvidence": [
+        {
+          "documentId": "doc-audit",
+          "start": 18,
+          "end": 95,
+          "text": "once per calendar year upon thirty (30) days prior written notice"
+        }
+      ],
+      "metadata": { "gold_document_ids": ["doc-audit"] },
+      "contaminationRisk": "PRIVATE_LOW"
+    },
+    {
+      "benchmarkId": "legalbench-rag",
+      "taskId": "lbrag-synth-002",
+      "split": "synthetic",
+      "taskType": "rag_qa",
+      "expectedAnswer": "consent except change of control affiliate",
+      "goldEvidence": [
+        {
+          "documentId": "doc-assign",
+          "start": 0,
+          "end": 60,
+          "text": "Assignment requires consent except change of control to affiliate"
+        }
+      ],
+      "contaminationRisk": "PRIVATE_LOW"
+    },
+    {
+      "benchmarkId": "legalbench-rag",
+      "taskId": "lbrag-synth-003",
+      "split": "synthetic",
+      "taskType": "rag_qa",
+      "expectedAnswer": "three years trade secrets",
+      "contaminationRisk": "UNKNOWN"
+    }
+  ]
+}

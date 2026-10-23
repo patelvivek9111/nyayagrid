@@ -1,0 +1,7 @@
+{
+  "benchmark_id": "nyaya-bench",
+  "role": "REGRESSION_ONLY",
+  "used_for_model_winner": false,
+  "v3_built": false,
+  "notes": "Internal NyayaGrid regression harness; not mixed into external legal benchmark leaderboards."
+}

@@ -7,7 +7,8 @@
     "apps/*",
     "packages/*",
     "benchmarks/nyaya-bench",
-    "benchmarks/performance"
+    "benchmarks/performance",
+    "benchmarks/external"
   ],
   "scripts": {
     "dev": "npm run dev -w @nyayagrid/web",
@@ -41,6 +42,11 @@
     "bench:6v": "npm run bench:6v -w @nyayagrid/nyaya-bench",
     "bench:fw1": "npm run bench:fw1 -w @nyayagrid/nyaya-bench --",
     "bench:week5": "npm run bench:week5 -w @nyayagrid/nyaya-bench",
+    "bench:external:fetch": "npm run fetch -w @nyayagrid/external-bench --",
+    "bench:external:verify": "npm run verify -w @nyayagrid/external-bench --",
+    "bench:external:list": "npm run list -w @nyayagrid/external-bench --",
+    "bench:external:dry-run": "npm run dry-run -w @nyayagrid/external-bench --",
+    "bench:external:authorize-live": "npm run authorize-live -w @nyayagrid/external-bench --",
     "perf:baseline": "npm run perf:offline -w @nyayagrid/perf-baseline",
     "perf:baseline:p2": "npm run perf:p2 -w @nyayagrid/perf-baseline",
     "docker:up": "docker compose up -d",

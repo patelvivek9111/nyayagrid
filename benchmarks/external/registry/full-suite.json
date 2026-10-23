@@ -1,0 +1,28 @@
+{
+  "suite_id": "external-full-v1",
+  "selection_method": "full_or_justified_subset",
+  "frozen": false,
+  "executed": false,
+  "composition": {
+    "prbench_legal_hard": {
+      "mode": "full_where_upstream_confirms",
+      "expected_published": 250,
+      "actual_upstream": null
+    },
+    "legalbench": {
+      "mode": "us_and_general_legal_subset",
+      "exclude_categories": ["NON_US_OR_LOW_RELEVANCE"],
+      "task_ids": []
+    },
+    "legalbench_rag": {
+      "mode": "full_or_statistically_justified",
+      "sources": ["privacy_qa", "contractnli", "cuad", "maud"],
+      "query_ids": []
+    }
+  },
+  "plawbench": {
+    "classification": "FOREIGN_JURISDICTION_OPTIONAL",
+    "included_in_us_primary_score": false
+  },
+  "notes": "Do not run yet. Define only."
+}

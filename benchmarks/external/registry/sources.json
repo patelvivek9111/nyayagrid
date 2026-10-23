@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "benchmark_id": "prbench",
+      "upstream_repo": "ScaleAI/PRBench",
+      "revision": "01947c6ef913df518e6e52626a7b29f132b12d4f",
+      "dataset_url": "https://huggingface.co/datasets/ScaleAI/PRBench",
+      "default_format": "parquet",
+      "pin_policy": "git_sha",
+      "expected_published_counts": {
+        "legal": 500,
+        "legal_hard": 250
+      }
+    },
+    {
+      "benchmark_id": "legalbench",
+      "upstream_repo": "HazyResearch/legalbench",
+      "revision": "b46bf4ffae90524b2b72aaa30e7745fe9db64481",
+      "dataset_url": "https://github.com/HazyResearch/legalbench",
+      "default_format": "tsv",
+      "pin_policy": "git_sha",
+      "notes": "Pinned GitHub revision primarily ships train.tsv few-shot files per task; adapter falls back to train when test.tsv is absent. HF mirror nguha/legalbench may provide fuller test splits pending license review."
+    },
+    {
+      "benchmark_id": "legalbench-rag",
+      "upstream_repo": "zeroentropy-ai/legalbenchrag",
+      "code_revision": "431bc8f2488a81569ab7259fa633dcc50ab77f9a",
+      "data_mirror": "awinml/legalbench-rag",
+      "revision": "2b9c248bc8179ef0908fd6ba01d50b156facd48b",
+      "dataset_url": "https://huggingface.co/datasets/awinml/legalbench-rag",
+      "default_format": "json",
+      "pin_policy": "hf_sha",
+      "expected_published_counts": {
+        "questions": 6889,
+        "documents": 714
+      }
+    }
+  ]
+}

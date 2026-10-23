@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-23T12:53:31.532Z",
+  "entries": [
+    {
+      "relativePath": "prbench-like.json",
+      "size": 3355,
+      "sha256": "60883dd7ce100c3cec528f04abbc423ae9e82d7069c5cfe08cba4a68721647bf",
+      "source": "fixtures",
+      "revision": "synthetic-v1"
+    },
+    {
+      "relativePath": "legalbench-like.json",
+      "size": 1716,
+      "sha256": "8692f9952dd3caffd6319efa8fd0148bf0438cd3d6d6102bd3972532ecf64573",
+      "source": "fixtures",
+      "revision": "synthetic-v1"
+    },
+    {
+      "relativePath": "legalbench-rag-like.json",
+      "size": 2118,
+      "sha256": "de6bc0c72d4ac24d546da044e2f5cc8521af1956adbbb3d2ad9de6e6a3e3573c",
+      "source": "fixtures",
+      "revision": "synthetic-v1"
+    }
+  ]
+}

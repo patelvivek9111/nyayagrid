@@ -1,0 +1,49 @@
+{
+  "benchmarkId": "legalbench",
+  "synthetic": true,
+  "prefilledResponses": {
+    "legalbench-synth-001": "The offer, acceptance, and consideration elements are satisfied; the contract is likely enforceable.",
+    "legalbench-synth-002": "Under the synthetic UCC fact pattern, the merchant firm offer rule may apply with a definite season for acceptance.",
+    "legalbench-synth-003": "The parol evidence rule would bar extrinsic terms inconsistent with the integrated writing."
+  },
+  "tasks": [
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "legalbench-synth-001",
+      "split": "synthetic",
+      "jurisdiction": "US",
+      "practiceArea": "contracts",
+      "taskType": "rule_application",
+      "input": { "cluster": "contract_formation_synthetic" },
+      "conversation": [
+        {
+          "role": "user",
+          "content": "Apply contract formation elements to the given facts."
+        }
+      ],
+      "expectedAnswer": "offer, acceptance, and consideration",
+      "metadata": { "license_note": "synthetic — not from LegalBench upstream" },
+      "contaminationRisk": "PUBLIC_HIGH"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "legalbench-synth-002",
+      "split": "synthetic",
+      "jurisdiction": "US",
+      "practiceArea": "commercial",
+      "taskType": "ucc",
+      "expectedAnswer": "firm offer",
+      "contaminationRisk": "PUBLIC_HIGH"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "legalbench-synth-003",
+      "split": "synthetic",
+      "jurisdiction": "US",
+      "practiceArea": "evidence",
+      "taskType": "parol_evidence",
+      "expectedAnswer": "parol evidence rule",
+      "contaminationRisk": "PUBLIC_MEDIUM"
+    }
+  ]
+}

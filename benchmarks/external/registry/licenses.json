@@ -1,0 +1,71 @@
+[
+  {
+    "benchmark_id": "prbench",
+    "source": "huggingface",
+    "upstream_repo": "ScaleAI/PRBench",
+    "upstream_revision": "01947c6ef913df518e6e52626a7b29f132b12d4f",
+    "dataset_url": "https://huggingface.co/datasets/ScaleAI/PRBench",
+    "license": "cc-by-4.0",
+    "subcomponent_licenses": [],
+    "commercial_evaluation_allowed": true,
+    "redistribution_allowed": true,
+    "runtime_distribution_allowed": false,
+    "attribution_required": true,
+    "notes": "CC-BY-4.0 permits commercial use and redistribution with attribution; cache eval copies only, do not ship dataset in runtime artifacts.",
+    "review_status": "VERIFIED_OK"
+  },
+  {
+    "benchmark_id": "legalbench",
+    "source": "github",
+    "upstream_repo": "HazyResearch/legalbench",
+    "upstream_revision": "b46bf4ffae90524b2b72aaa30e7745fe9db64481",
+    "dataset_url": "https://github.com/HazyResearch/legalbench",
+    "license": "mixed-per-task",
+    "subcomponent_licenses": ["cc-by-4.0", "cc-by-nc-4.0", "mit", "other"],
+    "commercial_evaluation_allowed": null,
+    "redistribution_allowed": null,
+    "runtime_distribution_allowed": false,
+    "attribution_required": true,
+    "notes": "LegalBench tasks carry heterogeneous licenses; several subsets are CC-BY-NC or task-specific. Per-task license map required before commercial eval or redistribution.",
+    "review_status": "LICENSE_REVIEW_REQUIRED"
+  },
+  {
+    "benchmark_id": "legalbench-rag",
+    "source": "huggingface",
+    "upstream_repo": "zeroentropy-ai/legalbenchrag",
+    "upstream_revision": "431bc8f2488a81569ab7259fa633dcc50ab77f9a",
+    "dataset_url": "https://huggingface.co/datasets/awinml/legalbench-rag",
+    "license": "other (per-source-licenses)",
+    "subcomponent_licenses": [
+      "mit (code repo)",
+      "cuad",
+      "maud",
+      "contractnli",
+      "privacyqa",
+      "other"
+    ],
+    "commercial_evaluation_allowed": null,
+    "redistribution_allowed": null,
+    "runtime_distribution_allowed": false,
+    "attribution_required": true,
+    "notes": "Code repo MIT at 431bc8f; published data mirror awinml/legalbench-rag@2b9c248 with license=other/per-source. Corpora from CUAD/MAUD/ContractNLI/PrivacyQA may impose separate terms. Do not redistribute until matrix reviewed.",
+    "review_status": "LICENSE_REVIEW_REQUIRED",
+    "data_mirror_revision": "2b9c248bc8179ef0908fd6ba01d50b156facd48b"
+  },
+  {
+    "benchmark_id": "plawbench",
+    "source": "external",
+    "upstream_repo": null,
+    "upstream_revision": null,
+    "dataset_url": null,
+    "license": "unknown",
+    "subcomponent_licenses": [],
+    "commercial_evaluation_allowed": null,
+    "redistribution_allowed": false,
+    "runtime_distribution_allowed": false,
+    "attribution_required": true,
+    "notes": "Chinese-law focused benchmark; classification FOREIGN_JURISDICTION_OPTIONAL. Excluded from US-primary production model ranking. Not integrated into primary harness.",
+    "review_status": "INTERNAL_EVAL_ONLY",
+    "classification": "FOREIGN_JURISDICTION_OPTIONAL"
+  }
+]

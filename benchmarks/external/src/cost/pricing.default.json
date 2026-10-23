@@ -1,0 +1,31 @@
+{
+  "currency": "USD",
+  "models": {
+    "dummy/fixture": {
+      "inputPer1M": 0,
+      "outputPer1M": 0
+    },
+    "placeholder-response": {
+      "inputPer1M": 3,
+      "outputPer1M": 15
+    },
+    "openai/gpt-4o-mini": {
+      "inputPer1M": 0.15,
+      "outputPer1M": 0.6
+    },
+    "anthropic/claude-sonnet": {
+      "inputPer1M": 3,
+      "outputPer1M": 15
+    }
+  },
+  "judgeModels": {
+    "placeholder-judge": {
+      "inputPer1M": 3,
+      "outputPer1M": 15
+    },
+    "openai/gpt-4o-mini": {
+      "inputPer1M": 0.15,
+      "outputPer1M": 0.6
+    }
+  }
+}
