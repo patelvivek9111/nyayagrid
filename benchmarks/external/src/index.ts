@@ -141,6 +141,23 @@ export {
   mapWithConcurrency,
   DEFAULT_PROVIDER_CONCURRENCY,
 } from "./live/concurrency.js";
+export { checkCredentialPresence, allCredentialsPresent } from "./live/credentials.js";
+export type { CredentialPresenceReport, CredentialName } from "./live/credentials.js";
+export { classifyModelAccessFromCredentials } from "./live/model-access.js";
+export {
+  buildStage1RunId,
+  buildStage1ManifestPayload,
+  freezeStage1Manifest,
+  hashFileContents,
+} from "./live/stage1-manifest-builder.js";
+export {
+  buildOpenAiResponsesRequest,
+  buildAnthropicMessagesRequest,
+  buildGeminiInteractionsRequest,
+  buildXaiResponsesRequest,
+  xaiPricingTierForPromptTokens,
+  XAI_LONG_CONTEXT_THRESHOLD_TOKENS,
+} from "./providers/request-builders.js";
 
 export { assertJudgeSeparation, JudgeSeparationError } from "./guards/judge-separation.js";
 

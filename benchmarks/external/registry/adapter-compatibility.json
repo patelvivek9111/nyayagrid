@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-23",
+  "note": "Metadata/request-builder compatibility only. No inference performed.",
+  "models": {
+    "gpt-6.1-sol": {
+      "status": "COMPATIBLE",
+      "required_api": "responses",
+      "required_controls": ["reasoning.effort"],
+      "forbidden_or_ignored": [],
+      "external_bench_builder": "buildOpenAiResponsesRequest",
+      "packages_ai_gap": "No OpenAI provider in packages/ai; external-bench owns Responses builder for Stage-1."
+    },
+    "claude-opus-5-5": {
+      "status": "COMPATIBLE_WITH_EXTERNAL_BUILDER",
+      "required_api": "messages",
+      "required_controls": ["thinking.adaptive", "effort"],
+      "forbidden": ["temperature", "top_p", "top_k", "thinking.disabled", "thinking.enabled+budget_tokens"],
+      "external_bench_builder": "buildAnthropicMessagesRequest",
+      "packages_ai_gap": "packages/ai AnthropicProvider currently sends temperature=0 — incompatible with Opus 5.5. Do not use that path for Stage-1; use external-bench builder."
+    },
+    "claude-sonnet-5-5": {
+      "status": "COMPATIBLE_WITH_EXTERNAL_BUILDER",
+      "role": "judge",
+      "required_api": "messages",
+      "required_controls": ["thinking.adaptive", "effort"],
+      "forbidden": ["temperature", "top_p", "top_k"],
+      "external_bench_builder": "buildAnthropicMessagesRequest"
+    },
+    "gemini-4-argon": {
+      "status": "COMPATIBLE",
+      "required_api": "interactions",
+      "required_controls": ["thinking_level"],
+      "ignored_if_sent": ["temperature", "top_p", "top_k"],
+      "notes": ["unified 1M context", "output accounting includes thinking tokens"],
+      "external_bench_builder": "buildGeminiInteractionsRequest",
+      "packages_ai_gap": "Verify packages/ai Google provider uses thinking_level and omits sampling; Stage-1 uses external-bench builder."
+    },
+    "grok-4.7": {
+      "status": "COMPATIBLE",
+      "required_api": "responses",
+      "required_controls": ["reasoning.effort"],
+      "long_context_price_threshold_tokens": 200000,
+      "external_bench_builder": "buildXaiResponsesRequest"
+    }
+  }
+}

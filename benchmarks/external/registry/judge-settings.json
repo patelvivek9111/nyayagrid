@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage1-judge-v1",
+  "frozen_at": "2026-10-23",
+  "mode": "dual_independent_llm_judges",
+  "applies_to": ["prbench"],
+  "judges": {
+    "judge_a": {
+      "provider": "anthropic",
+      "exactModelId": "claude-sonnet-5-5",
+      "thinking": { "type": "adaptive" },
+      "effort": "medium",
+      "temperature": null,
+      "top_p": null,
+      "top_k": null,
+      "max_tokens": 2048
+    },
+    "judge_b": {
+      "provider": "openai",
+      "exactModelId": "gpt-6.1-sol",
+      "api": "responses",
+      "reasoning": { "effort": "medium" },
+      "service_tier": "standard",
+      "temperature": null,
+      "max_output_tokens": 2048
+    }
+  },
+  "scoring": {
+    "report_independently": true,
+    "fields": ["judge_a_score", "judge_b_score", "disagreement", "combined"],
+    "disagreement": {
+      "definition": "abs(judge_a_score - judge_b_score)",
+      "flag_threshold": 0.15
+    },
+    "combined_rule": {
+      "method": "mean_of_independent_scores",
+      "do_not_silently_drop_disagreement": true,
+      "same_provider_indicator": {
+        "enabled": true,
+        "description": "When response model provider matches a judge provider, set same_provider_judge=true for that judge score; still retain both scores."
+      }
+    }
+  },
+  "self_grade": {
+    "forbidden_by_default": true,
+    "allowSelfGrade": false,
+    "note": "gpt-6.1-sol responses are still judged by gpt-6.1-sol as judge_b under dual-judge policy; flag same_provider_judge=true. Primary bias control is dual providers + disagreement reporting."
+  }
+}

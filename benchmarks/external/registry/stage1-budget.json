@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage1-budget-v1",
+  "frozen_at": "2026-10-23",
+  "total_max_usd": 25,
+  "auto_increase": false,
+  "provider_subcaps_usd": {
+    "openai_responses": 4,
+    "anthropic_responses": 6,
+    "google_responses": 4,
+    "xai_responses": 4,
+    "judging": 12
+  },
+  "notes": "Subcaps may overlap; TOTAL $25 is absolute. STOP_BUDGET_LIMIT before any call that would exceed remaining total."
+}

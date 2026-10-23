@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage1-canary-v1",
+  "status": "PREPARED_NOT_EXECUTED",
+  "frozen_at": "2026-10-23",
+  "task": {
+    "benchmarkId": "prbench",
+    "split": "legal_hard",
+    "taskId": "b3f21d7d047856eec803e6e8",
+    "selection_reason": "Deterministic mid-index (15) from frozen 32 Legal Hard IDs; representative hard task, not first/easiest."
+  },
+  "response_model": {
+    "exactModelId": "gpt-6.1-sol",
+    "settings_ref": "stage1-reasoning-settings.json#gpt-6.1-sol"
+  },
+  "judges": [
+    {
+      "exactModelId": "claude-sonnet-5-5",
+      "settings_ref": "judge-settings.json#judge_a"
+    },
+    {
+      "exactModelId": "gpt-6.1-sol",
+      "settings_ref": "judge-settings.json#judge_b",
+      "same_provider_indicator": true
+    }
+  ],
+  "validates": [
+    "provider_call",
+    "response_persistence",
+    "token_usage",
+    "cost_accounting",
+    "raw_response_retention",
+    "cache_key",
+    "response_parsing",
+    "judge_calls",
+    "judge_cache",
+    "rubric_scoring",
+    "resume_manifest",
+    "offline_rescoring"
+  ],
+  "cost": {
+    "expected_usd": 0.08,
+    "high_usd": 0.35,
+    "hard_cap_usd": 1.0
+  },
+  "reusable_in_stage1": true,
+  "reuse_conditions": [
+    "same runId / frozen manifest",
+    "same dataset revision",
+    "same exactModelId",
+    "same reasoning settings hash",
+    "same prompt version hash",
+    "same judge settings hash"
+  ],
+  "execution": {
+    "allowed_now": false,
+    "blocked_reasons": ["credentials_missing", "awaiting_explicit_user_authorization", "live_executor_scaffold_refuses_until_keys"],
+    "runId": "stage1-screening-v1-eb9305739f4f",
+    "exact_command_when_authorized": "npm run canary --workspace=@nyayagrid/external-bench -- --allow-paid-model-calls --max-cost-usd 1 --run-id stage1-screening-v1-eb9305739f4f"
+  }
+}

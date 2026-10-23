@@ -1,6 +1,9 @@
 {
   "schema_version": 1,
+  "policy_version": "critical-failure-v1",
   "generated_at": "2026-10-23",
+  "frozen_before_scores": true,
+  "mutation_rule": "Require new policy_version for any future change; do not alter mid-run to change winner.",
   "evaluation_order": "disqualifiers_before_aggregate_scores",
   "disqualifiers": [
     {

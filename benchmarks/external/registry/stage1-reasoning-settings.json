@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage1-reasoning-v1",
+  "frozen_at": "2026-10-23",
+  "principle": "Fair production-representative quality; do not retune after seeing scores.",
+  "settings": {
+    "gpt-6.1-sol": {
+      "provider": "openai",
+      "api": "responses",
+      "exactModelId": "gpt-6.1-sol",
+      "reasoning": { "effort": "high" },
+      "service_tier": "standard",
+      "temperature": null,
+      "max_output_tokens": 4096,
+      "notes": "reasoning.effort=high; none/minimal unsupported on gpt-6.1-sol."
+    },
+    "claude-opus-5-5": {
+      "provider": "anthropic",
+      "api": "messages",
+      "exactModelId": "claude-opus-5-5",
+      "thinking": { "type": "adaptive" },
+      "effort": "high",
+      "temperature": null,
+      "top_p": null,
+      "top_k": null,
+      "max_tokens": 4096,
+      "notes": "Adaptive thinking always on; effort steers depth. Omit temperature/top_p/top_k."
+    },
+    "gemini-4-argon": {
+      "provider": "google",
+      "api": "interactions",
+      "exactModelId": "gemini-4-argon",
+      "thinking_level": "high",
+      "temperature": null,
+      "top_p": null,
+      "top_k": null,
+      "max_output_tokens": 4096,
+      "notes": "thinking_level=high; sampling params ignored if sent. Output tokens include thinking."
+    },
+    "grok-4.7": {
+      "provider": "xai",
+      "api": "responses",
+      "exactModelId": "grok-4.7",
+      "reasoning": { "effort": "high" },
+      "temperature": null,
+      "max_output_tokens": 4096,
+      "long_context_threshold_tokens": 200000,
+      "notes": "reasoning.effort=high; long-context rates apply when prompt >= 200k (not expected for Stage-1 screening)."
+    }
+  }
+}

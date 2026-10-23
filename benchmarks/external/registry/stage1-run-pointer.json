@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "status": "MANIFEST_FROZEN_AWAITING_CREDENTIALS",
+  "runId": "stage1-screening-v1-eb9305739f4f",
+  "gitSha_at_freeze": "eb9305739f4f92f4a166385a2ee5540e77bd1d80",
+  "configHash": "5adbe130f321c1f38c75b45edea82e3d57c2a1f59e6000a49c74c51ded416fbe",
+  "budgetMaxUsd": 25,
+  "policy_versions": {
+    "reasoning": "stage1-reasoning-v1",
+    "judge": "stage1-judge-v1",
+    "budget": "stage1-budget-v1",
+    "criticalFailure": "critical-failure-v1"
+  },
+  "pricing_date": "2026-10-23",
+  "note": "Full immutable manifest lives under cache/runs/<runId>/ (gitignored). Re-freeze after HEAD moves if config changes."
+}

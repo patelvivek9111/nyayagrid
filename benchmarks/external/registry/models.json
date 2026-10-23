@@ -104,7 +104,7 @@
         "stability": "PINNED_STABLE",
         "mutableAlias": null,
         "contextWindow": 1000000,
-        "maxOutput": 64000,
+        "maxOutput": 128000,
         "structuredOutput": true,
         "tools": true,
         "reasoning": true,

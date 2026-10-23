@@ -17,7 +17,11 @@
     "cost-plan": "tsx src/cli/cost-plan.ts",
     "rebuild-commercial-screening": "tsx src/cli/rebuild-commercial-screening.ts",
     "preflight": "tsx src/cli/preflight.ts --dry-run",
+    "final-preflight": "tsx src/cli/final-preflight.ts",
     "freeze-screening": "tsx src/cli/freeze-screening.ts",
+    "freeze-stage1-manifest": "tsx src/cli/freeze-stage1-manifest.ts",
+    "rag-retrieval": "tsx src/cli/run-rag-retrieval.ts",
+    "canary": "tsx src/cli/canary.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit"

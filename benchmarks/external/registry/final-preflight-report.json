@@ -1,0 +1,58 @@
+{
+  "status": "LIVE_CANARY_BLOCKED",
+  "classification": "LIVE_MODEL_BENCHMARK_PREFLIGHT",
+  "gitSha": "eb9305739f4f92f4a166385a2ee5540e77bd1d80",
+  "runId": "stage1-screening-v1-eb9305739f4f",
+  "manifestFrozen": true,
+  "credentials": {
+    "OPENAI_API_KEY": "MISSING",
+    "ANTHROPIC_API_KEY": "MISSING",
+    "GOOGLE_API_KEY": "MISSING",
+    "XAI_API_KEY": "MISSING"
+  },
+  "valuesPrinted": false,
+  "modelAccess": {
+    "gpt-6.1-sol": "KEY_MISSING",
+    "claude-opus-5-5": "KEY_MISSING",
+    "claude-sonnet-5-5": "KEY_MISSING",
+    "gemini-4-argon": "KEY_MISSING",
+    "grok-4.7": "KEY_MISSING"
+  },
+  "dataset": {
+    "prbenchHard": 32,
+    "legalbench": 24,
+    "legalbenchRag": 150
+  },
+  "datasetHashes": {
+    "screeningSuite": "714bebc812b311693fbce9410ab43fd95a69a619d418023848510dbbca29b3e2"
+  },
+  "callCounts": {
+    "prbenchRawModelReasoning": 128,
+    "legalbenchGeneration": 96,
+    "ragRetrievalOnly": 150,
+    "judgeCalls": 256
+  },
+  "cost": {
+    "lowUsd": 1.752288,
+    "expectedUsd": 8.963104000000001,
+    "highUsd": 18.57928,
+    "currency": "USD"
+  },
+  "freeRag": {
+    "executed": true,
+    "queries": 150,
+    "documentHitRate": 0,
+    "meanRecallAtK": 0
+  },
+  "paidCalls": {
+    "openai": 0,
+    "anthropic": 0,
+    "google": 0,
+    "xai": 0,
+    "judge": 0,
+    "courtlistener": 0
+  },
+  "blockedReasons": [
+    "credentials_missing"
+  ]
+}
