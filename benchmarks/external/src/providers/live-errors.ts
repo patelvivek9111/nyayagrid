@@ -41,12 +41,18 @@ export function classifyHttpStatus(
   bodyText: string,
 ): LiveProviderError {
   const lower = bodyText.toLowerCase();
-  if (status === 401 || status === 403) {
+  if (
+    status === 401 ||
+    status === 403 ||
+    /credit balance is too low|insufficient.?credit|billing|invalid.?api.?key|authentication/i.test(
+      bodyText,
+    )
+  ) {
     return new LiveProviderError({
       code: "AUTH_ERROR",
       provider,
       status,
-      message: `${provider} auth failed (${status})`,
+      message: `${provider} auth/billing failed (${status}): ${bodyText.replace(/\s+/g, " ").slice(0, 240)}`,
       retryable: false,
     });
   }

@@ -588,10 +588,8 @@ export async function runLiveCanary(input: {
     }
   }
 
-  if (
-    status === "LIVE_CANARY_PASS" ||
-    (status === "LIVE_CANARY_PARTIAL" && judgeA.score !== null)
-  ) {
+  // Judges are independent: Judge A failure must not skip Judge B (resume fills gaps).
+  if (status !== "LIVE_CANARY_BUDGET_STOP" && status !== "LIVE_CANARY_UNKNOWN_COMPLETION") {
     try {
       judgeB = await runJudge({
         label: "B",
@@ -599,7 +597,6 @@ export async function runLiveCanary(input: {
         modelId: JUDGE_B_MODEL,
         sameProvider: true,
       });
-      if (status === "LIVE_CANARY_PARTIAL" && judgeB.score !== null) status = "LIVE_CANARY_PASS";
     } catch (err) {
       if (err instanceof BudgetLimitError) {
         status = "LIVE_CANARY_BUDGET_STOP";
@@ -609,7 +606,7 @@ export async function runLiveCanary(input: {
         note = err.message;
       } else {
         status = "LIVE_CANARY_PARTIAL";
-        note = err instanceof Error ? err.message : String(err);
+        note = [note, err instanceof Error ? err.message : String(err)].filter(Boolean).join(" | ");
       }
     }
   }
