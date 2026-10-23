@@ -1,5 +1,6 @@
 import { execSync } from "node:child_process";
 import { buildStage1RunId, freezeStage1Manifest } from "../live/stage1-manifest-builder.js";
+import { loadExternalBenchLocalEnv } from "../live/load-local-env.js";
 
 function gitSha(): string {
   try {
@@ -13,6 +14,7 @@ function gitSha(): string {
 }
 
 function main(): void {
+  loadExternalBenchLocalEnv();
   const sha = gitSha();
   const runId = buildStage1RunId(sha);
   try {

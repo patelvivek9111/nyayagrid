@@ -1,15 +1,18 @@
 /**
  * ONE-CALL canary entrypoint.
- * Refuses without two-step paid authorization. This task must not execute paid calls.
+ * Requires --allow-paid-model-calls and --max-cost-usd 1 (hard canary cap).
  */
-import { assertLivePaidExecutionAuthorized } from "../live/authorization.js";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { getRegistryDir } from "../paths.js";
 import { checkCredentialPresence, allCredentialsPresent } from "../live/credentials.js";
 import { loadExternalBenchLocalEnv } from "../live/load-local-env.js";
+import { runLiveCanary } from "../live/canary-executor.js";
+import { BudgetLimitError } from "../live/budget.js";
+import { UnknownCompletionError } from "../live/retry.js";
+import { LiveProviderError } from "../providers/live-errors.js";
 
-function main(): void {
+async function main(): Promise<void> {
   loadExternalBenchLocalEnv();
   const plan = JSON.parse(
     readFileSync(path.join(getRegistryDir(), "canary-plan.json"), "utf8"),
@@ -39,43 +42,47 @@ function main(): void {
   }
 
   try {
-    assertLivePaidExecutionAuthorized({ argv: process.argv });
+    const summary = await runLiveCanary({ argv: process.argv });
+    console.log(JSON.stringify(summary, null, 2));
+    if (summary.status !== "LIVE_CANARY_PASS") {
+      process.exitCode = 2;
+    }
   } catch (err) {
+    const reason =
+      err instanceof BudgetLimitError
+        ? err.message
+        : err instanceof UnknownCompletionError
+          ? err.message
+          : err instanceof LiveProviderError
+            ? `${err.code}: ${err.message}`
+            : err instanceof Error
+              ? err.message
+              : String(err);
+    const status =
+      err instanceof BudgetLimitError
+        ? "LIVE_CANARY_BUDGET_STOP"
+        : err instanceof UnknownCompletionError
+          ? "LIVE_CANARY_UNKNOWN_COMPLETION"
+          : "LIVE_CANARY_BLOCKED";
     console.error(
       JSON.stringify(
         {
-          status: "LIVE_CANARY_BLOCKED",
-          reason: err instanceof Error ? err.message : String(err),
+          status,
+          reason,
           prepared: {
             taskId: plan.task.taskId,
             model: plan.response_model.exactModelId,
             hardCapUsd: plan.cost.hard_cap_usd,
           },
           paidCalls: 0,
+          valuesPrinted: false,
         },
         null,
         2,
       ),
     );
     process.exitCode = 2;
-    return;
   }
-
-  // Authorization present — still do not auto-run inference in this scaffold without
-  // an explicit future executor. Fail closed until live executor is wired.
-  console.error(
-    JSON.stringify(
-      {
-        status: "LIVE_CANARY_BLOCKED",
-        reason: "live_executor_not_wired_for_paid_inference",
-        note: "Preflight prepared canary; paid executor lands in a later authorized task.",
-        paidCalls: 0,
-      },
-      null,
-      2,
-    ),
-  );
-  process.exitCode = 2;
 }
 
 main();

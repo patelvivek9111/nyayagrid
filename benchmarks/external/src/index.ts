@@ -126,7 +126,18 @@ export { createRunProgress, bumpProgress, formatProgressLine } from "./live/prog
 export { resolveBatchSize, chunk, DEFAULT_BATCH_SIZE_MIN } from "./live/batch.js";
 export { shouldRetry, computeBackoffMs, UnknownCompletionError } from "./live/retry.js";
 export { buildCanaryPlan, shouldStopAfterCanary } from "./live/canary.js";
+export { runLiveCanary, offlineRescoreCanary } from "./live/canary-executor.js";
+export { calculateActualCostUsd, worstCaseCostForBudgetGate } from "./live/cost-accounting.js";
 export { scoreFromSavedResponses } from "./live/offline-score.js";
+export {
+  classifyHttpStatus,
+  isRetryableLiveError,
+  LiveProviderError,
+} from "./providers/live-errors.js";
+export type { LiveProviderErrorCode } from "./providers/live-errors.js";
+export { executeOpenAiResponses } from "./providers/openai-live.js";
+export { executeAnthropicMessages } from "./providers/anthropic-live.js";
+export type { LiveProviderResult, LiveClientOptions } from "./providers/live-types.js";
 export {
   parseProviderCaps,
   assertWithinProviderCaps,
