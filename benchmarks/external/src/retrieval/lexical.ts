@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
+import { decodeCacheFsPath } from "../fetch/cache-path.js";
 
 export type LexicalDoc = {
   documentId: string;
@@ -36,8 +37,9 @@ export function loadCorpusDocuments(corpusRoot: string, source: string): Lexical
       if (entry.isDirectory()) {
         walk(abs, nextRel);
       } else if (entry.isFile() && /\.(txt|md|html?)$/i.test(entry.name)) {
+        const logicalRel = decodeCacheFsPath(nextRel.replace(/\\/g, "/"));
         docs.push({
-          documentId: `${source}/${nextRel}`.replace(/\\/g, "/"),
+          documentId: `${source}/${logicalRel}`,
           text: readFileSync(abs, "utf8"),
         });
       }

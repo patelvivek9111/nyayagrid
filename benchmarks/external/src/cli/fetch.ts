@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { inventoryLegalBenchTasks } from "../adapters/legalbench.js";
+import { encodeCacheFsPath } from "../fetch/cache-path.js";
 import { downloadToFile, recordAsset, writeJson } from "../fetch/download.js";
 import type { IntegrityManifestEntry } from "../integrity/manifest.js";
 import { getCacheDir, getRegistryDir } from "../paths.js";
@@ -202,13 +203,14 @@ async function fetchLegalBenchRag(
   ];
   for (const file of corpusFiles) {
     const rel = `corpus/privacy_qa/${file}`;
-    const dest = path.join(base, rel);
+    const fsRel = encodeCacheFsPath(rel);
+    const dest = path.join(base, ...fsRel.split("/"));
     const enc = encodeURIComponent(file);
     const url = `https://huggingface.co/datasets/awinml/legalbench-rag/resolve/${LEGALBENCH_RAG_DATA_REV}/corpus/privacy_qa/${enc}`;
     try {
       await downloadToFile(url, dest, { force: options.force });
       const asset = await recordAsset({
-        relativePath: path.relative(cacheRoot, dest),
+        relativePath: path.posix.join(path.relative(cacheRoot, base).replace(/\\/g, "/"), rel),
         absolutePath: dest,
         source: "https://huggingface.co/datasets/awinml/legalbench-rag",
         revision: LEGALBENCH_RAG_DATA_REV,
@@ -228,14 +230,23 @@ async function fetchLegalBenchRag(
       "NOTE: --full-corpus requested; downloading remaining corpus entries from SHA256SUMS (large).",
     );
     for (const [rel, expected] of checksums) {
-      if (!rel.startsWith("corpus/") || existsSync(path.join(base, rel))) {
+      if (!rel.startsWith("corpus/")) {
         continue;
       }
-      const dest = path.join(base, rel);
-      const url = `https://huggingface.co/datasets/awinml/legalbench-rag/resolve/${LEGALBENCH_RAG_DATA_REV}/${rel.split("/").map(encodeURIComponent).join("/")}`;
+      // Windows-illegal chars in upstream names (`|`, `:`, …) are encoded on disk.
+      const fsRel = encodeCacheFsPath(rel);
+      const dest = path.join(base, ...fsRel.split("/"));
+      if (!options.force && existsSync(dest)) {
+        continue;
+      }
+      const url = `https://huggingface.co/datasets/awinml/legalbench-rag/resolve/${LEGALBENCH_RAG_DATA_REV}/${rel
+        .split("/")
+        .map(encodeURIComponent)
+        .join("/")}`;
       await downloadToFile(url, dest, { force: options.force });
       const asset = await recordAsset({
-        relativePath: path.relative(cacheRoot, dest),
+        // Logical upstream path (decoded) for human-readable manifests.
+        relativePath: path.posix.join(path.relative(cacheRoot, base).replace(/\\/g, "/"), rel),
         absolutePath: dest,
         source: "https://huggingface.co/datasets/awinml/legalbench-rag",
         revision: LEGALBENCH_RAG_DATA_REV,

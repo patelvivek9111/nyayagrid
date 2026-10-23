@@ -5,24 +5,24 @@
   "retrievalConfigHash": "8a497fb757bee93ff52ed8a472bac73786c82f83854644ddf1c09602a90f462c",
   "queries": 150,
   "k": 5,
-  "documentHitRate": 0,
-  "meanRecallAtK": 0,
+  "documentHitRate": 0.06666666666666667,
+  "meanRecallAtK": 0.07333333333333333,
   "corpusDocsLoaded": [
     {
       "source": "cuad",
-      "docs": 0
+      "docs": 462
     },
     {
       "source": "maud",
-      "docs": 0
+      "docs": 150
     },
     {
       "source": "contractnli",
-      "docs": 0
+      "docs": 111
     }
   ],
   "note": "Baseline lexical retrieval only; not production embedding/RAG pipeline. Separated from model-selection generation scores.",
-  "corpusStatus": "COMMERCIAL_CORPUS_NOT_CACHED_LOCALLY",
+  "corpusStatus": "LOADED",
   "sample": [
     {
       "taskId": "contractnli::109",
