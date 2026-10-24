@@ -17,6 +17,7 @@ import {
   assertNextCallWithinBudget,
   BudgetLimitError,
   parseMaxCostUsd,
+  applyPersistedSpend,
   recordSpend,
   remainingBudgetUsd,
   type BudgetState,
@@ -364,6 +365,8 @@ export async function runLiveCanary(input: {
     };
     responsePersisted = true;
     responseUsd = Number(payload.costEstimateUsd ?? 0) || 0;
+    // Resume must count prior successful spend against the same hard cap.
+    budget = applyPersistedSpend(budget, responseUsd);
   } else {
     const estimatedInput = estimateTokens(systemPrompt + userPrompt);
     const worst = worstCaseCostForBudgetGate({
@@ -465,13 +468,18 @@ export async function runLiveCanary(input: {
     if (isJudgeCacheHit(runId, judgeKey)) {
       const cached = readJudgeCache(runId, judgeKey) as unknown as PersistedPaidCallRecord;
       const parsed = cached.structuredParsedResponse as { score?: number } | undefined;
+      const cachedCost = Number(cached.costEstimateUsd ?? 0) || 0;
+      if (params.label === "A") judgeAUsd = cachedCost;
+      else judgeBUsd = cachedCost;
+      // Prior judge spend counts toward the run hard cap on resume.
+      budget = applyPersistedSpend(budget, cachedCost);
       return {
         cacheHit: true,
         paidCall: false,
         score: typeof parsed?.score === "number" ? parsed.score : null,
         tokens: { input: cached.inputTokens ?? 0, output: cached.outputTokens ?? 0 },
         latencyMs: cached.latencyMs ?? 0,
-        costUsd: Number(cached.costEstimateUsd ?? 0) || 0,
+        costUsd: cachedCost,
         sameProvider: params.sameProvider,
       };
     }

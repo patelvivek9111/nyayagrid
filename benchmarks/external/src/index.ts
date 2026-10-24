@@ -96,6 +96,8 @@ export {
   assertBudgetConfigured,
   assertNextCallWithinBudget,
   recordSpend,
+  applyPersistedSpend,
+  reconstructSpendFromPersistedCosts,
   remainingBudgetUsd,
   worstCaseCallCostUsd,
   BudgetLimitError,

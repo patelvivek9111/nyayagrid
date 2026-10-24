@@ -63,3 +63,28 @@ export function recordSpend(state: BudgetState, actualUsd: number): BudgetState 
 export function remainingBudgetUsd(state: BudgetState): number {
   return Math.max(0, state.maxUsd - state.spentUsd);
 }
+
+/**
+ * Reconstruct the hard-cap ledger from persisted successful call costs.
+ * Used on resume / new-process restart so cached spend is not forgotten.
+ * Non-finite or negative values are treated as 0.
+ */
+export function reconstructSpendFromPersistedCosts(
+  maxUsd: number,
+  persistedCostsUsd: readonly number[],
+): BudgetState {
+  let state: BudgetState = { maxUsd, spentUsd: 0 };
+  for (const raw of persistedCostsUsd) {
+    const cost = Number(raw);
+    const safe = Number.isFinite(cost) && cost > 0 ? cost : 0;
+    if (safe > 0) state = recordSpend(state, safe);
+  }
+  return state;
+}
+
+/** Apply one persisted successful cost onto an existing ledger (cache-hit path). */
+export function applyPersistedSpend(state: BudgetState, persistedCostUsd: number): BudgetState {
+  const cost = Number(persistedCostUsd);
+  const safe = Number.isFinite(cost) && cost > 0 ? cost : 0;
+  return safe > 0 ? recordSpend(state, safe) : state;
+}
