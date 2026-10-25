@@ -1,0 +1,14 @@
+{
+  "paidCalls": 0,
+  "promptCount": 330,
+  "inputTokens": {
+    "p50": 283,
+    "p90": 7331,
+    "p95": 11237,
+    "max": 24902,
+    "mean": 2210.742424242424
+  },
+  "gptOverflows": 0,
+  "grokOverflows": 0,
+  "promptContentHash": "f4566b1f04057c7c604817c59479739ec383680bc48fd23c6de3052dcafa8eff"
+}

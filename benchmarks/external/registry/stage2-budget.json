@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage2-budget-v1",
+  "currency": "USD",
+  "note": "Recommended hard cap from frozen Stage-2 HIGH + ~10% contingency; not authorized until explicit paid authorization.",
+  "authorized_now": false,
+  "recommended_total_max_usd": 55,
+  "provider_subcaps_usd": {
+    "openai_responses": 13,
+    "xai_responses": 11,
+    "anthropic_judge": 18,
+    "openai_judge": 18,
+    "max_judge_usd": 35
+  },
+  "global_overrides_provider_caps": true,
+  "batching": {
+    "preferred_batch_size": 5,
+    "max_batch_size": 10,
+    "default_concurrency": 1,
+    "provider_concurrency": {
+      "openai": 1,
+      "xai": 1,
+      "anthropic": 1
+    }
+  }
+}

@@ -124,6 +124,25 @@ export { assessContextFit, assertNoSilentTruncate } from "./live/context-fit.js"
 export { findDuplicateInputHashes } from "./live/duplicate-tasks.js";
 export { assertSameModelPinned, ModelSwapForbiddenError } from "./live/no-fallback.js";
 export { mayStartStage, autoStartStage2FromStage1 } from "./live/stage-gate.js";
+export { runStage2Finalists } from "./live/stage2-executor.js";
+export type { Stage2RunSummary, Stage2ExecutorDeps } from "./live/stage2-executor.js";
+export {
+  buildStage2SuitePlan,
+  plannedStage2ResponseCount,
+  plannedStage2JudgeCount,
+  STAGE2_RESPONSE_MODELS,
+} from "./live/stage2-task-planner.js";
+export type { Stage2SuitePlan, Stage2ResponseModelId } from "./live/stage2-task-planner.js";
+export { buildStage2ContextProfile, buildStage2ContextProfileFromTasks } from "./live/stage2-context-profile.js";
+export type { Stage2ContextProfile } from "./live/stage2-context-profile.js";
+export { computeStage2ExactCostPlan } from "./cost/plan-stage2.js";
+export type { Stage2ExactCostPlan } from "./cost/plan-stage2.js";
+export {
+  buildStage2RunId,
+  buildStage2ManifestPayload,
+  freezeStage2Manifest,
+  STAGE2_RUN_ID_PREFIX,
+} from "./live/stage2-manifest-builder.js";
 export { createRunProgress, bumpProgress, formatProgressLine } from "./live/progress.js";
 export { resolveBatchSize, chunk, DEFAULT_BATCH_SIZE_MIN } from "./live/batch.js";
 export { shouldRetry, computeBackoffMs, UnknownCompletionError } from "./live/retry.js";

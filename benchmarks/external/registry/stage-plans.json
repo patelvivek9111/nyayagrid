@@ -76,8 +76,8 @@
     "stage": 2,
     "status": "PLANNED_REQUIRES_SEPARATE_AUTHORIZATION",
     "autoStartFromStage1": false,
-    "models": ["TOP_2_FROM_STAGE_1"],
-    "modelNote": "Exact finalist IDs selected only after Stage-1 scores; no auto-escalation.",
+    "models": ["gpt-6.1-sol", "grok-4.7"],
+    "modelNote": "Finalists frozen from Stage-1 screening stage1-screening-v1-323ee6eb76ee; no auto-escalation.",
     "tasks": {
       "prbenchLegalHard": 250,
       "legalbenchCleared": 80,
@@ -90,10 +90,12 @@
       "judgeCalls": 1000
     },
     "cost": {
-      "lowUsd": 6.59225,
-      "expectedUsd": 32.9664,
-      "highUsd": 68.29950000000001,
-      "currency": "USD"
+      "lowUsd": 4.32644,
+      "expectedUsd": 19.60512,
+      "highUsd": 49.23708,
+      "currency": "USD",
+      "recommendedHardCapUsd": 55,
+      "recomputedFrom": "stage2-cost-plan.json measured token profile + exact finalist rates"
     }
   },
   "stage_3": {

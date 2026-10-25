@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage2-finalists-v1",
+  "frozen_before_live": true,
+  "source_stage1_run_id": "stage1-screening-v1-323ee6eb76ee",
+  "advancement_basis": "Stage-1 terminal-partial but decision-sufficient; highest coverage + dual-judge PRBench among completable finalists",
+  "response_models": ["grok-4.7", "gpt-6.1-sol"],
+  "eliminated_response_models": ["claude-opus-5-5", "gemini-4-argon"],
+  "judges": {
+    "judge_a": "claude-sonnet-5-5",
+    "judge_b": "gpt-6.1-sol"
+  },
+  "no_fallback": true,
+  "notes": [
+    "Exact finalist IDs frozen after Stage-1 scores; no mid-Stage-2 substitutions.",
+    "Anthropic Sonnet remains Judge A only; Claude Opus is not a Stage-2 response model.",
+    "Gemini is not included."
+  ]
+}

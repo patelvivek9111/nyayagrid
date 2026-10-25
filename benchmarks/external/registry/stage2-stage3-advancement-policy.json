@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage2-to-stage3-advancement-v1",
+  "frozen_before_live": true,
+  "mutation_rule": "Require new policy_version for any change; do not alter after Stage-2 scores.",
+  "purpose": "Decide whether one finalist clearly wins Stage 2 or both enter Stage 3 variance/critical-failure stability.",
+  "axes": [
+    "legal_reasoning",
+    "professional_execution",
+    "critical_failures",
+    "reliability",
+    "judge_disagreement",
+    "latency",
+    "cost",
+    "context_fit"
+  ],
+  "rules": [
+    {
+      "id": "disqualifiers_first",
+      "rule": "Apply critical-failure-policy.json disqualifiers before any ranking."
+    },
+    {
+      "id": "sole_winner",
+      "rule": "Advance only the sole finalist if it wins legal_reasoning AND professional_execution without a critical-failure disqualifier AND the other finalist is either disqualified or trails by >=0.05 combined PRBench dual-judge mean with no offsetting LegalBench advantage >=0.10 absolute accuracy."
+    },
+    {
+      "id": "both_to_stage3",
+      "rule": "If neither is disqualified and neither meets sole_winner, both enter Stage 3."
+    },
+    {
+      "id": "incomplete_coverage",
+      "rule": "A finalist with response coverage <95% of planned Stage-2 responses cannot be sole winner; may still enter Stage 3 if the other is also incomplete or disqualified."
+    },
+    {
+      "id": "self_judge_sensitivity",
+      "rule": "Report dual-judge combined and cross-provider-only views; sole_winner must hold under both views or default to both_to_stage3."
+    },
+    {
+      "id": "no_auto_stage3",
+      "rule": "Stage 3 never auto-starts; requires separate explicit authorization."
+    }
+  ],
+  "autoStartStage3FromStage2": false
+}

@@ -1,0 +1,104 @@
+{
+  "stage": 2,
+  "status": "PLANNED_REQUIRES_SEPARATE_AUTHORIZATION",
+  "autoStartFromStage1": false,
+  "authorizedNow": false,
+  "models": [
+    "gpt-6.1-sol",
+    "grok-4.7"
+  ],
+  "judges": [
+    "claude-sonnet-5-5",
+    "gpt-6.1-sol"
+  ],
+  "tasks": {
+    "prbenchLegalHard": 250,
+    "legalbenchCleared": 80,
+    "legalbenchRagRetrieval": 150
+  },
+  "callCounts": {
+    "prbenchResponses": 500,
+    "legalbenchResponses": 160,
+    "totalResponses": 660,
+    "judgeCalls": 1000,
+    "ragRetrievalOnly": 150,
+    "ragGenerationCalls": 0
+  },
+  "tokenAssumptions": {
+    "inputTokens": {
+      "low": 283,
+      "expected": 4032,
+      "high": 11237
+    },
+    "prbenchOutput": {
+      "low": 400,
+      "expected": 800,
+      "high": 1600
+    },
+    "legalbenchOutput": {
+      "low": 25,
+      "expected": 50,
+      "high": 100
+    },
+    "judgeOutput": {
+      "low": 100,
+      "expected": 200,
+      "high": 400
+    },
+    "inputFromTokenProfile": true,
+    "note": "Input low/expected/high derived from measured p50 / max(p50,p90*0.55) / p95 (max tracked in context profile only)."
+  },
+  "cost": {
+    "lowUsd": 4.32644,
+    "expectedUsd": 19.605120000000003,
+    "highUsd": 49.237080000000006,
+    "currency": "USD"
+  },
+  "breakdown": {
+    "gptResponses": {
+      "lowUsd": 1.18422,
+      "expectedUsd": 4.378560000000001,
+      "highUsd": 10.59754,
+      "currency": "USD"
+    },
+    "grokResponses": {
+      "lowUsd": 0.77622,
+      "expectedUsd": 3.5625600000000004,
+      "highUsd": 8.96554,
+      "currency": "USD"
+    },
+    "anthropicJudgeA": {
+      "lowUsd": 1.183,
+      "expectedUsd": 5.832000000000001,
+      "highUsd": 14.837,
+      "currency": "USD"
+    },
+    "openaiJudgeB": {
+      "lowUsd": 1.183,
+      "expectedUsd": 5.832000000000001,
+      "highUsd": 14.837,
+      "currency": "USD"
+    },
+    "ragGeneration": {
+      "lowUsd": 0,
+      "expectedUsd": 0,
+      "highUsd": 0,
+      "currency": "USD"
+    }
+  },
+  "oldPlanComparison": {
+    "oldExpectedUsd": 32.9664,
+    "oldHighUsd": 68.2995,
+    "newExpectedUsd": 19.605120000000003,
+    "newHighUsd": 49.237080000000006,
+    "materialDifferenceNote": "New estimate uses exact finalist rates (gpt-6.1-sol + grok-4.7) and measured Stage-2 input percentiles instead of Stage-1 four-model average rates."
+  },
+  "recommendedHardCapUsd": 55,
+  "providerSubcapsUsd": {
+    "openai_responses": 13,
+    "xai_responses": 11,
+    "anthropic_judge": 18,
+    "openai_judge": 18,
+    "max_judge_usd": 35
+  }
+}

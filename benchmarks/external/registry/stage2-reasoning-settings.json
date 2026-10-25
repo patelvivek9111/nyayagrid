@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage2-reasoning-v1",
+  "frozen_at": "2026-10-25",
+  "principle": "Reuse Stage-1 certified production-representative settings for both finalists; do not retune after seeing Stage-2 scores.",
+  "inherits_from": "stage1-reasoning-v1",
+  "change_from_stage1": "none — same effort/high and max output for gpt-6.1-sol and grok-4.7",
+  "settings": {
+    "gpt-6.1-sol": {
+      "provider": "openai",
+      "api": "responses",
+      "exactModelId": "gpt-6.1-sol",
+      "reasoning": { "effort": "high" },
+      "service_tier": "default",
+      "temperature": null,
+      "max_output_tokens": 4096,
+      "notes": "Identical to Stage-1 certified configuration."
+    },
+    "grok-4.7": {
+      "provider": "xai",
+      "api": "responses",
+      "exactModelId": "grok-4.7",
+      "reasoning": { "effort": "high" },
+      "temperature": null,
+      "max_output_tokens": 4096,
+      "long_context_threshold_tokens": 200000,
+      "notes": "Identical to Stage-1 certified configuration."
+    }
+  }
+}
