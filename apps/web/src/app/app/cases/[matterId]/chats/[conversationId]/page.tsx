@@ -65,10 +65,7 @@ function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
       id: s.chunkId || `s-${i}`,
       chunkId: s.chunkId || undefined,
       documentId: s.documentId || undefined,
-      title:
-        legalTitle ||
-        s.documentTitle ||
-        (category === "web" ? "Web source" : "Case document"),
+      title: legalTitle || s.documentTitle || (category === "web" ? "Web source" : "Case document"),
       classLabel:
         category === "web"
           ? "Web"
@@ -110,9 +107,7 @@ function sourcesFromCitations(citations: any[] | undefined, messageId: string): 
       id: c.chunkId || `${messageId}-${i}`,
       chunkId: c.chunkId || undefined,
       documentId: c.documentId || undefined,
-      title:
-        legalTitle ||
-        (category === "web" ? "Web source" : "Case document"),
+      title: legalTitle || (category === "web" ? "Web source" : "Case document"),
       classLabel:
         category === "web"
           ? "Web"
@@ -138,7 +133,9 @@ function sourcesFromCitations(citations: any[] | undefined, messageId: string): 
   });
 }
 
-function streamSourceToDrawerItem(source: AskStreamEvent & { type: "source_added" }): SourceDrawerItem {
+function streamSourceToDrawerItem(
+  source: AskStreamEvent & { type: "source_added" },
+): SourceDrawerItem {
   const s = source.source;
   return {
     id: s.id,
@@ -218,9 +215,162 @@ export default function CaseChatThreadPage() {
   const busyRef = useRef(false);
   const loadGenRef = useRef(0);
   const lastQuestionRef = useRef("");
+  const pendingLoadRef = useRef<{
+    loadGen: number;
+    title: string;
+    turns: ChatTurn[];
+  } | null>(null);
+
+  function applyLoadedConversation(title: string, nextTurns: ChatTurn[]) {
+    setTitle(title);
+    setTurns(nextTurns);
+  }
+
+  function mapLoadedTurns(data: {
+    messages?: unknown[];
+    artifacts?: Array<{ messageId?: string; [key: string]: unknown }>;
+  }): ChatTurn[] {
+    const artifactsByMsg = new Map<string, any>();
+    for (const a of data.artifacts ?? []) {
+      if (a.messageId) artifactsByMsg.set(a.messageId, a);
+    }
+    return (data.messages ?? []).map((m: any) => {
+      const art = artifactsByMsg.get(m.id);
+      const validation = (art?.validation ?? {}) as Record<string, unknown>;
+      const sources = filterRenderableMatterSources(sourcesFromCitations(art?.citations, m.id), {
+        matterId,
+      });
+      const rawAction = (validation.conversationalAction ?? null) as Record<string, unknown> | null;
+      const previewPayload =
+        rawAction?.previewPayload && typeof rawAction.previewPayload === "object"
+          ? (rawAction.previewPayload as Record<string, unknown>)
+          : {};
+      const action: CommandCenterActionUx | undefined =
+        rawAction && typeof rawAction.pendingActionId === "string"
+          ? {
+              pendingActionId: rawAction.pendingActionId,
+              actionType: String(rawAction.actionType ?? ""),
+              actionClass: String(rawAction.actionClass ?? ""),
+              actionStatus: String(rawAction.actionStatus ?? ""),
+              workflowStatus:
+                typeof rawAction.workflowStatus === "string" ? rawAction.workflowStatus : undefined,
+              confirmationRequired: Boolean(rawAction.confirmationRequired),
+              summary:
+                typeof previewPayload.previewText === "string"
+                  ? previewPayload.previewText
+                  : typeof previewPayload.title === "string"
+                    ? previewPayload.title
+                    : undefined,
+              targetLabel:
+                typeof previewPayload.label === "string"
+                  ? previewPayload.label
+                  : typeof previewPayload.title === "string"
+                    ? previewPayload.title
+                    : undefined,
+              sourceCount: Array.isArray(rawAction.sourceRefs)
+                ? rawAction.sourceRefs.length
+                : undefined,
+              failureReason:
+                typeof rawAction.failureReason === "string" ? rawAction.failureReason : null,
+              draftRoute: `/app/cases/${matterId}/draft`,
+            }
+          : undefined;
+      const referent = validation.referentResolution as
+        | {
+            status?: string;
+            clarificationPrompt?: string;
+            candidates?: Array<{ label: string; entityType: string }>;
+          }
+        | undefined;
+      const completionStatus = String(validation.completionStatus ?? "");
+      const factualityTypes = (() => {
+        const contract = validation.factualityContract as
+          { assertions?: Array<{ type?: string }> } | undefined;
+        const types = (contract?.assertions ?? [])
+          .map((a) => a.type)
+          .filter((t): t is string => typeof t === "string" && t.length > 0);
+        return types.length ? [...new Set(types)] : undefined;
+      })();
+      const crossWorkflow = (validation.crossWorkflow ?? {}) as Record<string, unknown>;
+      const investigateNextSnap =
+        validation.investigateNext && typeof validation.investigateNext === "object"
+          ? (validation.investigateNext as Record<string, unknown>)
+          : null;
+      const matterSynthesisSnap =
+        crossWorkflow.matterSynthesis && typeof crossWorkflow.matterSynthesis === "object"
+          ? (crossWorkflow.matterSynthesis as Record<string, unknown>)
+          : null;
+      const ux: AskUxPayload | undefined = (() => {
+        const structured: Pick<AskUxPayload, "investigateNext" | "matterSynthesis"> = {};
+        if (investigateNextSnap) structured.investigateNext = investigateNextSnap;
+        if (matterSynthesisSnap) structured.matterSynthesis = matterSynthesisSnap;
+
+        if (referent?.status === "AMBIGUOUS" && referent.candidates?.length) {
+          return {
+            turnKind: "ambiguity" as const,
+            ambiguity: {
+              prompt: referent.clarificationPrompt ?? "Which one do you mean?",
+              choices: referent.candidates.map((c) => ({
+                label: c.label,
+                entityType: c.entityType,
+              })),
+            },
+            factualityTypes,
+            ...structured,
+          };
+        }
+        if (action?.pendingActionId) {
+          return {
+            turnKind:
+              action.actionStatus === "COMPLETED"
+                ? ("action_result" as const)
+                : ("action_preview" as const),
+            action,
+            factualityTypes,
+            navigation:
+              action.actionClass === "NAVIGATION" && typeof previewPayload.route === "string"
+                ? {
+                    kind: String(previewPayload.kind ?? "NAVIGATE"),
+                    route: previewPayload.route,
+                    label: String(previewPayload.label ?? "item"),
+                  }
+                : undefined,
+            ...structured,
+          };
+        }
+        if (factualityTypes?.length || investigateNextSnap || matterSynthesisSnap) {
+          return { turnKind: "answer" as const, factualityTypes, ...structured };
+        }
+        return undefined;
+      })();
+      return {
+        id: m.id,
+        role: m.role,
+        content: m.content,
+        evidenceState: art?.evidenceState,
+        sources: sources.length ? sources : undefined,
+        assumptions: Array.isArray(validation.assumptions)
+          ? (validation.assumptions as string[])
+          : undefined,
+        unresolvedQuestions: Array.isArray(validation.unresolvedQuestions)
+          ? (validation.unresolvedQuestions as string[])
+          : undefined,
+        artifactId: art?.id,
+        needsMoreDocuments: Boolean(validation.needsMoreDocuments),
+        provenance: validation.provenance as ProvenanceSummary | undefined,
+        factualityTypes,
+        cancelled:
+          completionStatus === "cancelled" ||
+          action?.actionStatus === "CANCELLED" ||
+          /\[Generation stopped\]/i.test(String(m.content ?? "")),
+        ux,
+      } satisfies ChatTurn;
+    });
+  }
 
   useEffect(() => {
     const loadGen = ++loadGenRef.current;
+    pendingLoadRef.current = null;
     setLoading(true);
     fetch(`/api/v1/matters/${matterId}/conversations/${conversationId}`)
       .then(async (res) => {
@@ -231,159 +381,18 @@ export default function CaseChatThreadPage() {
           }
           throw new Error(userFacingLoadError("chats", res.status));
         }
-        // Stale or in-flight Ask: never clobber live turns with a late empty/partial load.
-        if (loadGen !== loadGenRef.current || busyRef.current) {
+        if (loadGen !== loadGenRef.current) {
           return;
         }
-        setTitle(data.conversation?.title ?? "Chat");
-        const artifactsByMsg = new Map<string, any>();
-        for (const a of data.artifacts ?? []) {
-          if (a.messageId) artifactsByMsg.set(a.messageId, a);
+        const title = data.conversation?.title ?? "Chat";
+        const nextTurns = mapLoadedTurns(data);
+        // In-flight Ask: defer applying server turns until the composer unlocks so we
+        // never clobber optimistic UI, then sync after busy clears.
+        if (busyRef.current) {
+          pendingLoadRef.current = { loadGen, title, turns: nextTurns };
+          return;
         }
-        setTurns(
-          (data.messages ?? []).map((m: any) => {
-            const art = artifactsByMsg.get(m.id);
-            const validation = (art?.validation ?? {}) as Record<string, unknown>;
-            const sources = filterRenderableMatterSources(
-              sourcesFromCitations(art?.citations, m.id),
-              { matterId },
-            );
-            const rawAction = (validation.conversationalAction ?? null) as Record<
-              string,
-              unknown
-            > | null;
-            const previewPayload =
-              rawAction?.previewPayload && typeof rawAction.previewPayload === "object"
-                ? (rawAction.previewPayload as Record<string, unknown>)
-                : {};
-            const action: CommandCenterActionUx | undefined =
-              rawAction && typeof rawAction.pendingActionId === "string"
-                ? {
-                    pendingActionId: rawAction.pendingActionId,
-                    actionType: String(rawAction.actionType ?? ""),
-                    actionClass: String(rawAction.actionClass ?? ""),
-                    actionStatus: String(rawAction.actionStatus ?? ""),
-                    workflowStatus:
-                      typeof rawAction.workflowStatus === "string"
-                        ? rawAction.workflowStatus
-                        : undefined,
-                    confirmationRequired: Boolean(rawAction.confirmationRequired),
-                    summary:
-                      typeof previewPayload.previewText === "string"
-                        ? previewPayload.previewText
-                        : typeof previewPayload.title === "string"
-                          ? previewPayload.title
-                          : undefined,
-                    targetLabel:
-                      typeof previewPayload.label === "string"
-                        ? previewPayload.label
-                        : typeof previewPayload.title === "string"
-                          ? previewPayload.title
-                          : undefined,
-                    sourceCount: Array.isArray(rawAction.sourceRefs)
-                      ? rawAction.sourceRefs.length
-                      : undefined,
-                    failureReason:
-                      typeof rawAction.failureReason === "string"
-                        ? rawAction.failureReason
-                        : null,
-                    draftRoute: `/app/cases/${matterId}/draft`,
-                  }
-                : undefined;
-            const referent = validation.referentResolution as
-              | {
-                  status?: string;
-                  clarificationPrompt?: string;
-                  candidates?: Array<{ label: string; entityType: string }>;
-                }
-              | undefined;
-            const completionStatus = String(validation.completionStatus ?? "");
-            const factualityTypes = (() => {
-              const contract = validation.factualityContract as
-                | { assertions?: Array<{ type?: string }> }
-                | undefined;
-              const types = (contract?.assertions ?? [])
-                .map((a) => a.type)
-                .filter((t): t is string => typeof t === "string" && t.length > 0);
-              return types.length ? [...new Set(types)] : undefined;
-            })();
-            const crossWorkflow = (validation.crossWorkflow ?? {}) as Record<string, unknown>;
-            const investigateNextSnap =
-              validation.investigateNext && typeof validation.investigateNext === "object"
-                ? (validation.investigateNext as Record<string, unknown>)
-                : null;
-            const matterSynthesisSnap =
-              crossWorkflow.matterSynthesis && typeof crossWorkflow.matterSynthesis === "object"
-                ? (crossWorkflow.matterSynthesis as Record<string, unknown>)
-                : null;
-            const ux: AskUxPayload | undefined = (() => {
-              const structured: Pick<AskUxPayload, "investigateNext" | "matterSynthesis"> = {};
-              if (investigateNextSnap) structured.investigateNext = investigateNextSnap;
-              if (matterSynthesisSnap) structured.matterSynthesis = matterSynthesisSnap;
-
-              if (referent?.status === "AMBIGUOUS" && referent.candidates?.length) {
-                return {
-                  turnKind: "ambiguity" as const,
-                  ambiguity: {
-                    prompt: referent.clarificationPrompt ?? "Which one do you mean?",
-                    choices: referent.candidates.map((c) => ({
-                      label: c.label,
-                      entityType: c.entityType,
-                    })),
-                  },
-                  factualityTypes,
-                  ...structured,
-                };
-              }
-              if (action?.pendingActionId) {
-                return {
-                  turnKind:
-                    action.actionStatus === "COMPLETED"
-                      ? ("action_result" as const)
-                      : ("action_preview" as const),
-                  action,
-                  factualityTypes,
-                  navigation:
-                    action.actionClass === "NAVIGATION" &&
-                    typeof previewPayload.route === "string"
-                      ? {
-                          kind: String(previewPayload.kind ?? "NAVIGATE"),
-                          route: previewPayload.route,
-                          label: String(previewPayload.label ?? "item"),
-                        }
-                      : undefined,
-                  ...structured,
-                };
-              }
-              if (factualityTypes?.length || investigateNextSnap || matterSynthesisSnap) {
-                return { turnKind: "answer" as const, factualityTypes, ...structured };
-              }
-              return undefined;
-            })();
-            return {
-              id: m.id,
-              role: m.role,
-              content: m.content,
-              evidenceState: art?.evidenceState,
-              sources: sources.length ? sources : undefined,
-              assumptions: Array.isArray(validation.assumptions)
-                ? (validation.assumptions as string[])
-                : undefined,
-              unresolvedQuestions: Array.isArray(validation.unresolvedQuestions)
-                ? (validation.unresolvedQuestions as string[])
-                : undefined,
-              artifactId: art?.id,
-              needsMoreDocuments: Boolean(validation.needsMoreDocuments),
-              provenance: validation.provenance as ProvenanceSummary | undefined,
-              factualityTypes,
-              cancelled:
-                completionStatus === "cancelled" ||
-                action?.actionStatus === "CANCELLED" ||
-                /\[Generation stopped\]/i.test(String(m.content ?? "")),
-              ux,
-            } satisfies ChatTurn;
-          }),
-        );
+        applyLoadedConversation(title, nextTurns);
       })
       .catch((err) => {
         if (loadGen !== loadGenRef.current) return;
@@ -400,6 +409,7 @@ export default function CaseChatThreadPage() {
       .catch(() => undefined);
     return () => {
       loadGenRef.current += 1;
+      pendingLoadRef.current = null;
     };
   }, [matterId, conversationId]);
 
@@ -472,7 +482,6 @@ export default function CaseChatThreadPage() {
       setBusy(false);
     }, 500);
   }
-
 
   async function send(opts?: {
     continueToken?: string | null;
@@ -562,6 +571,11 @@ export default function CaseChatThreadPage() {
             provenance = event.provenance;
             uxPayload = event.ux;
             factualityTypes = event.ux?.factualityTypes;
+            // Unlock as soon as the terminal event arrives. Trailing server work
+            // (audit, etc.) must not leave "Stop generating" stuck until SSE close.
+            clearHardAbortTimer();
+            busyRef.current = false;
+            setBusy(false);
           }
           if (event.type === "continue_available") {
             clearHardAbortTimer();
@@ -571,12 +585,17 @@ export default function CaseChatThreadPage() {
             clearHardAbortTimer();
             wasStopped = true;
             cancelRequestedRef.current = true;
+            busyRef.current = false;
+            setBusy(false);
             // Unblock the SSE reader — soft-cancel alone can leave the stream open
             // and stick the composer in busy/disabled.
             queueMicrotask(() => abortRef.current?.abort());
           }
           if (event.type === "generation_failed") {
             setError(event.message || USER_FACING_ASK_ERROR);
+            clearHardAbortTimer();
+            busyRef.current = false;
+            setBusy(false);
           }
         });
       } else {
@@ -657,6 +676,11 @@ export default function CaseChatThreadPage() {
       setBusy(false);
       setLiveAnswer("");
       setStreamEvents([]);
+      const pending = pendingLoadRef.current;
+      if (pending && pending.loadGen === loadGenRef.current) {
+        pendingLoadRef.current = null;
+        applyLoadedConversation(pending.title, pending.turns);
+      }
     }
   }
 
@@ -748,9 +772,7 @@ export default function CaseChatThreadPage() {
                   </div>
                 ) : null}
                 {t.role === "assistant" && (t.factualityTypes ?? t.ux?.factualityTypes)?.length ? (
-                  <FactualityAssertionBadges
-                    types={t.factualityTypes ?? t.ux?.factualityTypes}
-                  />
+                  <FactualityAssertionBadges types={t.factualityTypes ?? t.ux?.factualityTypes} />
                 ) : null}
                 {t.role === "assistant" && t.provenance ? (
                   <div className="mb-2">
@@ -892,7 +914,9 @@ export default function CaseChatThreadPage() {
                 <Button
                   type="button"
                   variant="secondary"
-                  onClick={() => void send({ continueToken, questionOverride: lastQuestionRef.current })}
+                  onClick={() =>
+                    void send({ continueToken, questionOverride: lastQuestionRef.current })
+                  }
                 >
                   Continue generating
                 </Button>

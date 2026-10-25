@@ -805,6 +805,177 @@ export async function askNyayaAboutMatter(params: {
   try {
     throwIfAborted();
 
+    // Entity-free navigation (e.g. "Open the draft.") must not wait on retrieval /
+    // authority / case-intel. Those stages can keep the SSE stream open long enough
+    // for Command Center "Stop generating" to stick under CI load even though the
+    // eventual answer is a deterministic route link.
+    const ENTITY_FREE_NAVIGATION = new Set([
+      "OPEN_DRAFT",
+      "OPEN_RESEARCH",
+      "OPEN_TASK",
+      "OPEN_TIMELINE",
+      "OPEN_GRAPH",
+    ]);
+    const earlyWorkflow = classifyConversationalAction({ question: params.question });
+    if (
+      earlyWorkflow.actionClass === "NAVIGATION" &&
+      earlyWorkflow.navigationKind &&
+      ENTITY_FREE_NAVIGATION.has(earlyWorkflow.navigationKind)
+    ) {
+      let conversationIdForWorkflow = conversationId;
+      if (!conversationIdForWorkflow) {
+        const [created] = await params.db
+          .insert(conversations)
+          .values({
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            createdByUserId: params.userId,
+            title: params.question.slice(0, 120),
+          })
+          .returning();
+        conversationIdForWorkflow = created!.id;
+        conversationId = conversationIdForWorkflow;
+      }
+      const nav = buildNavigationAction({
+        kind: earlyWorkflow.navigationKind,
+        matterId: params.matterId,
+        organizationId: params.organizationId,
+        workingState: emptyWorkingState(),
+        allowedEntityIds: new Set(),
+      });
+      if (!nav.ok) {
+        // Fall through to the full Ask path so entity-aware recovery can run.
+      } else {
+        const action = createPendingActionRecord({
+          actionType: "NAVIGATE",
+          actionClass: "NAVIGATION",
+          conversationId: conversationIdForWorkflow,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          workingState: emptyWorkingState(),
+          previewPayload: nav.payload as unknown as Record<string, unknown>,
+          targetEntityIds: nav.payload.targetEntityId ? [nav.payload.targetEntityId] : [],
+          classificationLatencyMs: earlyWorkflow.latencyMs,
+        });
+        action.actionStatus = "COMPLETED";
+        action.workflowStatus = "COMPLETED";
+        action.confirmationRequired = false;
+        const answer = formatActionPreviewAnswer({
+          classification: earlyWorkflow,
+          pending: action,
+          navigation: nav.payload,
+        });
+        conversationalAction = action;
+        if (!isContinue) {
+          await params.db.insert(messages).values({
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            conversationId: conversationIdForWorkflow,
+            role: "user",
+            content: params.question,
+            createdByUserId: params.userId,
+          });
+        }
+        const [assistantMessage] = await params.db
+          .insert(messages)
+          .values({
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            conversationId: conversationIdForWorkflow,
+            role: "assistant",
+            content: answer,
+            createdByUserId: params.userId,
+          })
+          .returning();
+        const [artifact] = await params.db
+          .insert(aiArtifacts)
+          .values({
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            conversationId: conversationIdForWorkflow,
+            messageId: assistantMessage!.id,
+            artifactType: "matter_qa",
+            question: params.question,
+            answer,
+            evidenceState: "grounded",
+            provider: "nyaya_workflow",
+            model: "deterministic",
+            promptVersion: NYAYA_PROMPT_VERSION,
+            retrievedChunkIds: [],
+            citations: [],
+            validation: {
+              completionStatus: "completed",
+              premiseCheck: null,
+              selectedDomains: [],
+              referentResolution: null,
+              conversationWorkingState: emptyWorkingState(),
+              conversationalAction: action,
+              workflowClassification: earlyWorkflow,
+              assertionReady: true,
+              navigationFastPath: true,
+            },
+            createdByUserId: params.userId,
+          })
+          .returning();
+        emit({ type: "text_delta", text: answer, at: nowIso() });
+        const provenance = buildProvenanceSummary({
+          sourceScope,
+          caseSourceCount: 0,
+          webSourceCount: 0,
+          authoritySourceCount: 0,
+        });
+        emit({
+          type: "generation_completed",
+          answer,
+          conversationId: conversationIdForWorkflow,
+          artifactId: artifact?.id,
+          messageId: assistantMessage?.id,
+          status: "completed",
+          provenance,
+          ux: buildAskUxPayload({
+            matterId: params.matterId,
+            conversationalAction: action,
+            referentResolution: null,
+          }),
+          at: nowIso(),
+        });
+        return {
+          conversationId: conversationIdForWorkflow,
+          artifact,
+          answer: {
+            answer,
+            sources: [],
+            assumptions: [],
+            unresolvedQuestions: [],
+            evidenceState: "grounded" as const,
+          },
+          retrieved: [],
+          provenance,
+          sourceScope,
+          usageActionId,
+          needsMoreDocuments: false,
+          needMoreDocumentReasons: [],
+          usedFollowUpRetrieval: false,
+          usedVerifiedIntelligence: false,
+          usedGraph: false,
+          usedMemory: false,
+          usedProfessionalAnalysis: false,
+          usedLegalAuthority: false,
+          usedWeek4CombinedContext: false,
+          week4StructuredContext: null,
+          doctrineQuestion: false,
+          authorityResearchMissing: false,
+          authorityWarnings: [] as string[],
+          authorityValidation: null,
+          timings: {
+            ...timings,
+            totalMs: Date.now() - startedAsk,
+            navigationFastPathMs: Date.now() - startedAsk,
+          },
+        };
+      }
+    }
+
     if (flags.webEnabled) {
       emit({
         type: "retrieval_started",

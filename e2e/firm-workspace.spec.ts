@@ -91,10 +91,10 @@ test.describe("Firm workspace surfaces", () => {
   });
 
   test("practice pages stay organization-scoped", async ({ page }) => {
-    const orgRes = await page.request.get("/api/v1/organizations");
-    const orgs = ((await orgRes.json()).organizations ?? []) as Array<{ id: string }>;
-    test.skip(orgs.length === 0, "no organization for this identity");
-    const orgId = orgs[0]!.id;
+    // Pin to the org created in beforeAll — orgs[0] is unordered and can be a
+    // contaminated tenant from earlier E2E files (rate-limit / capability mismatch).
+    expect(organizationId.length).toBeGreaterThan(0);
+    const orgId = organizationId;
     const paths = [
       `/api/v1/clients?organizationId=${orgId}`,
       `/api/v1/calendar?organizationId=${orgId}`,
@@ -107,7 +107,10 @@ test.describe("Firm workspace surfaces", () => {
     ];
     for (const path of paths) {
       const res = await page.request.get(path);
-      expect(res.ok(), path).toBeTruthy();
+      expect(
+        res.ok(),
+        `${path} → ${res.status()} ${await res.text().then((t) => t.slice(0, 200))}`,
+      ).toBeTruthy();
     }
   });
 });

@@ -65,7 +65,9 @@ async function answerDirectly(params: {
       correlationId: params.correlationId,
     });
 
-    await writeAuditEvent(params.db, {
+    // Do not await audit inside the SSE run — a slow/locked audit write would keep
+    // the stream open and stick the Command Center "Stop generating" control.
+    void writeAuditEvent(params.db, {
       organizationId: params.organizationId,
       actorUserId: params.userId,
       matterId: params.matterId,
@@ -78,6 +80,8 @@ async function answerDirectly(params: {
         provider: result.artifact?.provider,
         sourceScope: result.sourceScope ?? params.sourceScope ?? "case",
       },
+    }).catch(() => {
+      /* audit is best-effort relative to stream completion */
     });
 
     return result;
@@ -113,8 +117,7 @@ export async function POST(request: Request, { params }: Params) {
     const mayCreateRun = agentsOn && mode !== "ask";
     const sourceScope: SourceScope = body.sourceScope ?? "case";
     const wantsStream =
-      body.stream === true ||
-      (request.headers.get("accept") ?? "").includes("text/event-stream");
+      body.stream === true || (request.headers.get("accept") ?? "").includes("text/event-stream");
 
     const { matter, membership } = await requireMatterAccess(db, {
       userId: user.id,

@@ -47,6 +47,13 @@ describe("Phase 4 conversational workflow actions", () => {
     expect(c.draftRequested).toBe(true);
   });
 
+  it("B2: Open the draft is NAVIGATION (not draft generation)", () => {
+    const c = classifyConversationalAction({ question: "Open the draft." });
+    expect(c.actionClass).toBe("NAVIGATION");
+    expect(c.navigationKind).toBe("OPEN_DRAFT");
+    expect(c.draftRequested).toBe(false);
+  });
+
   it("C: save draft requires confirmation / confirm pending", () => {
     expect(classifyConversationalAction({ question: "save this draft" }).actionType).toBe(
       "DRAFT_SAVE",

@@ -169,24 +169,31 @@ async function sendAsk(page: Page, question: string) {
   await expect(page.locator("p.whitespace-pre-wrap", { hasText: question })).toBeVisible({
     timeout: 45_000,
   });
-  // Progress mounts only while the stream is active. On fast mock providers it can
-  // unmount before a hard toContainText assertion; observe softly then wait for idle.
+  // Progress mounts only while the stream is active. Fast navigation / mock paths can
+  // finish before progress paints — wait briefly for Stop, then require idle.
+  const stop = page.getByRole("button", { name: "Stop generating" });
   const progress = page.getByLabel("Ask progress");
-  const sawProgress = await progress
-    .waitFor({ state: "visible", timeout: 8_000 })
+  const sawStop = await stop
+    .waitFor({ state: "visible", timeout: 3_000 })
     .then(() => true)
     .catch(() => false);
-  if (sawProgress) {
-    metrics.firstProgressMs = Date.now() - started;
-    const progressText = (await progress.innerText().catch(() => "")) ?? "";
-    if (progressText.trim()) {
-      expect(progressText).toMatch(
-        /Request accepted|Loading matter|Preparing|Answer ready|Waiting|Cancelled|Failed|Matter sources|Retrieving|Checking|Citations/i,
-      );
+  if (sawStop) {
+    const sawProgress = await progress
+      .waitFor({ state: "visible", timeout: 5_000 })
+      .then(() => true)
+      .catch(() => false);
+    if (sawProgress) {
+      metrics.firstProgressMs = Date.now() - started;
+      const progressText = (await progress.innerText().catch(() => "")) ?? "";
+      if (progressText.trim()) {
+        expect(progressText).toMatch(
+          /Request accepted|Loading matter|Preparing|Answer ready|Waiting|Cancelled|Failed|Matter sources|Retrieving|Checking|Citations/i,
+        );
+      }
     }
   }
   metrics.firstAnswerMs = Date.now() - started;
-  await expect(page.getByRole("button", { name: "Stop generating" })).toHaveCount(0, {
+  await expect(stop).toHaveCount(0, {
     timeout: 90_000,
   });
   metrics.fullAnswerMs = Date.now() - started;
@@ -345,9 +352,14 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
   });
 
   test("SCENARIO 9 — navigation Open Draft link", async ({ page }) => {
-    test.setTimeout(120_000);
+    // Match sibling scenarios + sendAsk budget (question 45s + Stop idle 90s).
+    test.setTimeout(180_000);
     trackPageHealth(page);
     await ensureThread(page);
+    // Prior cancel/retry must fully unlock the composer before navigation Ask.
+    await expect(page.getByRole("button", { name: "Stop generating" })).toHaveCount(0, {
+      timeout: 30_000,
+    });
     await sendAsk(page, "Open the draft.");
     const openDraft = page.getByRole("link", { name: /Open Draft|Open draft/i });
     if (await openDraft.isVisible({ timeout: 10_000 }).catch(() => false)) {
