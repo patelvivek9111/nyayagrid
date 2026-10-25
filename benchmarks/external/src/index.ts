@@ -139,7 +139,24 @@ export {
 export type { LiveProviderErrorCode } from "./providers/live-errors.js";
 export { executeOpenAiResponses } from "./providers/openai-live.js";
 export { executeAnthropicMessages } from "./providers/anthropic-live.js";
-export type { LiveProviderResult, LiveClientOptions } from "./providers/live-types.js";
+export {
+  executeGeminiInteractions,
+  buildGeminiInteractionsWireBody,
+} from "./providers/gemini-live.js";
+export { executeXaiResponses } from "./providers/xai-live.js";
+export type {
+  LiveProviderResult,
+  LiveClientOptions,
+  LiveProviderId,
+  LiveUsage,
+} from "./providers/live-types.js";
+export { runStage1Screening, STAGE1_RESPONSE_MODELS } from "./live/stage1-executor.js";
+export type {
+  Stage1RunSummary,
+  Stage1ExecutorDeps,
+  Stage1ResponseModelId,
+} from "./live/stage1-executor.js";
+export { scoreLegalBenchExact, normalizeLegalBenchAnswer } from "./scorers/legalbench-exact.js";
 export {
   parseProviderCaps,
   assertWithinProviderCaps,

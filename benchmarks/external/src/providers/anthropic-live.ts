@@ -17,16 +17,16 @@ function extractAnthropicText(raw: Record<string, unknown>): string {
 }
 
 export type AnthropicLiveCallInput = {
-  model: "claude-sonnet-5-5";
+  model: "claude-sonnet-5-5" | "claude-opus-5-5";
   messages: Array<{ role: string; content: string }>;
-  effort: "medium";
+  effort: "medium" | "high";
   maxTokens: number;
   requestDispatched?: boolean;
 };
 
 /**
- * Anthropic Messages API for Judge A (claude-sonnet-5-5).
- * Never logs x-api-key.
+ * Anthropic Messages API for Stage-1 Opus responses and Sonnet Judge A.
+ * Never logs x-api-key. No automatic model fallback.
  */
 export async function executeAnthropicMessages(
   options: LiveClientOptions,
@@ -40,10 +40,16 @@ export async function executeAnthropicMessages(
     effort: input.effort,
     maxTokens: input.maxTokens,
   });
+  if (body.model !== input.model) {
+    throw new LiveProviderError({
+      code: "BAD_REQUEST",
+      provider: "anthropic",
+      message: "Anthropic request model mismatch",
+      retryable: false,
+    });
+  }
 
   const started = Date.now();
-  // Once fetch begins, the request may have reached the provider — treat
-  // subsequent transport loss as UNKNOWN_COMPLETION (do not auto-resend).
   let dispatched = Boolean(input.requestDispatched);
   let response: Response;
   try {
@@ -109,7 +115,9 @@ export async function executeAnthropicMessages(
   const usage = (raw.usage ?? {}) as Record<string, unknown>;
   const inputTokens = Number(usage.input_tokens ?? 0) || 0;
   const outputTokens = Number(usage.output_tokens ?? 0) || 0;
-  const thinkingTokens = Number(usage.thinking_tokens ?? 0) || undefined;
+  const thinkingDetails = (usage.output_tokens_details ?? {}) as Record<string, unknown>;
+  const thinkingTokens =
+    Number(usage.thinking_tokens ?? thinkingDetails.thinking_tokens ?? 0) || undefined;
 
   return {
     provider: "anthropic",

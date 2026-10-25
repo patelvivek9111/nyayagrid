@@ -3,10 +3,13 @@ export type LiveUsage = {
   outputTokens: number;
   reasoningTokens?: number;
   thinkingTokens?: number;
+  cachedInputTokens?: number;
 };
 
+export type LiveProviderId = "openai" | "anthropic" | "google" | "xai";
+
 export type LiveProviderResult = {
-  provider: "openai" | "anthropic";
+  provider: LiveProviderId;
   exactModelId: string;
   text: string;
   raw: unknown;

@@ -3,10 +3,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { z } from "zod";
 
-const PricingEntrySchema = z.object({
-  inputPer1M: z.number(),
-  outputPer1M: z.number(),
-});
+const PricingEntrySchema = z
+  .object({
+    inputPer1M: z.number(),
+    outputPer1M: z.number(),
+    cachedInputPer1M: z.number().optional(),
+  })
+  .passthrough();
 
 const PricingTableSchema = z.object({
   currency: z.string(),
