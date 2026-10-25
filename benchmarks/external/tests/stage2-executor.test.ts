@@ -707,11 +707,11 @@ describe("stage2 post-stop safety", () => {
       xaiApiKey: "test-xai",
       prbenchTasks,
       legalbenchTasks,
-      ragTaskIds: [],
+      ragTaskIds: [] as string[],
       skipRag: true,
       suiteOverride: suite,
       sleep: async () => undefined,
-    } as const;
+    };
 
     const seed = await runStage2Finalists({
       argv: [
