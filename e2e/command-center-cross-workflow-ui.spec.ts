@@ -193,19 +193,9 @@ async function sendAsk(page: Page, question: string) {
     }
   }
   metrics.firstAnswerMs = Date.now() - started;
-  try {
-    await expect(stop).toHaveCount(0, {
-      timeout: 60_000,
-    });
-  } catch {
-    // Soft unlock if the composer stuck busy after a painted answer (SSE unlock race).
-    if (await stop.isVisible().catch(() => false)) {
-      await stop.click();
-      await expect(stop).toHaveCount(0, { timeout: 15_000 });
-    } else {
-      throw new Error("Ask did not unlock Stop generating and Stop control was missing");
-    }
-  }
+  await expect(stop).toHaveCount(0, {
+    timeout: 90_000,
+  });
   metrics.fullAnswerMs = Date.now() - started;
 }
 
