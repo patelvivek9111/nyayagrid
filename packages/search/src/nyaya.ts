@@ -4181,6 +4181,29 @@ export async function askNyayaAboutMatter(params: {
       emit({ type: "text_delta", text: chunk, at: nowIso() });
     }
 
+    // Unlock Command Center before message/artifact persistence. Slow or locked DB
+    // writes must not leave "Stop generating" stuck (CI flake on premise Ask).
+    emit({
+      type: "generation_completed",
+      answer: validated.answer.answer,
+      conversationId: conversationId!,
+      status: "completed",
+      provenance,
+      ux: buildAskUxPayload({
+        matterId: params.matterId,
+        factualityTypes: (factualityContract?.assertions ?? []).map((a) => String(a.type)),
+        conversationalAction,
+        referentResolution,
+        investigateNext: investigateNextResult
+          ? toInvestigateNextValidationSnapshot(investigateNextResult)
+          : null,
+        matterSynthesis: matterSynthesisResult
+          ? toMatterSynthesisValidationSnapshot(matterSynthesisResult)
+          : null,
+      }),
+      at: nowIso(),
+    });
+
     const [assistantMessage] = await params.db
       .insert(messages)
       .values({
@@ -4482,29 +4505,6 @@ export async function askNyayaAboutMatter(params: {
         createdByUserId: params.userId,
       })
       .returning();
-
-    emit({
-      type: "generation_completed",
-      answer: validated.answer.answer,
-      conversationId: conversationId!,
-      artifactId: artifact?.id,
-      messageId: assistantMessage?.id,
-      status: "completed",
-      provenance,
-      ux: buildAskUxPayload({
-        matterId: params.matterId,
-        factualityTypes: (factualityContract?.assertions ?? []).map((a) => String(a.type)),
-        conversationalAction,
-        referentResolution,
-        investigateNext: investigateNextResult
-          ? toInvestigateNextValidationSnapshot(investigateNextResult)
-          : null,
-        matterSynthesis: matterSynthesisResult
-          ? toMatterSynthesisValidationSnapshot(matterSynthesisResult)
-          : null,
-      }),
-      at: nowIso(),
-    });
 
     return {
       conversationId: conversationId!,
