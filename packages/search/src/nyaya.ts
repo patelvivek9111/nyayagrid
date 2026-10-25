@@ -151,6 +151,7 @@ import {
   createEnvWebSearchClient,
   createHttpPageFetcher,
   ensureMissingInstrumentDisclosure,
+  detectUserPremise,
   evaluatePremiseAgainstRecord,
   formatEvidenceAssessmentForPrompt,
   formatFactualityContractForPrompt,
@@ -816,6 +817,161 @@ export async function askNyayaAboutMatter(params: {
       "OPEN_TIMELINE",
       "OPEN_GRAPH",
     ]);
+    // Refuse false outcome premises before retrieval/case-intel. Under CI load the
+    // full Ask path can stall the SSE long enough for "Stop generating" to stick
+    // even though the eventual answer is a deterministic unsupported-premise refusal.
+    const earlyOutcomePremise = detectUserPremise(params.question);
+    if (earlyOutcomePremise.detected && earlyOutcomePremise.kind === "outcome_win") {
+      const earlyPremise = evaluatePremiseAgainstRecord({
+        question: params.question,
+        record: {
+          matterId: params.matterId,
+          organizationId: params.organizationId,
+          allowedSourceIds: [],
+          persistedDispositions: [],
+          recordText: "",
+          propositionSupported: null,
+          propositionPartial: null,
+        },
+      });
+      if (earlyPremise.result === "UNSUPPORTED" || earlyPremise.result === "UNKNOWN") {
+        let conversationIdForPremise = conversationId;
+        if (!conversationIdForPremise) {
+          const [created] = await params.db
+            .insert(conversations)
+            .values({
+              organizationId: params.organizationId,
+              matterId: params.matterId,
+              createdByUserId: params.userId,
+              title: params.question.slice(0, 120),
+            })
+            .returning();
+          conversationIdForPremise = created!.id;
+          conversationId = conversationIdForPremise;
+        }
+        const answer =
+          earlyPremise.result === "UNSUPPORTED"
+            ? "Unsupported by current record — cannot confirm a win. Outcome remains UNKNOWN. Not established by the case file."
+            : "Not established by the current record. Outcome remains UNKNOWN. Insufficient evidence to confirm a win.";
+        premiseCheck = earlyPremise;
+        factualityContract = buildFactualityContract({
+          premiseCheck: earlyPremise,
+          selectedDomains: [],
+          sourceRefs: [],
+          authorityRefs: [],
+          activeEntityRefs: [],
+          allowedSourceIds: [],
+        });
+        emit({ type: "generation_started", at: nowIso() });
+        generationStarted = true;
+        for (const chunk of chunkAnswerForStreaming(answer)) {
+          throwIfAborted();
+          emit({ type: "text_delta", text: chunk, at: nowIso() });
+        }
+        const provenance = buildProvenanceSummary({
+          sourceScope,
+          caseSourceCount: 0,
+          webSourceCount: 0,
+          authoritySourceCount: 0,
+        });
+        emit({
+          type: "generation_completed",
+          answer,
+          conversationId: conversationIdForPremise,
+          status: "completed",
+          provenance,
+          ux: buildAskUxPayload({
+            matterId: params.matterId,
+            factualityTypes: (factualityContract?.assertions ?? []).map((a) => String(a.type)),
+            conversationalAction: null,
+            referentResolution: null,
+          }),
+          at: nowIso(),
+        });
+        if (!isContinue) {
+          await params.db.insert(messages).values({
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            conversationId: conversationIdForPremise,
+            role: "user",
+            content: params.question,
+            createdByUserId: params.userId,
+          });
+        }
+        const [assistantMessage] = await params.db
+          .insert(messages)
+          .values({
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            conversationId: conversationIdForPremise,
+            role: "assistant",
+            content: answer,
+            createdByUserId: params.userId,
+          })
+          .returning();
+        const [artifact] = await params.db
+          .insert(aiArtifacts)
+          .values({
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            conversationId: conversationIdForPremise,
+            messageId: assistantMessage!.id,
+            artifactType: "matter_qa",
+            question: params.question,
+            answer,
+            evidenceState: "insufficient",
+            provider: "nyaya_workflow",
+            model: "deterministic_premise",
+            promptVersion: NYAYA_PROMPT_VERSION,
+            retrievedChunkIds: [],
+            citations: [],
+            validation: {
+              completionStatus: "completed",
+              premiseCheck: earlyPremise,
+              factualityContract,
+              selectedDomains: [],
+              premiseFastPath: true,
+            },
+            createdByUserId: params.userId,
+          })
+          .returning();
+        return {
+          conversationId: conversationIdForPremise,
+          artifact,
+          answer: {
+            answer,
+            sources: [],
+            assumptions: [earlyPremise.reason],
+            unresolvedQuestions: ["What record evidence would establish the asserted outcome?"],
+            evidenceState: "insufficient" as const,
+          },
+          retrieved: [],
+          provenance,
+          sourceScope,
+          usageActionId,
+          needsMoreDocuments: true,
+          needMoreDocumentReasons: ["Outcome premise is not established on the current record"],
+          usedFollowUpRetrieval: false,
+          usedVerifiedIntelligence: false,
+          usedGraph: false,
+          usedMemory: false,
+          usedProfessionalAnalysis: false,
+          usedLegalAuthority: false,
+          usedWeek4CombinedContext: false,
+          week4StructuredContext: null,
+          doctrineQuestion: false,
+          authorityResearchMissing: false,
+          authorityWarnings: [] as string[],
+          authorityValidation: null,
+          timings: {
+            ...timings,
+            totalMs: Date.now() - startedAsk,
+            premiseFastPathMs: Date.now() - startedAsk,
+          },
+        };
+      }
+    }
+
     const earlyWorkflow = classifyConversationalAction({ question: params.question });
     if (
       earlyWorkflow.actionClass === "NAVIGATION" &&

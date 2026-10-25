@@ -520,6 +520,20 @@ export default function CaseChatThreadPage() {
     let wasStopped = false;
     let uxPayload: AskUxPayload | undefined;
     let factualityTypes: string[] | undefined;
+    // Never leave "Stop generating" stuck if the SSE run stalls before a terminal event
+    // (observed CI flake on premise Ask after document upload).
+    const unlockWatchdog = setTimeout(() => {
+      if (!busyRef.current) return;
+      clearHardAbortTimer();
+      try {
+        controller.abort();
+      } catch {
+        /* ignore */
+      }
+      busyRef.current = false;
+      setBusy(false);
+      setError((prev) => prev || USER_FACING_ASK_ERROR);
+    }, 55_000);
 
     try {
       const res = await fetch(`/api/v1/matters/${matterId}/ask`, {
@@ -670,6 +684,7 @@ export default function CaseChatThreadPage() {
         setError(err instanceof Error ? err.message : "Failed");
       }
     } finally {
+      clearTimeout(unlockWatchdog);
       clearHardAbortTimer();
       abortRef.current = null;
       busyRef.current = false;
