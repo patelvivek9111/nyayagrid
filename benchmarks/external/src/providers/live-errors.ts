@@ -44,7 +44,7 @@ export function classifyHttpStatus(
   if (
     status === 401 ||
     status === 403 ||
-    /credit balance is too low|insufficient.?credit|billing|invalid.?api.?key|authentication/i.test(
+    /credit_balance_exhausted|credit balance is too low|no credits remaining|insufficient.?credit|insufficient_quota|billing|invalid.?api.?key|authentication/i.test(
       bodyText,
     )
   ) {

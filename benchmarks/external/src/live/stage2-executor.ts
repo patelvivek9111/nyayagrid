@@ -39,8 +39,8 @@ import {
   type BudgetState,
 } from "./budget.js";
 import { buildCacheKey, contentHashFromText } from "./cache-key.js";
-import { resolveBatchSize, chunk } from "./batch.js";
-import { parseConcurrency, mapWithConcurrency } from "./concurrency.js";
+import { resolveBatchSize } from "./batch.js";
+import { parseConcurrency } from "./concurrency.js";
 import { calculateActualCostUsd, worstCaseCostForBudgetGate } from "./cost-accounting.js";
 import { assessContextFit, assertNoSilentTruncate } from "./context-fit.js";
 import { isJudgeCacheHit, readJudgeCache } from "./judge-cache.js";
@@ -395,13 +395,14 @@ export async function runStage2Finalists(input: {
 
   const pricing = loadCurrentPricingTable();
   const parsedCaps = parseProviderCaps(argv);
+  // Frozen Stage-2 subcaps (registry/stage2-budget.json); global $55 remains authoritative.
   const providerCaps: ProviderCapsConfig = {
     ...parsedCaps,
-    openai: { maxDollars: parsedCaps.openai?.maxDollars ?? 40 },
-    anthropic: { maxDollars: parsedCaps.anthropic?.maxDollars ?? 40 },
+    openai: { maxDollars: parsedCaps.openai?.maxDollars ?? 13 },
+    anthropic: { maxDollars: parsedCaps.anthropic?.maxDollars ?? 18 },
     google: { maxDollars: 0 },
-    xai: { maxDollars: parsedCaps.xai?.maxDollars ?? 40 },
-    maxJudgeDollars: parsedCaps.maxJudgeDollars ?? 50,
+    xai: { maxDollars: parsedCaps.xai?.maxDollars ?? 11 },
+    maxJudgeDollars: parsedCaps.maxJudgeDollars ?? 35,
   };
 
   let budget: BudgetState = { maxUsd: maxCostUsd, spentUsd: 0 };
@@ -433,8 +434,12 @@ export async function runStage2Finalists(input: {
 
   const systemPrompt =
     "You are NyayaGrid external-bench Stage-2. Produce a careful legal analysis response.";
-  const concurrency = parseConcurrency(argv, 1);
+  // Balanced hard-stop is serial-only: concurrency>1 would let the other finalist continue after AUTH_ERROR.
+  const requestedConcurrency = parseConcurrency(argv, 1);
+  void requestedConcurrency;
   const batchSize = resolveBatchSize(argv, 5);
+  const accountedResponseKeys = new Set<string>();
+  const accountedJudgeKeys = new Set<string>();
 
   const bumpFailure = (provider: string) => {
     failuresByProvider[provider] = (failuresByProvider[provider] ?? 0) + 1;
@@ -503,13 +508,16 @@ export async function runStage2Finalists(input: {
     task: NormalizedTask;
     modelId: Stage2ResponseModelId;
   };
+  // Interleave finalists per task so GPT/Grok stay matched (authorization §15).
   const work: WorkItem[] = [];
-  for (const modelId of models) {
-    for (const task of prbenchTasks) work.push({ benchmarkId: "prbench", task, modelId });
-    for (const task of legalbenchTasks) work.push({ benchmarkId: "legalbench", task, modelId });
+  for (const task of prbenchTasks) {
+    for (const modelId of models) work.push({ benchmarkId: "prbench", task, modelId });
+  }
+  for (const task of legalbenchTasks) {
+    for (const modelId of models) work.push({ benchmarkId: "legalbench", task, modelId });
   }
 
-  async function processOne(item: WorkItem): Promise<void> {
+  async function processOne(item: WorkItem, cacheOnly: boolean): Promise<void> {
     const { task, modelId, benchmarkId } = item;
     const provider = MODEL_PROVIDER[modelId];
     const license = assertCommercialEvalAllowed(task, "production-selection");
@@ -547,11 +555,24 @@ export async function runStage2Finalists(input: {
         (typeof (cached.response as { text?: string } | undefined)?.text === "string"
           ? (cached.response as { text: string }).text
           : "");
-      const responseCost = Number(cached.costEstimateUsd ?? 0) || 0;
-      budget = applyPersistedSpend(budget, responseCost);
-      responseSpendUsd += responseCost;
-      cacheHits += 1;
-      completedResponses += 1;
+      if (!accountedResponseKeys.has(responseKey)) {
+        const responseCost = Number(cached.costEstimateUsd ?? 0) || 0;
+        budget = applyPersistedSpend(budget, responseCost);
+        responseSpendUsd += responseCost;
+        if (provider === "openai") costByBucket.openaiResponsesUsd += responseCost;
+        if (provider === "xai") costByBucket.xaiResponsesUsd += responseCost;
+        providerSpend[providerCapKey(provider)] = recordProviderSpend(
+          providerSpend[providerCapKey(provider)],
+          {
+            calls: 1,
+            tokens: (cached.inputTokens ?? 0) + (cached.outputTokens ?? 0),
+            dollars: responseCost,
+          },
+        );
+        completedResponses += 1;
+        accountedResponseKeys.add(responseKey);
+        cacheHits += 1;
+      }
       responseResult = {
         provider,
         exactModelId: modelId,
@@ -566,6 +587,8 @@ export async function runStage2Finalists(input: {
         finishReason: "cached",
         completionStatus: "success",
       };
+    } else if (cacheOnly) {
+      return;
     } else {
       const estimatedInput = estimateTokens(systemPrompt + userPrompt);
       const fit = assessContextFit({
@@ -665,6 +688,7 @@ export async function runStage2Finalists(input: {
           cacheKey: responseKey,
           kind: "response",
         });
+        accountedResponseKeys.add(responseKey);
         completedResponses += 1;
       } catch (err) {
         bumpFailure(provider);
@@ -677,6 +701,17 @@ export async function runStage2Finalists(input: {
           runStatus = "STAGE2_PARTIAL";
           note = err.message;
           return;
+        }
+        // Hard billing/auth stop: do not run the other finalist alone (authorization §6–8).
+        if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
+          runStatus = "STAGE2_BLOCKED";
+          note =
+            provider === "openai"
+              ? `STAGE2_BLOCKED_OPENAI_BILLING: ${err.message}`
+              : provider === "xai"
+                ? `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`
+                : `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`;
+          throw err;
         }
         runStatus = "STAGE2_PARTIAL";
         note = err instanceof Error ? err.message : String(err);
@@ -712,14 +747,26 @@ export async function runStage2Finalists(input: {
       });
 
       if (isJudgeCacheHit(runId, judgeKey)) {
-        const cached = readJudgeCache(runId, judgeKey) as unknown as PersistedPaidCallRecord;
-        const cachedCost = Number(cached.costEstimateUsd ?? 0) || 0;
-        budget = applyPersistedSpend(budget, cachedCost);
-        judgeSpendUsd += cachedCost;
-        cacheHits += 1;
-        completedJudges += 1;
+        if (!accountedJudgeKeys.has(judgeKey)) {
+          const cached = readJudgeCache(runId, judgeKey) as unknown as PersistedPaidCallRecord;
+          const cachedCost = Number(cached.costEstimateUsd ?? 0) || 0;
+          budget = applyPersistedSpend(budget, cachedCost);
+          judgeSpendUsd += cachedCost;
+          if (label === "A") costByBucket.anthropicJudgeUsd += cachedCost;
+          else costByBucket.openaiJudgeUsd += cachedCost;
+          providerSpend.judge = recordProviderSpend(providerSpend.judge, {
+            calls: 1,
+            tokens: (cached.inputTokens ?? 0) + (cached.outputTokens ?? 0),
+            dollars: cachedCost,
+          });
+          completedJudges += 1;
+          accountedJudgeKeys.add(judgeKey);
+          cacheHits += 1;
+        }
         return;
       }
+
+      if (cacheOnly) return;
 
       const estimatedInput = estimateTokens(judgePrompt);
       const worst = worstCaseCostForBudgetGate({
@@ -807,6 +854,7 @@ export async function runStage2Finalists(input: {
         cacheKey: judgeKey,
         kind: "judge",
       });
+      accountedJudgeKeys.add(judgeKey);
       completedJudges += 1;
     }
 
@@ -814,6 +862,11 @@ export async function runStage2Finalists(input: {
       await runJudge("A");
     } catch (err) {
       bumpFailure("anthropic");
+      if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
+        runStatus = "STAGE2_BLOCKED";
+        note = `STAGE2_BLOCKED_PROVIDER_ACCESS: Judge A ${err.message}`;
+        throw err;
+      }
       runStatus = err instanceof BudgetLimitError ? "STAGE2_BUDGET_STOP" : "STAGE2_PARTIAL";
       note = err instanceof Error ? err.message : String(err);
       if (err instanceof BudgetLimitError) throw err;
@@ -822,27 +875,65 @@ export async function runStage2Finalists(input: {
       await runJudge("B");
     } catch (err) {
       bumpFailure("openai");
+      if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
+        runStatus = "STAGE2_BLOCKED";
+        note = `STAGE2_BLOCKED_OPENAI_BILLING: Judge B ${err.message}`;
+        throw err;
+      }
       runStatus = err instanceof BudgetLimitError ? "STAGE2_BUDGET_STOP" : "STAGE2_PARTIAL";
       note = err instanceof Error ? err.message : String(err);
       if (err instanceof BudgetLimitError) throw err;
     }
   }
 
+  const emitCheckpoint = () => {
+    persistProgress();
+    console.error(
+      JSON.stringify({
+        checkpoint: true,
+        runId,
+        completedResponses,
+        plannedResponses,
+        completedJudges,
+        plannedJudges,
+        ragEvaluations,
+        plannedRag,
+        cacheHits,
+        paidCalls,
+        totalSpendUsd: Number(budget.spentUsd.toFixed(4)),
+        remainingBudgetUsd: Number(remainingBudgetUsd(budget).toFixed(4)),
+        failuresByProvider: { ...failuresByProvider },
+      }),
+    );
+  };
+
+  // Pass 1: account every cache hit first so AUTH hard-stop cannot wipe prior spend.
+  for (const item of work) {
+    await processOne(item, true);
+  }
+  emitCheckpoint();
+
   try {
-    for (const batch of chunk(work, batchSize)) {
-      const results = await mapWithConcurrency(batch, concurrency, async (item) => {
-        await processOne(item);
-        return true;
-      });
-      for (const r of results) {
-        if (!r.ok && r.error instanceof BudgetLimitError) throw r.error;
+    // Pass 2: serial paid execution; first AUTH_ERROR / budget stop aborts immediately.
+    let sinceCheckpoint = 0;
+    for (const item of work) {
+      await processOne(item, false);
+      sinceCheckpoint += 1;
+      if (sinceCheckpoint >= batchSize) {
+        emitCheckpoint();
+        sinceCheckpoint = 0;
       }
-      persistProgress();
     }
+    if (sinceCheckpoint > 0) emitCheckpoint();
   } catch (err) {
     if (err instanceof BudgetLimitError) {
       runStatus = "STAGE2_BUDGET_STOP";
       note = err.message;
+    } else if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
+      runStatus = "STAGE2_BLOCKED";
+      if (!note?.startsWith("STAGE2_BLOCKED")) {
+        note = `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`;
+      }
     } else {
       runStatus = "STAGE2_PARTIAL";
       note = err instanceof Error ? err.message : String(err);
