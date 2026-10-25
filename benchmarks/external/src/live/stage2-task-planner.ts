@@ -9,10 +9,7 @@ import path from "node:path";
 import { loadPrbenchParquet, normalizePrbenchRow } from "../adapters/prbench.js";
 import { loadLegalBenchTaskDir } from "../adapters/legalbench.js";
 import { loadLegalBenchRagBenchmarkFile } from "../adapters/legalbench-rag.js";
-import {
-  isCommercialInternalEvalOk,
-  loadRagSourceLicense,
-} from "../license/firewall.js";
+import { isCommercialInternalEvalOk, loadRagSourceLicense } from "../license/firewall.js";
 import { getCacheDir, getRegistryDir } from "../paths.js";
 import type { NormalizedTask } from "../schema/normalized-task.js";
 import {
@@ -208,9 +205,7 @@ export async function buildStage2SuitePlan(input?: {
     .map((t) => t.taskId)
     .filter((id) => {
       const up = id.split("::")[0] ?? id;
-      return (
-        !isLegalBenchTaskCommercialCleared(id) || !isUsRelevantLegalBenchUpstreamTask(up)
-      );
+      return !isLegalBenchTaskCommercialCleared(id) || !isUsRelevantLegalBenchUpstreamTask(up);
     })
     .slice(0, 50);
 

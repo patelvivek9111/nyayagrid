@@ -134,7 +134,11 @@ function miniSuite(pr: string[], lb: string[], rag: string[]): Stage2SuitePlan {
 
 describe("stage2 planner counts", () => {
   it("computes response and judge counts for finalists only", () => {
-    const suite = miniSuite(["a", "b", "c"], ["lb1", "lb2", "lb3"], ["cuad::0", "maud::1", "contractnli::2"]);
+    const suite = miniSuite(
+      ["a", "b", "c"],
+      ["lb1", "lb2", "lb3"],
+      ["cuad::0", "maud::1", "contractnli::2"],
+    );
     expect(plannedStage2ResponseCount(suite)).toBe(12);
     expect(plannedStage2JudgeCount(suite)).toBe(12);
     expect(suite.call_counts.ragGenerationCalls).toBe(0);
@@ -196,7 +200,10 @@ describe("stage2 mini-run mock", () => {
       stage: 2,
       autoEscalate: false,
       suite,
-      models: { response: ["gpt-6.1-sol", "grok-4.7"], judges: ["claude-sonnet-5-5", "gpt-6.1-sol"] },
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
       test: true,
     };
     const configHash = hashRunConfig(config);
@@ -246,7 +253,15 @@ describe("stage2 mini-run mock", () => {
 
     const { fetchImpl, getCalls } = mockFetchFactory();
     const summary1 = await runStage2Finalists({
-      argv: ["node", "stage2", "--run-id", runId, "--allow-paid-model-calls", "--max-cost-usd", "75"],
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "75",
+      ],
       deps: {
         bypassAuthForTests: true,
         maxCostUsdForTests: 75,
@@ -275,7 +290,15 @@ describe("stage2 mini-run mock", () => {
     // Interrupt/resume: all cache hits, no new paid calls
     const { fetchImpl: fetch2, getCalls: getCalls2 } = mockFetchFactory();
     const summary2 = await runStage2Finalists({
-      argv: ["node", "stage2", "--run-id", runId, "--allow-paid-model-calls", "--max-cost-usd", "75"],
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "75",
+      ],
       deps: {
         bypassAuthForTests: true,
         maxCostUsdForTests: 75,
@@ -294,9 +317,9 @@ describe("stage2 mini-run mock", () => {
     expect(summary2.cacheHits).toBe(24);
     expect(getCalls2()).toBe(0);
     expect(summary2.progress.totalSpendUsd).toBeGreaterThan(0);
-    expect(Math.abs(summary2.progress.totalSpendUsd - summary1.progress.totalSpendUsd)).toBeLessThan(
-      1e-9,
-    );
+    expect(
+      Math.abs(summary2.progress.totalSpendUsd - summary1.progress.totalSpendUsd),
+    ).toBeLessThan(1e-9);
 
     // Partial judge resume: delete one judge, resume fills only that gap
     const judgeDir = path.join(getCacheDir(), "runs", runId, "judge");
@@ -305,7 +328,15 @@ describe("stage2 mini-run mock", () => {
     rmSync(path.join(judgeDir, judgeFiles[0]!));
     const { fetchImpl: fetch3, getCalls: getCalls3 } = mockFetchFactory();
     const summary3 = await runStage2Finalists({
-      argv: ["node", "stage2", "--run-id", runId, "--allow-paid-model-calls", "--max-cost-usd", "75"],
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "75",
+      ],
       deps: {
         bypassAuthForTests: true,
         maxCostUsdForTests: 75,

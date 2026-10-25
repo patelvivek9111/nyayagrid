@@ -50,10 +50,7 @@ function buildUserPrompt(task: NormalizedTask): string {
 
 function percentile(sorted: number[], p: number): number {
   if (sorted.length === 0) return 0;
-  const idx = Math.min(
-    sorted.length - 1,
-    Math.max(0, Math.ceil((p / 100) * sorted.length) - 1),
-  );
+  const idx = Math.min(sorted.length - 1, Math.max(0, Math.ceil((p / 100) * sorted.length) - 1));
   return sorted[idx]!;
 }
 
@@ -129,9 +126,7 @@ export async function buildStage2ContextProfile(
   }
 
   const sorted = [...estimates].sort((a, b) => a - b);
-  const mean = sorted.length
-    ? sorted.reduce((a, b) => a + b, 0) / sorted.length
-    : 0;
+  const mean = sorted.length ? sorted.reduce((a, b) => a + b, 0) / sorted.length : 0;
 
   return {
     paidCalls: 0,
@@ -150,9 +145,7 @@ export async function buildStage2ContextProfile(
 }
 
 /** Test helper: profile from in-memory tasks (no dataset IO). */
-export function buildStage2ContextProfileFromTasks(
-  tasks: NormalizedTask[],
-): Stage2ContextProfile {
+export function buildStage2ContextProfileFromTasks(tasks: NormalizedTask[]): Stage2ContextProfile {
   const estimates: number[] = [];
   let gptOverflows = 0;
   let grokOverflows = 0;

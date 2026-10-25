@@ -3,14 +3,8 @@
   "status": "PLANNED_REQUIRES_SEPARATE_AUTHORIZATION",
   "autoStartFromStage1": false,
   "authorizedNow": false,
-  "models": [
-    "gpt-6.1-sol",
-    "grok-4.7"
-  ],
-  "judges": [
-    "claude-sonnet-5-5",
-    "gpt-6.1-sol"
-  ],
+  "models": ["gpt-6.1-sol", "grok-4.7"],
+  "judges": ["claude-sonnet-5-5", "gpt-6.1-sol"],
   "tasks": {
     "prbenchLegalHard": 250,
     "legalbenchCleared": 80,

@@ -32,12 +32,12 @@ async function main(): Promise<void> {
   const profilePath = path.join(getRegistryDir(), "stage2-context-profile.json");
   const costPath = path.join(getRegistryDir(), "stage2-cost-plan.json");
   if (!existsSync(suitePath) || !existsSync(profilePath) || !existsSync(costPath)) {
-    throw new Error("Missing stage2-suite/context/cost registry files; run freeze-stage2-suite first");
+    throw new Error(
+      "Missing stage2-suite/context/cost registry files; run freeze-stage2-suite first",
+    );
   }
   const suite = JSON.parse(readFileSync(suitePath, "utf8")) as Stage2SuitePlan;
-  const contextProfile = JSON.parse(
-    readFileSync(profilePath, "utf8"),
-  ) as Stage2ContextProfile;
+  const contextProfile = JSON.parse(readFileSync(profilePath, "utf8")) as Stage2ContextProfile;
   const costPlan = JSON.parse(readFileSync(costPath, "utf8")) as {
     recommendedHardCapUsd: number;
   };

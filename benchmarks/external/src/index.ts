@@ -133,7 +133,10 @@ export {
   STAGE2_RESPONSE_MODELS,
 } from "./live/stage2-task-planner.js";
 export type { Stage2SuitePlan, Stage2ResponseModelId } from "./live/stage2-task-planner.js";
-export { buildStage2ContextProfile, buildStage2ContextProfileFromTasks } from "./live/stage2-context-profile.js";
+export {
+  buildStage2ContextProfile,
+  buildStage2ContextProfileFromTasks,
+} from "./live/stage2-context-profile.js";
 export type { Stage2ContextProfile } from "./live/stage2-context-profile.js";
 export { computeStage2ExactCostPlan } from "./cost/plan-stage2.js";
 export type { Stage2ExactCostPlan } from "./cost/plan-stage2.js";

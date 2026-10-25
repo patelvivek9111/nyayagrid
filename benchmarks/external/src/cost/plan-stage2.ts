@@ -68,12 +68,7 @@ function costUsd(
   return (inputTokens / 1_000_000) * inputPer1M + (outputTokens / 1_000_000) * outputPer1M;
 }
 
-function band(
-  currency: string,
-  low: number,
-  expected: number,
-  high: number,
-): StageCostBand {
+function band(currency: string, low: number, expected: number, high: number): StageCostBand {
   return { lowUsd: low, expectedUsd: expected, highUsd: high, currency };
 }
 

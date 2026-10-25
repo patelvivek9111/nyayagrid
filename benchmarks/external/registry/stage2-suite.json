@@ -14,10 +14,7 @@
     "legalbench": 80,
     "legalbenchRag": 150
   },
-  "response_models": [
-    "gpt-6.1-sol",
-    "grok-4.7"
-  ],
+  "response_models": ["gpt-6.1-sol", "grok-4.7"],
   "judges": {
     "judge_a": "claude-sonnet-5-5",
     "judge_b": "gpt-6.1-sol"
