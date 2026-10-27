@@ -673,6 +673,8 @@ export async function runStage2Finalists(input: {
     taskId: string;
     benchmarkId: string;
     cacheKeyHint?: string;
+    /** When false, do not count toward this-session circuit breaker (historical reconcile). */
+    countTowardSessionCircuitBreaker?: boolean;
   }): void {
     const key = `${input.provider}::${input.taskId}`;
     const already = hasTerminalProviderUnknown(runId, input.taskId, input.provider);
@@ -684,7 +686,10 @@ export async function runStage2Finalists(input: {
       exactModelId: input.modelId,
       cacheKeyHint: input.cacheKeyHint,
     });
-    noteSessionUnknown(input.provider, input.taskId);
+    const countSession = input.countTowardSessionCircuitBreaker !== false;
+    if (countSession) {
+      noteSessionUnknown(input.provider, input.taskId);
+    }
     unverifiedProviderBillingExposure = "YES";
     // Task terminalization clears provider-wide quarantine so other work continues.
     quarantinedProviders.delete(input.provider);
@@ -698,6 +703,7 @@ export async function runStage2Finalists(input: {
     } else if (!already) {
       terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
     }
+    if (!countSession) return;
     const providerSession = sessionDistinctUnknownByProvider.get(input.provider) ?? new Set();
     if (isProviderCircuitBroken(providerSession)) {
       providerCircuitBreakerTripped = true;
@@ -1466,11 +1472,13 @@ export async function runStage2Finalists(input: {
     const attempts = countUnknownAttemptsForTask(runId, compositeTaskId, provider);
     const resendConsumed = hasConsumedSingleUnknownResend(runId, compositeTaskId, provider);
     if (attempts >= 2 || resendConsumed) {
+      // Historical reconcile only — does not burn the session circuit-breaker budget.
       accountTerminalFailure({
         provider,
         modelId: item.modelId,
         taskId: compositeTaskId,
         benchmarkId: item.benchmarkId,
+        countTowardSessionCircuitBreaker: false,
       });
       if (runStatus === "STAGE2_COMPLETE") {
         runStatus = "STAGE2_PARTIAL";

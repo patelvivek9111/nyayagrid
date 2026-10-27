@@ -1432,6 +1432,141 @@ describe("stage2 unknown-completion safety", () => {
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });
 
+  it("historical terminal reconcile does not burn session circuit-breaker budget", async () => {
+    const runId = `stage2-unk-hist-${Date.now()}`;
+    const suite = miniSuite(["pr-h1", "pr-h2"], [], []);
+    const config = {
+      runId,
+      stage: 2,
+      suite,
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 55,
+    });
+
+    // Two prior uncertain attempts already recorded for h1 grok → historical terminal.
+    for (let i = 0; i < 2; i += 1) {
+      persistUnknownCompletion({
+        kind: "UNKNOWN_COMPLETION",
+        runId,
+        taskId: "pr-h1::grok-4.7",
+        benchmarkId: "prbench",
+        provider: "xai",
+        exactModelId: "grok-4.7",
+        attemptNumber: i + 1,
+        requestStartTimestamp: new Date().toISOString(),
+        dispatchTimestamp: new Date().toISOString(),
+        failureTimestamp: new Date().toISOString(),
+        failureClassification: "TRANSPORT_POST_DISPATCH_UNKNOWN",
+        providerRequestId: null,
+        sanitizedErrorMessage: "prior unknown",
+        usageReceived: false,
+        responseBodyReceived: false,
+        safelyRetryable: false,
+        potentialBillingExposure: "YES",
+        resendBlocked: true,
+        operatorOverrideRequired: true,
+      });
+    }
+    recordUnknownResendAttempt({
+      runId,
+      taskId: "pr-h1::grok-4.7",
+      provider: "xai",
+    });
+
+    let xaiCalls = 0;
+    const fetchImpl: typeof fetch = async (url) => {
+      const u = String(url);
+      if (u.includes("api.openai.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "oa",
+            status: "completed",
+            output_text: '{"score":0.5,"rationale":"x"}',
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.x.ai")) {
+        xaiCalls += 1;
+        return new Response(
+          JSON.stringify({
+            id: `xai_${xaiCalls}`,
+            status: "completed",
+            output_text: "Grok ok",
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.anthropic.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "msg",
+            stop_reason: "end_turn",
+            content: [{ type: "text", text: '{"score":0.5,"rationale":"x"}' }],
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      return new Response("not found", { status: 404 });
+    };
+
+    const summary = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "55",
+        "--acknowledge-unverified-billing-exposure",
+        "--allow-unknown-resend",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 55,
+        fetchImpl,
+        openaiApiKey: "t",
+        anthropicApiKey: "t",
+        xaiApiKey: "t",
+        prbenchTasks: [
+          task({ benchmarkId: "prbench", taskId: "pr-h1" }),
+          task({ benchmarkId: "prbench", taskId: "pr-h2" }),
+        ],
+        legalbenchTasks: [],
+        skipRag: true,
+        suiteOverride: suite,
+        sleep: async () => undefined,
+      },
+    });
+
+    expect(hasTerminalProviderUnknown(runId, "pr-h1::grok-4.7", "xai")).toBe(true);
+    expect(summary.status).toBe("STAGE2_COMPLETE");
+    expect(summary.progress.providerCircuitBreakerTripped).toBe(false);
+    expect(summary.progress.sessionDistinctUnknownTasks).toBe(0);
+    expect(xaiCalls).toBe(1); // only pr-h2 grok
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
   it("three distinct provider UNKNOWN/terminal tasks trip circuit breaker", async () => {
     const runId = `stage2-unk-breaker-${Date.now()}`;
     const suite = miniSuite(["pr-1", "pr-2", "pr-3", "pr-4"], [], []);
