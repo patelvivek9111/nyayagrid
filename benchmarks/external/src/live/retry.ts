@@ -1,10 +1,23 @@
 export type RetryableErrorKind = "429" | "5xx" | "reset" | "timeout";
 
+export type UnknownFailureClassification =
+  "UNKNOWN_COMPLETION" | "TIMEOUT_POST_DISPATCH_UNKNOWN" | "TRANSPORT_POST_DISPATCH_UNKNOWN";
+
 export class UnknownCompletionError extends Error {
   readonly code = "UNKNOWN_COMPLETION_REVIEW_REQUIRED" as const;
-  constructor(message: string) {
+  readonly failureClassification: UnknownFailureClassification;
+  readonly providerCode: string | null;
+  constructor(
+    message: string,
+    opts?: {
+      failureClassification?: UnknownFailureClassification;
+      providerCode?: string;
+    },
+  ) {
     super(message);
     this.name = "UnknownCompletionError";
+    this.failureClassification = opts?.failureClassification ?? "UNKNOWN_COMPLETION";
+    this.providerCode = opts?.providerCode ?? null;
   }
 }
 

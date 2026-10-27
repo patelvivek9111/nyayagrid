@@ -9,6 +9,7 @@ import { runStage2Finalists } from "../live/stage2-executor.js";
 import { BudgetLimitError } from "../live/budget.js";
 import { UnknownCompletionError } from "../live/retry.js";
 import { assertNoAutoEscalation } from "../live/stage-gate.js";
+import { Stage2UnknownCompletionStopError } from "../live/stage2-executor.js";
 
 async function main(): Promise<void> {
   loadExternalBenchLocalEnv();
@@ -52,7 +53,9 @@ async function main(): Promise<void> {
     }
   } catch (err) {
     const reason =
-      err instanceof BudgetLimitError || err instanceof UnknownCompletionError
+      err instanceof BudgetLimitError ||
+      err instanceof UnknownCompletionError ||
+      err instanceof Stage2UnknownCompletionStopError
         ? err.message
         : err instanceof Error
           ? err.message
@@ -60,8 +63,8 @@ async function main(): Promise<void> {
     const status =
       err instanceof BudgetLimitError
         ? "STAGE2_BUDGET_STOP"
-        : err instanceof UnknownCompletionError
-          ? "STAGE2_PARTIAL"
+        : err instanceof UnknownCompletionError || err instanceof Stage2UnknownCompletionStopError
+          ? "STAGE2_PAUSED_UNKNOWN_COMPLETION"
           : "STAGE2_BLOCKED";
     console.error(
       JSON.stringify(

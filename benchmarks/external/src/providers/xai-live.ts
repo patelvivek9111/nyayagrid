@@ -1,6 +1,7 @@
 import { buildXaiResponsesRequest } from "./request-builders.js";
-import { classifyHttpStatus, LiveProviderError } from "./live-errors.js";
+import { classifyFetchFailure, classifyHttpStatus, LiveProviderError } from "./live-errors.js";
 import type { LiveClientOptions, LiveProviderResult } from "./live-types.js";
+import { DEFAULT_LIVE_TIMEOUT_MS } from "../live/provider-timeouts.js";
 
 function extractXaiText(raw: Record<string, unknown>): string {
   if (typeof raw.output_text === "string" && raw.output_text.trim()) {
@@ -99,26 +100,10 @@ export async function executeXaiResponses(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(options.timeoutMs ?? 180_000),
+      signal: AbortSignal.timeout(options.timeoutMs ?? DEFAULT_LIVE_TIMEOUT_MS),
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    if (dispatched) {
-      throw new LiveProviderError({
-        code: "UNKNOWN_COMPLETION",
-        provider: "xai",
-        message: `xAI transport failure after dispatch: ${message}`,
-        retryable: false,
-        completionKnownIncomplete: false,
-      });
-    }
-    throw new LiveProviderError({
-      code: "TRANSPORT_ERROR",
-      provider: "xai",
-      message: `xAI transport error: ${message}`,
-      retryable: true,
-      completionKnownIncomplete: true,
-    });
+    throw classifyFetchFailure({ provider: "xai", dispatched, err });
   }
 
   const bodyText = await response.text();

@@ -26,6 +26,7 @@
     "canary": "tsx src/cli/canary.ts",
     "stage1": "tsx src/cli/stage1.ts",
     "stage2": "tsx src/cli/stage2.ts",
+    "audit-unknown-completions": "tsx src/cli/audit-unknown-completions.ts",
     "check-credentials": "tsx src/cli/check-credentials.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",

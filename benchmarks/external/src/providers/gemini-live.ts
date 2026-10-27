@@ -1,6 +1,7 @@
 import { buildGeminiInteractionsRequest } from "./request-builders.js";
-import { classifyHttpStatus, LiveProviderError } from "./live-errors.js";
+import { classifyFetchFailure, classifyHttpStatus, LiveProviderError } from "./live-errors.js";
 import type { LiveClientOptions, LiveProviderResult } from "./live-types.js";
+import { DEFAULT_LIVE_TIMEOUT_MS } from "../live/provider-timeouts.js";
 
 /**
  * Map frozen Stage-1 semantic settings onto Gemini Interactions API wire shape.
@@ -134,26 +135,10 @@ export async function executeGeminiInteractions(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(options.timeoutMs ?? 180_000),
+      signal: AbortSignal.timeout(options.timeoutMs ?? DEFAULT_LIVE_TIMEOUT_MS),
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    if (dispatched) {
-      throw new LiveProviderError({
-        code: "UNKNOWN_COMPLETION",
-        provider: "google",
-        message: `Gemini transport failure after dispatch: ${message}`,
-        retryable: false,
-        completionKnownIncomplete: false,
-      });
-    }
-    throw new LiveProviderError({
-      code: "TRANSPORT_ERROR",
-      provider: "google",
-      message: `Gemini transport error: ${message}`,
-      retryable: true,
-      completionKnownIncomplete: true,
-    });
+    throw classifyFetchFailure({ provider: "google", dispatched, err });
   }
 
   const bodyText = await response.text();

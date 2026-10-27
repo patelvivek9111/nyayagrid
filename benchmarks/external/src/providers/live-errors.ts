@@ -2,6 +2,10 @@ export type LiveProviderErrorCode =
   | "RATE_LIMIT"
   | "TEMPORARY_PROVIDER_ERROR"
   | "TRANSPORT_ERROR"
+  | "TRANSPORT_PRE_DISPATCH"
+  | "TRANSPORT_POST_DISPATCH_UNKNOWN"
+  | "TIMEOUT_PRE_DISPATCH"
+  | "TIMEOUT_POST_DISPATCH_UNKNOWN"
   | "AUTH_ERROR"
   | "MODEL_NOT_FOUND"
   | "BAD_REQUEST"
@@ -33,6 +37,71 @@ export class LiveProviderError extends Error {
     this.retryable = input.retryable ?? false;
     this.completionKnownIncomplete = input.completionKnownIncomplete ?? true;
   }
+}
+
+export function isTimeoutLikeError(err: unknown): boolean {
+  if (!err || typeof err !== "object") return false;
+  const name = "name" in err ? String((err as { name?: unknown }).name ?? "") : "";
+  const message = err instanceof Error ? err.message : String(err);
+  return (
+    name === "TimeoutError" || name === "AbortError" || /timeout|timed out|aborted/i.test(message)
+  );
+}
+
+/**
+ * Classify fetch abort/transport failures with dispatch awareness.
+ * Post-dispatch uncertainty is never retryable.
+ */
+export function classifyFetchFailure(input: {
+  provider: string;
+  dispatched: boolean;
+  err: unknown;
+}): LiveProviderError {
+  const message = input.err instanceof Error ? input.err.message : String(input.err);
+  const timeout = isTimeoutLikeError(input.err);
+  if (input.dispatched) {
+    if (timeout) {
+      return new LiveProviderError({
+        code: "TIMEOUT_POST_DISPATCH_UNKNOWN",
+        provider: input.provider,
+        message: `${input.provider} timeout after dispatch: ${message}`,
+        retryable: false,
+        completionKnownIncomplete: false,
+      });
+    }
+    return new LiveProviderError({
+      code: "TRANSPORT_POST_DISPATCH_UNKNOWN",
+      provider: input.provider,
+      message: `${input.provider} transport failure after dispatch: ${message}`,
+      retryable: false,
+      completionKnownIncomplete: false,
+    });
+  }
+  if (timeout) {
+    return new LiveProviderError({
+      code: "TIMEOUT_PRE_DISPATCH",
+      provider: input.provider,
+      message: `${input.provider} timeout before dispatch: ${message}`,
+      retryable: true,
+      completionKnownIncomplete: true,
+    });
+  }
+  return new LiveProviderError({
+    code: "TRANSPORT_PRE_DISPATCH",
+    provider: input.provider,
+    message: `${input.provider} transport error: ${message}`,
+    retryable: true,
+    completionKnownIncomplete: true,
+  });
+}
+
+export function isPostDispatchUnknownError(error: unknown): boolean {
+  return (
+    error instanceof LiveProviderError &&
+    (error.code === "UNKNOWN_COMPLETION" ||
+      error.code === "TIMEOUT_POST_DISPATCH_UNKNOWN" ||
+      error.code === "TRANSPORT_POST_DISPATCH_UNKNOWN")
+  );
 }
 
 export function classifyHttpStatus(
@@ -127,5 +196,13 @@ export function classifyHttpStatus(
 }
 
 export function isRetryableLiveError(error: unknown): boolean {
-  return error instanceof LiveProviderError && error.retryable && error.completionKnownIncomplete;
+  if (!(error instanceof LiveProviderError)) return false;
+  if (
+    error.code === "UNKNOWN_COMPLETION" ||
+    error.code === "TIMEOUT_POST_DISPATCH_UNKNOWN" ||
+    error.code === "TRANSPORT_POST_DISPATCH_UNKNOWN"
+  ) {
+    return false;
+  }
+  return error.retryable && error.completionKnownIncomplete;
 }

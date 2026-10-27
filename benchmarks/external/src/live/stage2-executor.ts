@@ -17,7 +17,11 @@ import {
 } from "../license/firewall.js";
 import { getCacheDir } from "../paths.js";
 import { executeAnthropicMessages } from "../providers/anthropic-live.js";
-import { isRetryableLiveError, LiveProviderError } from "../providers/live-errors.js";
+import {
+  isPostDispatchUnknownError,
+  isRetryableLiveError,
+  LiveProviderError,
+} from "../providers/live-errors.js";
 import { executeOpenAiResponses } from "../providers/openai-live.js";
 import type { LiveFetch, LiveProviderId, LiveProviderResult } from "../providers/live-types.js";
 import { executeXaiResponses } from "../providers/xai-live.js";
@@ -61,6 +65,24 @@ import { isResponseCacheHit, readResponseCache } from "./response-cache.js";
 import { computeBackoffMs, UnknownCompletionError } from "./retry.js";
 import { assertNoAutoEscalation } from "./stage-gate.js";
 import {
+  bumpTaxonomy,
+  classifyErrorToTaxonomy,
+  emptyFailureTaxonomy,
+  type FailureTaxonomyByProvider,
+} from "./failure-taxonomy.js";
+import { stage2JudgeTimeoutMs, stage2ResponseTimeoutMs } from "./provider-timeouts.js";
+import {
+  acknowledgeUnverifiedBillingExposure,
+  allowUnknownResend,
+  ensureQuarantineFromPartialSummary,
+  hasUnknownCompletionArtifact,
+  isPostDispatchUnknownCode,
+  persistUnknownCompletion,
+  readRunUnknownQuarantine,
+  writeRunUnknownQuarantine,
+  type UnknownCompletionRecord,
+} from "./unknown-completion.js";
+import {
   LEGALBENCH_REV,
   PRBENCH_REV,
   RAG_REV,
@@ -101,7 +123,12 @@ export type Stage2ExecutorDeps = {
 };
 
 export type Stage2RunSummary = {
-  status: "STAGE2_COMPLETE" | "STAGE2_PARTIAL" | "STAGE2_BUDGET_STOP" | "STAGE2_BLOCKED";
+  status:
+    | "STAGE2_COMPLETE"
+    | "STAGE2_PARTIAL"
+    | "STAGE2_BUDGET_STOP"
+    | "STAGE2_BLOCKED"
+    | "STAGE2_PAUSED_UNKNOWN_COMPLETION";
   runId: string;
   configHash: string;
   paidCalls: number;
@@ -118,11 +145,20 @@ export type Stage2RunSummary = {
     cacheHits: number;
     paidCalls: number;
     failuresByProvider: Record<string, number>;
+    failureTaxonomyByProvider: FailureTaxonomyByProvider;
+    gptResponsesDone: number;
+    grokResponsesDone: number;
+    judgeADone: number;
+    judgeBDone: number;
+    unknownQuarantines: number;
+    knownLedgerSpendUsd: number;
+    unverifiedProviderBillingExposure: "YES" | "NO" | "UNKNOWN";
     responseSpendUsd: number;
     judgeSpendUsd: number;
     retriesUsd: number;
     totalSpendUsd: number;
     remainingBudgetUsd: number;
+    lastProviderActivity: string | null;
     updatedAt: string;
   };
   cost: {
@@ -134,12 +170,24 @@ export type Stage2RunSummary = {
     retriesUsd: number;
     totalUsd: number;
     remainingUsd: number;
+    knownLedgerSpendUsd: number;
+    unverifiedProviderBillingExposure: "YES" | "NO" | "UNKNOWN";
   };
   stage3Started: false;
   courtListener: 0;
   valuesPrinted: false;
   note?: string;
 };
+
+export class Stage2UnknownCompletionStopError extends Error {
+  readonly code = "STAGE2_PAUSED_UNKNOWN_COMPLETION" as const;
+  readonly provider: string;
+  constructor(provider: string, message: string) {
+    super(message);
+    this.name = "Stage2UnknownCompletionStopError";
+    this.provider = provider;
+  }
+}
 
 function hashObj(v: unknown): string {
   return createHash("sha256").update(JSON.stringify(v)).digest("hex");
@@ -230,8 +278,18 @@ async function withRetries<T>(
     try {
       return await fn();
     } catch (err) {
-      if (err instanceof LiveProviderError && err.code === "UNKNOWN_COMPLETION") {
-        throw new UnknownCompletionError(err.message);
+      if (isPostDispatchUnknownError(err)) {
+        const live = err as LiveProviderError;
+        const classification =
+          live.code === "TIMEOUT_POST_DISPATCH_UNKNOWN" ||
+          live.code === "TRANSPORT_POST_DISPATCH_UNKNOWN" ||
+          live.code === "UNKNOWN_COMPLETION"
+            ? live.code
+            : "UNKNOWN_COMPLETION";
+        throw new UnknownCompletionError(`${live.code}: ${live.message}`, {
+          failureClassification: classification,
+          providerCode: live.code,
+        });
       }
       if (!isRetryableLiveError(err) || attempt >= maxRetries) throw err;
       await sleep(computeBackoffMs(attempt));
@@ -345,11 +403,20 @@ export async function runStage2Finalists(input: {
         cacheHits: 0,
         paidCalls: 0,
         failuresByProvider: {},
+        failureTaxonomyByProvider: {},
+        gptResponsesDone: 0,
+        grokResponsesDone: 0,
+        judgeADone: 0,
+        judgeBDone: 0,
+        unknownQuarantines: 0,
+        knownLedgerSpendUsd: 0,
+        unverifiedProviderBillingExposure: "NO",
         responseSpendUsd: 0,
         judgeSpendUsd: 0,
         retriesUsd: 0,
         totalSpendUsd: 0,
         remainingBudgetUsd: maxCostUsd,
+        lastProviderActivity: null,
         updatedAt: new Date().toISOString(),
       },
       cost: {
@@ -361,6 +428,8 @@ export async function runStage2Finalists(input: {
         retriesUsd: 0,
         totalUsd: 0,
         remainingUsd: maxCostUsd,
+        knownLedgerSpendUsd: 0,
+        unverifiedProviderBillingExposure: "NO",
       },
       stage3Started: false,
       courtListener: 0,
@@ -429,8 +498,32 @@ export async function runStage2Finalists(input: {
     openaiJudgeUsd: 0,
   };
   const failuresByProvider: Record<string, number> = {};
+  const failureTaxonomyByProvider: FailureTaxonomyByProvider = {
+    openai: emptyFailureTaxonomy(),
+    xai: emptyFailureTaxonomy(),
+    anthropic: emptyFailureTaxonomy(),
+  };
+  let gptResponsesDone = 0;
+  let grokResponsesDone = 0;
+  let judgeADone = 0;
+  let judgeBDone = 0;
+  let unknownQuarantines = 0;
+  let lastProviderActivity: string | null = null;
+  let unverifiedProviderBillingExposure: "YES" | "NO" | "UNKNOWN" = "NO";
+  const quarantinedProviders = new Set<string>();
   let runStatus: Stage2RunSummary["status"] = "STAGE2_COMPLETE";
   let note: string | undefined;
+  const allowResendUnknown = allowUnknownResend(argv);
+  const ackUnverified = acknowledgeUnverifiedBillingExposure(argv);
+
+  // Prior post-dispatch cascade → durable run quarantine (no paid calls).
+  const seededQuarantine = ensureQuarantineFromPartialSummary(runId);
+  const existingQuarantine = seededQuarantine ?? readRunUnknownQuarantine(runId);
+  if (existingQuarantine) {
+    for (const p of existingQuarantine.providers) quarantinedProviders.add(p);
+    unknownQuarantines = Math.max(unknownQuarantines, existingQuarantine.providers.length);
+    unverifiedProviderBillingExposure = "YES";
+  }
 
   const systemPrompt =
     "You are NyayaGrid external-bench Stage-2. Produce a careful legal analysis response.";
@@ -440,9 +533,12 @@ export async function runStage2Finalists(input: {
   const batchSize = resolveBatchSize(argv, 5);
   const accountedResponseKeys = new Set<string>();
   const accountedJudgeKeys = new Set<string>();
+  let paidCallsSinceCheckpoint = 0;
+  let batchStartedAt = Date.now();
 
-  const bumpFailure = (provider: string) => {
+  const bumpFailure = (provider: string, err?: unknown) => {
     failuresByProvider[provider] = (failuresByProvider[provider] ?? 0) + 1;
+    bumpTaxonomy(failureTaxonomyByProvider, provider, classifyErrorToTaxonomy(err));
   };
 
   const persistProgress = () => {
@@ -457,11 +553,20 @@ export async function runStage2Finalists(input: {
       cacheHits,
       paidCalls,
       failuresByProvider: { ...failuresByProvider },
+      failureTaxonomyByProvider: structuredClone(failureTaxonomyByProvider),
+      gptResponsesDone,
+      grokResponsesDone,
+      judgeADone,
+      judgeBDone,
+      unknownQuarantines,
+      knownLedgerSpendUsd: budget.spentUsd,
+      unverifiedProviderBillingExposure,
       responseSpendUsd,
       judgeSpendUsd,
       retriesUsd,
       totalSpendUsd: budget.spentUsd,
       remainingBudgetUsd: remainingBudgetUsd(budget),
+      lastProviderActivity,
       updatedAt: new Date().toISOString(),
     });
   };
@@ -470,7 +575,12 @@ export async function runStage2Finalists(input: {
     modelId: Stage2ResponseModelId,
     prompt: string,
   ): Promise<LiveProviderResult> {
-    const clientOpts = { fetchImpl: deps.fetchImpl };
+    const provider = MODEL_PROVIDER[modelId];
+    const clientOpts = {
+      fetchImpl: deps.fetchImpl,
+      timeoutMs: stage2ResponseTimeoutMs(provider === "xai" ? "xai" : "openai"),
+    };
+    lastProviderActivity = `${provider}:${modelId}`;
     if (modelId === "gpt-6.1-sol") {
       const result = await executeOpenAiResponses(
         { ...clientOpts, apiKey: openaiKey! },
@@ -503,6 +613,64 @@ export async function runStage2Finalists(input: {
     return result;
   }
 
+  function handleUnknownCompletion(input: {
+    provider: string;
+    modelId: string;
+    taskId: string;
+    benchmarkId: string;
+    attemptNumber: number;
+    requestStartTimestamp: string;
+    err: unknown;
+    cacheKeyHint?: string;
+  }): never {
+    const live = input.err instanceof LiveProviderError ? input.err : null;
+    const unknownErr = input.err instanceof UnknownCompletionError ? input.err : null;
+    const classification: UnknownCompletionRecord["failureClassification"] =
+      unknownErr?.failureClassification ??
+      (live && isPostDispatchUnknownCode(live.code)
+        ? (live.code as UnknownCompletionRecord["failureClassification"])
+        : "UNKNOWN_COMPLETION");
+    const message = input.err instanceof Error ? input.err.message : String(input.err);
+    persistUnknownCompletion({
+      kind: "UNKNOWN_COMPLETION",
+      runId,
+      taskId: input.taskId,
+      benchmarkId: input.benchmarkId,
+      provider: input.provider,
+      exactModelId: input.modelId,
+      attemptNumber: input.attemptNumber,
+      requestStartTimestamp: input.requestStartTimestamp,
+      dispatchTimestamp: input.requestStartTimestamp,
+      failureTimestamp: new Date().toISOString(),
+      failureClassification: classification,
+      providerRequestId: null,
+      sanitizedErrorMessage: message.replace(/\s+/g, " ").slice(0, 500),
+      usageReceived: false,
+      responseBodyReceived: false,
+      safelyRetryable: false,
+      potentialBillingExposure: "YES",
+      resendBlocked: true,
+      operatorOverrideRequired: true,
+      cacheKeyHint: input.cacheKeyHint,
+    });
+    writeRunUnknownQuarantine({
+      runId,
+      reason: message,
+      providers: [...quarantinedProviders, input.provider, "openai", "xai"],
+    });
+    quarantinedProviders.add(input.provider);
+    // Balanced Stage-2: quarantine both finalists so one cannot continue alone.
+    quarantinedProviders.add("openai");
+    quarantinedProviders.add("xai");
+    unknownQuarantines += 1;
+    unverifiedProviderBillingExposure = "YES";
+    bumpTaxonomy(failureTaxonomyByProvider, input.provider, classifyErrorToTaxonomy(input.err));
+    failuresByProvider[input.provider] = (failuresByProvider[input.provider] ?? 0) + 1;
+    runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+    note = `STAGE2_PAUSED_UNKNOWN_COMPLETION: ${input.provider}: ${message}`;
+    throw new Stage2UnknownCompletionStopError(input.provider, note);
+  }
+
   type WorkItem = {
     benchmarkId: "prbench" | "legalbench";
     task: NormalizedTask;
@@ -520,6 +688,7 @@ export async function runStage2Finalists(input: {
   async function processOne(item: WorkItem, cacheOnly: boolean): Promise<void> {
     const { task, modelId, benchmarkId } = item;
     const provider = MODEL_PROVIDER[modelId];
+    const compositeTaskId = `${task.taskId}::${modelId}`;
     const license = assertCommercialEvalAllowed(task, "production-selection");
     if (!license.allowed) {
       bumpFailure(provider);
@@ -533,7 +702,7 @@ export async function runStage2Finalists(input: {
     const contentHash = contentHashFromText(userPrompt);
     const responseKey = buildCacheKey({
       revision: benchmarkId === "prbench" ? PRBENCH_REV : LEGALBENCH_REV,
-      taskId: `${task.taskId}::${modelId}`,
+      taskId: compositeTaskId,
       contentHash,
       provider,
       modelId,
@@ -572,6 +741,9 @@ export async function runStage2Finalists(input: {
         completedResponses += 1;
         accountedResponseKeys.add(responseKey);
         cacheHits += 1;
+        if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
+        if (modelId === "grok-4.7") grokResponsesDone += 1;
+        bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
       }
       responseResult = {
         provider,
@@ -588,6 +760,20 @@ export async function runStage2Finalists(input: {
         completionStatus: "success",
       };
     } else if (cacheOnly) {
+      return;
+    } else if (
+      !allowResendUnknown &&
+      hasUnknownCompletionArtifact(runId, compositeTaskId, provider)
+    ) {
+      // Quarantined UNKNOWN task — never silently convert to MISSING / auto-resend.
+      unverifiedProviderBillingExposure = "YES";
+      runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+      note = note ?? `STAGE2_PAUSED_UNKNOWN_COMPLETION: blocked auto-resend for ${compositeTaskId}`;
+      return;
+    } else if (!allowResendUnknown && quarantinedProviders.has(provider)) {
+      unverifiedProviderBillingExposure = "YES";
+      runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+      note = note ?? `STAGE2_PAUSED_UNKNOWN_COMPLETION: provider ${provider} quarantined`;
       return;
     } else {
       const estimatedInput = estimateTokens(systemPrompt + userPrompt);
@@ -631,9 +817,11 @@ export async function runStage2Finalists(input: {
         return;
       }
 
+      const requestStartTimestamp = new Date().toISOString();
       try {
         responseResult = await withRetries(() => callResponseModel(modelId, userPrompt), sleep);
         paidCalls += 1;
+        paidCallsSinceCheckpoint += 1;
         const actual = calculateActualCostUsd({
           modelId,
           inputTokens: responseResult.usage.inputTokens,
@@ -659,7 +847,7 @@ export async function runStage2Finalists(input: {
         persistPaidCallImmediately({
           runId,
           benchmarkId,
-          taskId: `${task.taskId}::${modelId}`,
+          taskId: compositeTaskId,
           provider,
           exactModelId: modelId,
           modelConfiguration: settings,
@@ -690,18 +878,34 @@ export async function runStage2Finalists(input: {
         });
         accountedResponseKeys.add(responseKey);
         completedResponses += 1;
+        if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
+        if (modelId === "grok-4.7") grokResponsesDone += 1;
+        bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
       } catch (err) {
-        bumpFailure(provider);
         if (err instanceof BudgetLimitError) {
+          bumpFailure(provider, err);
           runStatus = "STAGE2_BUDGET_STOP";
           note = err.message;
           throw err;
         }
-        if (err instanceof UnknownCompletionError) {
-          runStatus = "STAGE2_PARTIAL";
-          note = err.message;
-          return;
+        if (
+          err instanceof UnknownCompletionError ||
+          isPostDispatchUnknownError(err) ||
+          err instanceof Stage2UnknownCompletionStopError
+        ) {
+          if (err instanceof Stage2UnknownCompletionStopError) throw err;
+          handleUnknownCompletion({
+            provider,
+            modelId,
+            taskId: compositeTaskId,
+            benchmarkId,
+            attemptNumber: 1,
+            requestStartTimestamp,
+            err,
+            cacheKeyHint: responseKey,
+          });
         }
+        bumpFailure(provider, err);
         // Hard billing/auth stop: do not run the other finalist alone (authorization §6–8).
         if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
           runStatus = "STAGE2_BLOCKED";
@@ -762,11 +966,17 @@ export async function runStage2Finalists(input: {
           completedJudges += 1;
           accountedJudgeKeys.add(judgeKey);
           cacheHits += 1;
+          if (label === "A") judgeADone += 1;
+          else judgeBDone += 1;
         }
         return;
       }
 
       if (cacheOnly) return;
+      // Prefer STOP over new judge spend after finalist UNKNOWN quarantine.
+      if (runStatus === "STAGE2_PAUSED_UNKNOWN_COMPLETION" || quarantinedProviders.size > 0) {
+        return;
+      }
 
       const estimatedInput = estimateTokens(judgePrompt);
       const worst = worstCaseCostForBudgetGate({
@@ -785,10 +995,15 @@ export async function runStage2Finalists(input: {
         isJudge: true,
       });
 
+      lastProviderActivity = `${judgeProvider}:${judgeModel}`;
       const result = await withRetries(async () => {
         if (label === "A") {
           return executeAnthropicMessages(
-            { apiKey: anthropicKey!, fetchImpl: deps.fetchImpl },
+            {
+              apiKey: anthropicKey!,
+              fetchImpl: deps.fetchImpl,
+              timeoutMs: stage2JudgeTimeoutMs("anthropic"),
+            },
             {
               model: STAGE2_JUDGE_A,
               effort: "medium",
@@ -798,7 +1013,11 @@ export async function runStage2Finalists(input: {
           );
         }
         return executeOpenAiResponses(
-          { apiKey: openaiKey!, fetchImpl: deps.fetchImpl },
+          {
+            apiKey: openaiKey!,
+            fetchImpl: deps.fetchImpl,
+            timeoutMs: stage2JudgeTimeoutMs("openai"),
+          },
           {
             model: STAGE2_JUDGE_B,
             effort: "medium",
@@ -808,6 +1027,7 @@ export async function runStage2Finalists(input: {
         );
       }, sleep);
       paidCalls += 1;
+      paidCallsSinceCheckpoint += 1;
       const score = parseJudgeScore(result.text);
       const actual = calculateActualCostUsd({
         modelId: judgeModel,
@@ -856,12 +1076,25 @@ export async function runStage2Finalists(input: {
       });
       accountedJudgeKeys.add(judgeKey);
       completedJudges += 1;
+      if (label === "A") judgeADone += 1;
+      else judgeBDone += 1;
     }
 
     try {
       await runJudge("A");
     } catch (err) {
-      bumpFailure("anthropic");
+      if (err instanceof UnknownCompletionError || isPostDispatchUnknownError(err)) {
+        handleUnknownCompletion({
+          provider: "anthropic",
+          modelId: STAGE2_JUDGE_A,
+          taskId: `${task.taskId}::${modelId}::judge_A`,
+          benchmarkId: "prbench",
+          attemptNumber: 1,
+          requestStartTimestamp: new Date().toISOString(),
+          err,
+        });
+      }
+      bumpFailure("anthropic", err);
       if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
         runStatus = "STAGE2_BLOCKED";
         note = `STAGE2_BLOCKED_PROVIDER_ACCESS: Judge A ${err.message}`;
@@ -874,7 +1107,18 @@ export async function runStage2Finalists(input: {
     try {
       await runJudge("B");
     } catch (err) {
-      bumpFailure("openai");
+      if (err instanceof UnknownCompletionError || isPostDispatchUnknownError(err)) {
+        handleUnknownCompletion({
+          provider: "openai",
+          modelId: STAGE2_JUDGE_B,
+          taskId: `${task.taskId}::${modelId}::judge_B`,
+          benchmarkId: "prbench",
+          attemptNumber: 1,
+          requestStartTimestamp: new Date().toISOString(),
+          err,
+        });
+      }
+      bumpFailure("openai", err);
       if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
         runStatus = "STAGE2_BLOCKED";
         note = `STAGE2_BLOCKED_OPENAI_BILLING: Judge B ${err.message}`;
@@ -888,10 +1132,15 @@ export async function runStage2Finalists(input: {
 
   const emitCheckpoint = () => {
     persistProgress();
+    const elapsedBatchMs = Date.now() - batchStartedAt;
     console.error(
       JSON.stringify({
         checkpoint: true,
         runId,
+        gptResponsesDone,
+        grokResponsesDone,
+        judgeADone,
+        judgeBDone,
         completedResponses,
         plannedResponses,
         completedJudges,
@@ -901,10 +1150,18 @@ export async function runStage2Finalists(input: {
         cacheHits,
         paidCalls,
         totalSpendUsd: Number(budget.spentUsd.toFixed(4)),
+        knownLedgerSpendUsd: Number(budget.spentUsd.toFixed(4)),
         remainingBudgetUsd: Number(remainingBudgetUsd(budget).toFixed(4)),
+        lastProviderActivity,
+        unknownQuarantines,
+        unverifiedProviderBillingExposure,
+        failureTaxonomyByProvider: structuredClone(failureTaxonomyByProvider),
         failuresByProvider: { ...failuresByProvider },
+        elapsedBatchMs,
       }),
     );
+    batchStartedAt = Date.now();
+    paidCallsSinceCheckpoint = 0;
   };
 
   // Pass 1: account every cache hit first so AUTH hard-stop cannot wipe prior spend.
@@ -914,26 +1171,43 @@ export async function runStage2Finalists(input: {
   emitCheckpoint();
 
   try {
-    // Pass 2: serial paid execution; first AUTH_ERROR / budget stop aborts immediately.
-    let sinceCheckpoint = 0;
-    for (const item of work) {
-      await processOne(item, false);
-      sinceCheckpoint += 1;
-      if (sinceCheckpoint >= batchSize) {
-        emitCheckpoint();
-        sinceCheckpoint = 0;
+    // Refuse paid finalist work under prior UNKNOWN quarantine unless operator overrides.
+    if (existingQuarantine && !ackUnverified && !allowResendUnknown) {
+      runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+      note =
+        note ??
+        `STAGE2_PAUSED_UNKNOWN_COMPLETION: prior quarantine ${existingQuarantine.reason}; pass --acknowledge-unverified-billing-exposure to continue after reconciliation`;
+      emitCheckpoint();
+    } else {
+      // Pass 2: serial paid execution; AUTH / UNKNOWN / budget stop aborts immediately.
+      let sinceCheckpoint = 0;
+      for (const item of work) {
+        await processOne(item, false);
+        sinceCheckpoint += 1;
+        if (sinceCheckpoint >= batchSize || paidCallsSinceCheckpoint >= 10) {
+          emitCheckpoint();
+          sinceCheckpoint = 0;
+        }
       }
+      if (sinceCheckpoint > 0 || paidCallsSinceCheckpoint > 0) emitCheckpoint();
     }
-    if (sinceCheckpoint > 0) emitCheckpoint();
   } catch (err) {
     if (err instanceof BudgetLimitError) {
       runStatus = "STAGE2_BUDGET_STOP";
       note = err.message;
+    } else if (err instanceof Stage2UnknownCompletionStopError) {
+      runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+      if (!note?.startsWith("STAGE2_PAUSED_UNKNOWN_COMPLETION")) {
+        note = err.message;
+      }
     } else if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
       runStatus = "STAGE2_BLOCKED";
       if (!note?.startsWith("STAGE2_BLOCKED")) {
         note = `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`;
       }
+    } else if (err instanceof UnknownCompletionError || isPostDispatchUnknownError(err)) {
+      runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+      note = err instanceof Error ? err.message : String(err);
     } else {
       runStatus = "STAGE2_PARTIAL";
       note = err instanceof Error ? err.message : String(err);
@@ -1035,11 +1309,20 @@ export async function runStage2Finalists(input: {
       cacheHits,
       paidCalls,
       failuresByProvider,
+      failureTaxonomyByProvider: structuredClone(failureTaxonomyByProvider),
+      gptResponsesDone,
+      grokResponsesDone,
+      judgeADone,
+      judgeBDone,
+      unknownQuarantines,
+      knownLedgerSpendUsd: budget.spentUsd,
+      unverifiedProviderBillingExposure,
       responseSpendUsd,
       judgeSpendUsd,
       retriesUsd,
       totalSpendUsd: budget.spentUsd,
       remainingBudgetUsd: remainingBudgetUsd(budget),
+      lastProviderActivity,
       updatedAt: new Date().toISOString(),
     },
     cost: {
@@ -1048,6 +1331,8 @@ export async function runStage2Finalists(input: {
       retriesUsd,
       totalUsd: budget.spentUsd,
       remainingUsd: remainingBudgetUsd(budget),
+      knownLedgerSpendUsd: budget.spentUsd,
+      unverifiedProviderBillingExposure,
     },
     stage3Started: false,
     courtListener: 0,

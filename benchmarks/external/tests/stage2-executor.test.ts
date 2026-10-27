@@ -21,7 +21,11 @@ import {
   isLegalBenchTaskCommercialCleared,
   isRagTaskProductionCleared,
 } from "../src/selectors/commercial-screening.js";
-import { classifyHttpStatus } from "../src/providers/live-errors.js";
+import {
+  classifyFetchFailure,
+  classifyHttpStatus,
+  isRetryableLiveError,
+} from "../src/providers/live-errors.js";
 import { assertSameModelPinned } from "../src/live/no-fallback.js";
 import { assertCompletionKnown, UnknownCompletionError } from "../src/live/retry.js";
 import {
@@ -30,6 +34,18 @@ import {
   parseProviderCaps,
 } from "../src/live/provider-caps.js";
 import { BudgetLimitError, reconstructSpendFromPersistedCosts } from "../src/live/budget.js";
+import {
+  STAGE2_PROVIDER_TIMEOUTS_MS,
+  stage2ResponseTimeoutMs,
+} from "../src/live/provider-timeouts.js";
+import {
+  auditUnknownCompletions,
+  hasUnknownCompletionArtifact,
+  listUnknownCompletions,
+  persistUnknownCompletion,
+  readRunUnknownQuarantine,
+  writeRunUnknownQuarantine,
+} from "../src/live/unknown-completion.js";
 
 function task(
   partial: Partial<NormalizedTask> & { taskId: string; benchmarkId: string },
@@ -800,6 +816,358 @@ describe("stage2 post-stop safety", () => {
     expect(resumed.cost.remainingUsd).toBeLessThan(55);
     expect(resumed.cost.authorizedUsd).toBe(55);
     expect(priorSpend).toBeGreaterThan(resumed.cost.totalUsd); // GPT/Judge B spend not in ledger
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+});
+
+describe("stage2 unknown-completion safety", () => {
+  it("provider-specific timeouts: Grok > GPT observed tail; judges independent", () => {
+    expect(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse).toBeGreaterThanOrEqual(240_000);
+    expect(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse).toBeLessThanOrEqual(300_000);
+    expect(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse).toBeGreaterThan(
+      STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse,
+    );
+    expect(STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse).toBe(180_000);
+    expect(STAGE2_PROVIDER_TIMEOUTS_MS.anthropicJudge).toBe(180_000);
+    expect(STAGE2_PROVIDER_TIMEOUTS_MS.openaiJudge).toBe(180_000);
+    expect(stage2ResponseTimeoutMs("xai")).toBe(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse);
+    expect(stage2ResponseTimeoutMs("openai")).toBe(STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse);
+  });
+
+  it("classifies timeout vs transport pre/post dispatch separately", () => {
+    const timeoutPost = classifyFetchFailure({
+      provider: "xai",
+      dispatched: true,
+      err: Object.assign(new Error("The operation was aborted due to timeout"), {
+        name: "TimeoutError",
+      }),
+    });
+    expect(timeoutPost.code).toBe("TIMEOUT_POST_DISPATCH_UNKNOWN");
+    expect(timeoutPost.retryable).toBe(false);
+    expect(isRetryableLiveError(timeoutPost)).toBe(false);
+
+    const transportPost = classifyFetchFailure({
+      provider: "openai",
+      dispatched: true,
+      err: new Error("fetch failed"),
+    });
+    expect(transportPost.code).toBe("TRANSPORT_POST_DISPATCH_UNKNOWN");
+    expect(isRetryableLiveError(transportPost)).toBe(false);
+
+    const transportPre = classifyFetchFailure({
+      provider: "openai",
+      dispatched: false,
+      err: new Error("fetch failed"),
+    });
+    expect(transportPre.code).toBe("TRANSPORT_PRE_DISPATCH");
+    expect(isRetryableLiveError(transportPre)).toBe(true);
+  });
+
+  it("OpenAI post-dispatch timeout persists UNKNOWN, quarantines, balanced-stops, no further finalist paid calls", async () => {
+    const runId = `stage2-unk-oa-${Date.now()}`;
+    const suite = miniSuite(["pr-u1", "pr-u2", "pr-u3"], [], []);
+    const config = {
+      runId,
+      stage: 2,
+      suite,
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 55,
+    });
+
+    let openaiCalls = 0;
+    let xaiCalls = 0;
+    let anthropicCalls = 0;
+    const fetchImpl: typeof fetch = async (url) => {
+      const u = String(url);
+      if (u.includes("api.openai.com")) {
+        openaiCalls += 1;
+        throw Object.assign(new Error("The operation was aborted due to timeout"), {
+          name: "TimeoutError",
+        });
+      }
+      if (u.includes("api.x.ai")) {
+        xaiCalls += 1;
+        return new Response(
+          JSON.stringify({
+            id: "xai_should_stop",
+            status: "completed",
+            output_text: "should not continue alone",
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.anthropic.com")) {
+        anthropicCalls += 1;
+        return new Response(
+          JSON.stringify({
+            id: "msg_x",
+            stop_reason: "end_turn",
+            content: [{ type: "text", text: '{"score":0.5,"rationale":"x"}' }],
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      return new Response("not found", { status: 404 });
+    };
+
+    const summary = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "55",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 55,
+        fetchImpl,
+        openaiApiKey: "t",
+        anthropicApiKey: "t",
+        xaiApiKey: "t",
+        prbenchTasks: [
+          task({ benchmarkId: "prbench", taskId: "pr-u1" }),
+          task({ benchmarkId: "prbench", taskId: "pr-u2" }),
+          task({ benchmarkId: "prbench", taskId: "pr-u3" }),
+        ],
+        legalbenchTasks: [],
+        skipRag: true,
+        suiteOverride: suite,
+        sleep: async () => undefined,
+      },
+    });
+
+    expect(summary.status).toBe("STAGE2_PAUSED_UNKNOWN_COMPLETION");
+    expect(summary.note).toMatch(/STAGE2_PAUSED_UNKNOWN_COMPLETION/);
+    expect(openaiCalls).toBe(1);
+    expect(xaiCalls).toBe(0);
+    expect(anthropicCalls).toBe(0);
+    expect(listUnknownCompletions(runId).length).toBe(1);
+    expect(listUnknownCompletions(runId)[0]?.failureClassification).toBe(
+      "TIMEOUT_POST_DISPATCH_UNKNOWN",
+    );
+    expect(readRunUnknownQuarantine(runId)?.automaticResendBlocked).toBe(true);
+    expect(summary.progress.unverifiedProviderBillingExposure).toBe("YES");
+    expect(summary.paidCalls).toBe(0);
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("xAI post-dispatch fetch failure persists UNKNOWN and stops balanced execution", async () => {
+    const runId = `stage2-unk-xai-${Date.now()}`;
+    const suite = miniSuite(["pr-x1", "pr-x2"], [], []);
+    const config = {
+      runId,
+      stage: 2,
+      suite,
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 55,
+    });
+
+    let openaiCalls = 0;
+    let xaiCalls = 0;
+    const fetchImpl: typeof fetch = async (url) => {
+      const u = String(url);
+      if (u.includes("api.openai.com")) {
+        openaiCalls += 1;
+        const isJudge = false;
+        void isJudge;
+        return new Response(
+          JSON.stringify({
+            id: `oa_${openaiCalls}`,
+            status: "completed",
+            output_text: "OpenAI ok",
+            usage: { input_tokens: 20, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.x.ai")) {
+        xaiCalls += 1;
+        throw new Error("fetch failed");
+      }
+      if (u.includes("api.anthropic.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "msg",
+            stop_reason: "end_turn",
+            content: [{ type: "text", text: '{"score":0.5,"rationale":"x"}' }],
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      return new Response("not found", { status: 404 });
+    };
+
+    const summary = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "55",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 55,
+        fetchImpl,
+        openaiApiKey: "t",
+        anthropicApiKey: "t",
+        xaiApiKey: "t",
+        prbenchTasks: [
+          task({ benchmarkId: "prbench", taskId: "pr-x1" }),
+          task({ benchmarkId: "prbench", taskId: "pr-x2" }),
+        ],
+        legalbenchTasks: [],
+        skipRag: true,
+        suiteOverride: suite,
+        sleep: async () => undefined,
+      },
+    });
+
+    expect(summary.status).toBe("STAGE2_PAUSED_UNKNOWN_COMPLETION");
+    expect(xaiCalls).toBe(1);
+    // GPT may complete the interleaved first task (+ judges) before Grok UNKNOWN stops the run.
+    expect(openaiCalls).toBeGreaterThanOrEqual(1);
+    expect(openaiCalls).toBeLessThanOrEqual(4);
+    expect(listUnknownCompletions(runId).some((r) => r.provider === "xai")).toBe(true);
+    expect(
+      listUnknownCompletions(runId).find((r) => r.provider === "xai")?.failureClassification,
+    ).toBe("TRANSPORT_POST_DISPATCH_UNKNOWN");
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("resume does not auto-resend UNKNOWN task without operator override", async () => {
+    const runId = `stage2-unk-resume-${Date.now()}`;
+    const suite = miniSuite(["pr-r1"], [], []);
+    const config = {
+      runId,
+      stage: 2,
+      suite,
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 55,
+    });
+
+    persistUnknownCompletion({
+      kind: "UNKNOWN_COMPLETION",
+      runId,
+      taskId: "pr-r1::grok-4.7",
+      benchmarkId: "prbench",
+      provider: "xai",
+      exactModelId: "grok-4.7",
+      attemptNumber: 1,
+      requestStartTimestamp: new Date().toISOString(),
+      dispatchTimestamp: new Date().toISOString(),
+      failureTimestamp: new Date().toISOString(),
+      failureClassification: "TRANSPORT_POST_DISPATCH_UNKNOWN",
+      providerRequestId: null,
+      sanitizedErrorMessage: "xAI transport failure after dispatch: fetch failed",
+      usageReceived: false,
+      responseBodyReceived: false,
+      safelyRetryable: false,
+      potentialBillingExposure: "YES",
+      resendBlocked: true,
+      operatorOverrideRequired: true,
+    });
+    writeRunUnknownQuarantine({
+      runId,
+      reason: "test quarantine",
+      providers: ["openai", "xai"],
+    });
+
+    let xaiCalls = 0;
+    let openaiCalls = 0;
+    const fetchImpl: typeof fetch = async (url) => {
+      const u = String(url);
+      if (u.includes("api.x.ai")) xaiCalls += 1;
+      if (u.includes("api.openai.com")) openaiCalls += 1;
+      throw new Error("should not be called under quarantine");
+    };
+
+    const resumed = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "55",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 55,
+        fetchImpl,
+        openaiApiKey: "t",
+        anthropicApiKey: "t",
+        xaiApiKey: "t",
+        prbenchTasks: [task({ benchmarkId: "prbench", taskId: "pr-r1" })],
+        legalbenchTasks: [],
+        skipRag: true,
+        suiteOverride: suite,
+        sleep: async () => undefined,
+      },
+    });
+
+    expect(resumed.status).toBe("STAGE2_PAUSED_UNKNOWN_COMPLETION");
+    expect(xaiCalls).toBe(0);
+    expect(openaiCalls).toBe(0);
+    expect(hasUnknownCompletionArtifact(runId, "pr-r1::grok-4.7", "xai")).toBe(true);
+    expect(auditUnknownCompletions({ runId })[0]?.resendBlocked).toBe(true);
 
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });

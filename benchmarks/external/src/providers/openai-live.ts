@@ -1,6 +1,7 @@
 import { buildOpenAiResponsesRequest } from "./request-builders.js";
-import { classifyHttpStatus, LiveProviderError } from "./live-errors.js";
+import { classifyFetchFailure, classifyHttpStatus, LiveProviderError } from "./live-errors.js";
 import type { LiveClientOptions, LiveProviderResult } from "./live-types.js";
+import { DEFAULT_LIVE_TIMEOUT_MS } from "../live/provider-timeouts.js";
 
 function extractOpenAiText(raw: Record<string, unknown>): string {
   if (typeof raw.output_text === "string" && raw.output_text.trim()) {
@@ -84,7 +85,7 @@ export async function executeOpenAiResponses(
 
   const started = Date.now();
   // Once fetch begins, the request may have reached the provider — treat
-  // subsequent transport loss as UNKNOWN_COMPLETION (do not auto-resend).
+  // subsequent transport/timeout loss as post-dispatch UNKNOWN (do not auto-resend).
   let dispatched = Boolean(input.requestDispatched);
   let response: Response;
   try {
@@ -96,26 +97,10 @@ export async function executeOpenAiResponses(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(options.timeoutMs ?? 180_000),
+      signal: AbortSignal.timeout(options.timeoutMs ?? DEFAULT_LIVE_TIMEOUT_MS),
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    if (dispatched) {
-      throw new LiveProviderError({
-        code: "UNKNOWN_COMPLETION",
-        provider: "openai",
-        message: `OpenAI transport failure after dispatch: ${message}`,
-        retryable: false,
-        completionKnownIncomplete: false,
-      });
-    }
-    throw new LiveProviderError({
-      code: "TRANSPORT_ERROR",
-      provider: "openai",
-      message: `OpenAI transport error: ${message}`,
-      retryable: true,
-      completionKnownIncomplete: true,
-    });
+    throw classifyFetchFailure({ provider: "openai", dispatched, err });
   }
 
   const bodyText = await response.text();

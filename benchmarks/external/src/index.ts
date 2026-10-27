@@ -124,7 +124,7 @@ export { assessContextFit, assertNoSilentTruncate } from "./live/context-fit.js"
 export { findDuplicateInputHashes } from "./live/duplicate-tasks.js";
 export { assertSameModelPinned, ModelSwapForbiddenError } from "./live/no-fallback.js";
 export { mayStartStage, autoStartStage2FromStage1 } from "./live/stage-gate.js";
-export { runStage2Finalists } from "./live/stage2-executor.js";
+export { runStage2Finalists, Stage2UnknownCompletionStopError } from "./live/stage2-executor.js";
 export type { Stage2RunSummary, Stage2ExecutorDeps } from "./live/stage2-executor.js";
 export {
   buildStage2SuitePlan,
@@ -155,10 +155,33 @@ export { calculateActualCostUsd, worstCaseCostForBudgetGate } from "./live/cost-
 export { scoreFromSavedResponses } from "./live/offline-score.js";
 export {
   classifyHttpStatus,
+  classifyFetchFailure,
+  isPostDispatchUnknownError,
   isRetryableLiveError,
+  isTimeoutLikeError,
   LiveProviderError,
 } from "./providers/live-errors.js";
 export type { LiveProviderErrorCode } from "./providers/live-errors.js";
+export {
+  STAGE2_PROVIDER_TIMEOUTS_MS,
+  DEFAULT_LIVE_TIMEOUT_MS,
+  stage2ResponseTimeoutMs,
+  stage2JudgeTimeoutMs,
+} from "./live/provider-timeouts.js";
+export {
+  persistUnknownCompletion,
+  listUnknownCompletions,
+  auditUnknownCompletions,
+  hasUnknownCompletionArtifact,
+  readRunUnknownQuarantine,
+  writeRunUnknownQuarantine,
+  ensureQuarantineFromPartialSummary,
+} from "./live/unknown-completion.js";
+export {
+  emptyFailureTaxonomy,
+  bumpTaxonomy,
+  classifyErrorToTaxonomy,
+} from "./live/failure-taxonomy.js";
 export { executeOpenAiResponses } from "./providers/openai-live.js";
 export { executeAnthropicMessages } from "./providers/anthropic-live.js";
 export {

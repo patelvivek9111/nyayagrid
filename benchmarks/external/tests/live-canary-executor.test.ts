@@ -165,7 +165,7 @@ describe("error classification", () => {
 });
 
 describe("unknown completion", () => {
-  it("transport after dispatch is UNKNOWN_COMPLETION and not retryable", async () => {
+  it("transport after dispatch is TRANSPORT_POST_DISPATCH_UNKNOWN and not retryable", async () => {
     await expect(
       executeOpenAiResponses(
         {
@@ -182,7 +182,7 @@ describe("unknown completion", () => {
         },
       ),
     ).rejects.toMatchObject({
-      code: "UNKNOWN_COMPLETION",
+      code: "TRANSPORT_POST_DISPATCH_UNKNOWN",
       retryable: false,
     } satisfies Partial<LiveProviderError>);
   });

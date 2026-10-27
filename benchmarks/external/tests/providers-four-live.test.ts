@@ -232,7 +232,7 @@ describe("four-provider live clients (mock fetch)", () => {
     ).rejects.toMatchObject({ code: "CONTENT_FILTER_OR_REFUSAL" });
   });
 
-  it("unknown completion after dispatch on transport failure", async () => {
+  it("post-dispatch transport failure is TRANSPORT_POST_DISPATCH_UNKNOWN", async () => {
     await expect(
       executeGeminiInteractions(
         {
@@ -264,7 +264,7 @@ describe("four-provider live clients (mock fetch)", () => {
           input: "q",
         },
       ),
-    ).rejects.toMatchObject({ code: "UNKNOWN_COMPLETION" });
+    ).rejects.toMatchObject({ code: "TRANSPORT_POST_DISPATCH_UNKNOWN", retryable: false });
   });
 
   it("no fallback / model swap forbidden", () => {
