@@ -4,12 +4,16 @@
  *
  * Evidence from stage2-finalists-v1-044fb482d7bf successful artifacts:
  * - GPT max ~141s → 180s remains acceptable
- * - Grok p95 ~161s / max ~177.7s vs prior 180s → raise to 270s
+ * - Grok p95 ~161s / historical max ~177.7s; a legitimate long-tail then hit the
+ *   full 270s client abort → raise response timeout to 360s for tail margin
  * - Judges p95 ≪ 180s → keep 180s
+ *
+ * Post-dispatch timeout at this bound still becomes TIMEOUT_POST_DISPATCH_UNKNOWN
+ * with durable UNKNOWN persistence, provider quarantine, and no auto-retry.
  */
 export const STAGE2_PROVIDER_TIMEOUTS_MS = {
   openaiResponse: 180_000,
-  xaiResponse: 270_000,
+  xaiResponse: 360_000,
   anthropicJudge: 180_000,
   openaiJudge: 180_000,
 } as const;

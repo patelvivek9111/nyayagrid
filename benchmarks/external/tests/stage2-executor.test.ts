@@ -36,14 +36,18 @@ import {
 import { BudgetLimitError, reconstructSpendFromPersistedCosts } from "../src/live/budget.js";
 import {
   STAGE2_PROVIDER_TIMEOUTS_MS,
+  stage2JudgeTimeoutMs,
   stage2ResponseTimeoutMs,
 } from "../src/live/provider-timeouts.js";
 import {
+  acknowledgeQuarantineForSingleResend,
   auditUnknownCompletions,
+  hasConsumedSingleUnknownResend,
   hasUnknownCompletionArtifact,
   listUnknownCompletions,
   persistUnknownCompletion,
   readRunUnknownQuarantine,
+  recordUnknownResendAttempt,
   writeRunUnknownQuarantine,
 } from "../src/live/unknown-completion.js";
 
@@ -822,17 +826,15 @@ describe("stage2 post-stop safety", () => {
 });
 
 describe("stage2 unknown-completion safety", () => {
-  it("provider-specific timeouts: Grok > GPT observed tail; judges independent", () => {
-    expect(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse).toBeGreaterThanOrEqual(240_000);
-    expect(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse).toBeLessThanOrEqual(300_000);
-    expect(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse).toBeGreaterThan(
-      STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse,
-    );
+  it("provider-specific timeouts: Grok 360s tail; GPT/judges remain 180s", () => {
+    expect(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse).toBe(360_000);
     expect(STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse).toBe(180_000);
     expect(STAGE2_PROVIDER_TIMEOUTS_MS.anthropicJudge).toBe(180_000);
     expect(STAGE2_PROVIDER_TIMEOUTS_MS.openaiJudge).toBe(180_000);
-    expect(stage2ResponseTimeoutMs("xai")).toBe(STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse);
-    expect(stage2ResponseTimeoutMs("openai")).toBe(STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse);
+    expect(stage2ResponseTimeoutMs("xai")).toBe(360_000);
+    expect(stage2ResponseTimeoutMs("openai")).toBe(180_000);
+    expect(stage2JudgeTimeoutMs("anthropic")).toBe(180_000);
+    expect(stage2JudgeTimeoutMs("openai")).toBe(180_000);
   });
 
   it("classifies timeout vs transport pre/post dispatch separately", () => {
@@ -1169,6 +1171,164 @@ describe("stage2 unknown-completion safety", () => {
     expect(hasUnknownCompletionArtifact(runId, "pr-r1::grok-4.7", "xai")).toBe(true);
     expect(auditUnknownCompletions({ runId })[0]?.resendBlocked).toBe(true);
 
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("operator single-resend ack releases quarantine, allows one resend, blocks second, re-quarantines on UNKNOWN", async () => {
+    const runId = `stage2-unk-single-${Date.now()}`;
+    const suite = miniSuite(["pr-s1"], [], []);
+    const config = {
+      runId,
+      stage: 2,
+      suite,
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 55,
+    });
+
+    persistUnknownCompletion({
+      kind: "UNKNOWN_COMPLETION",
+      runId,
+      taskId: "pr-s1::grok-4.7",
+      benchmarkId: "prbench",
+      provider: "xai",
+      exactModelId: "grok-4.7",
+      attemptNumber: 1,
+      requestStartTimestamp: new Date().toISOString(),
+      dispatchTimestamp: new Date().toISOString(),
+      failureTimestamp: new Date().toISOString(),
+      failureClassification: "TIMEOUT_POST_DISPATCH_UNKNOWN",
+      providerRequestId: null,
+      sanitizedErrorMessage: "TIMEOUT_POST_DISPATCH_UNKNOWN: prior",
+      usageReceived: false,
+      responseBodyReceived: false,
+      safelyRetryable: false,
+      potentialBillingExposure: "YES",
+      resendBlocked: true,
+      operatorOverrideRequired: true,
+    });
+    writeRunUnknownQuarantine({
+      runId,
+      reason: "prior TIMEOUT_POST_DISPATCH_UNKNOWN",
+      providers: ["openai", "xai"],
+    });
+    const ack = acknowledgeQuarantineForSingleResend({
+      runId,
+      taskIds: ["pr-s1::grok-4.7"],
+    });
+    expect(ack.status).toBe("OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND");
+    expect(hasUnknownCompletionArtifact(runId, "pr-s1::grok-4.7", "xai")).toBe(true);
+    expect(readRunUnknownQuarantine(runId)?.status).toBe("OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND");
+
+    let xaiCalls = 0;
+    let openaiCalls = 0;
+    const fetchImpl: typeof fetch = async (url) => {
+      const u = String(url);
+      if (u.includes("api.openai.com")) {
+        openaiCalls += 1;
+        return new Response(
+          JSON.stringify({
+            id: `oa_${openaiCalls}`,
+            status: "completed",
+            output_text: "OpenAI ok",
+            usage: { input_tokens: 20, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.x.ai")) {
+        xaiCalls += 1;
+        throw Object.assign(new Error("The operation was aborted due to timeout"), {
+          name: "TimeoutError",
+        });
+      }
+      if (u.includes("api.anthropic.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "msg",
+            stop_reason: "end_turn",
+            content: [{ type: "text", text: '{"score":0.5,"rationale":"x"}' }],
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      return new Response("not found", { status: 404 });
+    };
+
+    const resumeArgv = [
+      "node",
+      "stage2",
+      "--run-id",
+      runId,
+      "--allow-paid-model-calls",
+      "--max-cost-usd",
+      "55",
+      "--acknowledge-unverified-billing-exposure",
+      "--allow-unknown-resend",
+    ];
+    const resumeDeps = {
+      bypassAuthForTests: true,
+      maxCostUsdForTests: 55,
+      fetchImpl,
+      openaiApiKey: "t",
+      anthropicApiKey: "t",
+      xaiApiKey: "t",
+      prbenchTasks: [task({ benchmarkId: "prbench", taskId: "pr-s1" })],
+      legalbenchTasks: [] as NormalizedTask[],
+      skipRag: true,
+      suiteOverride: suite,
+      sleep: async () => undefined,
+    };
+
+    const first = await runStage2Finalists({ argv: resumeArgv, deps: resumeDeps });
+
+    expect(first.status).toBe("STAGE2_PAUSED_UNKNOWN_COMPLETION");
+    expect(xaiCalls).toBe(1);
+    expect(hasConsumedSingleUnknownResend(runId, "pr-s1::grok-4.7", "xai")).toBe(true);
+    expect(readRunUnknownQuarantine(runId)?.status).toBe("QUARANTINED");
+    expect(listUnknownCompletions(runId).length).toBeGreaterThanOrEqual(1);
+
+    const xaiBeforeSecond = xaiCalls;
+    const second = await runStage2Finalists({ argv: resumeArgv, deps: resumeDeps });
+
+    expect(second.status).toBe("STAGE2_PAUSED_UNKNOWN_COMPLETION");
+    // Same UNKNOWN task must never receive a third paid attempt.
+    expect(xaiCalls).toBe(xaiBeforeSecond);
+    expect(second.note ?? "").toMatch(/single-resend already consumed|quarantined|UNKNOWN|PAUSED/);
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("recordUnknownResendAttempt is idempotent and blocks duplicate consumption checks", () => {
+    const runId = `stage2-unk-ledger-${Date.now()}`;
+    ensureRunDir(runId);
+    recordUnknownResendAttempt({
+      runId,
+      taskId: "t1::grok-4.7",
+      provider: "xai",
+    });
+    recordUnknownResendAttempt({
+      runId,
+      taskId: "t1::grok-4.7",
+      provider: "xai",
+    });
+    expect(hasConsumedSingleUnknownResend(runId, "t1::grok-4.7", "xai")).toBe(true);
+    expect(hasConsumedSingleUnknownResend(runId, "t1::gpt-6.1-sol", "openai")).toBe(false);
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });
 });

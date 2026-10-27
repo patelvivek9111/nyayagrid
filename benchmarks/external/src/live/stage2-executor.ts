@@ -75,10 +75,13 @@ import {
   acknowledgeUnverifiedBillingExposure,
   allowUnknownResend,
   ensureQuarantineFromPartialSummary,
+  hasConsumedSingleUnknownResend,
   hasUnknownCompletionArtifact,
+  isActiveUnknownQuarantine,
   isPostDispatchUnknownCode,
   persistUnknownCompletion,
   readRunUnknownQuarantine,
+  recordUnknownResendAttempt,
   writeRunUnknownQuarantine,
   type UnknownCompletionRecord,
 } from "./unknown-completion.js";
@@ -520,9 +523,12 @@ export async function runStage2Finalists(input: {
   const seededQuarantine = ensureQuarantineFromPartialSummary(runId);
   const existingQuarantine = seededQuarantine ?? readRunUnknownQuarantine(runId);
   if (existingQuarantine) {
-    for (const p of existingQuarantine.providers) quarantinedProviders.add(p);
-    unknownQuarantines = Math.max(unknownQuarantines, existingQuarantine.providers.length);
     unverifiedProviderBillingExposure = "YES";
+    // Only an active QUARANTINED marker blocks; OPERATOR_ACKNOWLEDGED releases.
+    if (isActiveUnknownQuarantine(existingQuarantine)) {
+      for (const p of existingQuarantine.providers) quarantinedProviders.add(p);
+      unknownQuarantines = Math.max(unknownQuarantines, existingQuarantine.providers.length);
+    }
   }
 
   const systemPrompt =
@@ -761,21 +767,36 @@ export async function runStage2Finalists(input: {
       };
     } else if (cacheOnly) {
       return;
-    } else if (
-      !allowResendUnknown &&
-      hasUnknownCompletionArtifact(runId, compositeTaskId, provider)
-    ) {
-      // Quarantined UNKNOWN task — never silently convert to MISSING / auto-resend.
-      unverifiedProviderBillingExposure = "YES";
-      runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
-      note = note ?? `STAGE2_PAUSED_UNKNOWN_COMPLETION: blocked auto-resend for ${compositeTaskId}`;
-      return;
-    } else if (!allowResendUnknown && quarantinedProviders.has(provider)) {
-      unverifiedProviderBillingExposure = "YES";
-      runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
-      note = note ?? `STAGE2_PAUSED_UNKNOWN_COMPLETION: provider ${provider} quarantined`;
-      return;
     } else {
+      if (hasUnknownCompletionArtifact(runId, compositeTaskId, provider)) {
+        // Quarantined UNKNOWN task — never silently convert to MISSING / auto-resend.
+        unverifiedProviderBillingExposure = "YES";
+        if (!allowResendUnknown) {
+          runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+          note =
+            note ?? `STAGE2_PAUSED_UNKNOWN_COMPLETION: blocked auto-resend for ${compositeTaskId}`;
+          return;
+        }
+        // Operator --allow-unknown-resend authorizes exactly one paid attempt per UNKNOWN task.
+        if (hasConsumedSingleUnknownResend(runId, compositeTaskId, provider)) {
+          runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+          note =
+            note ??
+            `STAGE2_PAUSED_UNKNOWN_COMPLETION: single-resend already consumed for ${compositeTaskId}`;
+          return;
+        }
+        recordUnknownResendAttempt({
+          runId,
+          taskId: compositeTaskId,
+          provider,
+        });
+      } else if (!allowResendUnknown && quarantinedProviders.has(provider)) {
+        unverifiedProviderBillingExposure = "YES";
+        runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+        note = note ?? `STAGE2_PAUSED_UNKNOWN_COMPLETION: provider ${provider} quarantined`;
+        return;
+      }
+
       const estimatedInput = estimateTokens(systemPrompt + userPrompt);
       const fit = assessContextFit({
         inputTokensEstimate: estimatedInput,
@@ -1172,7 +1193,14 @@ export async function runStage2Finalists(input: {
 
   try {
     // Refuse paid finalist work under prior UNKNOWN quarantine unless operator overrides.
-    if (existingQuarantine && !ackUnverified && !allowResendUnknown) {
+    // OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND still requires the resume flags for paid work.
+    if (
+      existingQuarantine &&
+      (isActiveUnknownQuarantine(existingQuarantine) ||
+        existingQuarantine.status === "OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND") &&
+      !ackUnverified &&
+      !allowResendUnknown
+    ) {
       runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
       note =
         note ??

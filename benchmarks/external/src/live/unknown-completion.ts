@@ -36,15 +36,33 @@ export type UnknownCompletionRecord = {
   cacheKeyHint?: string;
 };
 
+export const OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND =
+  "OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND" as const;
+
 export type RunUnknownQuarantine = {
   runId: string;
-  status: "QUARANTINED";
+  status: "QUARANTINED" | typeof OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND;
   reason: string;
   providers: string[];
   createdAt: string;
   unverifiedProviderBillingExposure: "YES";
   automaticResendBlocked: true;
   operatorReconciliationRequired: true;
+  /** Present after operator release; historical UNKNOWN artifacts remain on disk. */
+  acknowledgedTaskIds?: string[];
+  acknowledgedAt?: string;
+  priorQuarantineReason?: string;
+};
+
+export type UnknownResendAttempt = {
+  taskId: string;
+  provider: string;
+  attemptedAt: string;
+};
+
+export type UnknownResendLedger = {
+  runId: string;
+  attempts: UnknownResendAttempt[];
 };
 
 function unknownDir(runId: string): string {
@@ -70,6 +88,16 @@ export function unknownArtifactPath(runId: string, taskId: string, provider: str
 
 export function runQuarantinePath(runId: string): string {
   return path.join(runArtifactsDir(runId), "unknown-quarantine.json");
+}
+
+export function unknownResendLedgerPath(runId: string): string {
+  return path.join(runArtifactsDir(runId), "unknown-resend-ledger.json");
+}
+
+export function isActiveUnknownQuarantine(
+  quarantine: RunUnknownQuarantine | null | undefined,
+): boolean {
+  return quarantine?.status === "QUARANTINED";
 }
 
 /** Persist UNKNOWN completion atomically. Never marks as success / missing. */
@@ -113,6 +141,91 @@ export function readRunUnknownQuarantine(runId: string): RunUnknownQuarantine | 
   const p = runQuarantinePath(runId);
   if (!existsSync(p)) return null;
   return JSON.parse(readFileSync(p, "utf8")) as RunUnknownQuarantine;
+}
+
+/**
+ * Operator release of an active UNKNOWN quarantine for exactly one resend of
+ * listed missing tasks. Preserves historical UNKNOWN artifacts and audit fields.
+ * Does not authorize repeated retries of the same task.
+ */
+export function acknowledgeQuarantineForSingleResend(input: {
+  runId: string;
+  taskIds: string[];
+  note?: string;
+}): RunUnknownQuarantine {
+  ensureRunDir(input.runId);
+  const prior = readRunUnknownQuarantine(input.runId);
+  const taskIds = [...new Set(input.taskIds.filter((t) => t.trim().length > 0))];
+  if (taskIds.length === 0) {
+    throw new Error("acknowledgeQuarantineForSingleResend requires at least one taskId");
+  }
+  const payload: RunUnknownQuarantine = {
+    runId: input.runId,
+    status: OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND,
+    reason: sanitizeMessage(
+      input.note ?? `OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND for ${taskIds.join(", ")}`,
+    ),
+    providers: prior?.providers ?? ["openai", "xai"],
+    createdAt: prior?.createdAt ?? new Date().toISOString(),
+    unverifiedProviderBillingExposure: "YES",
+    automaticResendBlocked: true,
+    operatorReconciliationRequired: true,
+    acknowledgedTaskIds: taskIds,
+    acknowledgedAt: new Date().toISOString(),
+    priorQuarantineReason: prior?.reason,
+  };
+  const finalPath = runQuarantinePath(input.runId);
+  const tmpPath = `${finalPath}.tmp`;
+  writeFileSync(tmpPath, `${JSON.stringify(payload, null, 2)}\n`, "utf8");
+  renameSync(tmpPath, finalPath);
+  return payload;
+}
+
+export function readUnknownResendLedger(runId: string): UnknownResendLedger {
+  const p = unknownResendLedgerPath(runId);
+  if (!existsSync(p)) return { runId, attempts: [] };
+  try {
+    const parsed = JSON.parse(readFileSync(p, "utf8")) as UnknownResendLedger;
+    return {
+      runId,
+      attempts: Array.isArray(parsed.attempts) ? parsed.attempts : [],
+    };
+  } catch {
+    return { runId, attempts: [] };
+  }
+}
+
+export function hasConsumedSingleUnknownResend(
+  runId: string,
+  taskId: string,
+  provider: string,
+): boolean {
+  return readUnknownResendLedger(runId).attempts.some(
+    (a) => a.taskId === taskId && a.provider === provider,
+  );
+}
+
+/** Record that operator-authorized single resend was consumed for this task. */
+export function recordUnknownResendAttempt(input: {
+  runId: string;
+  taskId: string;
+  provider: string;
+}): UnknownResendLedger {
+  ensureRunDir(input.runId);
+  const ledger = readUnknownResendLedger(input.runId);
+  if (ledger.attempts.some((a) => a.taskId === input.taskId && a.provider === input.provider)) {
+    return ledger;
+  }
+  ledger.attempts.push({
+    taskId: input.taskId,
+    provider: input.provider,
+    attemptedAt: new Date().toISOString(),
+  });
+  const finalPath = unknownResendLedgerPath(input.runId);
+  const tmpPath = `${finalPath}.tmp`;
+  writeFileSync(tmpPath, `${JSON.stringify(ledger, null, 2)}\n`, "utf8");
+  renameSync(tmpPath, finalPath);
+  return ledger;
 }
 
 export function hasUnknownCompletionArtifact(
