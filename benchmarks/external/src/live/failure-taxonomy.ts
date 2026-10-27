@@ -11,6 +11,7 @@ export type FailureTaxonomyCategory =
   | "parser"
   | "semantic_refusal"
   | "unknown_completion"
+  | "terminal_provider_unknown"
   | "other";
 
 export type ProviderFailureTaxonomy = Record<FailureTaxonomyCategory, number>;
@@ -29,6 +30,7 @@ export function emptyFailureTaxonomy(): ProviderFailureTaxonomy {
     parser: 0,
     semantic_refusal: 0,
     unknown_completion: 0,
+    terminal_provider_unknown: 0,
     other: 0,
   };
 }
@@ -69,6 +71,8 @@ export function classifyErrorToTaxonomy(err: unknown): FailureTaxonomyCategory {
     case "UNKNOWN_COMPLETION":
     case "UNKNOWN_COMPLETION_REVIEW_REQUIRED":
       return "unknown_completion";
+    case "TERMINAL_PROVIDER_UNKNOWN":
+      return "terminal_provider_unknown";
     default:
       return "other";
   }

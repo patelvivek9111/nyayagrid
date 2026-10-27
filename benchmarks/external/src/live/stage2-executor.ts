@@ -86,6 +86,14 @@ import {
   type UnknownCompletionRecord,
 } from "./unknown-completion.js";
 import {
+  PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD,
+  countUnknownAttemptsForTask,
+  hasTerminalProviderUnknown,
+  isProviderCircuitBroken,
+  listTerminalProviderUnknowns,
+  terminalizeRepeatedUnknownTask,
+} from "./terminal-unknown.js";
+import {
   LEGALBENCH_REV,
   PRBENCH_REV,
   RAG_REV,
@@ -131,7 +139,8 @@ export type Stage2RunSummary = {
     | "STAGE2_PARTIAL"
     | "STAGE2_BUDGET_STOP"
     | "STAGE2_BLOCKED"
-    | "STAGE2_PAUSED_UNKNOWN_COMPLETION";
+    | "STAGE2_PAUSED_UNKNOWN_COMPLETION"
+    | "STAGE2_PROVIDER_CIRCUIT_BREAKER";
   runId: string;
   configHash: string;
   paidCalls: number;
@@ -154,6 +163,9 @@ export type Stage2RunSummary = {
     judgeADone: number;
     judgeBDone: number;
     unknownQuarantines: number;
+    terminalProviderFailures: number;
+    sessionDistinctUnknownTasks: number;
+    providerCircuitBreakerTripped: boolean;
     knownLedgerSpendUsd: number;
     unverifiedProviderBillingExposure: "YES" | "NO" | "UNKNOWN";
     responseSpendUsd: number;
@@ -188,6 +200,16 @@ export class Stage2UnknownCompletionStopError extends Error {
   constructor(provider: string, message: string) {
     super(message);
     this.name = "Stage2UnknownCompletionStopError";
+    this.provider = provider;
+  }
+}
+
+export class Stage2ProviderCircuitBreakerError extends Error {
+  readonly code = "STAGE2_PROVIDER_CIRCUIT_BREAKER" as const;
+  readonly provider: string;
+  constructor(provider: string, message: string) {
+    super(message);
+    this.name = "Stage2ProviderCircuitBreakerError";
     this.provider = provider;
   }
 }
@@ -412,6 +434,9 @@ export async function runStage2Finalists(input: {
         judgeADone: 0,
         judgeBDone: 0,
         unknownQuarantines: 0,
+        terminalProviderFailures: 0,
+        sessionDistinctUnknownTasks: 0,
+        providerCircuitBreakerTripped: false,
         knownLedgerSpendUsd: 0,
         unverifiedProviderBillingExposure: "NO",
         responseSpendUsd: 0,
@@ -511,9 +536,16 @@ export async function runStage2Finalists(input: {
   let judgeADone = 0;
   let judgeBDone = 0;
   let unknownQuarantines = 0;
+  let terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
   let lastProviderActivity: string | null = null;
   let unverifiedProviderBillingExposure: "YES" | "NO" | "UNKNOWN" = "NO";
   const quarantinedProviders = new Set<string>();
+  /** Distinct taskIds that produced NEW unknown/terminal events in this process. */
+  const sessionDistinctUnknownByProvider = new Map<string, Set<string>>();
+  let providerCircuitBreakerTripped = false;
+  const accountedTerminalKeys = new Set<string>(
+    listTerminalProviderUnknowns(runId).map((t) => `${t.provider}::${t.taskId}`),
+  );
   let runStatus: Stage2RunSummary["status"] = "STAGE2_COMPLETE";
   let note: string | undefined;
   const allowResendUnknown = allowUnknownResend(argv);
@@ -524,12 +556,25 @@ export async function runStage2Finalists(input: {
   const existingQuarantine = seededQuarantine ?? readRunUnknownQuarantine(runId);
   if (existingQuarantine) {
     unverifiedProviderBillingExposure = "YES";
-    // Only an active QUARANTINED marker blocks; OPERATOR_ACKNOWLEDGED releases.
+    // Only an active QUARANTINED marker blocks; cleared/terminalized quarantines do not.
     if (isActiveUnknownQuarantine(existingQuarantine)) {
       for (const p of existingQuarantine.providers) quarantinedProviders.add(p);
       unknownQuarantines = Math.max(unknownQuarantines, existingQuarantine.providers.length);
     }
   }
+
+  const sessionUnknownCount = (): number => {
+    let n = 0;
+    for (const set of sessionDistinctUnknownByProvider.values()) n += set.size;
+    return n;
+  };
+
+  const noteSessionUnknown = (provider: string, taskId: string) => {
+    if (!sessionDistinctUnknownByProvider.has(provider)) {
+      sessionDistinctUnknownByProvider.set(provider, new Set());
+    }
+    sessionDistinctUnknownByProvider.get(provider)!.add(taskId);
+  };
 
   const systemPrompt =
     "You are NyayaGrid external-bench Stage-2. Produce a careful legal analysis response.";
@@ -565,6 +610,9 @@ export async function runStage2Finalists(input: {
       judgeADone,
       judgeBDone,
       unknownQuarantines,
+      terminalProviderFailures,
+      sessionDistinctUnknownTasks: sessionUnknownCount(),
+      providerCircuitBreakerTripped,
       knownLedgerSpendUsd: budget.spentUsd,
       unverifiedProviderBillingExposure,
       responseSpendUsd,
@@ -619,6 +667,54 @@ export async function runStage2Finalists(input: {
     return result;
   }
 
+  function accountTerminalFailure(input: {
+    provider: string;
+    modelId: string;
+    taskId: string;
+    benchmarkId: string;
+    cacheKeyHint?: string;
+  }): void {
+    const key = `${input.provider}::${input.taskId}`;
+    const already = hasTerminalProviderUnknown(runId, input.taskId, input.provider);
+    terminalizeRepeatedUnknownTask({
+      runId,
+      taskId: input.taskId,
+      benchmarkId: input.benchmarkId,
+      provider: input.provider,
+      exactModelId: input.modelId,
+      cacheKeyHint: input.cacheKeyHint,
+    });
+    noteSessionUnknown(input.provider, input.taskId);
+    unverifiedProviderBillingExposure = "YES";
+    // Task terminalization clears provider-wide quarantine so other work continues.
+    quarantinedProviders.delete(input.provider);
+    quarantinedProviders.delete("openai");
+    quarantinedProviders.delete("xai");
+    if (!accountedTerminalKeys.has(key)) {
+      accountedTerminalKeys.add(key);
+      terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
+      bumpTaxonomy(failureTaxonomyByProvider, input.provider, "terminal_provider_unknown");
+      failuresByProvider[input.provider] = (failuresByProvider[input.provider] ?? 0) + 1;
+    } else if (!already) {
+      terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
+    }
+    const providerSession = sessionDistinctUnknownByProvider.get(input.provider) ?? new Set();
+    if (isProviderCircuitBroken(providerSession)) {
+      providerCircuitBreakerTripped = true;
+      quarantinedProviders.add("openai");
+      quarantinedProviders.add("xai");
+      runStatus = "STAGE2_PROVIDER_CIRCUIT_BREAKER";
+      note = `STAGE2_PROVIDER_CIRCUIT_BREAKER: ${input.provider} hit ${PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD} distinct UNKNOWN/terminal tasks this session`;
+      throw new Stage2ProviderCircuitBreakerError(input.provider, note);
+    }
+  }
+
+  /**
+   * Persist UNKNOWN. First uncertain attempt may pause for operator (unless
+   * --allow-unknown-resend). Second uncertain attempt terminalizes the task and
+   * continues Stage-2. Never converts UNKNOWN into success.
+   * @returns "paused" | "terminal" | "retry_authorized"
+   */
   function handleUnknownCompletion(input: {
     provider: string;
     modelId: string;
@@ -628,7 +724,7 @@ export async function runStage2Finalists(input: {
     requestStartTimestamp: string;
     err: unknown;
     cacheKeyHint?: string;
-  }): never {
+  }): "paused" | "terminal" | "retry_authorized" {
     const live = input.err instanceof LiveProviderError ? input.err : null;
     const unknownErr = input.err instanceof UnknownCompletionError ? input.err : null;
     const classification: UnknownCompletionRecord["failureClassification"] =
@@ -659,19 +755,53 @@ export async function runStage2Finalists(input: {
       operatorOverrideRequired: true,
       cacheKeyHint: input.cacheKeyHint,
     });
+    noteSessionUnknown(input.provider, input.taskId);
+    unverifiedProviderBillingExposure = "YES";
+    bumpTaxonomy(failureTaxonomyByProvider, input.provider, classifyErrorToTaxonomy(input.err));
+    failuresByProvider[input.provider] = (failuresByProvider[input.provider] ?? 0) + 1;
+
+    const attemptCount = countUnknownAttemptsForTask(runId, input.taskId, input.provider);
+    const resendAlreadyConsumed = hasConsumedSingleUnknownResend(
+      runId,
+      input.taskId,
+      input.provider,
+    );
+    // Second uncertain outcome → terminalize task and continue (no run-wide forever pause).
+    if (attemptCount >= 2 || resendAlreadyConsumed) {
+      accountTerminalFailure({
+        provider: input.provider,
+        modelId: input.modelId,
+        taskId: input.taskId,
+        benchmarkId: input.benchmarkId,
+        cacheKeyHint: input.cacheKeyHint,
+      });
+      if (runStatus === "STAGE2_COMPLETE" || runStatus === "STAGE2_PARTIAL") {
+        runStatus = "STAGE2_PARTIAL";
+        note =
+          note ??
+          `TERMINAL_PROVIDER_UNKNOWN: ${input.taskId} after ${attemptCount} uncertain attempts; continuing`;
+      }
+      return "terminal";
+    }
+
+    // First UNKNOWN: durable task quarantine; one authorized resend may follow.
     writeRunUnknownQuarantine({
       runId,
       reason: message,
       providers: [...quarantinedProviders, input.provider, "openai", "xai"],
     });
+    unknownQuarantines += 1;
+    if (allowResendUnknown) {
+      recordUnknownResendAttempt({
+        runId,
+        taskId: input.taskId,
+        provider: input.provider,
+      });
+      return "retry_authorized";
+    }
     quarantinedProviders.add(input.provider);
-    // Balanced Stage-2: quarantine both finalists so one cannot continue alone.
     quarantinedProviders.add("openai");
     quarantinedProviders.add("xai");
-    unknownQuarantines += 1;
-    unverifiedProviderBillingExposure = "YES";
-    bumpTaxonomy(failureTaxonomyByProvider, input.provider, classifyErrorToTaxonomy(input.err));
-    failuresByProvider[input.provider] = (failuresByProvider[input.provider] ?? 0) + 1;
     runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
     note = `STAGE2_PAUSED_UNKNOWN_COMPLETION: ${input.provider}: ${message}`;
     throw new Stage2UnknownCompletionStopError(input.provider, note);
@@ -698,6 +828,18 @@ export async function runStage2Finalists(input: {
     const license = assertCommercialEvalAllowed(task, "production-selection");
     if (!license.allowed) {
       bumpFailure(provider);
+      return;
+    }
+
+    // Terminal provider-unknown tasks are coverage outcomes, never resent.
+    if (hasTerminalProviderUnknown(runId, compositeTaskId, provider)) {
+      const key = `${provider}::${compositeTaskId}`;
+      if (!accountedTerminalKeys.has(key)) {
+        accountedTerminalKeys.add(key);
+        terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
+        bumpTaxonomy(failureTaxonomyByProvider, provider, "terminal_provider_unknown");
+      }
+      unverifiedProviderBillingExposure = "YES";
       return;
     }
 
@@ -771,6 +913,23 @@ export async function runStage2Finalists(input: {
       if (hasUnknownCompletionArtifact(runId, compositeTaskId, provider)) {
         // Quarantined UNKNOWN task — never silently convert to MISSING / auto-resend.
         unverifiedProviderBillingExposure = "YES";
+        const attempts = countUnknownAttemptsForTask(runId, compositeTaskId, provider);
+        const resendConsumed = hasConsumedSingleUnknownResend(runId, compositeTaskId, provider);
+        // Second uncertain attempt already used → terminalize and continue (no third send).
+        if (attempts >= 2 || resendConsumed) {
+          accountTerminalFailure({
+            provider,
+            modelId,
+            taskId: compositeTaskId,
+            benchmarkId,
+            cacheKeyHint: responseKey,
+          });
+          if (runStatus === "STAGE2_COMPLETE") runStatus = "STAGE2_PARTIAL";
+          note =
+            note ??
+            `TERMINAL_PROVIDER_UNKNOWN: ${compositeTaskId}; continuing without further resend`;
+          return;
+        }
         if (!allowResendUnknown) {
           runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
           note =
@@ -778,13 +937,6 @@ export async function runStage2Finalists(input: {
           return;
         }
         // Operator --allow-unknown-resend authorizes exactly one paid attempt per UNKNOWN task.
-        if (hasConsumedSingleUnknownResend(runId, compositeTaskId, provider)) {
-          runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
-          note =
-            note ??
-            `STAGE2_PAUSED_UNKNOWN_COMPLETION: single-resend already consumed for ${compositeTaskId}`;
-          return;
-        }
         recordUnknownResendAttempt({
           runId,
           taskId: compositeTaskId,
@@ -909,13 +1061,10 @@ export async function runStage2Finalists(input: {
           note = err.message;
           throw err;
         }
-        if (
-          err instanceof UnknownCompletionError ||
-          isPostDispatchUnknownError(err) ||
-          err instanceof Stage2UnknownCompletionStopError
-        ) {
-          if (err instanceof Stage2UnknownCompletionStopError) throw err;
-          handleUnknownCompletion({
+        if (err instanceof Stage2ProviderCircuitBreakerError) throw err;
+        if (err instanceof Stage2UnknownCompletionStopError) throw err;
+        if (err instanceof UnknownCompletionError || isPostDispatchUnknownError(err)) {
+          const disposition = handleUnknownCompletion({
             provider,
             modelId,
             taskId: compositeTaskId,
@@ -925,22 +1074,142 @@ export async function runStage2Finalists(input: {
             err,
             cacheKeyHint: responseKey,
           });
+          if (disposition === "terminal") {
+            return;
+          }
+          if (disposition === "retry_authorized") {
+            // Exactly one same-run uncertain retry under operator flags.
+            const retryStart = new Date().toISOString();
+            try {
+              assertNextCallWithinBudget(budget, worst);
+              assertWithinProviderCaps({
+                provider: providerCapKey(provider),
+                caps: providerCaps,
+                spend: providerSpend[providerCapKey(provider)],
+                nextDollarsWorstCase: worst,
+              });
+              responseResult = await withRetries(
+                () => callResponseModel(modelId, userPrompt),
+                sleep,
+              );
+              paidCalls += 1;
+              paidCallsSinceCheckpoint += 1;
+              const actual = calculateActualCostUsd({
+                modelId,
+                inputTokens: responseResult.usage.inputTokens,
+                outputTokens: responseResult.usage.outputTokens,
+                thinkingTokens: responseResult.usage.thinkingTokens,
+                cachedInputTokens: responseResult.usage.cachedInputTokens,
+                bucket: "models",
+                pricingTable: pricing,
+              });
+              budget = recordSpend(budget, actual);
+              providerSpend[providerCapKey(provider)] = recordProviderSpend(
+                providerSpend[providerCapKey(provider)],
+                {
+                  calls: 1,
+                  tokens: responseResult.usage.inputTokens + responseResult.usage.outputTokens,
+                  dollars: actual,
+                },
+              );
+              responseSpendUsd += actual;
+              if (provider === "openai") costByBucket.openaiResponsesUsd += actual;
+              if (provider === "xai") costByBucket.xaiResponsesUsd += actual;
+              responseText = responseResult.text;
+              persistPaidCallImmediately({
+                runId,
+                benchmarkId,
+                taskId: compositeTaskId,
+                provider,
+                exactModelId: modelId,
+                modelConfiguration: settings,
+                promptVersionHash: promptHashes[0]!,
+                datasetRevision: benchmarkId === "prbench" ? PRBENCH_REV : LEGALBENCH_REV,
+                inputHash: contentHash,
+                response: responseResult.raw,
+                structuredParsedResponse: {
+                  text: responseText,
+                  ...(benchmarkId === "legalbench"
+                    ? scoreLegalBenchExact({
+                        modelOutput: responseText,
+                        expectedAnswer: task.expectedAnswer,
+                      })
+                    : {}),
+                },
+                usage: responseResult.usage,
+                inputTokens: responseResult.usage.inputTokens,
+                outputTokens: responseResult.usage.outputTokens,
+                latencyMs: responseResult.latencyMs,
+                providerRequestId: responseResult.providerRequestId,
+                timestamp: new Date().toISOString(),
+                attemptNumber: 2,
+                costEstimateUsd: actual,
+                completionStatus: "success",
+                cacheKey: responseKey,
+                kind: "response",
+              });
+              accountedResponseKeys.add(responseKey);
+              completedResponses += 1;
+              if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
+              if (modelId === "grok-4.7") grokResponsesDone += 1;
+              bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
+            } catch (retryErr) {
+              if (retryErr instanceof BudgetLimitError) {
+                runStatus = "STAGE2_BUDGET_STOP";
+                note = retryErr.message;
+                throw retryErr;
+              }
+              if (retryErr instanceof Stage2ProviderCircuitBreakerError) throw retryErr;
+              if (
+                retryErr instanceof UnknownCompletionError ||
+                isPostDispatchUnknownError(retryErr)
+              ) {
+                handleUnknownCompletion({
+                  provider,
+                  modelId,
+                  taskId: compositeTaskId,
+                  benchmarkId,
+                  attemptNumber: 2,
+                  requestStartTimestamp: retryStart,
+                  err: retryErr,
+                  cacheKeyHint: responseKey,
+                });
+                return;
+              }
+              bumpFailure(provider, retryErr);
+              if (retryErr instanceof LiveProviderError && retryErr.code === "AUTH_ERROR") {
+                runStatus = "STAGE2_BLOCKED";
+                note =
+                  provider === "openai"
+                    ? `STAGE2_BLOCKED_OPENAI_BILLING: ${retryErr.message}`
+                    : `STAGE2_BLOCKED_PROVIDER_ACCESS: ${retryErr.message}`;
+                throw retryErr;
+              }
+              runStatus = "STAGE2_PARTIAL";
+              note = retryErr instanceof Error ? retryErr.message : String(retryErr);
+              return;
+            }
+            // Successful retry falls through to judges below.
+          } else {
+            return;
+          }
+        } else {
+          bumpFailure(provider, err);
+          // Hard billing/auth stop: do not run the other finalist alone (authorization §6–8).
+          if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
+            runStatus = "STAGE2_BLOCKED";
+            note =
+              provider === "openai"
+                ? `STAGE2_BLOCKED_OPENAI_BILLING: ${err.message}`
+                : provider === "xai"
+                  ? `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`
+                  : `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`;
+            throw err;
+          }
+          runStatus = "STAGE2_PARTIAL";
+          note = err instanceof Error ? err.message : String(err);
+          return;
         }
-        bumpFailure(provider, err);
-        // Hard billing/auth stop: do not run the other finalist alone (authorization §6–8).
-        if (err instanceof LiveProviderError && err.code === "AUTH_ERROR") {
-          runStatus = "STAGE2_BLOCKED";
-          note =
-            provider === "openai"
-              ? `STAGE2_BLOCKED_OPENAI_BILLING: ${err.message}`
-              : provider === "xai"
-                ? `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`
-                : `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`;
-          throw err;
-        }
-        runStatus = "STAGE2_PARTIAL";
-        note = err instanceof Error ? err.message : String(err);
-        return;
       }
     }
 
@@ -1175,6 +1444,9 @@ export async function runStage2Finalists(input: {
         remainingBudgetUsd: Number(remainingBudgetUsd(budget).toFixed(4)),
         lastProviderActivity,
         unknownQuarantines,
+        terminalProviderFailures,
+        sessionDistinctUnknownTasks: sessionUnknownCount(),
+        providerCircuitBreakerTripped,
         unverifiedProviderBillingExposure,
         failureTaxonomyByProvider: structuredClone(failureTaxonomyByProvider),
         failuresByProvider: { ...failuresByProvider },
@@ -1185,6 +1457,30 @@ export async function runStage2Finalists(input: {
     paidCallsSinceCheckpoint = 0;
   };
 
+  // Promote repeated UNKNOWN tasks to TERMINAL_PROVIDER_UNKNOWN before paid work.
+  for (const item of work) {
+    const provider = MODEL_PROVIDER[item.modelId];
+    const compositeTaskId = `${item.task.taskId}::${item.modelId}`;
+    if (hasTerminalProviderUnknown(runId, compositeTaskId, provider)) continue;
+    if (!hasUnknownCompletionArtifact(runId, compositeTaskId, provider)) continue;
+    const attempts = countUnknownAttemptsForTask(runId, compositeTaskId, provider);
+    const resendConsumed = hasConsumedSingleUnknownResend(runId, compositeTaskId, provider);
+    if (attempts >= 2 || resendConsumed) {
+      accountTerminalFailure({
+        provider,
+        modelId: item.modelId,
+        taskId: compositeTaskId,
+        benchmarkId: item.benchmarkId,
+      });
+      if (runStatus === "STAGE2_COMPLETE") {
+        runStatus = "STAGE2_PARTIAL";
+        note =
+          note ??
+          `TERMINAL_PROVIDER_UNKNOWN: ${compositeTaskId}; continuing Stage-2 without further resend`;
+      }
+    }
+  }
+
   // Pass 1: account every cache hit first so AUTH hard-stop cannot wipe prior spend.
   for (const item of work) {
     await processOne(item, true);
@@ -1192,22 +1488,22 @@ export async function runStage2Finalists(input: {
   emitCheckpoint();
 
   try {
-    // Refuse paid finalist work under prior UNKNOWN quarantine unless operator overrides.
-    // OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND still requires the resume flags for paid work.
+    // Refuse paid finalist work under prior ACTIVE UNKNOWN quarantine unless operator overrides.
+    // CLEARED_AFTER_TASK_TERMINALIZATION does not block continuation.
+    const quarantineNow = readRunUnknownQuarantine(runId);
     if (
-      existingQuarantine &&
-      (isActiveUnknownQuarantine(existingQuarantine) ||
-        existingQuarantine.status === "OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND") &&
+      quarantineNow &&
+      isActiveUnknownQuarantine(quarantineNow) &&
       !ackUnverified &&
       !allowResendUnknown
     ) {
       runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
       note =
         note ??
-        `STAGE2_PAUSED_UNKNOWN_COMPLETION: prior quarantine ${existingQuarantine.reason}; pass --acknowledge-unverified-billing-exposure to continue after reconciliation`;
+        `STAGE2_PAUSED_UNKNOWN_COMPLETION: prior quarantine ${quarantineNow.reason}; pass --acknowledge-unverified-billing-exposure to continue after reconciliation`;
       emitCheckpoint();
     } else {
-      // Pass 2: serial paid execution; AUTH / UNKNOWN / budget stop aborts immediately.
+      // Pass 2: serial paid execution; AUTH / circuit-breaker / budget stop aborts.
       let sinceCheckpoint = 0;
       for (const item of work) {
         await processOne(item, false);
@@ -1223,6 +1519,12 @@ export async function runStage2Finalists(input: {
     if (err instanceof BudgetLimitError) {
       runStatus = "STAGE2_BUDGET_STOP";
       note = err.message;
+    } else if (err instanceof Stage2ProviderCircuitBreakerError) {
+      runStatus = "STAGE2_PROVIDER_CIRCUIT_BREAKER";
+      providerCircuitBreakerTripped = true;
+      if (!note?.startsWith("STAGE2_PROVIDER_CIRCUIT_BREAKER")) {
+        note = err.message;
+      }
     } else if (err instanceof Stage2UnknownCompletionStopError) {
       runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
       if (!note?.startsWith("STAGE2_PAUSED_UNKNOWN_COMPLETION")) {
@@ -1312,11 +1614,20 @@ export async function runStage2Finalists(input: {
   }
 
   persistProgress();
+  terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
+  const responseTerminalCoverage = completedResponses + terminalProviderFailures;
   if (
-    runStatus === "STAGE2_COMPLETE" &&
-    (completedResponses < plannedResponses || completedJudges < plannedJudges)
+    runStatus !== "STAGE2_BUDGET_STOP" &&
+    runStatus !== "STAGE2_BLOCKED" &&
+    runStatus !== "STAGE2_PAUSED_UNKNOWN_COMPLETION" &&
+    runStatus !== "STAGE2_PROVIDER_CIRCUIT_BREAKER"
   ) {
-    runStatus = "STAGE2_PARTIAL";
+    if (responseTerminalCoverage >= plannedResponses) {
+      // Terminal provider failures count toward coverage; judges only for valid successes.
+      runStatus = "STAGE2_COMPLETE";
+    } else if (runStatus === "STAGE2_COMPLETE") {
+      runStatus = "STAGE2_PARTIAL";
+    }
   }
 
   const summary: Stage2RunSummary = {
@@ -1343,6 +1654,9 @@ export async function runStage2Finalists(input: {
       judgeADone,
       judgeBDone,
       unknownQuarantines,
+      terminalProviderFailures,
+      sessionDistinctUnknownTasks: sessionUnknownCount(),
+      providerCircuitBreakerTripped,
       knownLedgerSpendUsd: budget.spentUsd,
       unverifiedProviderBillingExposure,
       responseSpendUsd,

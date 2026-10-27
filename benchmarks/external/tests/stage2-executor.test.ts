@@ -50,6 +50,11 @@ import {
   recordUnknownResendAttempt,
   writeRunUnknownQuarantine,
 } from "../src/live/unknown-completion.js";
+import {
+  PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD,
+  hasTerminalProviderUnknown,
+  listTerminalProviderUnknowns,
+} from "../src/live/terminal-unknown.js";
 
 function task(
   partial: Partial<NormalizedTask> & { taskId: string; benchmarkId: string },
@@ -1174,8 +1179,8 @@ describe("stage2 unknown-completion safety", () => {
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });
 
-  it("operator single-resend ack releases quarantine, allows one resend, blocks second, re-quarantines on UNKNOWN", async () => {
-    const runId = `stage2-unk-single-${Date.now()}`;
+  it("second UNKNOWN terminalizes task, continues Stage-2, and never third-attempts", async () => {
+    const runId = `stage2-unk-terminal-${Date.now()}`;
     const suite = miniSuite(["pr-s1"], [], []);
     const config = {
       runId,
@@ -1297,19 +1302,231 @@ describe("stage2 unknown-completion safety", () => {
 
     const first = await runStage2Finalists({ argv: resumeArgv, deps: resumeDeps });
 
-    expect(first.status).toBe("STAGE2_PAUSED_UNKNOWN_COMPLETION");
+    expect(hasTerminalProviderUnknown(runId, "pr-s1::grok-4.7", "xai")).toBe(true);
     expect(xaiCalls).toBe(1);
     expect(hasConsumedSingleUnknownResend(runId, "pr-s1::grok-4.7", "xai")).toBe(true);
-    expect(readRunUnknownQuarantine(runId)?.status).toBe("QUARANTINED");
-    expect(listUnknownCompletions(runId).length).toBeGreaterThanOrEqual(1);
+    expect(readRunUnknownQuarantine(runId)?.status).toBe("CLEARED_AFTER_TASK_TERMINALIZATION");
+    expect(first.progress.terminalProviderFailures).toBeGreaterThanOrEqual(1);
+    expect(first.status).toBe("STAGE2_COMPLETE");
 
     const xaiBeforeSecond = xaiCalls;
     const second = await runStage2Finalists({ argv: resumeArgv, deps: resumeDeps });
-
-    expect(second.status).toBe("STAGE2_PAUSED_UNKNOWN_COMPLETION");
-    // Same UNKNOWN task must never receive a third paid attempt.
     expect(xaiCalls).toBe(xaiBeforeSecond);
-    expect(second.note ?? "").toMatch(/single-resend already consumed|quarantined|UNKNOWN|PAUSED/);
+    expect(hasTerminalProviderUnknown(runId, "pr-s1::grok-4.7", "xai")).toBe(true);
+    expect(second.status).toBe("STAGE2_COMPLETE");
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("mock continuation: Task A double-UNKNOWN terminalizes then Task B/C continue", async () => {
+    const runId = `stage2-unk-continue-${Date.now()}`;
+    const suite = miniSuite(["pr-a", "pr-b", "pr-c"], [], []);
+    const config = {
+      runId,
+      stage: 2,
+      suite,
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 55,
+    });
+
+    let xaiCalls = 0;
+    let openaiCalls = 0;
+    const fetchImpl: typeof fetch = async (url) => {
+      const u = String(url);
+      if (u.includes("api.openai.com")) {
+        openaiCalls += 1;
+        return new Response(
+          JSON.stringify({
+            id: `oa_${openaiCalls}`,
+            status: "completed",
+            output_text: '{"score":0.7,"rationale":"ok"}',
+            usage: { input_tokens: 20, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.x.ai")) {
+        xaiCalls += 1;
+        // First two xAI calls = Task A grok attempt + authorized retry; then succeed.
+        if (xaiCalls <= 2) throw new Error("fetch failed");
+        return new Response(
+          JSON.stringify({
+            id: `xai_${xaiCalls}`,
+            status: "completed",
+            output_text: "Grok ok",
+            usage: { input_tokens: 20, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.anthropic.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "msg",
+            stop_reason: "end_turn",
+            content: [{ type: "text", text: '{"score":0.6,"rationale":"ok"}' }],
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      return new Response("not found", { status: 404 });
+    };
+
+    const deps = {
+      bypassAuthForTests: true,
+      maxCostUsdForTests: 55,
+      fetchImpl,
+      openaiApiKey: "t",
+      anthropicApiKey: "t",
+      xaiApiKey: "t",
+      prbenchTasks: [
+        task({ benchmarkId: "prbench", taskId: "pr-a" }),
+        task({ benchmarkId: "prbench", taskId: "pr-b" }),
+        task({ benchmarkId: "prbench", taskId: "pr-c" }),
+      ],
+      legalbenchTasks: [] as NormalizedTask[],
+      skipRag: true,
+      suiteOverride: suite,
+      sleep: async () => undefined,
+    };
+    const argv = [
+      "node",
+      "stage2",
+      "--run-id",
+      runId,
+      "--allow-paid-model-calls",
+      "--max-cost-usd",
+      "55",
+      "--acknowledge-unverified-billing-exposure",
+      "--allow-unknown-resend",
+    ];
+
+    const summary = await runStage2Finalists({ argv, deps });
+    expect(hasTerminalProviderUnknown(runId, "pr-a::grok-4.7", "xai")).toBe(true);
+    expect(xaiCalls).toBe(4); // 2 fails for A + 1 success B + 1 success C
+    expect(summary.status).toBe("STAGE2_COMPLETE");
+    expect(summary.progress.terminalProviderFailures).toBe(1);
+    expect(summary.progress.gptResponsesDone).toBe(3);
+    expect(summary.progress.grokResponsesDone).toBe(2);
+
+    const before = xaiCalls;
+    await runStage2Finalists({ argv, deps });
+    expect(xaiCalls).toBe(before);
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("three distinct provider UNKNOWN/terminal tasks trip circuit breaker", async () => {
+    const runId = `stage2-unk-breaker-${Date.now()}`;
+    const suite = miniSuite(["pr-1", "pr-2", "pr-3", "pr-4"], [], []);
+    const config = {
+      runId,
+      stage: 2,
+      suite,
+      models: {
+        response: ["gpt-6.1-sol", "grok-4.7"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 55,
+    });
+
+    let xaiCalls = 0;
+    const fetchImpl: typeof fetch = async (url) => {
+      const u = String(url);
+      if (u.includes("api.openai.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "oa",
+            status: "completed",
+            output_text: "ok",
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.x.ai")) {
+        xaiCalls += 1;
+        throw new Error("fetch failed");
+      }
+      if (u.includes("api.anthropic.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "msg",
+            stop_reason: "end_turn",
+            content: [{ type: "text", text: '{"score":0.5,"rationale":"x"}' }],
+            usage: { input_tokens: 10, output_tokens: 5 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      return new Response("not found", { status: 404 });
+    };
+
+    const summary = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "55",
+        "--acknowledge-unverified-billing-exposure",
+        "--allow-unknown-resend",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 55,
+        fetchImpl,
+        openaiApiKey: "t",
+        anthropicApiKey: "t",
+        xaiApiKey: "t",
+        prbenchTasks: [
+          task({ benchmarkId: "prbench", taskId: "pr-1" }),
+          task({ benchmarkId: "prbench", taskId: "pr-2" }),
+          task({ benchmarkId: "prbench", taskId: "pr-3" }),
+          task({ benchmarkId: "prbench", taskId: "pr-4" }),
+        ],
+        legalbenchTasks: [],
+        skipRag: true,
+        suiteOverride: suite,
+        sleep: async () => undefined,
+      },
+    });
+
+    expect(PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD).toBe(3);
+    expect(summary.status).toBe("STAGE2_PROVIDER_CIRCUIT_BREAKER");
+    expect(summary.progress.providerCircuitBreakerTripped).toBe(true);
+    expect(listTerminalProviderUnknowns(runId).length).toBeGreaterThanOrEqual(3);
+    expect(xaiCalls).toBeLessThan(8);
 
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });

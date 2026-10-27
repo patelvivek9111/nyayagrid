@@ -39,9 +39,14 @@ export type UnknownCompletionRecord = {
 export const OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND =
   "OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND" as const;
 
+export type RunUnknownQuarantineStatus =
+  | "QUARANTINED"
+  | typeof OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND
+  | "CLEARED_AFTER_TASK_TERMINALIZATION";
+
 export type RunUnknownQuarantine = {
   runId: string;
-  status: "QUARANTINED" | typeof OPERATOR_ACKNOWLEDGED_FOR_SINGLE_RESEND;
+  status: RunUnknownQuarantineStatus;
   reason: string;
   providers: string[];
   createdAt: string;
@@ -52,6 +57,9 @@ export type RunUnknownQuarantine = {
   acknowledgedTaskIds?: string[];
   acknowledgedAt?: string;
   priorQuarantineReason?: string;
+  clearedTaskId?: string;
+  clearedProvider?: string;
+  clearedAt?: string;
 };
 
 export type UnknownResendAttempt = {
@@ -332,6 +340,13 @@ export function ensureQuarantineFromPartialSummary(runId: string): RunUnknownQua
   if (!looksUnknown) return null;
   const existing = readRunUnknownQuarantine(runId);
   if (existing) return existing;
+  // Do not re-seed provider-wide quarantine once tasks were terminalized / cleared.
+  if (
+    summary.status === "STAGE2_COMPLETE" ||
+    summary.status === "STAGE2_PROVIDER_CIRCUIT_BREAKER"
+  ) {
+    return null;
+  }
   // Only auto-seed quarantine when note clearly indicates post-dispatch uncertainty.
   if (
     !/transport failure after dispatch|UNKNOWN_COMPLETION|TIMEOUT_POST_DISPATCH|fetch failed/i.test(
