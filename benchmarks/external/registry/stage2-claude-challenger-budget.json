@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage2-claude-challenger-budget-v1",
+  "total_max_usd": 95,
+  "early_recalc_usd": 75,
+  "auto_increase": false,
+  "provider_subcaps_usd": {
+    "openai": 20,
+    "anthropic": 85,
+    "google": 0,
+    "xai": 0,
+    "judging": 25
+  },
+  "notes": [
+    "Authorized Claude-only Stage-2 challenger hard cap. Does not expand the completed GPT/Grok $55 run.",
+    "At $75 known spend, recalculate worst-case completion; stop before exceeding $95 if completion cannot fit."
+  ]
+}

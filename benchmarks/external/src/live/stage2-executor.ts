@@ -1,5 +1,7 @@
 /**
- * Stage-2 finalist executor: gpt-6.1-sol vs grok-4.7 only.
+ * Stage-2 finalist executor: gpt-6.1-sol vs grok-4.7 by default.
+ * Also supports Claude-only challenger runs (claude-opus-5-5) when frozen
+ * full-config.challengerMode === "claude-only". Never dispatches Gemini.
  * Reuses Stage-1 clients, cache, budget, resume, license, RAG retrieval.
  * No Stage-3 auto-escalation. No provider fallback.
  */
@@ -97,6 +99,7 @@ import {
   LEGALBENCH_REV,
   PRBENCH_REV,
   RAG_REV,
+  STAGE2_CLAUDE_CHALLENGER_MODEL,
   STAGE2_JUDGE_A,
   STAGE2_JUDGE_B,
   STAGE2_RESPONSE_MODELS,
@@ -105,15 +108,18 @@ import {
 } from "./stage2-task-planner.js";
 
 const SCHEMA_VERSION = 1;
+const CLAUDE_CHALLENGER_MAX_TOKENS = 8192;
 
 const MODEL_PROVIDER: Record<Stage2ResponseModelId, LiveProviderId> = {
   "gpt-6.1-sol": "openai",
   "grok-4.7": "xai",
+  "claude-opus-5-5": "anthropic",
 };
 
 const CONTEXT_WINDOWS: Record<Stage2ResponseModelId, number> = {
   "gpt-6.1-sol": 1_050_000,
   "grok-4.7": 2_000_000,
+  "claude-opus-5-5": 1_000_000,
 };
 
 export type Stage2ExecutorDeps = {
@@ -160,6 +166,7 @@ export type Stage2RunSummary = {
     failureTaxonomyByProvider: FailureTaxonomyByProvider;
     gptResponsesDone: number;
     grokResponsesDone: number;
+    claudeResponsesDone: number;
     judgeADone: number;
     judgeBDone: number;
     unknownQuarantines: number;
@@ -180,6 +187,7 @@ export type Stage2RunSummary = {
     authorizedUsd: number;
     openaiResponsesUsd: number;
     xaiResponsesUsd: number;
+    anthropicResponsesUsd: number;
     anthropicJudgeUsd: number;
     openaiJudgeUsd: number;
     retriesUsd: number;
@@ -289,6 +297,13 @@ function parseJudgeScore(text: string): number {
 function responseSettings(modelId: Stage2ResponseModelId): unknown {
   if (modelId === "gpt-6.1-sol") {
     return { effort: "high", service_tier: "default", max_output_tokens: 4096 };
+  }
+  if (modelId === STAGE2_CLAUDE_CHALLENGER_MODEL) {
+    return {
+      thinking: { type: "adaptive" },
+      effort: "high",
+      max_tokens: CLAUDE_CHALLENGER_MAX_TOKENS,
+    };
   }
   return { effort: "high", max_output_tokens: 4096 };
 }
@@ -408,8 +423,12 @@ export async function runStage2Finalists(input: {
   const openaiKey = deps.openaiApiKey ?? process.env.OPENAI_API_KEY?.trim();
   const anthropicKey = deps.anthropicApiKey ?? process.env.ANTHROPIC_API_KEY?.trim();
   const xaiKey = deps.xaiApiKey ?? process.env.XAI_API_KEY?.trim();
+  const challengerMode = fullConfig.challengerMode === "claude-only";
   // Google must not be used in Stage 2 even if present.
-  if (!openaiKey || !anthropicKey || !xaiKey) {
+  const credentialsOk = challengerMode
+    ? Boolean(openaiKey && anthropicKey) // Judge B + Claude response / Judge A
+    : Boolean(openaiKey && anthropicKey && xaiKey);
+  if (!credentialsOk) {
     return {
       status: "STAGE2_BLOCKED",
       runId,
@@ -431,6 +450,7 @@ export async function runStage2Finalists(input: {
         failureTaxonomyByProvider: {},
         gptResponsesDone: 0,
         grokResponsesDone: 0,
+        claudeResponsesDone: 0,
         judgeADone: 0,
         judgeBDone: 0,
         unknownQuarantines: 0,
@@ -451,6 +471,7 @@ export async function runStage2Finalists(input: {
         authorizedUsd: maxCostUsd,
         openaiResponsesUsd: 0,
         xaiResponsesUsd: 0,
+        anthropicResponsesUsd: 0,
         anthropicJudgeUsd: 0,
         openaiJudgeUsd: 0,
         retriesUsd: 0,
@@ -473,9 +494,15 @@ export async function runStage2Finalists(input: {
       readFileSync(path.join(getCacheDir(), "runs", runId, "stage2-suite.json"), "utf8"),
     ) as Stage2SuitePlan);
 
-  const models = deps.responseModels ?? STAGE2_RESPONSE_MODELS;
+  const models =
+    deps.responseModels ??
+    (challengerMode ? ([STAGE2_CLAUDE_CHALLENGER_MODEL] as const) : STAGE2_RESPONSE_MODELS);
   for (const m of models) {
-    if (m !== "gpt-6.1-sol" && m !== "grok-4.7") {
+    if (challengerMode) {
+      if (m !== STAGE2_CLAUDE_CHALLENGER_MODEL) {
+        throw new Error(`Claude challenger forbids response model ${m}`);
+      }
+    } else if (m !== "gpt-6.1-sol" && m !== "grok-4.7") {
       throw new Error(`Stage-2 forbids response model ${m}`);
     }
   }
@@ -492,15 +519,24 @@ export async function runStage2Finalists(input: {
 
   const pricing = loadCurrentPricingTable();
   const parsedCaps = parseProviderCaps(argv);
-  // Frozen Stage-2 subcaps (registry/stage2-budget.json); global $55 remains authoritative.
-  const providerCaps: ProviderCapsConfig = {
-    ...parsedCaps,
-    openai: { maxDollars: parsedCaps.openai?.maxDollars ?? 13 },
-    anthropic: { maxDollars: parsedCaps.anthropic?.maxDollars ?? 18 },
-    google: { maxDollars: 0 },
-    xai: { maxDollars: parsedCaps.xai?.maxDollars ?? 11 },
-    maxJudgeDollars: parsedCaps.maxJudgeDollars ?? 35,
-  };
+  // Finalists: registry/stage2-budget.json ($55). Claude challenger: $95 authorized cap.
+  const providerCaps: ProviderCapsConfig = challengerMode
+    ? {
+        ...parsedCaps,
+        openai: { maxDollars: parsedCaps.openai?.maxDollars ?? 20 },
+        anthropic: { maxDollars: parsedCaps.anthropic?.maxDollars ?? 85 },
+        google: { maxDollars: 0 },
+        xai: { maxDollars: 0 },
+        maxJudgeDollars: parsedCaps.maxJudgeDollars ?? 25,
+      }
+    : {
+        ...parsedCaps,
+        openai: { maxDollars: parsedCaps.openai?.maxDollars ?? 13 },
+        anthropic: { maxDollars: parsedCaps.anthropic?.maxDollars ?? 18 },
+        google: { maxDollars: 0 },
+        xai: { maxDollars: parsedCaps.xai?.maxDollars ?? 11 },
+        maxJudgeDollars: parsedCaps.maxJudgeDollars ?? 35,
+      };
 
   let budget: BudgetState = { maxUsd: maxCostUsd, spentUsd: 0 };
   const providerSpend: Record<ProviderId, ProviderSpendState> = {
@@ -522,6 +558,7 @@ export async function runStage2Finalists(input: {
   const costByBucket = {
     openaiResponsesUsd: 0,
     xaiResponsesUsd: 0,
+    anthropicResponsesUsd: 0,
     anthropicJudgeUsd: 0,
     openaiJudgeUsd: 0,
   };
@@ -533,6 +570,7 @@ export async function runStage2Finalists(input: {
   };
   let gptResponsesDone = 0;
   let grokResponsesDone = 0;
+  let claudeResponsesDone = 0;
   let judgeADone = 0;
   let judgeBDone = 0;
   let unknownQuarantines = 0;
@@ -607,6 +645,7 @@ export async function runStage2Finalists(input: {
       failureTaxonomyByProvider: structuredClone(failureTaxonomyByProvider),
       gptResponsesDone,
       grokResponsesDone,
+      claudeResponsesDone,
       judgeADone,
       judgeBDone,
       unknownQuarantines,
@@ -630,9 +669,11 @@ export async function runStage2Finalists(input: {
     prompt: string,
   ): Promise<LiveProviderResult> {
     const provider = MODEL_PROVIDER[modelId];
+    const timeoutProvider =
+      provider === "xai" ? "xai" : provider === "anthropic" ? "anthropic" : "openai";
     const clientOpts = {
       fetchImpl: deps.fetchImpl,
-      timeoutMs: stage2ResponseTimeoutMs(provider === "xai" ? "xai" : "openai"),
+      timeoutMs: stage2ResponseTimeoutMs(timeoutProvider),
     };
     lastProviderActivity = `${provider}:${modelId}`;
     if (modelId === "gpt-6.1-sol") {
@@ -646,6 +687,19 @@ export async function runStage2Finalists(input: {
             { role: "system", content: systemPrompt },
             { role: "user", content: prompt },
           ],
+        },
+      );
+      assertSameModelPinned(modelId, result.exactModelId);
+      return result;
+    }
+    if (modelId === STAGE2_CLAUDE_CHALLENGER_MODEL) {
+      const result = await executeAnthropicMessages(
+        { ...clientOpts, apiKey: anthropicKey! },
+        {
+          model: "claude-opus-5-5",
+          effort: "high",
+          maxTokens: CLAUDE_CHALLENGER_MAX_TOKENS,
+          messages: [{ role: "user", content: `${systemPrompt}\n\n${prompt}` }],
         },
       );
       assertSameModelPinned(modelId, result.exactModelId);
@@ -665,6 +719,18 @@ export async function runStage2Finalists(input: {
     );
     assertSameModelPinned(modelId, result.exactModelId);
     return result;
+  }
+
+  function bumpModelDone(modelId: Stage2ResponseModelId): void {
+    if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
+    if (modelId === "grok-4.7") grokResponsesDone += 1;
+    if (modelId === STAGE2_CLAUDE_CHALLENGER_MODEL) claudeResponsesDone += 1;
+  }
+
+  function recordResponseCost(provider: LiveProviderId, dollars: number): void {
+    if (provider === "openai") costByBucket.openaiResponsesUsd += dollars;
+    if (provider === "xai") costByBucket.xaiResponsesUsd += dollars;
+    if (provider === "anthropic") costByBucket.anthropicResponsesUsd += dollars;
   }
 
   function accountTerminalFailure(input: {
@@ -695,6 +761,7 @@ export async function runStage2Finalists(input: {
     quarantinedProviders.delete(input.provider);
     quarantinedProviders.delete("openai");
     quarantinedProviders.delete("xai");
+    quarantinedProviders.delete("anthropic");
     if (!accountedTerminalKeys.has(key)) {
       accountedTerminalKeys.add(key);
       terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
@@ -707,8 +774,11 @@ export async function runStage2Finalists(input: {
     const providerSession = sessionDistinctUnknownByProvider.get(input.provider) ?? new Set();
     if (isProviderCircuitBroken(providerSession)) {
       providerCircuitBreakerTripped = true;
-      quarantinedProviders.add("openai");
-      quarantinedProviders.add("xai");
+      quarantinedProviders.add(input.provider);
+      if (!challengerMode) {
+        quarantinedProviders.add("openai");
+        quarantinedProviders.add("xai");
+      }
       runStatus = "STAGE2_PROVIDER_CIRCUIT_BREAKER";
       note = `STAGE2_PROVIDER_CIRCUIT_BREAKER: ${input.provider} hit ${PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD} distinct UNKNOWN/terminal tasks this session`;
       throw new Stage2ProviderCircuitBreakerError(input.provider, note);
@@ -791,10 +861,13 @@ export async function runStage2Finalists(input: {
     }
 
     // First UNKNOWN: durable task quarantine; one authorized resend may follow.
+    const quarantineProviders = challengerMode
+      ? [...quarantinedProviders, input.provider]
+      : [...quarantinedProviders, input.provider, "openai", "xai"];
     writeRunUnknownQuarantine({
       runId,
       reason: message,
-      providers: [...quarantinedProviders, input.provider, "openai", "xai"],
+      providers: quarantineProviders,
     });
     unknownQuarantines += 1;
     if (allowResendUnknown) {
@@ -806,8 +879,10 @@ export async function runStage2Finalists(input: {
       return "retry_authorized";
     }
     quarantinedProviders.add(input.provider);
-    quarantinedProviders.add("openai");
-    quarantinedProviders.add("xai");
+    if (!challengerMode) {
+      quarantinedProviders.add("openai");
+      quarantinedProviders.add("xai");
+    }
     runStatus = "STAGE2_PAUSED_UNKNOWN_COMPLETION";
     note = `STAGE2_PAUSED_UNKNOWN_COMPLETION: ${input.provider}: ${message}`;
     throw new Stage2UnknownCompletionStopError(input.provider, note);
@@ -882,8 +957,7 @@ export async function runStage2Finalists(input: {
         const responseCost = Number(cached.costEstimateUsd ?? 0) || 0;
         budget = applyPersistedSpend(budget, responseCost);
         responseSpendUsd += responseCost;
-        if (provider === "openai") costByBucket.openaiResponsesUsd += responseCost;
-        if (provider === "xai") costByBucket.xaiResponsesUsd += responseCost;
+        recordResponseCost(provider, responseCost);
         providerSpend[providerCapKey(provider)] = recordProviderSpend(
           providerSpend[providerCapKey(provider)],
           {
@@ -895,8 +969,7 @@ export async function runStage2Finalists(input: {
         completedResponses += 1;
         accountedResponseKeys.add(responseKey);
         cacheHits += 1;
-        if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
-        if (modelId === "grok-4.7") grokResponsesDone += 1;
+        bumpModelDone(modelId);
         bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
       }
       responseResult = {
@@ -1020,8 +1093,7 @@ export async function runStage2Finalists(input: {
           },
         );
         responseSpendUsd += actual;
-        if (provider === "openai") costByBucket.openaiResponsesUsd += actual;
-        if (provider === "xai") costByBucket.xaiResponsesUsd += actual;
+        recordResponseCost(provider, actual);
         responseText = responseResult.text;
         persistPaidCallImmediately({
           runId,
@@ -1057,8 +1129,7 @@ export async function runStage2Finalists(input: {
         });
         accountedResponseKeys.add(responseKey);
         completedResponses += 1;
-        if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
-        if (modelId === "grok-4.7") grokResponsesDone += 1;
+        bumpModelDone(modelId);
         bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
       } catch (err) {
         if (err instanceof BudgetLimitError) {
@@ -1119,8 +1190,7 @@ export async function runStage2Finalists(input: {
                 },
               );
               responseSpendUsd += actual;
-              if (provider === "openai") costByBucket.openaiResponsesUsd += actual;
-              if (provider === "xai") costByBucket.xaiResponsesUsd += actual;
+              recordResponseCost(provider, actual);
               responseText = responseResult.text;
               persistPaidCallImmediately({
                 runId,
@@ -1156,8 +1226,7 @@ export async function runStage2Finalists(input: {
               });
               accountedResponseKeys.add(responseKey);
               completedResponses += 1;
-              if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
-              if (modelId === "grok-4.7") grokResponsesDone += 1;
+              bumpModelDone(modelId);
               bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
             } catch (retryErr) {
               if (retryErr instanceof BudgetLimitError) {
@@ -1433,8 +1502,10 @@ export async function runStage2Finalists(input: {
       JSON.stringify({
         checkpoint: true,
         runId,
+        challengerMode,
         gptResponsesDone,
         grokResponsesDone,
+        claudeResponsesDone,
         judgeADone,
         judgeBDone,
         completedResponses,
@@ -1519,6 +1590,34 @@ export async function runStage2Finalists(input: {
         if (sinceCheckpoint >= batchSize || paidCallsSinceCheckpoint >= 10) {
           emitCheckpoint();
           sinceCheckpoint = 0;
+          // Claude challenger early economic stop: at $75 known spend, refuse if
+          // remaining worst-case work cannot finish under the $95 hard cap.
+          if (challengerMode && budget.spentUsd >= 75) {
+            const remainingResponses = Math.max(0, plannedResponses - completedResponses);
+            const remainingJudges = Math.max(0, plannedJudges - completedJudges);
+            const remainWorst =
+              remainingResponses *
+                worstCaseCostForBudgetGate({
+                  modelId: STAGE2_CLAUDE_CHALLENGER_MODEL,
+                  estimatedInputTokens: 4500,
+                  maxOutputTokens: CLAUDE_CHALLENGER_MAX_TOKENS,
+                  bucket: "models",
+                  pricingTable: pricing,
+                }) +
+              remainingJudges *
+                worstCaseCostForBudgetGate({
+                  modelId: STAGE2_JUDGE_A,
+                  estimatedInputTokens: 3500,
+                  maxOutputTokens: 2048,
+                  bucket: "judgeModels",
+                  pricingTable: pricing,
+                });
+            if (budget.spentUsd + remainWorst > maxCostUsd + 1e-9) {
+              runStatus = "STAGE2_BUDGET_STOP";
+              note = `CLAUDE_STAGE2_EARLY_ECONOMIC_STOP: known=$${budget.spentUsd.toFixed(2)} remainWorst=$${remainWorst.toFixed(2)} exceeds cap $${maxCostUsd}`;
+              throw new BudgetLimitError(note);
+            }
+          }
         }
       }
       if (sinceCheckpoint > 0 || paidCallsSinceCheckpoint > 0) emitCheckpoint();
@@ -1659,6 +1758,7 @@ export async function runStage2Finalists(input: {
       failureTaxonomyByProvider: structuredClone(failureTaxonomyByProvider),
       gptResponsesDone,
       grokResponsesDone,
+      claudeResponsesDone,
       judgeADone,
       judgeBDone,
       unknownQuarantines,

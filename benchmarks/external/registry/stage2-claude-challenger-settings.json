@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "policy_version": "stage2-claude-challenger-reasoning-v1",
+  "frozen_before_live": true,
+  "purpose": "Full Stage-2 challenger for Claude Opus only, using the identical frozen Stage-2 task suite as GPT/Grok finalists. Does not rerun GPT or Grok.",
+  "source_stage2_run_id": "stage2-finalists-v1-044fb482d7bf",
+  "source_stage2_config_hash": "385d4c3f66f621ccd752b1de99d8ac2931d4e0948ce54d6e0e1f41127e9e5b0f",
+  "source_challenger_screen_run_id": "challenger-screen-v1-8802e482d165",
+  "response_model": "claude-opus-5-5",
+  "judges": {
+    "judge_a": "claude-sonnet-5-5",
+    "judge_b": "gpt-6.1-sol"
+  },
+  "settings": {
+    "claude-opus-5-5": {
+      "provider": "anthropic",
+      "api": "messages",
+      "exactModelId": "claude-opus-5-5",
+      "thinking": { "type": "adaptive" },
+      "effort": "high",
+      "temperature": null,
+      "top_p": null,
+      "top_k": null,
+      "max_tokens": 8192,
+      "timeout_ms": 180000,
+      "notes": "Exact configuration that passed challenger-screen qualification. max_tokens stop_reason with usable final text is scoreable; no usable final text is a terminal failure."
+    }
+  },
+  "do_not_dispatch": ["gpt-6.1-sol", "grok-4.7", "gemini-4-argon"],
+  "rag": {
+    "reuse_from_run_id": "stage2-finalists-v1-044fb482d7bf",
+    "generation_calls": 0
+  }
+}

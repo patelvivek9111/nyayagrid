@@ -33,7 +33,10 @@ export const LEGALBENCH_REV = "b46bf4ffae90524b2b72aaa30e7745fe9db64481";
 export const RAG_REV = "2b9c248bc8179ef0908fd6ba01d50b156facd48b";
 
 export const STAGE2_RESPONSE_MODELS = ["gpt-6.1-sol", "grok-4.7"] as const;
-export type Stage2ResponseModelId = (typeof STAGE2_RESPONSE_MODELS)[number];
+/** Finalist models only. Claude challenger is additive and never a silent substitute. */
+export const STAGE2_CLAUDE_CHALLENGER_MODEL = "claude-opus-5-5" as const;
+export type Stage2FinalistModelId = (typeof STAGE2_RESPONSE_MODELS)[number];
+export type Stage2ResponseModelId = Stage2FinalistModelId | typeof STAGE2_CLAUDE_CHALLENGER_MODEL;
 
 export const STAGE2_JUDGE_A = "claude-sonnet-5-5" as const;
 export const STAGE2_JUDGE_B = "gpt-6.1-sol" as const;

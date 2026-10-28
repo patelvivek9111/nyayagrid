@@ -14,6 +14,8 @@
 export const STAGE2_PROVIDER_TIMEOUTS_MS = {
   openaiResponse: 180_000,
   xaiResponse: 360_000,
+  /** Claude Stage-2 challenger: same 180s bound used in qualified challenger screen. */
+  anthropicResponse: 180_000,
   anthropicJudge: 180_000,
   openaiJudge: 180_000,
 } as const;
@@ -23,10 +25,10 @@ export type Stage2ProviderTimeoutKey = keyof typeof STAGE2_PROVIDER_TIMEOUTS_MS;
 /** Default used by Stage-1 / canary / Gemini when caller omits timeoutMs. */
 export const DEFAULT_LIVE_TIMEOUT_MS = 180_000;
 
-export function stage2ResponseTimeoutMs(provider: "openai" | "xai"): number {
-  return provider === "xai"
-    ? STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse
-    : STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse;
+export function stage2ResponseTimeoutMs(provider: "openai" | "xai" | "anthropic"): number {
+  if (provider === "xai") return STAGE2_PROVIDER_TIMEOUTS_MS.xaiResponse;
+  if (provider === "anthropic") return STAGE2_PROVIDER_TIMEOUTS_MS.anthropicResponse;
+  return STAGE2_PROVIDER_TIMEOUTS_MS.openaiResponse;
 }
 
 export function stage2JudgeTimeoutMs(provider: "anthropic" | "openai"): number {
