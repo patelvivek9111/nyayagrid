@@ -12,7 +12,11 @@ import { checkCredentialPresence } from "../live/credentials.js";
 import { loadExternalBenchLocalEnv } from "../live/load-local-env.js";
 import { UnknownCompletionError } from "../live/retry.js";
 import { assertNoAutoEscalation } from "../live/stage-gate.js";
-import { runStage2Finalists, Stage2UnknownCompletionStopError } from "../live/stage2-executor.js";
+import {
+  runStage2Finalists,
+  Stage2CheckpointStopError,
+  Stage2UnknownCompletionStopError,
+} from "../live/stage2-executor.js";
 import { getCacheDir } from "../paths.js";
 import { STAGE2_CLAUDE_CHALLENGER_MODEL } from "../live/stage2-task-planner.js";
 
@@ -235,6 +239,7 @@ async function main(): Promise<void> {
   } catch (err) {
     const reason =
       err instanceof BudgetLimitError ||
+      err instanceof Stage2CheckpointStopError ||
       err instanceof UnknownCompletionError ||
       err instanceof Stage2UnknownCompletionStopError
         ? err.message
@@ -242,7 +247,13 @@ async function main(): Promise<void> {
           ? err.message
           : String(err);
     const status =
-      err instanceof BudgetLimitError ? "CLAUDE_STAGE2_BUDGET_STOP" : "CLAUDE_STAGE2_PARTIAL";
+      err instanceof Stage2CheckpointStopError
+        ? reason.startsWith("CLAUDE_HALF_RUN_COST_STOP")
+          ? "CLAUDE_HALF_RUN_COST_STOP"
+          : "CLAUDE_HALF_RUN_CHECKPOINT"
+        : err instanceof BudgetLimitError
+          ? "CLAUDE_STAGE2_BUDGET_STOP"
+          : "CLAUDE_STAGE2_PARTIAL";
     console.error(JSON.stringify({ status, reason, paidCalls: 0, stage3Started: false }, null, 2));
     process.exitCode = 2;
   }

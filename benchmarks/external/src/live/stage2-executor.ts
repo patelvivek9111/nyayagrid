@@ -148,6 +148,7 @@ export type Stage2RunSummary = {
     | "STAGE2_COMPLETE"
     | "STAGE2_PARTIAL"
     | "STAGE2_BUDGET_STOP"
+    | "STAGE2_CHECKPOINT_STOP"
     | "STAGE2_BLOCKED"
     | "STAGE2_PAUSED_UNKNOWN_COMPLETION"
     | "STAGE2_PROVIDER_CIRCUIT_BREAKER";
@@ -226,6 +227,15 @@ export class Stage2ProviderCircuitBreakerError extends Error {
   }
 }
 
+/** Half-run / operator checkpoint: stop paid work without invalidating cache. */
+export class Stage2CheckpointStopError extends Error {
+  readonly code = "STAGE2_CHECKPOINT_STOP" as const;
+  constructor(message: string) {
+    super(message);
+    this.name = "Stage2CheckpointStopError";
+  }
+}
+
 function hashObj(v: unknown): string {
   return createHash("sha256").update(JSON.stringify(v)).digest("hex");
 }
@@ -238,6 +248,28 @@ function parseArgValue(argv: readonly string[], name: string): string | null {
     if (argv[i]?.startsWith(`${name}=`)) return argv[i]!.slice(name.length + 1) || null;
   }
   return null;
+}
+
+/** Optional hard stop on total Claude response outcomes (cache + paid). */
+export function parseMaxClaudeResponses(argv: readonly string[]): number | null {
+  const raw = parseArgValue(argv, "--max-claude-responses");
+  if (raw === null) return null;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || !Number.isInteger(n) || n < 0) {
+    throw new Error(`Invalid --max-claude-responses: ${raw}`);
+  }
+  return n;
+}
+
+/** Optional this-process paid spend subcap (does not replace --max-cost-usd). */
+export function parseSessionMaxSpendUsd(argv: readonly string[]): number | null {
+  const raw = parseArgValue(argv, "--session-max-spend-usd");
+  if (raw === null) return null;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || n < 0) {
+    throw new Error(`Invalid --session-max-spend-usd: ${raw}`);
+  }
+  return n;
 }
 
 function buildUserPrompt(task: NormalizedTask): string {
@@ -592,6 +624,10 @@ export async function runStage2Finalists(input: {
   let note: string | undefined;
   const allowResendUnknown = allowUnknownResend(argv);
   const ackUnverified = acknowledgeUnverifiedBillingExposure(argv);
+  const maxClaudeResponses = parseMaxClaudeResponses(argv);
+  const sessionMaxSpendUsd = parseSessionMaxSpendUsd(argv);
+  /** Paid dollars dispatched in this process only (excludes cache reconstruction). */
+  let sessionPaidSpendUsd = 0;
 
   // Prior post-dispatch cascade → durable run quarantine (no paid calls).
   const seededQuarantine = ensureQuarantineFromPartialSummary(runId);
@@ -632,6 +668,23 @@ export async function runStage2Finalists(input: {
   const bumpFailure = (provider: string, err?: unknown) => {
     failuresByProvider[provider] = (failuresByProvider[provider] ?? 0) + 1;
     bumpTaxonomy(failureTaxonomyByProvider, provider, classifyErrorToTaxonomy(err));
+  };
+
+  const assertClaudeResponseCheckpointAllowsDispatch = (modelId: Stage2ResponseModelId): void => {
+    if (maxClaudeResponses === null) return;
+    if (modelId !== STAGE2_CLAUDE_CHALLENGER_MODEL) return;
+    if (claudeResponsesDone < maxClaudeResponses) return;
+    runStatus = "STAGE2_CHECKPOINT_STOP";
+    note = `CLAUDE_HALF_RUN_CHECKPOINT: claudeResponsesDone=${claudeResponsesDone} max=${maxClaudeResponses}; refusing response ${claudeResponsesDone + 1}`;
+    throw new Stage2CheckpointStopError(note);
+  };
+
+  const assertSessionSpendAllows = (worstCaseUsd: number): void => {
+    if (sessionMaxSpendUsd === null) return;
+    if (sessionPaidSpendUsd + worstCaseUsd <= sessionMaxSpendUsd + 1e-9) return;
+    runStatus = "STAGE2_CHECKPOINT_STOP";
+    note = `CLAUDE_HALF_RUN_COST_STOP: sessionSpend=$${sessionPaidSpendUsd.toFixed(4)} worstNext=$${worstCaseUsd.toFixed(4)} cap=$${sessionMaxSpendUsd}`;
+    throw new Stage2CheckpointStopError(note);
   };
 
   const persistProgress = () => {
@@ -1006,6 +1059,7 @@ export async function runStage2Finalists(input: {
     } else if (cacheOnly) {
       return;
     } else {
+      assertClaudeResponseCheckpointAllowsDispatch(modelId);
       if (hasUnknownCompletionArtifact(runId, compositeTaskId, provider)) {
         // Quarantined UNKNOWN task — never silently convert to MISSING / auto-resend.
         unverifiedProviderBillingExposure = "YES";
@@ -1076,7 +1130,9 @@ export async function runStage2Finalists(input: {
           spend: providerSpend[providerCapKey(provider)],
           nextDollarsWorstCase: worst,
         });
+        assertSessionSpendAllows(worst);
       } catch (err) {
+        if (err instanceof Stage2CheckpointStopError) throw err;
         if (err instanceof BudgetLimitError) {
           runStatus = "STAGE2_BUDGET_STOP";
           note = err.message;
@@ -1100,6 +1156,7 @@ export async function runStage2Finalists(input: {
           bucket: "models",
           pricingTable: pricing,
         });
+        sessionPaidSpendUsd += actual;
         budget = recordSpend(budget, actual);
         providerSpend[providerCapKey(provider)] = recordProviderSpend(
           providerSpend[providerCapKey(provider)],
@@ -1149,6 +1206,7 @@ export async function runStage2Finalists(input: {
         bumpModelDone(modelId);
         bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
       } catch (err) {
+        if (err instanceof Stage2CheckpointStopError) throw err;
         if (err instanceof BudgetLimitError) {
           bumpFailure(provider, err);
           runStatus = "STAGE2_BUDGET_STOP";
@@ -1182,6 +1240,7 @@ export async function runStage2Finalists(input: {
                 spend: providerSpend[providerCapKey(provider)],
                 nextDollarsWorstCase: worst,
               });
+              assertSessionSpendAllows(worst);
               responseResult = await withRetries(
                 () => callResponseModel(modelId, userPrompt),
                 sleep,
@@ -1197,6 +1256,7 @@ export async function runStage2Finalists(input: {
                 bucket: "models",
                 pricingTable: pricing,
               });
+              sessionPaidSpendUsd += actual;
               budget = recordSpend(budget, actual);
               providerSpend[providerCapKey(provider)] = recordProviderSpend(
                 providerSpend[providerCapKey(provider)],
@@ -1246,6 +1306,7 @@ export async function runStage2Finalists(input: {
               bumpModelDone(modelId);
               bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
             } catch (retryErr) {
+              if (retryErr instanceof Stage2CheckpointStopError) throw retryErr;
               if (retryErr instanceof BudgetLimitError) {
                 runStatus = "STAGE2_BUDGET_STOP";
                 note = retryErr.message;
@@ -1385,6 +1446,7 @@ export async function runStage2Finalists(input: {
         nextDollarsWorstCase: worst,
         isJudge: true,
       });
+      assertSessionSpendAllows(worst);
 
       lastProviderActivity = `${judgeProvider}:${judgeModel}`;
       const result = await withRetries(async () => {
@@ -1427,6 +1489,7 @@ export async function runStage2Finalists(input: {
         bucket: "judgeModels",
         pricingTable: pricing,
       });
+      sessionPaidSpendUsd += actual;
       budget = recordSpend(budget, actual);
       providerSpend.judge = recordProviderSpend(providerSpend.judge, {
         calls: 1,
@@ -1474,6 +1537,7 @@ export async function runStage2Finalists(input: {
     try {
       await runJudge("A");
     } catch (err) {
+      if (err instanceof Stage2CheckpointStopError) throw err;
       if (err instanceof UnknownCompletionError || isPostDispatchUnknownError(err)) {
         handleUnknownCompletion({
           provider: "anthropic",
@@ -1498,6 +1562,7 @@ export async function runStage2Finalists(input: {
     try {
       await runJudge("B");
     } catch (err) {
+      if (err instanceof Stage2CheckpointStopError) throw err;
       if (err instanceof UnknownCompletionError || isPostDispatchUnknownError(err)) {
         handleUnknownCompletion({
           provider: "openai",
@@ -1532,6 +1597,7 @@ export async function runStage2Finalists(input: {
         gptResponsesDone,
         grokResponsesDone,
         claudeResponsesDone,
+        maxClaudeResponses,
         judgeADone,
         judgeBDone,
         completedResponses,
@@ -1542,6 +1608,8 @@ export async function runStage2Finalists(input: {
         plannedRag,
         cacheHits,
         paidCalls,
+        sessionPaidSpendUsd: Number(sessionPaidSpendUsd.toFixed(4)),
+        sessionMaxSpendUsd,
         totalSpendUsd: Number(budget.spentUsd.toFixed(4)),
         knownLedgerSpendUsd: Number(budget.spentUsd.toFixed(4)),
         remainingBudgetUsd: Number(remainingBudgetUsd(budget).toFixed(4)),
@@ -1649,7 +1717,10 @@ export async function runStage2Finalists(input: {
       if (sinceCheckpoint > 0 || paidCallsSinceCheckpoint > 0) emitCheckpoint();
     }
   } catch (err) {
-    if (err instanceof BudgetLimitError) {
+    if (err instanceof Stage2CheckpointStopError) {
+      runStatus = "STAGE2_CHECKPOINT_STOP";
+      note = err.message;
+    } else if (err instanceof BudgetLimitError) {
       runStatus = "STAGE2_BUDGET_STOP";
       note = err.message;
     } else if (err instanceof Stage2ProviderCircuitBreakerError) {
@@ -1751,6 +1822,7 @@ export async function runStage2Finalists(input: {
   const responseTerminalCoverage = completedResponses + terminalProviderFailures;
   if (
     runStatus !== "STAGE2_BUDGET_STOP" &&
+    runStatus !== "STAGE2_CHECKPOINT_STOP" &&
     runStatus !== "STAGE2_BLOCKED" &&
     runStatus !== "STAGE2_PAUSED_UNKNOWN_COMPLETION" &&
     runStatus !== "STAGE2_PROVIDER_CIRCUIT_BREAKER"

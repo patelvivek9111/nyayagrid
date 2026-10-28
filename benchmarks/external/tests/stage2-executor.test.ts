@@ -1684,3 +1684,207 @@ describe("stage2 unknown-completion safety", () => {
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });
 });
+
+describe("stage2 claude half-run checkpoint", () => {
+  it("stops at --max-claude-responses and refuses dispatch beyond the cap on resume", async () => {
+    const runId = `stage2-claude-half-${Date.now()}`;
+    const suite = miniSuite(
+      ["prbench-half-1", "prbench-half-2", "prbench-half-3"],
+      ["abercrombie::train::0", "sara_numeric::train::0"],
+      [],
+    );
+    const config = {
+      runId,
+      stage: 2,
+      challengerMode: "claude-only",
+      autoEscalate: false,
+      suite,
+      models: {
+        response: ["claude-opus-5-5"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+      test: true,
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "stage2-suite.json"),
+      `${JSON.stringify(suite, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 95,
+    });
+
+    const prbenchTasks = [
+      task({
+        benchmarkId: "prbench",
+        taskId: "prbench-half-1",
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+      task({
+        benchmarkId: "prbench",
+        taskId: "prbench-half-2",
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+      task({
+        benchmarkId: "prbench",
+        taskId: "prbench-half-3",
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+    ];
+    const legalbenchTasks = [
+      task({ benchmarkId: "legalbench", taskId: "abercrombie::train::0", expectedAnswer: "yes" }),
+      task({ benchmarkId: "legalbench", taskId: "sara_numeric::train::0", expectedAnswer: "yes" }),
+    ];
+
+    let anthropicMessages = 0;
+    let openaiCalls = 0;
+    const fetchImpl: typeof fetch = async (url, init) => {
+      const u = String(url);
+      const body = init?.body ? JSON.parse(String(init.body)) : {};
+      if (u.includes("api.anthropic.com")) {
+        anthropicMessages += 1;
+        const isJudge = JSON.stringify(body).includes("independent legal-benchmark judge");
+        return new Response(
+          JSON.stringify({
+            id: `msg_${anthropicMessages}`,
+            stop_reason: "end_turn",
+            content: [
+              {
+                type: "text",
+                text: isJudge
+                  ? '{"score":0.7,"rationale":"ok"}'
+                  : "Claude half-run legal answer mentioning yes",
+              },
+            ],
+            usage: { input_tokens: 40, output_tokens: 15 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.openai.com")) {
+        openaiCalls += 1;
+        return new Response(
+          JSON.stringify({
+            id: `resp_${openaiCalls}`,
+            status: "completed",
+            output_text: '{"score":0.65,"rationale":"ok"}',
+            usage: { input_tokens: 30, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      throw new Error(`unexpected url ${u}`);
+    };
+
+    const summary1 = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2-claude-challenger",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "95",
+        "--max-claude-responses",
+        "2",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 95,
+        fetchImpl,
+        openaiApiKey: "test-openai",
+        anthropicApiKey: "test-anthropic",
+        prbenchTasks,
+        legalbenchTasks,
+        ragTaskIds: [],
+        skipRag: true,
+        responseModels: ["claude-opus-5-5"],
+        suiteOverride: suite,
+      },
+    });
+
+    expect(summary1.status).toBe("STAGE2_CHECKPOINT_STOP");
+    expect(summary1.progress.claudeResponsesDone).toBe(2);
+    expect(summary1.progress.judgeADone).toBe(2);
+    expect(summary1.progress.judgeBDone).toBe(2);
+    expect(summary1.note).toMatch(/CLAUDE_HALF_RUN_CHECKPOINT/);
+    // 2 Claude responses + 2 Sonnet judges; no 3rd Claude response dispatch.
+    expect(anthropicMessages).toBe(4);
+    expect(openaiCalls).toBe(2);
+    const anthropicAfterFirst = anthropicMessages;
+
+    let anthropicOnResume = 0;
+    const fetch2: typeof fetch = async (url, init) => {
+      const u = String(url);
+      if (u.includes("api.anthropic.com")) {
+        anthropicOnResume += 1;
+        return new Response(
+          JSON.stringify({
+            id: `msg_resume_${anthropicOnResume}`,
+            stop_reason: "end_turn",
+            content: [{ type: "text", text: "should-not-dispatch" }],
+            usage: { input_tokens: 1, output_tokens: 1 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.openai.com")) {
+        return new Response(
+          JSON.stringify({
+            id: "resp_resume",
+            status: "completed",
+            output_text: '{"score":0.5,"rationale":"x"}',
+            usage: { input_tokens: 1, output_tokens: 1 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      throw new Error(`unexpected url ${u}`);
+    };
+
+    const summary2 = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2-claude-challenger",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "95",
+        "--max-claude-responses",
+        "2",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 95,
+        fetchImpl: fetch2,
+        openaiApiKey: "test-openai",
+        anthropicApiKey: "test-anthropic",
+        prbenchTasks,
+        legalbenchTasks,
+        ragTaskIds: [],
+        skipRag: true,
+        responseModels: ["claude-opus-5-5"],
+        suiteOverride: suite,
+      },
+    });
+
+    expect(summary2.status).toBe("STAGE2_CHECKPOINT_STOP");
+    expect(summary2.progress.claudeResponsesDone).toBe(2);
+    expect(summary2.paidCalls).toBe(0);
+    expect(summary2.cacheHits).toBeGreaterThanOrEqual(4);
+    expect(anthropicOnResume).toBe(0);
+    expect(anthropicMessages).toBe(anthropicAfterFirst);
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+});
