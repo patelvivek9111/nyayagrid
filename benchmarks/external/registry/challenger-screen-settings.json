@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "policy_version": "challenger-screen-reasoning-v1",
+  "frozen_before_live": true,
+  "purpose": "Fair Stage-1-equivalent re-screen for Claude and Gemini only. Corrects Claude max_tokens=4096 exhaustion without changing prompts, temperature, judges, or task selection.",
+  "source_screening_suite": "screening-suite.json",
+  "models": ["claude-opus-5-5", "gemini-4-argon"],
+  "judges": {
+    "judge_a": "claude-sonnet-5-5",
+    "judge_b": "gpt-6.1-sol"
+  },
+  "settings": {
+    "claude-opus-5-5": {
+      "provider": "anthropic",
+      "api": "messages",
+      "exactModelId": "claude-opus-5-5",
+      "thinking": { "type": "adaptive" },
+      "effort": "high",
+      "temperature": null,
+      "top_p": null,
+      "top_k": null,
+      "max_tokens": 8192,
+      "timeout_ms": 180000,
+      "previous_problematic_max_tokens": 4096,
+      "notes": "Production-realistic fixed output cap raised from 4096 so adaptive thinking and a usable final answer can both fit. Not unlimited. Not per-task dynamic."
+    },
+    "gemini-4-argon": {
+      "provider": "google",
+      "api": "interactions",
+      "exactModelId": "gemini-4-argon",
+      "thinking_level": "high",
+      "temperature": null,
+      "top_p": null,
+      "top_k": null,
+      "max_output_tokens": 4096,
+      "timeout_ms": 180000,
+      "notes": "Original Stage-1 Gemini output allowance retained; prior failure was quota/access, not output exhaustion."
+    }
+  },
+  "rag": {
+    "reuse_model_independent_retrieval": true,
+    "generation_calls": 0
+  }
+}

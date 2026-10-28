@@ -125,6 +125,22 @@ export type Stage1ExecutorDeps = {
   /** When set, skip live authorization argv checks (tests inject). */
   bypassAuthForTests?: boolean;
   maxCostUsdForTests?: number;
+  /**
+   * Challenger-screen / corrected Claude completion allowance.
+   * Default remains 4096 for historical Stage-1 semantics.
+   */
+  claudeMaxTokens?: number;
+  /** Optional Gemini output override (default 4096). */
+  geminiMaxOutputTokens?: number;
+  /**
+   * When true, only require API keys for selected response models + judges
+   * (OpenAI + Anthropic). Used by challenger screen (no xAI required).
+   */
+  requireOnlySelectedProviderKeys?: boolean;
+  /** Interleave models per task (Claude N then Gemini N) for balanced spend. */
+  interleaveModelsPerTask?: boolean;
+  /** Absolute hard ceiling for --max-cost-usd (default 25 Stage-1). */
+  maxCostUsdCeiling?: number;
 };
 
 export type Stage1ProgressSnapshot = {
@@ -255,14 +271,24 @@ function parseJudgeScore(text: string): number {
   throw new Error("Judge output missing parseable score");
 }
 
-function responseSettings(modelId: Stage1ResponseModelId): unknown {
+function responseSettings(
+  modelId: Stage1ResponseModelId,
+  limits: { claudeMaxTokens: number; geminiMaxOutputTokens: number },
+): unknown {
   switch (modelId) {
     case "gpt-6.1-sol":
       return { effort: "high", service_tier: "default", max_output_tokens: 4096 };
     case "claude-opus-5-5":
-      return { thinking: { type: "adaptive" }, effort: "high", max_tokens: 4096 };
+      return {
+        thinking: { type: "adaptive" },
+        effort: "high",
+        max_tokens: limits.claudeMaxTokens,
+      };
     case "gemini-4-argon":
-      return { thinking_level: "high", max_output_tokens: 4096 };
+      return {
+        thinking_level: "high",
+        max_output_tokens: limits.geminiMaxOutputTokens,
+      };
     case "grok-4.7":
       return { effort: "high", max_output_tokens: 4096 };
   }
@@ -380,8 +406,11 @@ export async function runStage1Screening(input: {
     const auth = assertLivePaidExecutionAuthorized({ argv });
     maxCostUsd = auth.maxCostUsd;
   }
-  if (maxCostUsd > 25 + 1e-9) {
-    throw new BudgetLimitError("Stage-1 hard cap is $25.00; refuse higher --max-cost-usd");
+  const costCeiling = deps.maxCostUsdCeiling ?? 25;
+  if (maxCostUsd > costCeiling + 1e-9) {
+    throw new BudgetLimitError(
+      `Hard cap is $${costCeiling.toFixed(2)}; refuse higher --max-cost-usd`,
+    );
   }
 
   const runIdArg = parseArgValue(argv, "--run-id");
@@ -400,12 +429,45 @@ export async function runStage1Screening(input: {
     throw new Error("REFUSE RESUME: config hash mismatch");
   }
 
+  const outputOverrides = (fullConfig.outputTokenOverrides ?? {}) as Record<string, number>;
+  const outputLimits = {
+    claudeMaxTokens:
+      deps.claudeMaxTokens ??
+      (typeof outputOverrides["claude-opus-5-5"] === "number"
+        ? outputOverrides["claude-opus-5-5"]
+        : 4096),
+    geminiMaxOutputTokens:
+      deps.geminiMaxOutputTokens ??
+      (typeof outputOverrides["gemini-4-argon"] === "number"
+        ? outputOverrides["gemini-4-argon"]
+        : 4096),
+  };
+
   const openaiKey = deps.openaiApiKey ?? process.env.OPENAI_API_KEY?.trim();
   const anthropicKey = deps.anthropicApiKey ?? process.env.ANTHROPIC_API_KEY?.trim();
   const googleKey =
     deps.googleApiKey ?? process.env.GOOGLE_API_KEY?.trim() ?? process.env.GEMINI_API_KEY?.trim();
   const xaiKey = deps.xaiApiKey ?? process.env.XAI_API_KEY?.trim();
-  if (!openaiKey || !anthropicKey || !googleKey || !xaiKey) {
+
+  const screening = JSON.parse(
+    readFileSync(path.join(getRegistryDir(), "screening-suite.json"), "utf8"),
+  ) as ScreeningSuite;
+
+  const models = deps.responseModels ?? STAGE1_RESPONSE_MODELS;
+  const needsGoogle = models.includes("gemini-4-argon");
+  const needsXai = models.includes("grok-4.7");
+  const needsOpenAi = true; // Judge B always gpt-6.1-sol for PRBench
+  const needsAnthropic = true; // Judge A + possibly Claude response
+  const selective = deps.requireOnlySelectedProviderKeys === true;
+  const credentialsOk = selective
+    ? Boolean(
+        (!needsOpenAi || openaiKey) &&
+        (!needsAnthropic || anthropicKey) &&
+        (!needsGoogle || googleKey) &&
+        (!needsXai || xaiKey),
+      )
+    : Boolean(openaiKey && anthropicKey && googleKey && xaiKey);
+  if (!credentialsOk) {
     return {
       status: "STAGE1_BLOCKED",
       runId,
@@ -449,12 +511,6 @@ export async function runStage1Screening(input: {
       note: "credentials_missing",
     };
   }
-
-  const screening = JSON.parse(
-    readFileSync(path.join(getRegistryDir(), "screening-suite.json"), "utf8"),
-  ) as ScreeningSuite;
-
-  const models = deps.responseModels ?? STAGE1_RESPONSE_MODELS;
   const prbenchTasks =
     deps.prbenchTasks ?? (await loadPrbenchTasks(screening.upstream_ids.prbench_legal_hard));
   const legalbenchTasks =
@@ -563,7 +619,7 @@ export async function runStage1Screening(input: {
         {
           model: "claude-opus-5-5",
           effort: "high",
-          maxTokens: 4096,
+          maxTokens: outputLimits.claudeMaxTokens,
           messages: [{ role: "user", content: `${systemPrompt}\n\n${prompt}` }],
         },
       );
@@ -576,7 +632,7 @@ export async function runStage1Screening(input: {
         {
           model: "gemini-4-argon",
           thinkingLevel: "high",
-          maxOutputTokens: 4096,
+          maxOutputTokens: outputLimits.geminiMaxOutputTokens,
           input: `${systemPrompt}\n\n${prompt}`,
         },
       );
@@ -606,12 +662,25 @@ export async function runStage1Screening(input: {
   };
 
   const work: WorkItem[] = [];
-  for (const modelId of models) {
+  if (deps.interleaveModelsPerTask) {
     for (const task of prbenchTasks) {
-      work.push({ benchmarkId: "prbench", task, modelId });
+      for (const modelId of models) {
+        work.push({ benchmarkId: "prbench", task, modelId });
+      }
     }
     for (const task of legalbenchTasks) {
-      work.push({ benchmarkId: "legalbench", task, modelId });
+      for (const modelId of models) {
+        work.push({ benchmarkId: "legalbench", task, modelId });
+      }
+    }
+  } else {
+    for (const modelId of models) {
+      for (const task of prbenchTasks) {
+        work.push({ benchmarkId: "prbench", task, modelId });
+      }
+      for (const task of legalbenchTasks) {
+        work.push({ benchmarkId: "legalbench", task, modelId });
+      }
     }
   }
 
@@ -625,7 +694,7 @@ export async function runStage1Screening(input: {
     }
 
     const userPrompt = buildUserPrompt(task);
-    const settings = responseSettings(modelId);
+    const settings = responseSettings(modelId, outputLimits);
     const settingsHash = hashObj(settings);
     const promptHashes = [contentHashFromText(systemPrompt), contentHashFromText(userPrompt)];
     const contentHash = contentHashFromText(userPrompt);
@@ -675,9 +744,15 @@ export async function runStage1Screening(input: {
       };
     } else {
       const estimatedInput = estimateTokens(systemPrompt + userPrompt);
+      const modelMaxOut =
+        modelId === "claude-opus-5-5"
+          ? outputLimits.claudeMaxTokens
+          : modelId === "gemini-4-argon"
+            ? outputLimits.geminiMaxOutputTokens
+            : 4096;
       const fit = assessContextFit({
         inputTokensEstimate: estimatedInput,
-        maxOutputTokens: 4096,
+        maxOutputTokens: modelMaxOut,
         contextWindow: CONTEXT_WINDOWS[modelId],
       });
       try {
@@ -694,7 +769,7 @@ export async function runStage1Screening(input: {
       const worst = worstCaseCostForBudgetGate({
         modelId,
         estimatedInputTokens: estimatedInput,
-        maxOutputTokens: 4096,
+        maxOutputTokens: modelMaxOut,
         bucket: "models",
         pricingTable: pricing,
       });

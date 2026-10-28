@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "policy_version": "challenger-screen-budget-v1",
+  "total_max_usd": 20,
+  "auto_increase": false,
+  "provider_subcaps_usd": {
+    "openai": 6,
+    "anthropic": 10,
+    "google": 5,
+    "xai": 0,
+    "judging": 10
+  },
+  "notes": [
+    "New challenger-screen budget; not a Stage-2 authorization.",
+    "Expected spend should be materially below the hard cap.",
+    "Refuse execution if realistic worst-case exceeds $20."
+  ]
+}
