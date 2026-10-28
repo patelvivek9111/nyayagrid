@@ -27,6 +27,7 @@
     "canary": "tsx src/cli/canary.ts",
     "stage1": "tsx src/cli/stage1.ts",
     "challenger-screen": "tsx src/cli/challenger-screen.ts",
+    "challenger-canary": "tsx src/cli/challenger-canary.ts",
     "stage2": "tsx src/cli/stage2.ts",
     "audit-unknown-completions": "tsx src/cli/audit-unknown-completions.ts",
     "check-credentials": "tsx src/cli/check-credentials.ts",
