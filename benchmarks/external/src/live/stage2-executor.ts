@@ -47,7 +47,11 @@ import {
 import { buildCacheKey, contentHashFromText } from "./cache-key.js";
 import { resolveBatchSize } from "./batch.js";
 import { parseConcurrency } from "./concurrency.js";
-import { calculateActualCostUsd, worstCaseCostForBudgetGate } from "./cost-accounting.js";
+import {
+  calculateActualCostUsd,
+  costUsdFromPersistedUsage,
+  worstCaseCostForBudgetGate,
+} from "./cost-accounting.js";
 import { assessContextFit, assertNoSilentTruncate } from "./context-fit.js";
 import { isJudgeCacheHit, readJudgeCache } from "./judge-cache.js";
 import { loadExternalBenchLocalEnv } from "./load-local-env.js";
@@ -954,7 +958,16 @@ export async function runStage2Finalists(input: {
           ? (cached.response as { text: string }).text
           : "");
       if (!accountedResponseKeys.has(responseKey)) {
-        const responseCost = Number(cached.costEstimateUsd ?? 0) || 0;
+        const cachedUsage = (cached.usage ?? {}) as { thinkingTokens?: number };
+        const responseCost = costUsdFromPersistedUsage({
+          modelId,
+          inputTokens: cached.inputTokens,
+          outputTokens: cached.outputTokens,
+          thinkingTokens: cachedUsage.thinkingTokens,
+          fallbackCostUsd: cached.costEstimateUsd,
+          bucket: "models",
+          pricingTable: pricing,
+        });
         budget = applyPersistedSpend(budget, responseCost);
         responseSpendUsd += responseCost;
         recordResponseCost(provider, responseCost);
@@ -1318,7 +1331,16 @@ export async function runStage2Finalists(input: {
       if (isJudgeCacheHit(runId, judgeKey)) {
         if (!accountedJudgeKeys.has(judgeKey)) {
           const cached = readJudgeCache(runId, judgeKey) as unknown as PersistedPaidCallRecord;
-          const cachedCost = Number(cached.costEstimateUsd ?? 0) || 0;
+          const cachedUsage = (cached.usage ?? {}) as { thinkingTokens?: number };
+          const cachedCost = costUsdFromPersistedUsage({
+            modelId: judgeModel,
+            inputTokens: cached.inputTokens,
+            outputTokens: cached.outputTokens,
+            thinkingTokens: cachedUsage.thinkingTokens,
+            fallbackCostUsd: cached.costEstimateUsd,
+            bucket: "judgeModels",
+            pricingTable: pricing,
+          });
           budget = applyPersistedSpend(budget, cachedCost);
           judgeSpendUsd += cachedCost;
           if (label === "A") costByBucket.anthropicJudgeUsd += cachedCost;

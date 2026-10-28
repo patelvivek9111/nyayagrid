@@ -151,7 +151,14 @@ export { resolveBatchSize, chunk, DEFAULT_BATCH_SIZE_MIN } from "./live/batch.js
 export { shouldRetry, computeBackoffMs, UnknownCompletionError } from "./live/retry.js";
 export { buildCanaryPlan, shouldStopAfterCanary } from "./live/canary.js";
 export { runLiveCanary, offlineRescoreCanary } from "./live/canary-executor.js";
-export { calculateActualCostUsd, worstCaseCostForBudgetGate } from "./live/cost-accounting.js";
+export {
+  calculateActualCostUsd,
+  worstCaseCostForBudgetGate,
+  billedOutputTokensForCost,
+  thinkingBillingSemanticsForModel,
+  costUsdFromPersistedUsage,
+} from "./live/cost-accounting.js";
+export type { ThinkingBillingSemantics } from "./live/cost-accounting.js";
 export { scoreFromSavedResponses } from "./live/offline-score.js";
 export {
   classifyHttpStatus,
