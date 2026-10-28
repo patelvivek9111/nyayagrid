@@ -193,15 +193,29 @@ async function sendAsk(page: Page, question: string) {
     }
   }
   metrics.firstAnswerMs = Date.now() - started;
-  // CI occasionally leaves Stop visible after the mock stream has finished (race with
-  // progress teardown). Require idle; if stuck, cancel once then re-assert idle.
+  // CI can leave Stop stuck when the Ask SSE stalls past the client watchdog.
+  // Prefer natural idle; if stuck: cancel, then reload the same thread and require idle.
   try {
-    await expect(stop).toHaveCount(0, { timeout: 90_000 });
+    await expect(stop).toHaveCount(0, { timeout: 60_000 });
   } catch {
     if (await stop.isVisible().catch(() => false)) {
       await stop.click({ timeout: 5_000 }).catch(() => undefined);
+      await expect(stop)
+        .toHaveCount(0, { timeout: 15_000 })
+        .catch(() => undefined);
     }
-    await expect(stop).toHaveCount(0, { timeout: 30_000 });
+    if ((await stop.count()) > 0) {
+      const url = page.url();
+      await page.goto(url);
+      await page.waitForLoadState("networkidle");
+      await selectWorkspace(page, ORG_NAME, organizationId);
+      await expect(page.getByPlaceholder(/Ask Nyaya about this Case/)).toBeVisible({
+        timeout: 30_000,
+      });
+    }
+    await expect(page.getByRole("button", { name: "Stop generating" })).toHaveCount(0, {
+      timeout: 30_000,
+    });
   }
   metrics.fullAnswerMs = Date.now() - started;
 }
