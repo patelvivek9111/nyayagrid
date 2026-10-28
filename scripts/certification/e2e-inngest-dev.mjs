@@ -27,10 +27,33 @@ async function waitFor(url, timeoutMs) {
 
 await waitFor(SDK_URL, 90_000);
 
+// CI/npx can inherit ignore-scripts=true (or a poisoned npx cache), which skips the
+// inngest-cli postinstall that downloads the binary and then fails with:
+// "Inngest CLI binary not found." Force scripts on and use a fresh cache when CI=true.
+const npxEnv = {
+  ...process.env,
+  NPM_CONFIG_IGNORE_SCRIPTS: "false",
+};
+if (process.env.CI) {
+  const { mkdtempSync } = await import("node:fs");
+  const { tmpdir } = await import("node:os");
+  const { join } = await import("node:path");
+  npxEnv.NPM_CONFIG_CACHE = mkdtempSync(join(tmpdir(), "nyaya-npx-"));
+}
+
 const child = spawn(
   "npx",
-  ["--yes", "inngest-cli@latest", "dev", "-u", SDK_URL, "-p", INNGEST_PORT],
-  { stdio: "inherit", shell: true, env: process.env },
+  [
+    "--yes",
+    "--ignore-scripts=false",
+    "inngest-cli@latest",
+    "dev",
+    "-u",
+    SDK_URL,
+    "-p",
+    INNGEST_PORT,
+  ],
+  { stdio: "inherit", shell: true, env: npxEnv },
 );
 
 function shutdown() {
