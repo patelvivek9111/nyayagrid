@@ -728,12 +728,16 @@ export async function runStage1Screening(input: {
           ? (cached.response as { text: string }).text
           : "");
       {
-        const cachedUsage = (cached.usage ?? {}) as { thinkingTokens?: number };
+        const cachedUsage = (cached.usage ?? {}) as {
+          thinkingTokens?: number;
+          cachedInputTokens?: number;
+        };
         responseCost = costUsdFromPersistedUsage({
           modelId,
           inputTokens: cached.inputTokens,
           outputTokens: cached.outputTokens,
           thinkingTokens: cachedUsage.thinkingTokens,
+          cachedInputTokens: cachedUsage.cachedInputTokens,
           fallbackCostUsd: cached.costEstimateUsd,
           bucket: "models",
           pricingTable: pricing,

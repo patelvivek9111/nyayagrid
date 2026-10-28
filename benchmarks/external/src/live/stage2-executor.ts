@@ -958,12 +958,16 @@ export async function runStage2Finalists(input: {
           ? (cached.response as { text: string }).text
           : "");
       if (!accountedResponseKeys.has(responseKey)) {
-        const cachedUsage = (cached.usage ?? {}) as { thinkingTokens?: number };
+        const cachedUsage = (cached.usage ?? {}) as {
+          thinkingTokens?: number;
+          cachedInputTokens?: number;
+        };
         const responseCost = costUsdFromPersistedUsage({
           modelId,
           inputTokens: cached.inputTokens,
           outputTokens: cached.outputTokens,
           thinkingTokens: cachedUsage.thinkingTokens,
+          cachedInputTokens: cachedUsage.cachedInputTokens,
           fallbackCostUsd: cached.costEstimateUsd,
           bucket: "models",
           pricingTable: pricing,
