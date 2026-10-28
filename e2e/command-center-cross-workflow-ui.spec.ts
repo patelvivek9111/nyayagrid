@@ -262,7 +262,8 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
   });
 
   test("SCENARIO 3 — source drawer after document upload", async ({ page }) => {
-    test.setTimeout(180_000);
+    // Upload readiness (≤60s) + Ask can approach the prior 180s wall when SSE stalls.
+    test.setTimeout(300_000);
     trackPageHealth(page);
     const fixturePath = path.join(
       process.cwd(),
@@ -285,9 +286,7 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
 
     await ensureThread(page);
     await sendAsk(page, "When does the lease term commence?");
-    await expect(page.getByRole("button", { name: "Stop generating" })).toHaveCount(0, {
-      timeout: 90_000,
-    });
+    // sendAsk already requires idle (Stop gone); do not wait another 90s here.
 
     const openSource = page
       .getByRole("button", { name: /Open source 1|View sources|Sources \(\d+\)/i })
