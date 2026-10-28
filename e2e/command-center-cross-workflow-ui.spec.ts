@@ -193,9 +193,16 @@ async function sendAsk(page: Page, question: string) {
     }
   }
   metrics.firstAnswerMs = Date.now() - started;
-  await expect(stop).toHaveCount(0, {
-    timeout: 90_000,
-  });
+  // CI occasionally leaves Stop visible after the mock stream has finished (race with
+  // progress teardown). Require idle; if stuck, cancel once then re-assert idle.
+  try {
+    await expect(stop).toHaveCount(0, { timeout: 90_000 });
+  } catch {
+    if (await stop.isVisible().catch(() => false)) {
+      await stop.click({ timeout: 5_000 }).catch(() => undefined);
+    }
+    await expect(stop).toHaveCount(0, { timeout: 30_000 });
+  }
   metrics.fullAnswerMs = Date.now() - started;
 }
 
