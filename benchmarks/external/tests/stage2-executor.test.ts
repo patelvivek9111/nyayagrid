@@ -1887,4 +1887,127 @@ describe("stage2 claude half-run checkpoint", () => {
 
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });
+
+  it("stop-after-prbench refuses LegalBench paid dispatch after PRBench", async () => {
+    const runId = `stage2-claude-prbench-boundary-${Date.now()}`;
+    const suite = miniSuite(
+      ["prbench-bound-1"],
+      ["abercrombie::train::0"],
+      [],
+    );
+    const config = {
+      runId,
+      stage: 2,
+      challengerMode: "claude-only",
+      autoEscalate: false,
+      suite,
+      models: {
+        response: ["claude-opus-5-5"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+      test: true,
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "stage2-suite.json"),
+      `${JSON.stringify(suite, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 95,
+    });
+
+    const prbenchTasks = [
+      task({
+        benchmarkId: "prbench",
+        taskId: "prbench-bound-1",
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+    ];
+    const legalbenchTasks = [
+      task({ benchmarkId: "legalbench", taskId: "abercrombie::train::0", expectedAnswer: "yes" }),
+    ];
+
+    let anthropicCalls = 0;
+    const fetchImpl: typeof fetch = async (url, init) => {
+      const u = String(url);
+      const body = init?.body ? JSON.parse(String(init.body)) : {};
+      if (u.includes("api.anthropic.com")) {
+        anthropicCalls += 1;
+        const isJudge = JSON.stringify(body).includes("independent legal-benchmark judge");
+        return new Response(
+          JSON.stringify({
+            id: `msg_${anthropicCalls}`,
+            stop_reason: "end_turn",
+            content: [
+              {
+                type: "text",
+                text: isJudge
+                  ? '{"score":0.7,"rationale":"ok"}'
+                  : "Claude PRBench boundary answer mentioning yes",
+              },
+            ],
+            usage: { input_tokens: 40, output_tokens: 15 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.openai.com")) {
+        return new Response(
+          JSON.stringify({
+            id: `resp_${anthropicCalls}`,
+            status: "completed",
+            output_text: '{"score":0.65,"rationale":"ok"}',
+            usage: { input_tokens: 30, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      throw new Error(`unexpected url ${u}`);
+    };
+
+    const summary = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2-claude-challenger",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "95",
+        "--stop-after-prbench",
+        "--max-prbench-responses",
+        "1",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 95,
+        fetchImpl,
+        openaiApiKey: "test-openai",
+        anthropicApiKey: "test-anthropic",
+        prbenchTasks,
+        legalbenchTasks,
+        ragTaskIds: [],
+        skipRag: true,
+        responseModels: ["claude-opus-5-5"],
+        suiteOverride: suite,
+      },
+    });
+
+    expect(summary.status).toBe("STAGE2_CHECKPOINT_STOP");
+    expect(summary.note).toMatch(/CLAUDE_PRBENCH_BOUNDARY|CLAUDE_PRBENCH_CHECKPOINT/);
+    expect(summary.progress.claudeResponsesDone).toBe(1);
+    // 1 Claude PRBench response + 1 Sonnet judge; no LegalBench Claude dispatch.
+    expect(anthropicCalls).toBe(2);
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
 });

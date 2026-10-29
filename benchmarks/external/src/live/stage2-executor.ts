@@ -272,6 +272,22 @@ export function parseSessionMaxSpendUsd(argv: readonly string[]): number | null 
   return n;
 }
 
+/** Optional hard stop on PRBench-only Claude successes (excludes LegalBench). */
+export function parseMaxPrbenchResponses(argv: readonly string[]): number | null {
+  const raw = parseArgValue(argv, "--max-prbench-responses");
+  if (raw === null) return null;
+  const n = Number(raw);
+  if (!Number.isFinite(n) || !Number.isInteger(n) || n < 0) {
+    throw new Error(`Invalid --max-prbench-responses: ${raw}`);
+  }
+  return n;
+}
+
+/** When set, refuse paid LegalBench dispatch (cache hits still accounted). */
+export function parseStopAfterPrbench(argv: readonly string[]): boolean {
+  return argv.includes("--stop-after-prbench");
+}
+
 function buildUserPrompt(task: NormalizedTask): string {
   const conversation =
     task.conversation?.map((t) => `${t.role.toUpperCase()}: ${t.content}`).join("\n\n") ??
@@ -625,9 +641,13 @@ export async function runStage2Finalists(input: {
   const allowResendUnknown = allowUnknownResend(argv);
   const ackUnverified = acknowledgeUnverifiedBillingExposure(argv);
   const maxClaudeResponses = parseMaxClaudeResponses(argv);
+  const maxPrbenchResponses = parseMaxPrbenchResponses(argv);
+  const stopAfterPrbench = parseStopAfterPrbench(argv);
   const sessionMaxSpendUsd = parseSessionMaxSpendUsd(argv);
   /** Paid dollars dispatched in this process only (excludes cache reconstruction). */
   let sessionPaidSpendUsd = 0;
+  /** Claude successes on PRBench only (LegalBench excluded). */
+  let prbenchClaudeResponsesDone = 0;
 
   // Prior post-dispatch cascade → durable run quarantine (no paid calls).
   const seededQuarantine = ensureQuarantineFromPartialSummary(runId);
@@ -670,7 +690,25 @@ export async function runStage2Finalists(input: {
     bumpTaxonomy(failureTaxonomyByProvider, provider, classifyErrorToTaxonomy(err));
   };
 
-  const assertClaudeResponseCheckpointAllowsDispatch = (modelId: Stage2ResponseModelId): void => {
+  const assertClaudeResponseCheckpointAllowsDispatch = (
+    modelId: Stage2ResponseModelId,
+    benchmarkId: "prbench" | "legalbench",
+  ): void => {
+    if (modelId === STAGE2_CLAUDE_CHALLENGER_MODEL && stopAfterPrbench && benchmarkId === "legalbench") {
+      runStatus = "STAGE2_CHECKPOINT_STOP";
+      note = `CLAUDE_PRBENCH_BOUNDARY: refusing LegalBench paid dispatch (prbenchClaude=${prbenchClaudeResponsesDone})`;
+      throw new Stage2CheckpointStopError(note);
+    }
+    if (
+      maxPrbenchResponses !== null &&
+      modelId === STAGE2_CLAUDE_CHALLENGER_MODEL &&
+      benchmarkId === "prbench" &&
+      prbenchClaudeResponsesDone >= maxPrbenchResponses
+    ) {
+      runStatus = "STAGE2_CHECKPOINT_STOP";
+      note = `CLAUDE_PRBENCH_CHECKPOINT: prbenchClaude=${prbenchClaudeResponsesDone} max=${maxPrbenchResponses}; refusing further PRBench Claude dispatch`;
+      throw new Stage2CheckpointStopError(note);
+    }
     if (maxClaudeResponses === null) return;
     if (modelId !== STAGE2_CLAUDE_CHALLENGER_MODEL) return;
     if (claudeResponsesDone < maxClaudeResponses) return;
@@ -778,10 +816,16 @@ export async function runStage2Finalists(input: {
     return result;
   }
 
-  function bumpModelDone(modelId: Stage2ResponseModelId): void {
+  function bumpModelDone(
+    modelId: Stage2ResponseModelId,
+    benchmarkId?: "prbench" | "legalbench",
+  ): void {
     if (modelId === "gpt-6.1-sol") gptResponsesDone += 1;
     if (modelId === "grok-4.7") grokResponsesDone += 1;
-    if (modelId === STAGE2_CLAUDE_CHALLENGER_MODEL) claudeResponsesDone += 1;
+    if (modelId === STAGE2_CLAUDE_CHALLENGER_MODEL) {
+      claudeResponsesDone += 1;
+      if (benchmarkId === "prbench") prbenchClaudeResponsesDone += 1;
+    }
   }
 
   function recordResponseCost(provider: LiveProviderId, dollars: number): void {
@@ -1039,7 +1083,7 @@ export async function runStage2Finalists(input: {
         completedResponses += 1;
         accountedResponseKeys.add(responseKey);
         cacheHits += 1;
-        bumpModelDone(modelId);
+        bumpModelDone(modelId, benchmarkId);
         bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
       }
       responseResult = {
@@ -1059,7 +1103,7 @@ export async function runStage2Finalists(input: {
     } else if (cacheOnly) {
       return;
     } else {
-      assertClaudeResponseCheckpointAllowsDispatch(modelId);
+      assertClaudeResponseCheckpointAllowsDispatch(modelId, benchmarkId);
       if (hasUnknownCompletionArtifact(runId, compositeTaskId, provider)) {
         // Quarantined UNKNOWN task — never silently convert to MISSING / auto-resend.
         unverifiedProviderBillingExposure = "YES";
@@ -1203,7 +1247,7 @@ export async function runStage2Finalists(input: {
         });
         accountedResponseKeys.add(responseKey);
         completedResponses += 1;
-        bumpModelDone(modelId);
+        bumpModelDone(modelId, benchmarkId);
         bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
       } catch (err) {
         if (err instanceof Stage2CheckpointStopError) throw err;
@@ -1303,7 +1347,7 @@ export async function runStage2Finalists(input: {
               });
               accountedResponseKeys.add(responseKey);
               completedResponses += 1;
-              bumpModelDone(modelId);
+              bumpModelDone(modelId, benchmarkId);
               bumpTaxonomy(failureTaxonomyByProvider, provider, "successful");
             } catch (retryErr) {
               if (retryErr instanceof Stage2CheckpointStopError) throw retryErr;
@@ -1597,7 +1641,10 @@ export async function runStage2Finalists(input: {
         gptResponsesDone,
         grokResponsesDone,
         claudeResponsesDone,
+        prbenchClaudeResponsesDone,
         maxClaudeResponses,
+        maxPrbenchResponses,
+        stopAfterPrbench,
         judgeADone,
         judgeBDone,
         completedResponses,
