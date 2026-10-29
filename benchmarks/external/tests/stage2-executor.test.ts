@@ -2016,6 +2016,17 @@ describe("stage2 claude half-run checkpoint", () => {
     expect(() => parseTaskAllowlist(["--task-allowlist", "  ,  "])).toThrow(/empty/);
   });
 
+  it("parseTaskAllowlist-file preserves commas and trailing spaces", () => {
+    const dir = path.join(getCacheDir(), "runs", `allowlist-file-${Date.now()}`);
+    ensureRunDir(path.basename(dir));
+    const file = path.join(dir, "allow.txt");
+    const weird = "task::train::hello, world";
+    const spaced = "ssla_plaintiff::train::25 ";
+    writeFileSync(file, `${weird}\n${spaced}\n# comment\n\n`, "utf8");
+    expect(parseTaskAllowlist(["--task-allowlist-file", file])).toEqual(new Set([weird, spaced]));
+    rmSync(dir, { recursive: true, force: true });
+  });
+
   it("task-allowlist dispatches only requested PRBench IDs and never LegalBench", async () => {
     const runId = `stage2-claude-allowlist-${Date.now()}`;
     const suite = miniSuite(

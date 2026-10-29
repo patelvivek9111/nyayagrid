@@ -293,9 +293,25 @@ export function parseStopAfterPrbench(argv: readonly string[]): boolean {
 
 /**
  * Optional exact task-ID allowlist for paid response dispatch.
- * Base task IDs only (no `::model` suffix). Comma-separated via --task-allowlist.
+ * Base task IDs only (no `::model` suffix).
+ * Prefer --task-allowlist-file (newline-separated; preserves exact IDs including spaces/commas).
+ * --task-allowlist remains comma-separated for simple ID sets without commas.
  */
 export function parseTaskAllowlist(argv: readonly string[]): Set<string> | null {
+  const file = parseArgValue(argv, "--task-allowlist-file");
+  if (file !== null) {
+    if (!existsSync(file)) {
+      throw new Error(`Invalid --task-allowlist-file: missing ${file}`);
+    }
+    const ids = readFileSync(file, "utf8")
+      .split("\n")
+      .map((line) => line.replace(/\r$/, ""))
+      .filter((line) => line.length > 0 && !line.startsWith("#"));
+    if (ids.length === 0) {
+      throw new Error("Invalid --task-allowlist-file: empty");
+    }
+    return new Set(ids);
+  }
   const raw = parseArgValue(argv, "--task-allowlist");
   if (raw === null) return null;
   const ids = raw
