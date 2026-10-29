@@ -32,6 +32,8 @@ export function buildChallengerScreenManifestPayload(input: {
   gitSha: string;
   budgetMaxUsd?: number;
   includeGemini?: boolean;
+  /** Fair Gemini-only Stage-1-equivalent screen; same task IDs as Claude screen. */
+  geminiOnly?: boolean;
 }): {
   config: Record<string, unknown>;
   configHash: string;
@@ -57,10 +59,13 @@ export function buildChallengerScreenManifestPayload(input: {
   const credentials = checkCredentialPresence();
   const access = classifyModelAccessFromCredentials(credentials);
 
-  const includeGemini = input.includeGemini !== false;
-  const responseModels = includeGemini
-    ? (["claude-opus-5-5", "gemini-4-argon"] as const)
-    : (["claude-opus-5-5"] as const);
+  const geminiOnly = input.geminiOnly === true;
+  const includeGemini = geminiOnly || input.includeGemini !== false;
+  const responseModels = geminiOnly
+    ? (["gemini-4-argon"] as const)
+    : includeGemini
+      ? (["claude-opus-5-5", "gemini-4-argon"] as const)
+      : (["claude-opus-5-5"] as const);
 
   const config = {
     runId: input.runId,
@@ -140,6 +145,7 @@ export function freezeChallengerScreenManifest(input: {
   gitSha: string;
   budgetMaxUsd?: number;
   includeGemini?: boolean;
+  geminiOnly?: boolean;
 }): { manifest: RunManifest; configHash: string; config: Record<string, unknown> } {
   const built = buildChallengerScreenManifestPayload(input);
   const dir = ensureRunDir(input.runId);

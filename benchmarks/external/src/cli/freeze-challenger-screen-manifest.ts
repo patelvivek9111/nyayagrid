@@ -30,24 +30,42 @@ async function main(): Promise<void> {
   const sha = gitSha();
   const runId = buildChallengerScreenRunId(sha);
   const claudeOnly = parseFlag(process.argv, "--claude-only");
+  const geminiOnly = parseFlag(process.argv, "--gemini-only");
+  if (claudeOnly && geminiOnly) {
+    console.error(
+      JSON.stringify({
+        status: "CHALLENGER_SCREEN_INVALID",
+        reason: "mutually exclusive --claude-only and --gemini-only",
+      }),
+    );
+    process.exitCode = 2;
+    return;
+  }
 
   let includeGemini = !claudeOnly;
   let geminiProbe: Awaited<ReturnType<typeof probeGeminiModelAccess>> | null = null;
-  if (includeGemini) {
+  // Models.list is unreliable for AI Studio AQ.* keys (401) even when Interactions
+  // generation works. Gemini-only freezes keep Gemini regardless of list probe.
+  if (includeGemini || geminiOnly) {
     geminiProbe = await probeGeminiModelAccess({
       apiKey: process.env.GOOGLE_API_KEY ?? process.env.GEMINI_API_KEY,
     });
-    if (geminiProbe.status !== "GEMINI_ACCESS_OK") {
+    if (!geminiOnly && geminiProbe.status !== "GEMINI_ACCESS_OK") {
       includeGemini = false;
     }
   }
+
+  const budgetMaxUsd = geminiOnly
+    ? Number(process.env.CHALLENGER_SCREEN_BUDGET_USD ?? 15)
+    : 20;
 
   try {
     const { manifest, configHash, config } = freezeChallengerScreenManifest({
       runId,
       gitSha: sha,
-      budgetMaxUsd: 20,
-      includeGemini,
+      budgetMaxUsd,
+      includeGemini: geminiOnly ? true : includeGemini,
+      geminiOnly,
     });
     console.log(
       JSON.stringify(
@@ -58,7 +76,8 @@ async function main(): Promise<void> {
           gitSha: sha,
           budgetMaxUsd: manifest.budgetMaxUsd,
           models: (config as { models?: unknown }).models,
-          includeGemini,
+          includeGemini: geminiOnly ? true : includeGemini,
+          geminiOnly,
           geminiProbe,
           paidCalls: 0,
           valuesPrinted: false,

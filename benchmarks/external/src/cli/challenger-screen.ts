@@ -1,6 +1,9 @@
 /**
  * Claude + Gemini Stage-1-equivalent challenger qualification screen.
  * Does NOT start full Stage-2 or Stage-3. Does NOT modify Stage-2 artifacts.
+ *
+ * Gemini-only fair rerun: --gemini-only --accept-gemini-generation-access
+ * (Models.list can 401 on AI Studio AQ keys while Interactions generation works).
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
@@ -20,6 +23,10 @@ function parseArgValue(argv: readonly string[], name: string): string | null {
     if (argv[i]?.startsWith(`${name}=`)) return argv[i]!.slice(name.length + 1) || null;
   }
   return null;
+}
+
+function parseFlag(argv: readonly string[], name: string): boolean {
+  return argv.includes(name);
 }
 
 function estimateChallengerWorstCaseUsd(models: readonly Stage1ResponseModelId[]): {
@@ -89,6 +96,9 @@ async function main(): Promise<void> {
     return;
   }
 
+  const geminiOnly = parseFlag(argv, "--gemini-only");
+  const acceptGeminiGenerationAccess = parseFlag(argv, "--accept-gemini-generation-access");
+
   const runDir = path.join(getCacheDir(), "runs", runId);
   const fullConfigPath = path.join(runDir, "full-config.json");
   if (!existsSync(fullConfigPath)) {
@@ -124,22 +134,52 @@ async function main(): Promise<void> {
     "gemini-4-argon",
   ]) as Stage1ResponseModelId[];
 
-  // Gemini access gate (non-generation). Drop Gemini if blocked.
+  if (geminiOnly) {
+    models = models.filter((m) => m === "gemini-4-argon");
+    if (models.length === 0) {
+      models = ["gemini-4-argon"];
+    }
+    if (models.some((m) => m !== "gemini-4-argon")) {
+      console.error(
+        JSON.stringify({
+          status: "CHALLENGER_SCREEN_INVALID",
+          reason: "--gemini-only but frozen manifest includes non-Gemini response models",
+          models,
+        }),
+      );
+      process.exitCode = 2;
+      return;
+    }
+  }
+
+  // Gemini access gate (non-generation). Drop Gemini if blocked — unless operator
+  // accepts generation access after a successful Interactions canary (AQ keys).
   let geminiProbe: Awaited<ReturnType<typeof probeGeminiModelAccess>> | null = null;
   if (models.includes("gemini-4-argon")) {
     geminiProbe = await probeGeminiModelAccess({
       apiKey: process.env.GOOGLE_API_KEY ?? process.env.GEMINI_API_KEY,
     });
     if (geminiProbe.status !== "GEMINI_ACCESS_OK") {
-      models = models.filter((m) => m !== "gemini-4-argon");
-      console.log(
-        JSON.stringify({
-          status: "GEMINI_PROVIDER_ACCESS_BLOCKED",
-          geminiProbe,
-          continuingWith: models,
-          paidCalls: 0,
-        }),
-      );
+      if (acceptGeminiGenerationAccess && geminiProbe.status !== "GEMINI_KEY_MISSING") {
+        console.log(
+          JSON.stringify({
+            status: "GEMINI_GENERATION_ACCESS_ACCEPTED",
+            note: "Models.list probe not OK; proceeding on operator canary authorization",
+            geminiProbe,
+            paidCalls: 0,
+          }),
+        );
+      } else {
+        models = models.filter((m) => m !== "gemini-4-argon");
+        console.log(
+          JSON.stringify({
+            status: "GEMINI_PROVIDER_ACCESS_BLOCKED",
+            geminiProbe,
+            continuingWith: models,
+            paidCalls: 0,
+          }),
+        );
+      }
     }
   }
 
@@ -155,8 +195,20 @@ async function main(): Promise<void> {
     return;
   }
 
+  if (geminiOnly && !models.includes("gemini-4-argon")) {
+    console.error(
+      JSON.stringify({
+        status: "CHALLENGER_SCREEN_PROVIDER_BLOCKED",
+        reason: "gemini-only requested but Gemini unavailable",
+        geminiProbe,
+      }),
+    );
+    process.exitCode = 2;
+    return;
+  }
+
   const estimate = estimateChallengerWorstCaseUsd(models);
-  const hardCap = fullConfig.budget?.totalMaxUsd ?? 20;
+  const hardCap = fullConfig.budget?.totalMaxUsd ?? (geminiOnly ? 15 : 20);
   if (estimate.totalUsd > hardCap + 1e-9) {
     console.error(
       JSON.stringify({
@@ -176,6 +228,8 @@ async function main(): Promise<void> {
       {
         runId,
         models,
+        geminiOnly,
+        acceptGeminiGenerationAccess,
         geminiProbe,
         estimate,
         hardCap,
@@ -202,12 +256,14 @@ async function main(): Promise<void> {
         skipRag: true, // model-independent RAG reused offline / already complete
         claudeMaxTokens: 8192,
         geminiMaxOutputTokens: 4096,
-        maxCostUsdCeiling: 20,
+        maxCostUsdCeiling: hardCap,
       },
     });
     const out = {
       ...summary,
-      classification: "CLAUDE_GEMINI_CHALLENGER_QUALIFICATION",
+      classification: geminiOnly
+        ? "GEMINI_CHALLENGER_SCREEN"
+        : "CLAUDE_GEMINI_CHALLENGER_QUALIFICATION",
       geminiProbe,
       estimate,
       stage2Started: false,
@@ -216,7 +272,9 @@ async function main(): Promise<void> {
       courtListener: 0,
       note:
         summary.note ??
-        (geminiProbe && geminiProbe.status !== "GEMINI_ACCESS_OK"
+        (geminiProbe &&
+        geminiProbe.status !== "GEMINI_ACCESS_OK" &&
+        !acceptGeminiGenerationAccess
           ? "Gemini blocked; Claude-only screen"
           : undefined),
     };
@@ -239,7 +297,7 @@ async function main(): Promise<void> {
             : String(err);
     const status =
       err instanceof BudgetLimitError
-        ? "CHALLENGER_SCREEN_BUDGET_STOP"
+        ? "GEMINI_CHALLENGER_COST_STOP"
         : "CHALLENGER_SCREEN_PARTIAL";
     console.error(JSON.stringify({ status, reason, paidCalls: 0, stage2Started: false }, null, 2));
     process.exitCode = 2;
