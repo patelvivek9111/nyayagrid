@@ -25,6 +25,7 @@ import {
 } from "./unknown-completion.js";
 
 export const TERMINAL_PROVIDER_UNKNOWN_KIND = "TERMINAL_PROVIDER_UNKNOWN" as const;
+export const TERMINAL_SEMANTIC_REFUSAL_KIND = "TERMINAL_SEMANTIC_REFUSAL" as const;
 
 /** Distinct NEW terminal/unknown tasks in one session before provider-wide stop. */
 export const PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD = 3;
@@ -51,8 +52,32 @@ export type TerminalProviderUnknownRecord = {
   cacheKeyHint?: string;
 };
 
+/** Durable non-success PRBench/response outcome for CONTENT_FILTER_OR_REFUSAL. */
+export type TerminalSemanticRefusalRecord = {
+  kind: typeof TERMINAL_SEMANTIC_REFUSAL_KIND;
+  runId: string;
+  taskId: string;
+  benchmarkId: string;
+  provider: string;
+  exactModelId: string;
+  terminalizedAt: string;
+  failureClassification: "CONTENT_FILTER_OR_REFUSAL";
+  responseSuccess: false;
+  semanticScore: "NO_SCORE";
+  providerReliabilityFailure: false;
+  retryable: false;
+  futurePaidResend: false;
+  potentialBillingExposure: "UNKNOWN";
+  cacheKeyHint?: string;
+  sanitizedErrorMessage?: string;
+};
+
 function terminalDir(runId: string): string {
   return path.join(runArtifactsDir(runId), "terminal-unknown");
+}
+
+function semanticTerminalDir(runId: string): string {
+  return path.join(runArtifactsDir(runId), "terminal-semantic-refusal");
 }
 
 function safeFilePart(value: string): string {
@@ -139,6 +164,103 @@ export function persistTerminalProviderUnknown(record: TerminalProviderUnknownRe
   const jsonl = path.join(ensureRunDir(record.runId), "terminal-unknown.jsonl");
   appendFileSync(jsonl, `${JSON.stringify(record)}\n`, "utf8");
   return finalPath;
+}
+
+export function terminalSemanticRefusalPath(
+  runId: string,
+  taskId: string,
+  provider: string,
+): string {
+  return path.join(
+    semanticTerminalDir(runId),
+    `${safeFilePart(provider)}__${safeFilePart(taskId)}.json`,
+  );
+}
+
+export function hasTerminalSemanticRefusal(
+  runId: string,
+  taskId: string,
+  provider: string,
+): boolean {
+  return existsSync(terminalSemanticRefusalPath(runId, taskId, provider));
+}
+
+export function readTerminalSemanticRefusal(
+  runId: string,
+  taskId: string,
+  provider: string,
+): TerminalSemanticRefusalRecord | null {
+  const p = terminalSemanticRefusalPath(runId, taskId, provider);
+  if (!existsSync(p)) return null;
+  return JSON.parse(readFileSync(p, "utf8")) as TerminalSemanticRefusalRecord;
+}
+
+export function listTerminalSemanticRefusals(runId: string): TerminalSemanticRefusalRecord[] {
+  const dir = semanticTerminalDir(runId);
+  if (!existsSync(dir)) return [];
+  const out: TerminalSemanticRefusalRecord[] = [];
+  for (const f of readdirSync(dir).filter((x) => x.endsWith(".json"))) {
+    try {
+      const rec = JSON.parse(
+        readFileSync(path.join(dir, f), "utf8"),
+      ) as TerminalSemanticRefusalRecord;
+      if (rec.kind === TERMINAL_SEMANTIC_REFUSAL_KIND) out.push(rec);
+    } catch {
+      /* skip corrupt */
+    }
+  }
+  return out.sort((a, b) => a.terminalizedAt.localeCompare(b.terminalizedAt));
+}
+
+function persistTerminalSemanticRefusal(record: TerminalSemanticRefusalRecord): string {
+  ensureRunDir(record.runId);
+  const dir = semanticTerminalDir(record.runId);
+  mkdirSync(dir, { recursive: true });
+  const finalPath = terminalSemanticRefusalPath(record.runId, record.taskId, record.provider);
+  const tmp = `${finalPath}.${process.pid}.${Date.now()}.tmp`;
+  writeFileSync(tmp, `${JSON.stringify(record, null, 2)}\n`, "utf8");
+  renameSync(tmp, finalPath);
+  const jsonl = path.join(runArtifactsDir(record.runId), "terminal-semantic-refusals.jsonl");
+  appendFileSync(jsonl, `${JSON.stringify(record)}\n`, "utf8");
+  return finalPath;
+}
+
+/**
+ * Persist CONTENT_FILTER_OR_REFUSAL as a terminal non-success coverage outcome.
+ * Never marks success; never authorizes future paid resend.
+ */
+export function terminalizeSemanticRefusal(input: {
+  runId: string;
+  taskId: string;
+  benchmarkId: string;
+  provider: string;
+  exactModelId: string;
+  cacheKeyHint?: string;
+  sanitizedErrorMessage?: string;
+}): TerminalSemanticRefusalRecord {
+  if (hasTerminalSemanticRefusal(input.runId, input.taskId, input.provider)) {
+    return readTerminalSemanticRefusal(input.runId, input.taskId, input.provider)!;
+  }
+  const record: TerminalSemanticRefusalRecord = {
+    kind: TERMINAL_SEMANTIC_REFUSAL_KIND,
+    runId: input.runId,
+    taskId: input.taskId,
+    benchmarkId: input.benchmarkId,
+    provider: input.provider,
+    exactModelId: input.exactModelId,
+    terminalizedAt: new Date().toISOString(),
+    failureClassification: "CONTENT_FILTER_OR_REFUSAL",
+    responseSuccess: false,
+    semanticScore: "NO_SCORE",
+    providerReliabilityFailure: false,
+    retryable: false,
+    futurePaidResend: false,
+    potentialBillingExposure: "UNKNOWN",
+    cacheKeyHint: input.cacheKeyHint,
+    sanitizedErrorMessage: input.sanitizedErrorMessage?.replace(/\s+/g, " ").slice(0, 500),
+  };
+  persistTerminalSemanticRefusal(record);
+  return record;
 }
 
 /**

@@ -53,8 +53,11 @@ import {
 import {
   PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD,
   hasTerminalProviderUnknown,
+  hasTerminalSemanticRefusal,
   listTerminalProviderUnknowns,
+  listTerminalSemanticRefusals,
 } from "../src/live/terminal-unknown.js";
+import { parseTaskAllowlist } from "../src/live/stage2-executor.js";
 
 function task(
   partial: Partial<NormalizedTask> & { taskId: string; benchmarkId: string },
@@ -2003,6 +2006,352 @@ describe("stage2 claude half-run checkpoint", () => {
     expect(summary.progress.claudeResponsesDone).toBe(1);
     // 1 Claude PRBench response + 1 Sonnet judge; no LegalBench Claude dispatch.
     expect(anthropicCalls).toBe(2);
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("parseTaskAllowlist requires exact comma-separated IDs", () => {
+    expect(parseTaskAllowlist(["--task-allowlist", "a,b,c"])).toEqual(new Set(["a", "b", "c"]));
+    expect(parseTaskAllowlist(["--other"])).toBeNull();
+    expect(() => parseTaskAllowlist(["--task-allowlist", "  ,  "])).toThrow(/empty/);
+  });
+
+  it("task-allowlist dispatches only requested PRBench IDs and never LegalBench", async () => {
+    const runId = `stage2-claude-allowlist-${Date.now()}`;
+    const suite = miniSuite(
+      ["gap-keep-1", "gap-dispatch-1", "gap-dispatch-2"],
+      ["abercrombie::train::0"],
+      [],
+    );
+    const config = {
+      runId,
+      stage: 2,
+      challengerMode: "claude-only",
+      autoEscalate: false,
+      suite,
+      models: {
+        response: ["claude-opus-5-5"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+      test: true,
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "stage2-suite.json"),
+      `${JSON.stringify(suite, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 95,
+    });
+
+    const prbenchTasks = [
+      task({
+        benchmarkId: "prbench",
+        taskId: "gap-keep-1",
+        conversation: [{ role: "user", content: "PROMPT_MARKER_KEEP_1" }],
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+      task({
+        benchmarkId: "prbench",
+        taskId: "gap-dispatch-1",
+        conversation: [{ role: "user", content: "PROMPT_MARKER_DISPATCH_1" }],
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+      task({
+        benchmarkId: "prbench",
+        taskId: "gap-dispatch-2",
+        conversation: [{ role: "user", content: "PROMPT_MARKER_DISPATCH_2" }],
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+    ];
+    const legalbenchTasks = [
+      task({
+        benchmarkId: "legalbench",
+        taskId: "abercrombie::train::0",
+        conversation: [{ role: "user", content: "PROMPT_MARKER_LEGALBENCH" }],
+        expectedAnswer: "yes",
+      }),
+    ];
+
+    const dispatchedMarkers: string[] = [];
+    let anthropicMessages = 0;
+    const fetchImpl: typeof fetch = async (url, init) => {
+      const u = String(url);
+      const body = init?.body ? JSON.parse(String(init.body)) : {};
+      if (u.includes("api.anthropic.com")) {
+        anthropicMessages += 1;
+        const blob = JSON.stringify(body);
+        const isJudge = blob.includes("independent legal-benchmark judge");
+        if (!isJudge) {
+          for (const m of [
+            "PROMPT_MARKER_KEEP_1",
+            "PROMPT_MARKER_DISPATCH_1",
+            "PROMPT_MARKER_DISPATCH_2",
+            "PROMPT_MARKER_LEGALBENCH",
+          ]) {
+            if (blob.includes(m)) dispatchedMarkers.push(m);
+          }
+        }
+        return new Response(
+          JSON.stringify({
+            id: `msg_${anthropicMessages}`,
+            stop_reason: "end_turn",
+            content: [
+              {
+                type: "text",
+                text: isJudge
+                  ? '{"score":0.7,"rationale":"ok"}'
+                  : "Claude allowlist answer mentioning yes",
+              },
+            ],
+            usage: { input_tokens: 40, output_tokens: 15 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.openai.com")) {
+        return new Response(
+          JSON.stringify({
+            id: `resp_${anthropicMessages}`,
+            status: "completed",
+            output_text: '{"score":0.65,"rationale":"ok"}',
+            usage: { input_tokens: 30, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      throw new Error(`unexpected url ${u}`);
+    };
+
+    const summary = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2-claude-challenger",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "95",
+        "--stop-after-prbench",
+        "--task-allowlist",
+        "gap-dispatch-1,gap-dispatch-2",
+        "--session-max-spend-usd",
+        "3",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 95,
+        fetchImpl,
+        openaiApiKey: "test-openai",
+        anthropicApiKey: "test-anthropic",
+        prbenchTasks,
+        legalbenchTasks,
+        ragTaskIds: [],
+        skipRag: true,
+        responseModels: ["claude-opus-5-5"],
+        suiteOverride: suite,
+      },
+    });
+
+    expect(dispatchedMarkers).toEqual(["PROMPT_MARKER_DISPATCH_1", "PROMPT_MARKER_DISPATCH_2"]);
+    expect(summary.progress.claudeResponsesDone).toBe(2);
+    // 2 Claude + 2 Sonnet judges; no LegalBench.
+    expect(anthropicMessages).toBe(4);
+
+    rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
+  });
+
+  it("stop-after-prbench terminalizes CONTENT_FILTER refusals without LegalBench fallthrough", async () => {
+    const runId = `stage2-claude-semantic-terminal-${Date.now()}`;
+    const suite = miniSuite(["gap-refuse-1", "gap-ok-1"], ["abercrombie::train::0"], []);
+    const config = {
+      runId,
+      stage: 2,
+      challengerMode: "claude-only",
+      autoEscalate: false,
+      suite,
+      models: {
+        response: ["claude-opus-5-5"],
+        judges: ["claude-sonnet-5-5", "gpt-6.1-sol"],
+      },
+      test: true,
+    };
+    const configHash = hashRunConfig(config);
+    ensureRunDir(runId);
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "full-config.json"),
+      `${JSON.stringify(config, null, 2)}\n`,
+    );
+    writeFileSync(
+      path.join(getCacheDir(), "runs", runId, "stage2-suite.json"),
+      `${JSON.stringify(suite, null, 2)}\n`,
+    );
+    freezeRunManifest(runId, {
+      runId,
+      configHash,
+      suite: config,
+      models: config.models,
+      budgetMaxUsd: 95,
+    });
+
+    const prbenchTasks = [
+      task({
+        benchmarkId: "prbench",
+        taskId: "gap-refuse-1",
+        conversation: [{ role: "user", content: "PROMPT_MARKER_REFUSE_1" }],
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+      task({
+        benchmarkId: "prbench",
+        taskId: "gap-ok-1",
+        conversation: [{ role: "user", content: "PROMPT_MARKER_OK_1" }],
+        rubric: { criteria: [{ id: "c1", description: "ok", weight: 1, maxScore: 1 }] },
+      }),
+    ];
+    const legalbenchTasks = [
+      task({
+        benchmarkId: "legalbench",
+        taskId: "abercrombie::train::0",
+        conversation: [{ role: "user", content: "PROMPT_MARKER_LEGALBENCH" }],
+        expectedAnswer: "yes",
+      }),
+    ];
+
+    let anthropicMessages = 0;
+    let legalbenchHints = 0;
+    const fetchImpl: typeof fetch = async (url, init) => {
+      const u = String(url);
+      const body = init?.body ? JSON.parse(String(init.body)) : {};
+      if (u.includes("api.anthropic.com")) {
+        anthropicMessages += 1;
+        const blob = JSON.stringify(body);
+        const isJudge = blob.includes("independent legal-benchmark judge");
+        if (!isJudge && blob.includes("PROMPT_MARKER_LEGALBENCH")) legalbenchHints += 1;
+        if (!isJudge && blob.includes("PROMPT_MARKER_REFUSE_1")) {
+          // Empty content → CONTENT_FILTER_OR_REFUSAL in anthropic-live.
+          return new Response(
+            JSON.stringify({
+              id: `msg_refuse_${anthropicMessages}`,
+              stop_reason: "refusal",
+              content: [],
+              usage: { input_tokens: 20, output_tokens: 0 },
+            }),
+            { status: 200, headers: { "content-type": "application/json" } },
+          );
+        }
+        return new Response(
+          JSON.stringify({
+            id: `msg_${anthropicMessages}`,
+            stop_reason: "end_turn",
+            content: [
+              {
+                type: "text",
+                text: isJudge
+                  ? '{"score":0.7,"rationale":"ok"}'
+                  : "Claude ok answer mentioning yes",
+              },
+            ],
+            usage: { input_tokens: 40, output_tokens: 15 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      if (u.includes("api.openai.com")) {
+        return new Response(
+          JSON.stringify({
+            id: `resp_${anthropicMessages}`,
+            status: "completed",
+            output_text: '{"score":0.65,"rationale":"ok"}',
+            usage: { input_tokens: 30, output_tokens: 10 },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }
+      throw new Error(`unexpected url ${u}`);
+    };
+
+    const summary = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2-claude-challenger",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "95",
+        "--stop-after-prbench",
+        "--task-allowlist",
+        "gap-refuse-1,gap-ok-1",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 95,
+        fetchImpl,
+        openaiApiKey: "test-openai",
+        anthropicApiKey: "test-anthropic",
+        prbenchTasks,
+        legalbenchTasks,
+        ragTaskIds: [],
+        skipRag: true,
+        responseModels: ["claude-opus-5-5"],
+        suiteOverride: suite,
+      },
+    });
+
+    expect(hasTerminalSemanticRefusal(runId, "gap-refuse-1::claude-opus-5-5", "anthropic")).toBe(
+      true,
+    );
+    expect(listTerminalSemanticRefusals(runId)).toHaveLength(1);
+    expect(summary.progress.claudeResponsesDone).toBe(1);
+    expect(legalbenchHints).toBe(0);
+    expect(summary.status).toBe("STAGE2_CHECKPOINT_STOP");
+    expect(summary.note).toMatch(/CLAUDE_PRBENCH_BOUNDARY|TERMINAL_SEMANTIC_REFUSAL/);
+
+    // Resume must not redispatch the terminal refusal.
+    let resumeAnthropic = 0;
+    const fetch2: typeof fetch = async () => {
+      resumeAnthropic += 1;
+      throw new Error("should not paid-dispatch on resume");
+    };
+    const summary2 = await runStage2Finalists({
+      argv: [
+        "node",
+        "stage2-claude-challenger",
+        "--run-id",
+        runId,
+        "--allow-paid-model-calls",
+        "--max-cost-usd",
+        "95",
+        "--stop-after-prbench",
+        "--task-allowlist",
+        "gap-refuse-1,gap-ok-1",
+      ],
+      deps: {
+        bypassAuthForTests: true,
+        maxCostUsdForTests: 95,
+        fetchImpl: fetch2,
+        openaiApiKey: "test-openai",
+        anthropicApiKey: "test-anthropic",
+        prbenchTasks,
+        legalbenchTasks,
+        ragTaskIds: [],
+        skipRag: true,
+        responseModels: ["claude-opus-5-5"],
+        suiteOverride: suite,
+      },
+    });
+    expect(resumeAnthropic).toBe(0);
+    expect(summary2.paidCalls).toBe(0);
+    expect(listTerminalSemanticRefusals(runId)).toHaveLength(1);
 
     rmSync(path.join(getCacheDir(), "runs", runId), { recursive: true, force: true });
   });

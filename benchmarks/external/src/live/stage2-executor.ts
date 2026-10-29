@@ -95,9 +95,12 @@ import {
   PROVIDER_UNKNOWN_CIRCUIT_BREAKER_THRESHOLD,
   countUnknownAttemptsForTask,
   hasTerminalProviderUnknown,
+  hasTerminalSemanticRefusal,
   isProviderCircuitBroken,
   listTerminalProviderUnknowns,
+  listTerminalSemanticRefusals,
   terminalizeRepeatedUnknownTask,
+  terminalizeSemanticRefusal,
 } from "./terminal-unknown.js";
 import {
   LEGALBENCH_REV,
@@ -286,6 +289,23 @@ export function parseMaxPrbenchResponses(argv: readonly string[]): number | null
 /** When set, refuse paid LegalBench dispatch (cache hits still accounted). */
 export function parseStopAfterPrbench(argv: readonly string[]): boolean {
   return argv.includes("--stop-after-prbench");
+}
+
+/**
+ * Optional exact task-ID allowlist for paid response dispatch.
+ * Base task IDs only (no `::model` suffix). Comma-separated via --task-allowlist.
+ */
+export function parseTaskAllowlist(argv: readonly string[]): Set<string> | null {
+  const raw = parseArgValue(argv, "--task-allowlist");
+  if (raw === null) return null;
+  const ids = raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  if (ids.length === 0) {
+    throw new Error("Invalid --task-allowlist: empty");
+  }
+  return new Set(ids);
 }
 
 function buildUserPrompt(task: NormalizedTask): string {
@@ -643,11 +663,20 @@ export async function runStage2Finalists(input: {
   const maxClaudeResponses = parseMaxClaudeResponses(argv);
   const maxPrbenchResponses = parseMaxPrbenchResponses(argv);
   const stopAfterPrbench = parseStopAfterPrbench(argv);
+  const taskAllowlist = parseTaskAllowlist(argv);
   const sessionMaxSpendUsd = parseSessionMaxSpendUsd(argv);
   /** Paid dollars dispatched in this process only (excludes cache reconstruction). */
   let sessionPaidSpendUsd = 0;
   /** Claude successes on PRBench only (LegalBench excluded). */
   let prbenchClaudeResponsesDone = 0;
+  /** PRBench semantic-refusal terminals accounted this process. */
+  let prbenchSemanticTerminalsDone = 0;
+  const accountedSemanticTerminalKeys = new Set<string>(
+    listTerminalSemanticRefusals(runId).map((t) => `${t.provider}::${t.taskId}`),
+  );
+  prbenchSemanticTerminalsDone = listTerminalSemanticRefusals(runId).filter(
+    (t) => t.benchmarkId === "prbench",
+  ).length;
 
   // Prior post-dispatch cascade → durable run quarantine (no paid calls).
   const seededQuarantine = ensureQuarantineFromPartialSummary(runId);
@@ -1029,6 +1058,17 @@ export async function runStage2Finalists(input: {
       return;
     }
 
+    // Terminal semantic refusals are coverage outcomes, never resent.
+    if (hasTerminalSemanticRefusal(runId, compositeTaskId, provider)) {
+      const key = `${provider}::${compositeTaskId}`;
+      if (!accountedSemanticTerminalKeys.has(key)) {
+        accountedSemanticTerminalKeys.add(key);
+        if (benchmarkId === "prbench") prbenchSemanticTerminalsDone += 1;
+        bumpTaxonomy(failureTaxonomyByProvider, provider, "semantic_refusal");
+      }
+      return;
+    }
+
     const userPrompt = buildUserPrompt(task);
     const settings = responseSettings(modelId);
     const settingsHash = hashObj(settings);
@@ -1107,6 +1147,10 @@ export async function runStage2Finalists(input: {
     } else if (cacheOnly) {
       return;
     } else {
+      // Paid allowlist: only exact base task IDs may dispatch (gap closure).
+      if (taskAllowlist && !taskAllowlist.has(task.taskId)) {
+        return;
+      }
       assertClaudeResponseCheckpointAllowsDispatch(modelId, benchmarkId);
       if (hasUnknownCompletionArtifact(runId, compositeTaskId, provider)) {
         // Quarantined UNKNOWN task — never silently convert to MISSING / auto-resend.
@@ -1386,6 +1430,31 @@ export async function runStage2Finalists(input: {
                     : `STAGE2_BLOCKED_PROVIDER_ACCESS: ${retryErr.message}`;
                 throw retryErr;
               }
+              if (
+                (stopAfterPrbench || taskAllowlist) &&
+                retryErr instanceof LiveProviderError &&
+                retryErr.code === "CONTENT_FILTER_OR_REFUSAL"
+              ) {
+                const key = `${provider}::${compositeTaskId}`;
+                terminalizeSemanticRefusal({
+                  runId,
+                  taskId: compositeTaskId,
+                  benchmarkId,
+                  provider,
+                  exactModelId: modelId,
+                  cacheKeyHint: responseKey,
+                  sanitizedErrorMessage: retryErr.message,
+                });
+                if (!accountedSemanticTerminalKeys.has(key)) {
+                  accountedSemanticTerminalKeys.add(key);
+                  if (benchmarkId === "prbench") prbenchSemanticTerminalsDone += 1;
+                }
+                if (runStatus === "STAGE2_COMPLETE") runStatus = "STAGE2_PARTIAL";
+                note =
+                  note ??
+                  `TERMINAL_SEMANTIC_REFUSAL: ${compositeTaskId}; continuing without further resend`;
+                return;
+              }
               runStatus = "STAGE2_PARTIAL";
               note = retryErr instanceof Error ? retryErr.message : String(retryErr);
               return;
@@ -1406,6 +1475,32 @@ export async function runStage2Finalists(input: {
                   ? `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`
                   : `STAGE2_BLOCKED_PROVIDER_ACCESS: ${err.message}`;
             throw err;
+          }
+          // Gap-closure / PRBench-boundary mode: persist semantic refusal as terminal coverage.
+          if (
+            (stopAfterPrbench || taskAllowlist) &&
+            err instanceof LiveProviderError &&
+            err.code === "CONTENT_FILTER_OR_REFUSAL"
+          ) {
+            const key = `${provider}::${compositeTaskId}`;
+            terminalizeSemanticRefusal({
+              runId,
+              taskId: compositeTaskId,
+              benchmarkId,
+              provider,
+              exactModelId: modelId,
+              cacheKeyHint: responseKey,
+              sanitizedErrorMessage: err.message,
+            });
+            if (!accountedSemanticTerminalKeys.has(key)) {
+              accountedSemanticTerminalKeys.add(key);
+              if (benchmarkId === "prbench") prbenchSemanticTerminalsDone += 1;
+            }
+            if (runStatus === "STAGE2_COMPLETE") runStatus = "STAGE2_PARTIAL";
+            note =
+              note ??
+              `TERMINAL_SEMANTIC_REFUSAL: ${compositeTaskId}; continuing without further resend`;
+            return;
           }
           runStatus = "STAGE2_PARTIAL";
           note = err instanceof Error ? err.message : String(err);
@@ -1646,9 +1741,11 @@ export async function runStage2Finalists(input: {
         grokResponsesDone,
         claudeResponsesDone,
         prbenchClaudeResponsesDone,
+        prbenchSemanticTerminalsDone,
         maxClaudeResponses,
         maxPrbenchResponses,
         stopAfterPrbench,
+        taskAllowlistSize: taskAllowlist?.size ?? null,
         judgeADone,
         judgeBDone,
         completedResponses,
@@ -1870,7 +1967,27 @@ export async function runStage2Finalists(input: {
 
   persistProgress();
   terminalProviderFailures = listTerminalProviderUnknowns(runId).length;
-  const responseTerminalCoverage = completedResponses + terminalProviderFailures;
+  const semanticTerminalFailures = listTerminalSemanticRefusals(runId).length;
+  const responseTerminalCoverage =
+    completedResponses + terminalProviderFailures + semanticTerminalFailures;
+  const prbenchTerminalOutcomes =
+    prbenchClaudeResponsesDone +
+    listTerminalSemanticRefusals(runId).filter((t) => t.benchmarkId === "prbench").length +
+    listTerminalProviderUnknowns(runId).filter((t) => t.benchmarkId === "prbench").length;
+  if (
+    stopAfterPrbench &&
+    runStatus !== "STAGE2_BUDGET_STOP" &&
+    runStatus !== "STAGE2_CHECKPOINT_STOP" &&
+    runStatus !== "STAGE2_BLOCKED" &&
+    runStatus !== "STAGE2_PAUSED_UNKNOWN_COMPLETION" &&
+    runStatus !== "STAGE2_PROVIDER_CIRCUIT_BREAKER" &&
+    prbenchTerminalOutcomes >= prbenchTasks.length * models.length
+  ) {
+    runStatus = "STAGE2_CHECKPOINT_STOP";
+    note =
+      note ??
+      `CLAUDE_PRBENCH_BOUNDARY: PRBench terminal coverage ${prbenchTerminalOutcomes}/${prbenchTasks.length * models.length}; LegalBench not started`;
+  }
   if (
     runStatus !== "STAGE2_BUDGET_STOP" &&
     runStatus !== "STAGE2_CHECKPOINT_STOP" &&
@@ -1879,7 +1996,7 @@ export async function runStage2Finalists(input: {
     runStatus !== "STAGE2_PROVIDER_CIRCUIT_BREAKER"
   ) {
     if (responseTerminalCoverage >= plannedResponses) {
-      // Terminal provider failures count toward coverage; judges only for valid successes.
+      // Terminal provider/semantic failures count toward coverage; judges only for valid successes.
       runStatus = "STAGE2_COMPLETE";
     } else if (runStatus === "STAGE2_COMPLETE") {
       runStatus = "STAGE2_PARTIAL";
