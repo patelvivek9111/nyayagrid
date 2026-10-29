@@ -120,6 +120,86 @@ describe("four-provider live clients (mock fetch)", () => {
     expect(result.providerRequestId).toBe("interaction_1");
   });
 
+  it("Gemini Interactions steps[].model_output content text + total_* usage", async () => {
+    const result = await executeGeminiInteractions(
+      {
+        apiKey: "google-secret",
+        fetchImpl: async () =>
+          jsonResponse({
+            id: "v1_probe",
+            status: "completed",
+            model: "gemini-3.6-flash",
+            usage: {
+              total_input_tokens: 7,
+              total_output_tokens: 1,
+              total_thought_tokens: 76,
+              total_cached_tokens: 0,
+            },
+            steps: [
+              { type: "thought", signature: "sig" },
+              { type: "model_output", content: [{ type: "text", text: "OK" }] },
+            ],
+          }),
+      },
+      {
+        model: "gemini-3.6-flash",
+        thinkingLevel: "low",
+        maxOutputTokens: 256,
+        input: "Reply with exactly:\nOK",
+      },
+    );
+    expect(result.text).toBe("OK");
+    expect(result.usage).toEqual({
+      inputTokens: 7,
+      outputTokens: 1,
+      thinkingTokens: 76,
+    });
+  });
+
+  it("Gemini empty text without filter signal is not CONTENT_FILTER_OR_REFUSAL", async () => {
+    await expect(
+      executeGeminiInteractions(
+        {
+          apiKey: "k",
+          fetchImpl: async () =>
+            jsonResponse({
+              id: "empty",
+              status: "completed",
+              steps: [{ type: "thought", signature: "sig" }],
+            }),
+        },
+        {
+          model: "gemini-3.6-flash",
+          thinkingLevel: "low",
+          maxOutputTokens: 20,
+          input: "q",
+        },
+      ),
+    ).rejects.toMatchObject({ code: "NON_RETRYABLE_PROVIDER_ERROR" });
+  });
+
+  it("Gemini safety block is CONTENT_FILTER_OR_REFUSAL", async () => {
+    await expect(
+      executeGeminiInteractions(
+        {
+          apiKey: "k",
+          fetchImpl: async () =>
+            jsonResponse({
+              id: "blocked",
+              status: "blocked",
+              steps: [],
+            }),
+        },
+        {
+          model: "gemini-3.6-flash",
+          thinkingLevel: "low",
+          maxOutputTokens: 20,
+          input: "q",
+        },
+      ),
+    ).rejects.toMatchObject({ code: "CONTENT_FILTER_OR_REFUSAL" });
+  });
+
   it("Grok success with cached input tokens", async () => {
     const result = await executeXaiResponses(
       {

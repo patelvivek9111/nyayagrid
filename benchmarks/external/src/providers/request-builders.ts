@@ -21,7 +21,8 @@ export type AnthropicMessagesRequest = {
 };
 
 export type GeminiInteractionsRequest = {
-  model: "gemini-4-argon";
+  /** Exact Generative Language model id (Stage-1 default remains gemini-4-argon). */
+  model: string;
   input: string;
   thinking_level: "low" | "medium" | "high";
   max_output_tokens: number;
@@ -76,12 +77,13 @@ export function buildAnthropicMessagesRequest(input: {
 }
 
 export function buildGeminiInteractionsRequest(input: {
+  model?: string;
   input: string;
   thinkingLevel?: "low" | "medium" | "high";
   maxOutputTokens?: number;
 }): GeminiInteractionsRequest {
   return {
-    model: "gemini-4-argon",
+    model: input.model ?? "gemini-4-argon",
     input: input.input,
     thinking_level: input.thinkingLevel ?? "high",
     max_output_tokens: input.maxOutputTokens ?? 4096,
