@@ -243,6 +243,27 @@ export async function executeGeminiInteractions(
         retryable: false,
       });
     }
+    // Interactions may return status=incomplete when thinking tokens consume the
+    // frozen max_output_tokens budget and no model_output text is produced.
+    // Treat as a terminal known-incomplete outcome (billable usage preserved),
+    // not a blind retry / not a mid-run max_tokens raise.
+    const status = String(raw.status ?? "").toLowerCase();
+    if (status === "incomplete") {
+      return {
+        provider: "google",
+        exactModelId: input.model,
+        text: "",
+        raw,
+        usage: extractGeminiUsage(raw),
+        latencyMs: Date.now() - started,
+        providerRequestId:
+          (typeof raw.id === "string" ? raw.id : null) ??
+          response.headers.get("x-request-id") ??
+          response.headers.get("request-id"),
+        finishReason: "incomplete",
+        completionStatus: "incomplete",
+      };
+    }
     throw new LiveProviderError({
       code: "NON_RETRYABLE_PROVIDER_ERROR",
       provider: "google",
@@ -264,6 +285,6 @@ export async function executeGeminiInteractions(
       response.headers.get("x-request-id") ??
       response.headers.get("request-id"),
     finishReason: typeof raw.status === "string" ? raw.status : null,
-    completionStatus: "success",
+    completionStatus: text ? "success" : "incomplete",
   };
 }

@@ -839,6 +839,9 @@ export async function runStage1Screening(input: {
         if (provider === "xai") costByBucket.xaiResponsesUsd += actual;
 
         responseText = responseResult.text;
+        const terminalIncomplete =
+          responseResult.completionStatus === "incomplete" ||
+          (typeof responseText === "string" && responseText.trim().length === 0);
         persistPaidCallImmediately({
           runId,
           benchmarkId,
@@ -858,6 +861,9 @@ export async function runStage1Screening(input: {
                   expectedAnswer: task.expectedAnswer,
                 })
               : {}),
+            ...(terminalIncomplete
+              ? { terminalReason: "OUTPUT_BUDGET_INCOMPLETE_NO_USABLE_TEXT" }
+              : {}),
           },
           usage: responseResult.usage,
           inputTokens: responseResult.usage.inputTokens,
@@ -867,7 +873,7 @@ export async function runStage1Screening(input: {
           timestamp: new Date().toISOString(),
           attemptNumber: 1,
           costEstimateUsd: actual,
-          completionStatus: "success",
+          completionStatus: terminalIncomplete ? "terminal_incomplete" : "success",
           cacheKey: responseKey,
           kind: "response",
         });

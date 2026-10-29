@@ -17,7 +17,11 @@ export type LiveProviderResult = {
   latencyMs: number;
   providerRequestId: string | null;
   finishReason: string | null;
-  completionStatus: "success" | "failed" | "unknown_completion_review_required";
+  completionStatus:
+    | "success"
+    | "failed"
+    | "incomplete"
+    | "unknown_completion_review_required";
 };
 
 export type LiveFetch = typeof fetch;
