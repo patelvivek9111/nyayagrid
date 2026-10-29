@@ -1890,11 +1890,7 @@ describe("stage2 claude half-run checkpoint", () => {
 
   it("stop-after-prbench refuses LegalBench paid dispatch after PRBench", async () => {
     const runId = `stage2-claude-prbench-boundary-${Date.now()}`;
-    const suite = miniSuite(
-      ["prbench-bound-1"],
-      ["abercrombie::train::0"],
-      [],
-    );
+    const suite = miniSuite(["prbench-bound-1"], ["abercrombie::train::0"], []);
     const config = {
       runId,
       stage: 2,

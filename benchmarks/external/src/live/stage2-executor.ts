@@ -694,7 +694,11 @@ export async function runStage2Finalists(input: {
     modelId: Stage2ResponseModelId,
     benchmarkId: "prbench" | "legalbench",
   ): void => {
-    if (modelId === STAGE2_CLAUDE_CHALLENGER_MODEL && stopAfterPrbench && benchmarkId === "legalbench") {
+    if (
+      modelId === STAGE2_CLAUDE_CHALLENGER_MODEL &&
+      stopAfterPrbench &&
+      benchmarkId === "legalbench"
+    ) {
       runStatus = "STAGE2_CHECKPOINT_STOP";
       note = `CLAUDE_PRBENCH_BOUNDARY: refusing LegalBench paid dispatch (prbenchClaude=${prbenchClaudeResponsesDone})`;
       throw new Stage2CheckpointStopError(note);
