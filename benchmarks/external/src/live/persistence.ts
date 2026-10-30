@@ -1,6 +1,9 @@
 import { appendFileSync, mkdirSync, renameSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { getCacheDir } from "../paths.js";
+import type { PaidCallCompletionStatus } from "./completion-status.js";
+
+export type { PaidCallCompletionStatus } from "./completion-status.js";
 
 /** Full paid-call persistence schema (A). Persist immediately after each successful call. */
 export type PersistedPaidCallRecord = {
@@ -23,7 +26,7 @@ export type PersistedPaidCallRecord = {
   timestamp: string;
   attemptNumber: number;
   costEstimateUsd: number;
-  completionStatus: "success" | "failed" | "unknown_completion_review_required";
+  completionStatus: PaidCallCompletionStatus;
   cacheKey: string;
   kind: "response" | "judge";
 };

@@ -110,6 +110,16 @@ export {
   runArtifactsDir,
 } from "./live/persistence.js";
 export type { PersistedPaidCallRecord, PersistedCallRecord } from "./live/persistence.js";
+export type { PaidCallCompletionStatus } from "./live/completion-status.js";
+export {
+  PAID_CALL_COMPLETION_STATUSES,
+  TERMINAL_INCOMPLETE_STATUS,
+  allowsBlindRetryForCompletionStatus,
+  countsTowardTerminalCoverage,
+  isPaidCallCompletionStatus,
+  isTerminalPaidCallCompletionStatus,
+  isValidSuccessCompletionStatus,
+} from "./live/completion-status.js";
 export { isResponseCacheHit, readResponseCache } from "./live/response-cache.js";
 export { isJudgeCacheHit, readJudgeCache } from "./live/judge-cache.js";
 export {
