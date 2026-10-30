@@ -69,7 +69,23 @@ const prosecutionResourceSchemas = {
     collector: optionalText,
     collectionDate: z.string().trim().max(40).nullable().optional(),
     storageReference: optionalText,
-    chainOfCustody: z.array(z.string().max(200)).max(50).optional(),
+    chainOfCustody: z
+      .array(
+        z.union([
+          z.string().max(200),
+          z.object({
+            actor: z.string().max(200).optional(),
+            timestamp: z.string().max(80).optional(),
+            from: z.string().max(200).nullable().optional(),
+            to: z.string().max(200),
+            location: z.string().max(200).nullable().optional(),
+            notes: z.string().max(1000).nullable().optional(),
+            source: provenanceSchema.optional(),
+          }),
+        ]),
+      )
+      .max(50)
+      .optional(),
     relatedDefendantIds: z.array(z.string().uuid()).max(20).optional(),
     relatedChargeIds: z.array(z.string().uuid()).max(50).optional(),
     relatedElementIds: z.array(z.string().uuid()).max(50).optional(),
@@ -272,6 +288,7 @@ const prosecutionResourceSchemas = {
       "OTHER",
     ]),
     title: text,
+    eventDate: z.string().datetime({ offset: true }).nullable().optional(),
     provenance: provenanceSchema,
   }),
   tasks: z.object({

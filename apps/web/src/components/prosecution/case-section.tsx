@@ -41,8 +41,63 @@ type MatrixRow = {
   missingEvidenceIds: string[];
   authorityIds: string[];
   humanReviewStatus: string;
+  legalStandard?:
+    "STANDARD_NOT_EXTRACTED" | { ruleText?: string; sourceCitation?: string; authorityId?: string };
+  bindingAuthorities?: Array<{ authorityId: string; citation: string | null }>;
+  persuasiveAuthorities?: Array<{ authorityId: string; citation: string | null }>;
+  contraryAuthorities?: Array<{ authorityId: string; citation: string | null }>;
   guiltConclusion: null;
 };
+
+type InvestigationGapView = {
+  id: string;
+  gapType: string;
+  description: string;
+  reviewSeverity: string;
+  humanStatus: string;
+  priority: string;
+  suggestedAction: string;
+};
+
+type CaseIntelligenceStats = {
+  evidenceCount: number;
+  witnessCount: number;
+  discoveryCount: number;
+  disclosureReviewRequired: number;
+  elementSupported: number;
+  elementConflicted: number;
+  elementMissingSupport: number;
+  custodyWarningCount: number;
+  witnessConflictCount: number;
+  timelineConflictCount: number;
+  openProcedureIssues: number;
+  openTasks: number;
+};
+
+const EVIDENCE_TYPE_OPTIONS = [
+  "physical",
+  "digital",
+  "photograph",
+  "video",
+  "body_camera",
+  "audio",
+  "911_recording",
+  "forensic_report",
+  "lab_report",
+  "police_report",
+  "incident_report",
+  "search_warrant_material",
+  "interview",
+  "witness_statement",
+  "defendant_statement",
+  "officer_statement",
+  "medical_record",
+  "business_record",
+  "device_extraction",
+  "documentary",
+  "other",
+  "unknown",
+] as const;
 
 type DiscoveryDashboard = {
   totalItems: number;
@@ -103,6 +158,22 @@ type WitnessView = {
     provenance: { documentId?: string | null; sourceSpan?: string | null; humanEntered?: boolean };
   }>;
   statementComparison: Array<{ key: string; label: string; detail: string }>;
+  statementDiscrepancies?: Array<{
+    label: string;
+    detail: string;
+    key: string;
+    statementA: {
+      id: string;
+      claim: string;
+      source?: { documentId?: string | null; sourceSpan?: string | null };
+    };
+    statementB: {
+      id: string;
+      claim: string;
+      source?: { documentId?: string | null; sourceSpan?: string | null };
+    };
+  }>;
+  truthfulnessConclusion?: null;
 };
 
 type DisclosureCandidateView = {
@@ -181,7 +252,23 @@ type Overview = {
   discoveryDashboard?: DiscoveryDashboard;
   suppressionReview?: SuppressionReviewView;
   suppressionAnswer?: SuppressionAnswerView;
+  investigationGaps?: InvestigationGapView[];
+  caseIntelligenceStats?: CaseIntelligenceStats;
+  timelineEvents?: Array<{
+    id: string;
+    eventType: string;
+    title: string;
+    occurredAt?: string | null;
+  }>;
+  timelineConflicts?: Array<{
+    conflict: string;
+    eventType: string;
+    versionA: { id: string };
+    versionB: { id: string };
+  }>;
   guiltConclusion: null;
+  chargingRecommendation?: null;
+  witnessCredibilityScore?: null;
 };
 
 function elementTone(status: string): "ok" | "warn" | "danger" | "neutral" | "info" {
@@ -336,12 +423,7 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
           description="Plea terms and history are human-controlled. Nyaya does not recommend accept or reject."
         />
       ) : null}
-      {section === "timeline" ? (
-        <EmptyState
-          title="Prosecution timeline"
-          description="Timeline events use prosecution event types and stay tied to this case. Open a large case to page through events."
-        />
-      ) : null}
+      {section === "timeline" ? <TimelineBody overview={overview} /> : null}
       {section === "research" ? (
         <div className="mt-4 space-y-3">
           <p className="text-sm text-ink/80">
@@ -518,11 +600,34 @@ function OverviewBody({
         <h2 className="text-sm font-semibold text-ink">Case snapshot</h2>
         <ul className="mt-2 space-y-1 text-sm text-ink/80">
           <li>Charges: {overview.charges.length}</li>
+          <li>Defendants: {overview.defendants.length}</li>
           <li>Evidence items: {overview.evidenceCount}</li>
           <li>Discovery items: {overview.discoveryCount}</li>
           <li>Witnesses: {overview.witnessCount}</li>
           <li>Open tasks: {overview.openTasks.length}</li>
+          {overview.caseIntelligenceStats ? (
+            <>
+              <li>Elements supported: {overview.caseIntelligenceStats.elementSupported}</li>
+              <li>Elements conflicted: {overview.caseIntelligenceStats.elementConflicted}</li>
+              <li>
+                Elements missing support: {overview.caseIntelligenceStats.elementMissingSupport}
+              </li>
+              <li>Custody warnings: {overview.caseIntelligenceStats.custodyWarningCount}</li>
+              <li>
+                Witness structural conflicts: {overview.caseIntelligenceStats.witnessConflictCount}
+              </li>
+              <li>Timeline conflicts: {overview.caseIntelligenceStats.timelineConflictCount}</li>
+              <li>
+                Disclosure review required:{" "}
+                {overview.caseIntelligenceStats.disclosureReviewRequired}
+              </li>
+              <li>Open procedure issues: {overview.caseIntelligenceStats.openProcedureIssues}</li>
+            </>
+          ) : null}
         </ul>
+        <p className="mt-2 text-xs text-ink/55">
+          Coverage counts describe evidence organization — not guilt, charging, or credibility.
+        </p>
       </section>
       <section className="rounded-md border border-line p-3 md:col-span-2">
         <h2 className="text-sm font-semibold text-ink">Separated issues</h2>
@@ -579,6 +684,30 @@ function OverviewBody({
               >
                 <StatusLabel label={humanizeKey(gap.status)} tone={elementTone(gap.status)} />
                 <span className="text-ink/80">{gap.elementText}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+      <section className="rounded-md border border-line p-3 md:col-span-2">
+        <h2 className="text-sm font-semibold text-ink">Investigation gap queue</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Source-grounded review items for missing support, conflicts, custody warnings, and
+          disclosure candidates. These are not legal conclusions.
+        </p>
+        {(overview.investigationGaps ?? []).length === 0 ? (
+          <p className="mt-2 text-sm text-ink/60">No open investigation gaps detected.</p>
+        ) : (
+          <ul className="mt-2 space-y-2">
+            {(overview.investigationGaps ?? []).slice(0, 24).map((gap) => (
+              <li key={gap.id} className="rounded border border-line/70 px-2 py-2 text-sm">
+                <div className="flex flex-wrap items-center gap-2">
+                  <StatusLabel label={humanizeKey(gap.gapType)} tone="warn" />
+                  <StatusLabel label={humanizeKey(gap.humanStatus)} tone="neutral" />
+                  <StatusLabel label={humanizeKey(gap.priority)} tone="info" />
+                </div>
+                <p className="mt-1 text-ink/80">{gap.description}</p>
+                <p className="mt-1 text-xs text-ink/55">{gap.suggestedAction}</p>
               </li>
             ))}
           </ul>
@@ -716,7 +845,9 @@ function ElementsMatrixBody({ overview }: { overview: Overview }) {
               <th className="px-3 py-2 font-semibold">Status</th>
               <th className="px-3 py-2 font-semibold">Supporting</th>
               <th className="px-3 py-2 font-semibold">Contrary</th>
+              <th className="px-3 py-2 font-semibold">Uncertain</th>
               <th className="px-3 py-2 font-semibold">Missing</th>
+              <th className="px-3 py-2 font-semibold">Legal standard</th>
               <th className="px-3 py-2 font-semibold">Review</th>
             </tr>
           </thead>
@@ -730,7 +861,21 @@ function ElementsMatrixBody({ overview }: { overview: Overview }) {
                 </td>
                 <td className="px-3 py-2 tabular-nums">{row.supportingEvidenceIds.length}</td>
                 <td className="px-3 py-2 tabular-nums">{row.contraryEvidenceIds.length}</td>
+                <td className="px-3 py-2 tabular-nums">{row.uncertainEvidenceIds.length}</td>
                 <td className="px-3 py-2 tabular-nums">{row.missingEvidenceIds.length}</td>
+                <td className="px-3 py-2 text-xs text-ink/70">
+                  {typeof row.legalStandard === "object" && row.legalStandard
+                    ? row.legalStandard.sourceCitation ||
+                      row.legalStandard.ruleText ||
+                      "Source-linked standard"
+                    : "Not extracted"}
+                  {(row.bindingAuthorities?.length ?? 0) > 0
+                    ? ` · binding ${row.bindingAuthorities!.length}`
+                    : ""}
+                  {(row.contraryAuthorities?.length ?? 0) > 0
+                    ? ` · contrary ${row.contraryAuthorities!.length}`
+                    : ""}
+                </td>
                 <td className="px-3 py-2">
                   <StatusLabel label={humanizeKey(row.humanReviewStatus)} tone="neutral" />
                 </td>
@@ -1004,7 +1149,7 @@ function EvidenceBody({
 }) {
   const items = overview.evidenceItems ?? [];
   const [error, setError] = useState("");
-  const [evidenceType, setEvidenceType] = useState("report");
+  const [evidenceType, setEvidenceType] = useState<string>("police_report");
   const [collector, setCollector] = useState("");
   const [collectionDate, setCollectionDate] = useState("");
   const [storageReference, setStorageReference] = useState("");
@@ -1063,13 +1208,19 @@ function EvidenceBody({
         >
           <h3 className="text-sm font-semibold md:col-span-2">Add evidence</h3>
           <label className="text-sm">
-            <span className="mb-1 block text-ink/70">Type / label</span>
-            <input
+            <span className="mb-1 block text-ink/70">Evidence type</span>
+            <select
               className="w-full rounded border border-line px-2 py-1"
               value={evidenceType}
               onChange={(e) => setEvidenceType(e.target.value)}
               required
-            />
+            >
+              {EVIDENCE_TYPE_OPTIONS.map((type) => (
+                <option key={type} value={type}>
+                  {humanizeKey(type)}
+                </option>
+              ))}
+            </select>
           </label>
           <label className="text-sm">
             <span className="mb-1 block text-ink/70">Collector</span>
@@ -1459,14 +1610,101 @@ function WitnessesBody({
                   </ul>
                   <p className="mt-2 text-xs text-ink/55">
                     Related potential disclosure candidates appear on Disclosure and still require
-                    human review.
+                    human review. Credibility score: none.
                   </p>
+                </div>
+              ) : null}
+              {(witness.statementDiscrepancies ?? []).length > 0 ? (
+                <div className="mt-3">
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-ink/55">
+                    Source-backed comparison findings
+                  </h4>
+                  <ul className="mt-1 space-y-2">
+                    {(witness.statementDiscrepancies ?? []).map((row) => (
+                      <li
+                        key={`${witness.id}-${row.key}-${row.label}-disc`}
+                        className="text-xs text-ink/75"
+                      >
+                        <StatusLabel label={humanizeKey(row.label)} tone="warn" /> {row.detail}
+                        <div className="mt-1 text-ink/55">
+                          A: {row.statementA.claim}
+                          {row.statementA.source?.documentId
+                            ? ` · doc ${row.statementA.source.documentId}`
+                            : row.statementA.source?.sourceSpan
+                              ? ` · ${row.statementA.source.sourceSpan}`
+                              : ""}
+                        </div>
+                        <div className="text-ink/55">
+                          B: {row.statementB.claim}
+                          {row.statementB.source?.documentId
+                            ? ` · doc ${row.statementB.source.documentId}`
+                            : row.statementB.source?.sourceSpan
+                              ? ` · ${row.statementB.source.sourceSpan}`
+                              : ""}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ) : null}
             </li>
           ))}
         </ul>
       )}
+    </div>
+  );
+}
+
+function TimelineBody({ overview }: { overview: Overview }) {
+  const events = overview.timelineEvents ?? [];
+  const conflicts = overview.timelineConflicts ?? [];
+  if (events.length === 0 && conflicts.length === 0) {
+    return (
+      <div className="mt-4">
+        <EmptyState
+          title="Prosecution timeline"
+          description="Timeline events use prosecution event types and stay tied to this case with provenance. Conflicts are surfaced, not silently resolved."
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="mt-4 space-y-4">
+      <p className="text-xs text-ink/55">
+        Timeline entries retain provenance. Date/time/order conflicts stay visible for human review.
+      </p>
+      {conflicts.length > 0 ? (
+        <section>
+          <h2 className="text-sm font-semibold text-ink">Timeline conflicts</h2>
+          <ul className="mt-2 space-y-2">
+            {conflicts.map((conflict, index) => (
+              <li
+                key={`${conflict.versionA.id}-${conflict.versionB.id}-${index}`}
+                className="text-sm"
+              >
+                <StatusLabel label={humanizeKey(conflict.conflict)} tone="warn" />{" "}
+                <span className="text-ink/80">{humanizeKey(conflict.eventType)}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      <section>
+        <h2 className="text-sm font-semibold text-ink">Events</h2>
+        {events.length === 0 ? (
+          <p className="mt-2 text-sm text-ink/60">No timeline events recorded.</p>
+        ) : (
+          <ul className="mt-2 space-y-2">
+            {events.map((event) => (
+              <li key={event.id} className="rounded border border-line/70 px-2 py-2 text-sm">
+                <StatusLabel label={humanizeKey(event.eventType)} />{" "}
+                <span className="font-semibold">{event.title}</span>
+                <span className="ml-2 text-ink/60">{event.occurredAt ?? "date unknown"}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }
