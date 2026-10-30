@@ -176,6 +176,13 @@
       "when": 1788200000000,
       "tag": "0024_citation_target_classification",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1788300000000,
+      "tag": "0025_drop_professor_guide_schema",
+      "breakpoints": true
     }
   ]
 }

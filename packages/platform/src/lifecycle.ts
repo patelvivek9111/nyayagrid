@@ -7,22 +7,11 @@ import {
   dataDeletionRequests,
   documents,
   documentVersions,
-  guideConsultationPackets,
-  guideConversations,
-  guideDocuments,
-  guideMessages,
-  guideSituations,
   legalHolds,
   matters,
   messages,
   notes,
   organizations,
-  studentCaseBriefs,
-  studentCaseComparisons,
-  studentCases,
-  studentConversations,
-  studentMessages,
-  studentSavedItems,
   tasks,
   timelineEvents,
   aiArtifacts,
@@ -248,8 +237,8 @@ export async function assertNotOnLegalHold(
  *
  * `workspace: "professional"` requires `organizationId` and checks legal holds: an organization-
  * wide hold when `scope.matterIds`/`scope.documentIds` are both empty, or a hold on each listed
- * matter/document otherwise. `student`/`public` workspace requests are user-scoped and have no
- * legal-hold concept, since holds only ever apply to organization data.
+ * matter/document otherwise. Historical `student`/`public` workspace values may appear on old
+ * deletion-request rows; new product surfaces are Professional or Prosecution (org-scoped).
  */
 export async function requestDataDeletion(params: {
   db: Database;
@@ -593,110 +582,33 @@ export type UserPersonalDataExport = {
 };
 
 /**
- * Exports a JSON-serializable summary of one user's Nyaya Professor / Nyaya Guide data. These
- * workspaces are user-scoped by construction (no organizationId), so `userId` alone is the
- * complete authorization boundary. Case/document/brief bodies are excluded — only metadata.
+ * Compatibility export for retired Professor/Guide personal data.
+ * Tables were dropped in migration 0025; this returns an empty summary so GDPR-style
+ * export APIs remain stable without binding removed schema.
  */
 export async function exportUserPersonalData(params: {
   db: Database;
   userId: string;
 }): Promise<UserPersonalDataExport> {
-  const [
-    caseRows,
-    savedItemRows,
-    guideDocRows,
-    guideSituationRows,
-    studentConvoRows,
-    studentMsgRows,
-    briefRows,
-    comparisonRows,
-    guideConvoRows,
-    guideMsgRows,
-    guidePacketRows,
-  ] = await Promise.all([
-    params.db
-      .select({
-        id: studentCases.id,
-        title: studentCases.title,
-        citation: studentCases.citation,
-        court: studentCases.court,
-        processingState: studentCases.processingState,
-      })
-      .from(studentCases)
-      .where(eq(studentCases.userId, params.userId)),
-    params.db
-      .select({
-        id: studentSavedItems.id,
-        itemType: studentSavedItems.itemType,
-        title: studentSavedItems.title,
-      })
-      .from(studentSavedItems)
-      .where(eq(studentSavedItems.userId, params.userId)),
-    params.db
-      .select({
-        id: guideDocuments.id,
-        title: guideDocuments.title,
-        documentKind: guideDocuments.documentKind,
-        processingState: guideDocuments.processingState,
-      })
-      .from(guideDocuments)
-      .where(eq(guideDocuments.userId, params.userId)),
-    params.db
-      .select({
-        id: guideSituations.id,
-        title: guideSituations.title,
-        jurisdiction: guideSituations.jurisdiction,
-      })
-      .from(guideSituations)
-      .where(eq(guideSituations.userId, params.userId)),
-    params.db
-      .select({ id: studentConversations.id })
-      .from(studentConversations)
-      .where(eq(studentConversations.userId, params.userId)),
-    params.db
-      .select({ id: studentMessages.id })
-      .from(studentMessages)
-      .where(eq(studentMessages.userId, params.userId)),
-    params.db
-      .select({ id: studentCaseBriefs.id })
-      .from(studentCaseBriefs)
-      .where(eq(studentCaseBriefs.userId, params.userId)),
-    params.db
-      .select({ id: studentCaseComparisons.id })
-      .from(studentCaseComparisons)
-      .where(eq(studentCaseComparisons.userId, params.userId)),
-    params.db
-      .select({ id: guideConversations.id })
-      .from(guideConversations)
-      .where(eq(guideConversations.userId, params.userId)),
-    params.db
-      .select({ id: guideMessages.id })
-      .from(guideMessages)
-      .where(eq(guideMessages.userId, params.userId)),
-    params.db
-      .select({ id: guideConsultationPackets.id })
-      .from(guideConsultationPackets)
-      .where(eq(guideConsultationPackets.userId, params.userId)),
-  ]);
-
+  void params.db;
   return {
     userId: params.userId,
-    studentCases: caseRows,
-    studentSavedItems: savedItemRows,
-    guideDocuments: guideDocRows,
-    guideSituations: guideSituationRows,
+    studentCases: [],
+    studentSavedItems: [],
+    guideDocuments: [],
+    guideSituations: [],
     counts: {
-      studentCases: caseRows.length,
-      studentConversations: studentConvoRows.length,
-      studentMessages: studentMsgRows.length,
-      studentCaseBriefs: briefRows.length,
-      studentCaseComparisons: comparisonRows.length,
-      studentSavedItems: savedItemRows.length,
-      guideDocuments: guideDocRows.length,
-      guideSituations: guideSituationRows.length,
-      guideConversations: guideConvoRows.length,
-      guideMessages: guideMsgRows.length,
-      guideConsultationPackets: guidePacketRows.length,
+      studentCases: 0,
+      studentConversations: 0,
+      studentMessages: 0,
+      studentCaseBriefs: 0,
+      studentCaseComparisons: 0,
+      studentSavedItems: 0,
+      guideDocuments: 0,
+      guideSituations: 0,
+      guideConversations: 0,
+      guideMessages: 0,
+      guideConsultationPackets: 0,
     },
     generatedAt: new Date().toISOString(),
   };

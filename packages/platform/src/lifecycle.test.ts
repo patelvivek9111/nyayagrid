@@ -125,7 +125,7 @@ describe.runIf(runDbTests)("lifecycle", () => {
     expect(before.counts.matters).toBe(0);
   });
 
-  it("exports empty personal data summary for a user with no Professor/Guide activity", async () => {
+  it("exports empty personal data summary after retired Professor/Guide schema drop", async () => {
     const summary = await exportUserPersonalData({ db, userId: ownerUserId });
     expect(summary.counts.studentCases).toBe(0);
     expect(summary.counts.guideDocuments).toBe(0);
