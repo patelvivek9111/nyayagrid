@@ -20,6 +20,8 @@ export const FEATURE_FLAGS = [
   "research",
   "ocr",
   "live_ai",
+  /** Benchmark-driven Tier 1–4 model router. Default OFF — preserves legacy NyayaRouter. */
+  "nyaya_model_router_v2",
 ] as const;
 
 export type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -33,6 +35,7 @@ const FLAG_ENV_VAR: Record<FeatureFlag, string> = {
   research: "FEATURE_RESEARCH",
   ocr: "FEATURE_OCR",
   live_ai: "FEATURE_LIVE_AI",
+  nyaya_model_router_v2: "FEATURE_NYAYA_MODEL_ROUTER_V2",
 };
 
 /**
@@ -50,6 +53,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     research: true,
     ocr: false,
     live_ai: false,
+    nyaya_model_router_v2: false,
   },
   test: {
     agents: true,
@@ -58,6 +62,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     research: true,
     ocr: false,
     live_ai: false,
+    nyaya_model_router_v2: false,
   },
   staging: {
     agents: false,
@@ -66,6 +71,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     research: false,
     ocr: false,
     live_ai: false,
+    nyaya_model_router_v2: false,
   },
   production: {
     agents: false,
@@ -74,6 +80,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     research: false,
     ocr: false,
     live_ai: false,
+    nyaya_model_router_v2: false,
   },
 };
 

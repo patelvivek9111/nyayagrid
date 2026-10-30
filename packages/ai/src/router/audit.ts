@@ -49,6 +49,15 @@ export type RoutingAuditRecord = {
   verifierProvider?: string;
   verifierModel?: string;
   disagreementUnresolved?: boolean;
+  /** Present when FEATURE_NYAYA_MODEL_ROUTER_V2 selected the route. */
+  benchmarkRouterVersion?: string;
+  routingTier?: 1 | 2 | 3 | 4;
+  taskCategory?: string;
+  fallbackOccurred?: boolean;
+  fallbackFrom?: string;
+  fallbackTo?: string;
+  fallbackReasonCode?: string;
+  highStakesLegal?: boolean;
 };
 
 const CONTENT_KEY =

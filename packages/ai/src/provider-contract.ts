@@ -104,6 +104,30 @@ export type RouterRequestContext = {
   providerPolicy?: ProviderPolicy;
   /** High-stakes draft types (motion, complaint, brief) raise risk. */
   draftType?: string;
+  /**
+   * Benchmark router v2 hints (FEATURE_NYAYA_MODEL_ROUTER_V2). Optional; ignored when flag OFF.
+   * Deterministic classification inputs — never require an LLM to choose a model.
+   */
+  benchmarkTaskCategory?:
+    | "HARD_LEGAL_REASONING"
+    | "AUTHORITY_ANALYSIS"
+    | "LEGAL_RESEARCH_ANSWER"
+    | "MATTER_SYNTHESIS_COMPLEX"
+    | "CONFLICT_ANALYSIS"
+    | "ROUTINE_MATTER_SYNTHESIS"
+    | "STRUCTURED_EXTRACTION"
+    | "STRUCTURED_TRANSFORMATION"
+    | "DRAFTING_REWRITE"
+    | "BACKGROUND_PROCESSING"
+    | "LATENCY_SENSITIVE_INTERACTION"
+    | "EVALUATION_JUDGE"
+    | "EXPERIMENTAL";
+  highStakesLegal?: boolean;
+  experimentalModelOptIn?: boolean;
+  latencySensitive?: boolean;
+  costSensitive?: boolean;
+  backgroundProcessing?: boolean;
+  evaluationJudge?: boolean;
 };
 
 export type TokenUsage = {

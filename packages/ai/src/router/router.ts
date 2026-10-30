@@ -60,6 +60,14 @@ import {
   type KillSwitches,
 } from "./kill-switch";
 import { defaultRouterMetrics, type RouterMetrics } from "./metrics";
+import {
+  BenchmarkRouterPolicyError,
+  isModelRouterV2Enabled,
+  planBenchmarkRoute,
+  resolveFallbackAfterPrimaryFailure,
+  type BenchmarkRouteDecision,
+} from "./v2";
+import { findBenchmarkRouterEntry } from "./v2/registry-bridge";
 
 /** Per-attempt bound. Long drafts may pass a higher request.timeoutMs. */
 const DEFAULT_TIMEOUT_MS = 60_000;
@@ -192,19 +200,68 @@ export class NyayaRouter implements AIProvider {
     }
 
     let selected: { entry: ModelRegistryEntry; score: RoutingScoreBreakdown; reason: string };
+    let benchmarkDecision: BenchmarkRouteDecision | null = null;
+    let fallbackReasonCode: string | undefined;
+    let fallbackFromModel: string | undefined;
+    let fallbackToModel: string | undefined;
 
     try {
-      selected = this.selectModel({
-        routing,
-        certSubsystem,
-        strategy: strategyPick.selected,
-        contextTokens,
-        policy,
-        switches,
-        reasonPrefix: strategyPick.reason,
-      });
+      if (isModelRouterV2Enabled(this.env) && !routing.modelId) {
+        const planned = planBenchmarkRoute({ request });
+        benchmarkDecision = planned.decision;
+        const entry = findBenchmarkRouterEntry(planned.decision.selectedModelId);
+        if (!entry) {
+          throw new RouterPolicyError(
+            `Benchmark router selected unknown model ${planned.decision.selectedModelId}`,
+          );
+        }
+        if (!this.providers[entry.provider]) {
+          throw new RouterPolicyError(
+            `${entry.provider} adapter is not configured for benchmark router`,
+          );
+        }
+        if (!isProviderAllowed(entry.provider, policy)) {
+          throw new RouterPolicyError(
+            `Provider ${entry.provider} is blocked by policy under benchmark router`,
+          );
+        }
+        if (isModelKilled(switches, entry.provider, entry.modelId)) {
+          throw new RouterPolicyError(`Model ${entry.id} is disabled`);
+        }
+        selected = {
+          entry,
+          score: {
+            provider: entry.provider,
+            modelId: entry.modelId,
+            eligible: true,
+            total: 1,
+            parts: {
+              certification: 1,
+              health: 1,
+              quality: entry.qualityScore,
+              safety: entry.safetyScore,
+              citation: entry.citationReliability,
+              structured: entry.structuredReliability,
+              latencyPenalty: 0,
+              costPenalty: 0,
+              failurePenalty: 0,
+            },
+          },
+          reason: planned.decision.routingReason,
+        };
+      } else {
+        selected = this.selectModel({
+          routing,
+          certSubsystem,
+          strategy: strategyPick.selected,
+          contextTokens,
+          policy,
+          switches,
+          reasonPrefix: strategyPick.reason,
+        });
+      }
     } catch (error) {
-      if (error instanceof RouterPolicyError) {
+      if (error instanceof RouterPolicyError || error instanceof BenchmarkRouterPolicyError) {
         emitUnavailable(error.message, { finalStatus: "policy_blocked" });
       }
       throw error;
@@ -359,31 +416,71 @@ export class NyayaRouter implements AIProvider {
       if (!isOperationalProviderFailure(normalized.code)) {
         emitUnavailable(`non-operational provider failure: ${normalized.code}`);
       }
-      const fallbackEntry = this.findFallback({
-        failed: usedEntry,
-        certSubsystem,
-        strategy: strategyPick.selected,
-        contextTokens,
-        policy,
-        switches,
-        budget,
-      });
-      if (!fallbackEntry) {
-        emitUnavailable(
-          `operational failure (${normalized.code}) with no validated fallback`,
-        );
+      if (benchmarkDecision) {
+        const plan = resolveFallbackAfterPrimaryFailure({
+          decision: {
+            ...benchmarkDecision,
+            selectedModelId:
+              usedEntry.modelId as typeof benchmarkDecision.selectedModelId,
+          },
+          failureCode: normalized.code,
+        });
+        fallbackReasonCode = plan.reasonCode;
+        fallbackFromModel = plan.fromModelId;
+        if (!plan.allowed || plan.failClosed || plan.toModelId == null) {
+          emitUnavailable(
+            `benchmark router FAIL_CLOSED after ${usedEntry.modelId} (${plan.reasonCode}); no silent GPT/Gemini downgrade`,
+          );
+        }
+        const fallbackModelId = plan.toModelId!;
+        const fbEntry = findBenchmarkRouterEntry(fallbackModelId);
+        if (!fbEntry || !this.providers[fbEntry.provider]) {
+          emitUnavailable(
+            `benchmark router fallback ${fallbackModelId} unavailable; FAIL_CLOSED`,
+          );
+        }
+        const secondaryEntry = fbEntry!;
+        fallbackToModel = fallbackModelId;
+        fallbacks.push({
+          provider: secondaryEntry.provider,
+          model: secondaryEntry.modelId,
+          reason: `${plan.reasonCode}; primary ${usedEntry.modelId} ${normalized.code}`,
+        });
+        try {
+          primaryResult = await tryGenerate(secondaryEntry, "fallback");
+          usedEntry = secondaryEntry;
+        } catch {
+          emitUnavailable(
+            `benchmark router secondary ${secondaryEntry.modelId} also failed; FAIL_CLOSED`,
+          );
+        }
       } else {
-      fallbacks.push({
-        provider: fallbackEntry.entry.provider,
-        model: fallbackEntry.entry.modelId,
-        reason: `primary ${usedEntry.provider} ${normalized.code}`,
-      });
-      try {
-        primaryResult = await tryGenerate(fallbackEntry.entry, "fallback");
-        usedEntry = fallbackEntry.entry;
-      } catch {
-        emitUnavailable("validated fallback also failed operationally");
-      }
+        const fallbackEntry = this.findFallback({
+          failed: usedEntry,
+          certSubsystem,
+          strategy: strategyPick.selected,
+          contextTokens,
+          policy,
+          switches,
+          budget,
+        });
+        if (!fallbackEntry) {
+          emitUnavailable(
+            `operational failure (${normalized.code}) with no validated fallback`,
+          );
+        } else {
+          fallbacks.push({
+            provider: fallbackEntry.entry.provider,
+            model: fallbackEntry.entry.modelId,
+            reason: `primary ${usedEntry.provider} ${normalized.code}`,
+          });
+          try {
+            primaryResult = await tryGenerate(fallbackEntry.entry, "fallback");
+            usedEntry = fallbackEntry.entry;
+          } catch {
+            emitUnavailable("validated fallback also failed operationally");
+          }
+        }
       }
     }
 
@@ -458,6 +555,18 @@ export class NyayaRouter implements AIProvider {
       verifierProvider,
       verifierModel,
       disagreementUnresolved,
+      ...(benchmarkDecision
+        ? {
+            benchmarkRouterVersion: benchmarkDecision.routerVersion,
+            routingTier: benchmarkDecision.routingTier,
+            taskCategory: benchmarkDecision.classification.taskCategory,
+            fallbackOccurred: fallbacks.length > 0,
+            fallbackFrom: fallbackFromModel,
+            fallbackTo: fallbackToModel,
+            fallbackReasonCode,
+            highStakesLegal: benchmarkDecision.highStakesLegal,
+          }
+        : {}),
     });
     this.metrics.record({
       provider: usedEntry.provider,

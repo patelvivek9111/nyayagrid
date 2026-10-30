@@ -63,3 +63,25 @@ export type { RoutingAuditRecord } from "./audit";
 export { newRunId, newUsageActionId } from "./audit";
 export { setRoutingAuditSink } from "./audit-sink";
 export type { NormalizedClaim, DisagreementResult } from "./disagreement";
+export {
+  BENCHMARK_ROUTER_V2_VERSION,
+  BENCHMARK_EVIDENCE_LABELS,
+  PINNED_BENCHMARK_MODEL_IDS,
+  BENCHMARK_MODEL_REGISTRY,
+  MODEL_ROUTER_V2_ENV,
+  isModelRouterV2Enabled,
+  planBenchmarkRoute,
+  resolveFallbackAfterPrimaryFailure,
+  classifyBenchmarkTask,
+  buildRouteDecision,
+  planHighStakesFallback,
+  isIllegalHighStakesDowngrade,
+  BenchmarkRouterPolicyError,
+} from "./v2";
+export type {
+  BenchmarkPinnedModelId,
+  RoutingTier,
+  BenchmarkTaskCategory,
+  BenchmarkRouteDecision,
+  BenchmarkFallbackPlan,
+} from "./v2";

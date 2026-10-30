@@ -28,6 +28,18 @@ export function persistRoutingAudit(audit: RoutingAuditRecord): void {
       fallbackCount: audit.fallbacks.length,
       finalStatus: audit.finalStatus,
       runId: audit.runId,
+      ...(audit.benchmarkRouterVersion
+        ? {
+            benchmarkRouterVersion: audit.benchmarkRouterVersion,
+            routingTier: audit.routingTier,
+            taskCategory: audit.taskCategory,
+            fallbackOccurred: audit.fallbackOccurred === true,
+            fallbackFrom: audit.fallbackFrom,
+            fallbackTo: audit.fallbackTo,
+            fallbackReasonCode: audit.fallbackReasonCode,
+            highStakesLegal: audit.highStakesLegal === true,
+          }
+        : {}),
     },
   });
 }
