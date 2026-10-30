@@ -25,6 +25,53 @@ export const EVIDENCE_RELATIONSHIPS = [
 ] as const;
 export type EvidenceRelationship = (typeof EVIDENCE_RELATIONSHIPS)[number];
 
+/** Prosecution evidence taxonomy — unknown/unclassified remains allowed. Type ≠ admissibility. */
+export const PROSECUTION_EVIDENCE_TYPES = [
+  "physical",
+  "digital",
+  "photograph",
+  "video",
+  "body_camera",
+  "audio",
+  "911_recording",
+  "forensic_report",
+  "lab_report",
+  "police_report",
+  "incident_report",
+  "search_warrant_material",
+  "interview",
+  "witness_statement",
+  "defendant_statement",
+  "officer_statement",
+  "medical_record",
+  "business_record",
+  "device_extraction",
+  "documentary",
+  "other",
+  "unknown",
+] as const;
+export type ProsecutionEvidenceType = (typeof PROSECUTION_EVIDENCE_TYPES)[number];
+
+export function normalizeProsecutionEvidenceType(raw: string | null | undefined): string {
+  const value = (raw ?? "")
+    .trim()
+    .toLowerCase()
+    .replace(/[\s-]+/g, "_");
+  if (!value) return "unknown";
+  const aliases: Record<string, string> = {
+    bodycam: "body_camera",
+    body_cam: "body_camera",
+    report: "police_report",
+    scene_photo: "photograph",
+    photo: "photograph",
+    statement: "witness_statement",
+    device: "device_extraction",
+  };
+  const mapped = aliases[value] ?? value;
+  if ((PROSECUTION_EVIDENCE_TYPES as readonly string[]).includes(mapped)) return mapped;
+  return mapped || "unknown";
+}
+
 export const WITNESS_COMPARISON_LABELS = [
   "CONSISTENT",
   "CONTRADICTORY",

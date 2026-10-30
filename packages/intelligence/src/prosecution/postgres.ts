@@ -48,6 +48,10 @@ import { notifyProsecutionEvent } from "../week4/notifications";
 import { normalizeCustody, validateChainOfCustody } from "../week4/chain-of-custody";
 import { suppressionPayload } from "./suppression-review";
 import {
+  buildProsecutionCaseIntelligence,
+  formatProsecutionAskIntelligenceContext,
+} from "./case-intelligence";
+import {
   EVIDENCE_RELATIONSHIPS,
   PROCEDURE_ISSUE_TYPES,
   ProsecutionError,
@@ -59,6 +63,7 @@ import {
   compareWitnessStatements,
   deriveElementStatus,
   isFinalDisclosureStatus,
+  normalizeProsecutionEvidenceType,
   prosecutionCapabilityAllows,
   prosecutionResourceCapability,
   transitionDisclosure,
@@ -448,6 +453,7 @@ export async function getProsecutionOverview(
     warrants,
     timeline,
     statements,
+    evidenceLinks,
   ] = await Promise.all([
     db
       .select()
@@ -514,6 +520,10 @@ export async function getProsecutionOverview(
       .select()
       .from(prosecutionWitnessStatements)
       .where(eq(prosecutionWitnessStatements.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionEvidenceLinks)
+      .where(eq(prosecutionEvidenceLinks.criminalCaseId, criminalCase.id)),
   ]);
   const warrantIds = warrants.map((warrant) => warrant.id);
   const affidavits = warrantIds.length
@@ -629,6 +639,59 @@ export async function getProsecutionOverview(
             : "defendant_specific",
     };
   });
+  const caseIntelligence = buildProsecutionCaseIntelligence({
+    caseId: criminalCase.id,
+    matrix,
+    evidence: evidenceItems.map((item) => ({
+      id: item.id,
+      evidenceType: item.evidenceType,
+      relatedDefendantIds: item.relatedDefendantIds ?? [],
+      relatedChargeIds: item.relatedChargeIds ?? [],
+      relatedElementIds: item.relatedElementIds ?? [],
+      chainOfCustody: item.chainOfCustody,
+      provenance: item.provenance,
+      custodyFindings: item.custodyFindings,
+    })),
+    evidenceLinks: evidenceLinks.map((link) => ({
+      id: link.id,
+      evidenceId: link.evidenceId,
+      relationship: link.relationship,
+      targetType: link.targetType,
+      targetId: link.targetId,
+      provenance: link.provenance,
+      createdAt: link.createdAt,
+    })),
+    witnesses: witnesses.map((witness) => ({ id: witness.id, displayName: witness.displayName })),
+    statements: statements.map((statement) => ({
+      id: statement.id,
+      witnessId: statement.witnessId,
+      claims: statement.claims ?? [],
+      provenance: statement.provenance,
+      statementDate: statement.statementDate,
+      sourceDocumentId: statement.sourceDocumentId,
+    })),
+    timeline: timeline.map((event) => ({
+      id: event.id,
+      eventType: event.eventType,
+      title: event.title,
+      eventDate: event.eventDate,
+      provenance: event.provenance,
+    })),
+    procedureIssues: issues.map((issue) => ({
+      id: issue.id,
+      issueType: issue.issueType,
+      status: issue.status,
+      missingFacts: issue.missingFacts ?? [],
+    })),
+    disclosures: disclosures.map((item) => ({
+      id: item.id,
+      status: item.status,
+      category: item.category,
+    })),
+    discoveryCount: discovery.length,
+    openTaskCount: tasks.filter((task) => task.status === "open").length,
+    defendantCount: defendants.length,
+  });
   const witnessProfiles = witnesses.map((witness) => {
     const witnessStatements = statements.filter((statement) => statement.witnessId === witness.id);
     const comparison =
@@ -646,10 +709,21 @@ export async function getProsecutionOverview(
             })),
           )
         : [];
+    const discrepancies = [
+      ...caseIntelligence.witnessIntelligence.contradictions,
+      ...caseIntelligence.witnessIntelligence.omissions,
+      ...caseIntelligence.witnessIntelligence.addedDetail,
+      ...caseIntelligence.witnessIntelligence.timelineDifferences,
+      ...caseIntelligence.witnessIntelligence.consistent,
+    ].filter((row) =>
+      witnessStatements.some((s) => s.id === row.statementA.id || s.id === row.statementB.id),
+    );
     return {
       ...witness,
       statements: witnessStatements,
       statementComparison: comparison,
+      statementDiscrepancies: discrepancies,
+      truthfulnessConclusion: null as null,
     };
   });
   const membership = await getMembershipCapabilities(db, {
@@ -685,9 +759,17 @@ export async function getProsecutionOverview(
     discoveryCount: discovery.length,
     witnessCount: witnesses.length,
     evidenceItems,
+    evidenceLinks: caseIntelligence.evidenceLinks,
     witnesses: witnessProfiles,
     statements,
     discoveryItems: discovery,
+    timelineEvents: caseIntelligence.timelineEvents,
+    timelineConflicts: caseIntelligence.timelineConflicts,
+    investigationGaps: caseIntelligence.investigationGaps,
+    suggestedDisclosureCandidates: caseIntelligence.suggestedDisclosureCandidates,
+    witnessIntelligence: caseIntelligence.witnessIntelligence,
+    caseIntelligenceStats: caseIntelligence.overviewStats,
+    askIntelligenceContext: formatProsecutionAskIntelligenceContext(caseIntelligence),
     disclosureCandidates: disclosures.map((item) => ({
       ...item,
       label: "Potential disclosure candidate",
@@ -776,6 +858,8 @@ export async function getProsecutionOverview(
       })),
     }),
     guiltConclusion: null,
+    chargingRecommendation: null,
+    witnessCredibilityScore: null,
   };
 }
 
@@ -1021,12 +1105,21 @@ export async function addProsecutionRecord(
       .values({
         organizationId,
         criminalCaseId,
-        evidenceType: String(params.body.evidenceType ?? "other"),
+        evidenceType: normalizeProsecutionEvidenceType(String(params.body.evidenceType ?? "other")),
         sourceAgency: (params.body.sourceAgency as string) ?? null,
         collector: (params.body.collector as string) ?? null,
         collectionDate: (params.body.collectionDate as string) ?? null,
         storageReference: (params.body.storageReference as string) ?? null,
-        chainOfCustody: (params.body.chainOfCustody as string[]) ?? [],
+        // JSONB accepts structured transfers; schema typing remains string[] for legacy rows.
+        chainOfCustody: normalizeCustody(params.body.chainOfCustody ?? []).map((transfer) => ({
+          actor: transfer.actor,
+          timestamp: transfer.timestamp,
+          from: transfer.from,
+          to: transfer.to,
+          location: transfer.location ?? null,
+          notes: transfer.notes ?? null,
+          source: transfer.source,
+        })) as unknown as string[],
         relatedDefendantIds,
         relatedChargeIds: Array.isArray(params.body.relatedChargeIds)
           ? params.body.relatedChargeIds.map(String)
@@ -1532,6 +1625,13 @@ export async function addProsecutionRecord(
   if (params.resource === "timeline") {
     const eventType = String(params.body.eventType ?? "");
     assertTimelineEventType(eventType);
+    const rawEventDate = params.body.eventDate;
+    const eventDate =
+      typeof rawEventDate === "string" && rawEventDate.trim()
+        ? new Date(rawEventDate)
+        : rawEventDate instanceof Date
+          ? rawEventDate
+          : null;
     const [row] = await db
       .insert(prosecutionTimelineEvents)
       .values({
@@ -1540,9 +1640,19 @@ export async function addProsecutionRecord(
         matterId: criminalCase.matterId,
         eventType,
         title: String(params.body.title ?? ""),
+        eventDate: eventDate && !Number.isNaN(eventDate.getTime()) ? eventDate : null,
         provenance,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.timeline_event_created",
+      targetType: "timeline_event",
+      targetId: row?.id,
+      metadata: { criminalCaseId, eventType },
+    });
     return row;
   }
 
