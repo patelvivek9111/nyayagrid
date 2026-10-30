@@ -33,13 +33,15 @@ import {
   resolvePinnedModelId,
   type ModelRegistryEntry,
 } from "./registry";
-import { classifyRisk, classifyTask, deriveRiskSignalsFromRequest, isKnownRouterSchemaName, toCertificationSubsystem } from "./classifier";
-import { isProviderAllowed, mergeProviderPolicy, resolveEnvProviderPolicy } from "./policy";
 import {
-  defaultHealthTracker,
-  type HealthEvent,
-  type ProviderHealthTracker,
-} from "./health";
+  classifyRisk,
+  classifyTask,
+  deriveRiskSignalsFromRequest,
+  isKnownRouterSchemaName,
+  toCertificationSubsystem,
+} from "./classifier";
+import { isProviderAllowed, mergeProviderPolicy, resolveEnvProviderPolicy } from "./policy";
+import { defaultHealthTracker, type HealthEvent, type ProviderHealthTracker } from "./health";
 import { BudgetMeter, budgetFor } from "./budget";
 import { pickHighest, scoreModel, type RoutingScoreBreakdown } from "./score";
 import { selectStrategy } from "./strategy";
@@ -147,10 +149,7 @@ export class NyayaRouter implements AIProvider {
       risk: risk.level,
       deepDisabled: switches.deepDisabled,
     });
-    const policy = mergeProviderPolicy(
-      resolveEnvProviderPolicy(this.env),
-      routing.providerPolicy,
-    );
+    const policy = mergeProviderPolicy(resolveEnvProviderPolicy(this.env), routing.providerPolicy);
 
     const runId = routing.runId ?? newRunId();
     const fallbacks: RoutingAuditRecord["fallbacks"] = [];
@@ -187,7 +186,11 @@ export class NyayaRouter implements AIProvider {
       throw new RouterUnavailableError(reason);
     };
 
-    if (subsystem === "agents" && this.env.FEATURE_AGENTS !== "1" && isProductionLikeEnv(this.env)) {
+    if (
+      subsystem === "agents" &&
+      this.env.FEATURE_AGENTS !== "1" &&
+      isProductionLikeEnv(this.env)
+    ) {
       emitUnavailable("Agents are disabled in staging/production");
     }
     if (
@@ -278,8 +281,7 @@ export class NyayaRouter implements AIProvider {
       if (!verifier) {
         strategyPick = {
           selected: "standard",
-          reason:
-            "Deep Review has no validated independent verifier; using Standard",
+          reason: "Deep Review has no validated independent verifier; using Standard",
           escalated: false,
         };
       }
@@ -339,7 +341,11 @@ export class NyayaRouter implements AIProvider {
       }
       let recordedHttp = false;
       const timeoutMs = request.timeoutMs ?? this.timeoutMs;
-      const recordAttempt = (params: { success: boolean; result?: AiGenerateResult; status?: string }) => {
+      const recordAttempt = (params: {
+        success: boolean;
+        result?: AiGenerateResult;
+        status?: string;
+      }) => {
         this.callLedger.record({
           runId,
           correlationId: runId,
@@ -420,8 +426,7 @@ export class NyayaRouter implements AIProvider {
         const plan = resolveFallbackAfterPrimaryFailure({
           decision: {
             ...benchmarkDecision,
-            selectedModelId:
-              usedEntry.modelId as typeof benchmarkDecision.selectedModelId,
+            selectedModelId: usedEntry.modelId as typeof benchmarkDecision.selectedModelId,
           },
           failureCode: normalized.code,
         });
@@ -435,9 +440,7 @@ export class NyayaRouter implements AIProvider {
         const fallbackModelId = plan.toModelId!;
         const fbEntry = findBenchmarkRouterEntry(fallbackModelId);
         if (!fbEntry || !this.providers[fbEntry.provider]) {
-          emitUnavailable(
-            `benchmark router fallback ${fallbackModelId} unavailable; FAIL_CLOSED`,
-          );
+          emitUnavailable(`benchmark router fallback ${fallbackModelId} unavailable; FAIL_CLOSED`);
         }
         const secondaryEntry = fbEntry!;
         fallbackToModel = fallbackModelId;
@@ -465,9 +468,7 @@ export class NyayaRouter implements AIProvider {
           budget,
         });
         if (!fallbackEntry) {
-          emitUnavailable(
-            `operational failure (${normalized.code}) with no validated fallback`,
-          );
+          emitUnavailable(`operational failure (${normalized.code}) with no validated fallback`);
         } else {
           fallbacks.push({
             provider: fallbackEntry.entry.provider,
@@ -603,7 +604,11 @@ export class NyayaRouter implements AIProvider {
       if (!this.providers[entry.provider]) continue;
       if (!isProviderAllowed(entry.provider, params.policy)) continue;
       if (isModelKilled(params.switches, entry.provider, entry.modelId)) continue;
-      if (entry.provider === "mock" && (isProductionLikeEnv(this.env) || (this.envProvider !== "mock" && this.envProvider !== "fake"))) {
+      if (
+        entry.provider === "mock" &&
+        (isProductionLikeEnv(this.env) ||
+          (this.envProvider !== "mock" && this.envProvider !== "fake"))
+      ) {
         continue;
       }
       if (this.envProvider === "mock" && entry.provider !== "mock" && entry.provider !== "fake") {
@@ -683,7 +688,8 @@ export class NyayaRouter implements AIProvider {
     if (isModelKilled(params.switches, entry.provider, entry.modelId)) {
       throw new RouterPolicyError(`Model ${entry.id} is disabled`);
     }
-    const experimentalOk = params.switches.allowExperimentalModels && !isProductionLikeEnv(this.env);
+    const experimentalOk =
+      params.switches.allowExperimentalModels && !isProductionLikeEnv(this.env);
     if (!isCertifiedFor(entry, params.certSubsystem) && !experimentalOk) {
       throw new RouterPolicyError(
         `Manual selection of ${entry.id} is blocked; it is not VALIDATED for ${params.certSubsystem}`,
@@ -725,7 +731,11 @@ export class NyayaRouter implements AIProvider {
       if (!this.providers[entry.provider]) continue;
       if (!isProviderAllowed(entry.provider, params.policy)) continue;
       if (isModelKilled(params.switches, entry.provider, entry.modelId)) continue;
-      if (entry.provider === "mock" && (isProductionLikeEnv(this.env) || this.envProvider !== "mock")) continue;
+      if (
+        entry.provider === "mock" &&
+        (isProductionLikeEnv(this.env) || this.envProvider !== "mock")
+      )
+        continue;
       if (!isAutoEligible(entry, params.certSubsystem)) continue;
       if (params.contextTokens > entry.contextWindowTokens) continue;
       if (!this.health.allowProbe(entry.provider, entry.modelId)) continue;
@@ -774,7 +784,11 @@ export class NyayaRouter implements AIProvider {
       if (!this.providers[entry.provider]) continue;
       if (!isProviderAllowed(entry.provider, params.policy)) continue;
       if (isModelKilled(params.switches, entry.provider, entry.modelId)) continue;
-      if (entry.provider === "mock" && (isProductionLikeEnv(this.env) || this.envProvider !== "mock")) continue;
+      if (
+        entry.provider === "mock" &&
+        (isProductionLikeEnv(this.env) || this.envProvider !== "mock")
+      )
+        continue;
       if (!isAutoEligible(entry, params.certSubsystem)) continue;
       if (params.contextTokens > entry.contextWindowTokens) continue;
       if (!this.health.allowProbe(entry.provider, entry.modelId)) continue;

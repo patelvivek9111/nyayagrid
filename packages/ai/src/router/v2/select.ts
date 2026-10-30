@@ -46,16 +46,13 @@ export function planBenchmarkRoute(input: PlanBenchmarkRouteInput): BenchmarkRou
   const classifyInput: BenchmarkClassifyInput = {
     request: input.request,
     taskCategory: input.taskCategory ?? input.request.routing?.benchmarkTaskCategory,
-    highStakesLegal:
-      input.highStakesLegal ?? input.request.routing?.highStakesLegal ?? false,
+    highStakesLegal: input.highStakesLegal ?? input.request.routing?.highStakesLegal ?? false,
     experimentalOptIn:
       input.experimentalOptIn ?? input.request.routing?.experimentalModelOptIn ?? false,
-    latencySensitive:
-      input.latencySensitive ?? input.request.routing?.latencySensitive ?? false,
+    latencySensitive: input.latencySensitive ?? input.request.routing?.latencySensitive ?? false,
     costSensitive: input.costSensitive ?? input.request.routing?.costSensitive ?? false,
     background: input.background ?? input.request.routing?.backgroundProcessing ?? false,
-    evaluationJudge:
-      input.evaluationJudge ?? input.request.routing?.evaluationJudge ?? false,
+    evaluationJudge: input.evaluationJudge ?? input.request.routing?.evaluationJudge ?? false,
   };
 
   const classification = classifyBenchmarkTask(classifyInput);
@@ -64,8 +61,7 @@ export function planBenchmarkRoute(input: PlanBenchmarkRouteInput): BenchmarkRou
     budgetExceeded: input.budgetExceeded,
   });
 
-  const manual =
-    input.manualModelOverride ?? input.request.routing?.modelId?.split(":").pop();
+  const manual = input.manualModelOverride ?? input.request.routing?.modelId?.split(":").pop();
   let overrideApplied = false;
   let overrideVisible = false;
 
@@ -148,9 +144,7 @@ export function planBenchmarkRoute(input: PlanBenchmarkRouteInput): BenchmarkRou
         routingTier: entry.routingTiers[0] ?? decision.routingTier,
         routingReason: `MANUAL_OVERRIDE ${entry.modelId}`,
         primaryModelId: entry.modelId,
-        fallbackModelId: entry.fallbackEligible
-          ? decision.fallbackModelId
-          : null,
+        fallbackModelId: entry.fallbackEligible ? decision.fallbackModelId : null,
       };
     }
   }
@@ -162,9 +156,7 @@ export function planBenchmarkRoute(input: PlanBenchmarkRouteInput): BenchmarkRou
       toModelId: decision.fallbackModelId,
     })
   ) {
-    throw new BenchmarkRouterPolicyError(
-      "Illegal high-stakes fallback target in route decision",
-    );
+    throw new BenchmarkRouterPolicyError("Illegal high-stakes fallback target in route decision");
   }
 
   return { decision, overrideApplied, overrideVisible };

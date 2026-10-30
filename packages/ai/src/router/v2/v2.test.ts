@@ -33,9 +33,7 @@ function jsonOk(provider: string, model: string): AIProvider {
 describe("benchmark model registry", () => {
   it("pins exact Stage-2 / challenger model IDs", () => {
     const ids = BENCHMARK_MODEL_REGISTRY.map((m) => m.modelId).sort();
-    expect(ids).toEqual(
-      ["claude-opus-5-5", "gemini-4-argon", "gpt-6.1-sol", "grok-4.7"].sort(),
-    );
+    expect(ids).toEqual(["claude-opus-5-5", "gemini-4-argon", "gpt-6.1-sol", "grok-4.7"].sort());
   });
 
   it("certifies Claude/Grok for high-stakes and blocks Gemini", () => {
@@ -136,9 +134,9 @@ describe("fallback policy", () => {
     expect(plan.allowed).toBe(true);
     expect(plan.toModelId).toBe("grok-4.7");
     expect(plan.reasonCode).toBe("PRIMARY_TIMEOUT");
-    expect(
-      isIllegalHighStakesDowngrade({ highStakesLegal: true, toModelId: "gpt-6.1-sol" }),
-    ).toBe(true);
+    expect(isIllegalHighStakesDowngrade({ highStakesLegal: true, toModelId: "gpt-6.1-sol" })).toBe(
+      true,
+    );
     expect(
       isIllegalHighStakesDowngrade({ highStakesLegal: true, toModelId: "gemini-4-argon" }),
     ).toBe(true);
@@ -307,8 +305,7 @@ describe("NyayaRouter integration (flag ON)", () => {
   });
 
   it("selects GPT for Tier-3 extraction", async () => {
-    const audits: Array<{ model: string; routingTier?: number; highStakesLegal?: boolean }> =
-      [];
+    const audits: Array<{ model: string; routingTier?: number; highStakesLegal?: boolean }> = [];
     const router = new NyayaRouter({
       providers: {
         openai: jsonOk("openai", "gpt-6.1-sol"),

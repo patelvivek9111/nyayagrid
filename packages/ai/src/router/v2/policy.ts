@@ -119,9 +119,7 @@ export function buildRouteDecision(
 /**
  * Map operational error codes onto typed fallback reason codes.
  */
-export function mapOperationalFailureToReason(
-  code: string | undefined,
-): FallbackReasonCode {
+export function mapOperationalFailureToReason(code: string | undefined): FallbackReasonCode {
   switch (code) {
     case "timeout":
       return "PRIMARY_TIMEOUT";

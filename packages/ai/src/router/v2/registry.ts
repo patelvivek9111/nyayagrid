@@ -59,13 +59,9 @@ export const BENCHMARK_MODEL_REGISTRY: readonly BenchmarkModelRegistryEntry[] = 
   },
 ] as const;
 
-const BY_MODEL = new Map(
-  BENCHMARK_MODEL_REGISTRY.map((entry) => [entry.modelId, entry] as const),
-);
+const BY_MODEL = new Map(BENCHMARK_MODEL_REGISTRY.map((entry) => [entry.modelId, entry] as const));
 
-export function getBenchmarkModel(
-  modelId: string,
-): BenchmarkModelRegistryEntry | undefined {
+export function getBenchmarkModel(modelId: string): BenchmarkModelRegistryEntry | undefined {
   return BY_MODEL.get(modelId as BenchmarkPinnedModelId);
 }
 

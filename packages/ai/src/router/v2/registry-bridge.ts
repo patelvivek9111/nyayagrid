@@ -19,9 +19,7 @@ function certificationFor(entry: BenchmarkModelRegistryEntry): ModelRegistryEntr
   ) as ModelRegistryEntry["certification"];
 }
 
-export function toRouterRegistryEntry(
-  entry: BenchmarkModelRegistryEntry,
-): ModelRegistryEntry {
+export function toRouterRegistryEntry(entry: BenchmarkModelRegistryEntry): ModelRegistryEntry {
   return {
     id: `${entry.provider}:${entry.modelId}`,
     provider: entry.provider,
@@ -55,9 +53,7 @@ export function buildBenchmarkRouterRegistryOverlay(): ModelRegistryEntry[] {
   return BENCHMARK_MODEL_REGISTRY.map(toRouterRegistryEntry);
 }
 
-export function findBenchmarkRouterEntry(
-  modelId: string,
-): ModelRegistryEntry | undefined {
+export function findBenchmarkRouterEntry(modelId: string): ModelRegistryEntry | undefined {
   const match = BENCHMARK_MODEL_REGISTRY.find((m) => m.modelId === modelId);
   return match ? toRouterRegistryEntry(match) : undefined;
 }

@@ -55,9 +55,7 @@ async function main(): Promise<void> {
     }
   }
 
-  const budgetMaxUsd = geminiOnly
-    ? Number(process.env.CHALLENGER_SCREEN_BUDGET_USD ?? 15)
-    : 20;
+  const budgetMaxUsd = geminiOnly ? Number(process.env.CHALLENGER_SCREEN_BUDGET_USD ?? 15) : 20;
 
   try {
     const { manifest, configHash, config } = freezeChallengerScreenManifest({

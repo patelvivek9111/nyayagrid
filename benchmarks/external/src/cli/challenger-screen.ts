@@ -272,9 +272,7 @@ async function main(): Promise<void> {
       courtListener: 0,
       note:
         summary.note ??
-        (geminiProbe &&
-        geminiProbe.status !== "GEMINI_ACCESS_OK" &&
-        !acceptGeminiGenerationAccess
+        (geminiProbe && geminiProbe.status !== "GEMINI_ACCESS_OK" && !acceptGeminiGenerationAccess
           ? "Gemini blocked; Claude-only screen"
           : undefined),
     };
@@ -296,9 +294,7 @@ async function main(): Promise<void> {
             ? err.message
             : String(err);
     const status =
-      err instanceof BudgetLimitError
-        ? "GEMINI_CHALLENGER_COST_STOP"
-        : "CHALLENGER_SCREEN_PARTIAL";
+      err instanceof BudgetLimitError ? "GEMINI_CHALLENGER_COST_STOP" : "CHALLENGER_SCREEN_PARTIAL";
     console.error(JSON.stringify({ status, reason, paidCalls: 0, stage2Started: false }, null, 2));
     process.exitCode = 2;
   }

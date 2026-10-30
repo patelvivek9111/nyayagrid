@@ -108,7 +108,12 @@ function mapSubsystemToCategory(
     }
     return { category: "STRUCTURED_EXTRACTION", reasons };
   }
-  if (subsystem === "ask" || subsystem === "agents" || subsystem === "professor" || subsystem === "guide") {
+  if (
+    subsystem === "ask" ||
+    subsystem === "agents" ||
+    subsystem === "professor" ||
+    subsystem === "guide"
+  ) {
     if (highRisk) {
       reasons.push("SUBSYSTEM_ASK_HIGH_RISK");
       return { category: "HARD_LEGAL_REASONING", reasons };
@@ -124,9 +129,7 @@ function mapSubsystemToCategory(
  * Pure classification. Prefer explicit caller inputs; otherwise derive from existing
  * deterministic subsystem/risk classifiers (no LLM).
  */
-export function classifyBenchmarkTask(
-  input: BenchmarkClassifyInput,
-): BenchmarkRouteClassification {
+export function classifyBenchmarkTask(input: BenchmarkClassifyInput): BenchmarkRouteClassification {
   const reasonCodes: ClassificationReasonCode[] = [];
 
   if (input.experimentalOptIn) {
@@ -214,11 +217,7 @@ export function classifyBenchmarkTask(
     };
   }
 
-  const mapped = mapSubsystemToCategory(
-    subsystem,
-    risk.signals,
-    input.request.routing?.draftType,
-  );
+  const mapped = mapSubsystemToCategory(subsystem, risk.signals, input.request.routing?.draftType);
   reasonCodes.push(...mapped.reasons);
 
   let tier = tierForCategory(mapped.category);
@@ -229,9 +228,7 @@ export function classifyBenchmarkTask(
     // Escalate routine categories when risk classifier marks HIGH/CRITICAL.
     tier = 1;
     mapped.category =
-      mapped.category === "DRAFTING_REWRITE"
-        ? "HARD_LEGAL_REASONING"
-        : "MATTER_SYNTHESIS_COMPLEX";
+      mapped.category === "DRAFTING_REWRITE" ? "HARD_LEGAL_REASONING" : "MATTER_SYNTHESIS_COMPLEX";
   }
 
   return {

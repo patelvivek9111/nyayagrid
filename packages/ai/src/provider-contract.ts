@@ -135,9 +135,7 @@ export type TokenUsage = {
   outputTokens?: number;
 };
 
-export type EstimatedCost =
-  | { known: true; amountUsd: number }
-  | { known: false };
+export type EstimatedCost = { known: true; amountUsd: number } | { known: false };
 
 export type AiGenerateRequest = {
   messages: AiMessage[];

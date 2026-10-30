@@ -6,9 +6,9 @@ describe("FEATURE_PROFESSOR", () => {
     expect(isFeatureEnabled("professor", { APP_ENV: "test" })).toBe(true);
     expect(isFeatureEnabled("professor", { APP_ENV: "production" })).toBe(false);
     expect(isFeatureEnabled("professor", { APP_ENV: "staging" })).toBe(false);
-    expect(
-      isFeatureEnabled("professor", { APP_ENV: "production", FEATURE_PROFESSOR: "1" }),
-    ).toBe(true);
+    expect(isFeatureEnabled("professor", { APP_ENV: "production", FEATURE_PROFESSOR: "1" })).toBe(
+      true,
+    );
   });
 });
 
