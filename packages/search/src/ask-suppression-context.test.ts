@@ -118,13 +118,16 @@ describe("Ask Nyaya suppression context gating", () => {
     }
   });
 
-  it("wires suppression merge into askNyayaAboutMatter without changing week-4 professional default", () => {
+  it("wires suppression merge into askNyayaAboutMatter with prosecution semantic workspace identity", () => {
     const src = readNyayaSrc();
     expect(src).toContain("buildSuppressionAskContextBlock");
     expect(src).toContain("mergeAskContextText");
     expect(src).toContain("isSuppressionAskQuestion");
     expect(src).toContain("askStructuredContextText");
-    expect(src).toMatch(/workspaceType:\s*"professional"/);
+    // Professional remains the default compatibility scope; prosecution uses semantic identity when set.
+    expect(src).toMatch(
+      /workspaceType:\s*params\.workspaceType\s*===\s*"prosecution"\s*\?\s*"prosecution"\s*:\s*"professional"/,
+    );
     expect(src).toMatch(/workspaceType:\s*"prosecution"/);
   });
 });
