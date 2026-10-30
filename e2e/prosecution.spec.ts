@@ -842,4 +842,234 @@ test.describe("signed-in prosecution workspace", () => {
     );
     expect(badLink.ok()).toBeFalsy();
   });
+
+  test("Stage 4 discovery/disclosure: candidates, human review history, production tracking, isolation", async ({
+    page,
+  }) => {
+    const created = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s4`, slug: `${ORG_SLUG}-s4`, type: "firm" },
+    });
+    expect(created.ok(), await created.text()).toBeTruthy();
+    const orgBody = (await created.json()) as { organization?: { id?: string }; id?: string };
+    const organizationId = orgBody.organization?.id ?? orgBody.id!;
+
+    await page.goto("/app/prosecution");
+    await selectWorkspace(page, `${ORG_NAME}-s4`, organizationId);
+
+    const opened = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-s4`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(opened.ok(), await opened.text()).toBeTruthy();
+    const caseId = ((await opened.json()) as { criminalCase: { id: string } }).criminalCase.id;
+
+    async function post(resource: string, data: Record<string, unknown>) {
+      const response = await page.request.post(
+        `/api/v1/prosecution/cases/${caseId}/${resource}?organizationId=${organizationId}`,
+        { data },
+      );
+      expect(response.ok(), await response.text()).toBeTruthy();
+      return ((await response.json()) as { record: { id: string } }).record;
+    }
+
+    const defendant = await post("defendants", {
+      displayName: `S4 Defendant ${suffix}`,
+      provenance,
+    });
+    const charge = await post("charges", {
+      defendantId: defendant.id,
+      countNumber: "1",
+      offenseName: "Synthetic S4 Count",
+      jurisdiction: "PA",
+      provenance,
+    });
+    const evidence = await post("evidence", {
+      evidenceType: "police_report",
+      relatedDefendantIds: [defendant.id],
+      relatedChargeIds: [charge.id],
+      provenance,
+    });
+    const contrary = await post("evidence", {
+      evidenceType: "witness_statement",
+      relatedDefendantIds: [defendant.id],
+      relatedChargeIds: [charge.id],
+      provenance,
+    });
+    await post("elements", {
+      chargeId: charge.id,
+      elementOrder: 1,
+      elementType: "element",
+      elementText: "Identity",
+      supportingEvidenceIds: [evidence.id],
+      contraryEvidenceIds: [contrary.id],
+      provenance,
+    });
+    const witness = await post("witnesses", {
+      displayName: `S4 Witness ${suffix}`,
+      witnessType: "civilian",
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "Main St", kind: "fact" }],
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "Oak Ave", kind: "fact" }],
+      provenance,
+    });
+    const discovery = await post("discovery", {
+      title: "Synthetic supplemental report",
+      source: "police",
+      category: "supplemental_report",
+      reviewStatus: "RECEIVED",
+      productionStatus: "RECEIVED",
+      relatedEvidenceIds: [contrary.id],
+      relatedWitnessIds: [witness.id],
+      relatedDefendantIds: [defendant.id],
+      provenance,
+    });
+    const candidate = await post("disclosure", {
+      category: "PRIOR_INCONSISTENT_STATEMENT",
+      status: "REVIEW_REQUIRED",
+      reason: "Structural statement difference on location requires prosecutor review",
+      origin: "human",
+      relatedEvidenceIds: [contrary.id],
+      relatedWitnessIds: [witness.id],
+      relatedDiscoveryIds: [discovery.id],
+      relatedChargeIds: [charge.id],
+      notes: "Potential disclosure candidate",
+      provenance,
+    });
+
+    const blockedFinal = await page.request.patch(
+      `/api/v1/prosecution/cases/${caseId}/disclosure?organizationId=${organizationId}`,
+      {
+        data: {
+          candidateId: candidate.id,
+          status: "REVIEWED_NOT_DISCLOSE",
+        },
+      },
+    );
+    // Without reason, consequential withhold must fail.
+    expect(blockedFinal.ok()).toBeFalsy();
+
+    const reviewed = await page.request.patch(
+      `/api/v1/prosecution/cases/${caseId}/disclosure?organizationId=${organizationId}`,
+      {
+        data: {
+          candidateId: candidate.id,
+          status: "REVIEWED_DISCLOSE",
+          reason: "Human final determination after source review",
+          notes: "Human determination — not an automated Brady conclusion",
+        },
+      },
+    );
+    expect(reviewed.ok(), await reviewed.text()).toBeTruthy();
+
+    const production = await post("productions", {
+      label: "S4 defense production",
+      status: "PRODUCED",
+      productionDate: "2024-03-01",
+      recipientReference: "defense counsel (tracking only)",
+      candidateIds: [candidate.id],
+      discoveryItemIds: [discovery.id],
+      isSupplemental: false,
+      notes: "Production tracking only — no external send",
+      provenance,
+    });
+    expect(production.id).toBeTruthy();
+
+    const overview = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${organizationId}`,
+    );
+    expect(overview.ok(), await overview.text()).toBeTruthy();
+    const body = (await overview.json()) as {
+      overview: {
+        guiltConclusion: null;
+        discoveryQueue: { unreviewed: number; produced: number };
+        disclosureCandidates: Array<{
+          id: string;
+          status: string;
+          reviewHistory: unknown[];
+          bradyViolationConclusion: null;
+          giglioViolationConclusion: null;
+          mustDiscloseConclusion: null;
+        }>;
+        disclosureProductions: Array<{ id: string; status: string }>;
+        supervisorDisclosureQueue: unknown[];
+        surfacedDisclosureCandidates: unknown[];
+        askIntelligenceContext: string;
+        disclosureAskContext: string;
+      };
+    };
+    expect(body.overview.guiltConclusion).toBeNull();
+    expect(body.overview.disclosureCandidates[0]?.status).toBe("REVIEWED_DISCLOSE");
+    expect((body.overview.disclosureCandidates[0]?.reviewHistory ?? []).length).toBeGreaterThan(0);
+    expect(body.overview.disclosureCandidates[0]?.bradyViolationConclusion).toBeNull();
+    expect(body.overview.disclosureCandidates[0]?.giglioViolationConclusion).toBeNull();
+    expect(body.overview.disclosureCandidates[0]?.mustDiscloseConclusion).toBeNull();
+    expect(body.overview.disclosureProductions.some((p) => p.id === production.id)).toBe(true);
+    expect(body.overview.askIntelligenceContext).toContain(
+      "PROSECUTION_DISCOVERY_DISCLOSURE_CONTEXT",
+    );
+    expect(body.overview.disclosureAskContext).toContain("[HUMAN DETERMINATION]");
+    expect(body.overview.disclosureAskContext).toContain("BRADY_VIOLATION_CONCLUSION: null");
+    expect(body.overview.disclosureAskContext).not.toMatch(/Brady violation|must disclose/i);
+
+    await page.goto(`/app/prosecution/${caseId}/disclosure`);
+    await selectWorkspace(page, `${ORG_NAME}-s4`, organizationId);
+    await expect(page.getByText("Potential disclosure candidate").first()).toBeVisible();
+    await expect(page.getByText(/Review history/i).first()).toBeVisible();
+    await expect(
+      page.getByText(/Brady violation|Giglio violation|must disclose|constitutional violation/i),
+    ).toHaveCount(0);
+
+    await page.goto(`/app/prosecution/${caseId}`);
+    await expect(page.getByRole("heading", { name: "Supervisor disclosure queue" })).toBeVisible();
+
+    const otherCreated = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s4-isol`, slug: `${ORG_SLUG}-s4-isol`, type: "firm" },
+    });
+    expect(otherCreated.ok(), await otherCreated.text()).toBeTruthy();
+    const isolBody = (await otherCreated.json()) as {
+      organization?: { id?: string };
+      id?: string;
+    };
+    const isolOrgId = isolBody.organization?.id ?? isolBody.id!;
+    const cross = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${isolOrgId}`,
+    );
+    expect(cross.ok()).toBeFalsy();
+
+    const caseB = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-s4-b`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(caseB.ok(), await caseB.text()).toBeTruthy();
+    const caseBId = ((await caseB.json()) as { criminalCase: { id: string } }).criminalCase.id;
+    const badProduction = await page.request.post(
+      `/api/v1/prosecution/cases/${caseBId}/productions?organizationId=${organizationId}`,
+      {
+        data: {
+          label: "cross-case production",
+          status: "PREPARED",
+          candidateIds: [candidate.id],
+          provenance,
+        },
+      },
+    );
+    expect(badProduction.ok()).toBeFalsy();
+  });
 });

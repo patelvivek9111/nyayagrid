@@ -109,6 +109,14 @@ describe("task → tier mapping", () => {
         content: "Provide disclosure-related legal analysis for candidates.",
       },
       {
+        label: "brady analysis",
+        content: "Does Brady require disclosure of this potentially exculpatory material?",
+      },
+      {
+        label: "giglio analysis",
+        content: "Does Giglio apply to this witness benefit or promise record?",
+      },
+      {
         label: "complex synthesis",
         content: "Produce complex case synthesis across charges and evidence.",
       },
