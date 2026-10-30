@@ -9,3 +9,4 @@ export * from "./suppression-catalog";
 export * from "./suppression-fixtures";
 export * from "./suppression-source-backed";
 export * from "./case-intelligence";
+export * from "./disclosure-workflow";

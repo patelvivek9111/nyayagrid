@@ -372,6 +372,8 @@ export function prosecutionResourceCapability(resource: string): ProsecutionReso
       return "witness.manage";
     case "discovery":
       return "discovery.manage";
+    case "productions":
+      return "discovery.manage";
     case "disclosure":
       return "disclosure.flag";
     case "procedure-issues":

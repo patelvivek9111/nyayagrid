@@ -10,6 +10,7 @@ import {
   prosecutionCharges,
   prosecutionDefendants,
   prosecutionDisclosureCandidates,
+  prosecutionDisclosureProductions,
   prosecutionDiscoveryItems,
   prosecutionDispositions,
   prosecutionEvidenceItems,
@@ -66,12 +67,21 @@ import {
   normalizeProsecutionEvidenceType,
   prosecutionCapabilityAllows,
   prosecutionResourceCapability,
-  transitionDisclosure,
   type ChargeElementStatus,
   type ProsecutionResourceAction,
   type StatementClaim,
 } from "./domain";
 import { buildDiscoveryDashboard } from "../week4/discovery-ops";
+import {
+  appendDisclosureReviewHistory,
+  buildDisclosureCandidateProposals,
+  buildSupervisorDisclosureQueue,
+  filterDiscoveryItems,
+  formatProsecutionDisclosureAskContext,
+  paginateRows,
+  transitionDisclosureWithGuards,
+  assertSafeDisclosureCopy,
+} from "./disclosure-workflow";
 
 async function authorize(
   db: Database,
@@ -376,6 +386,7 @@ export async function reviewDisclosureCandidate(
     candidateId: string;
     status: string;
     notes?: string | null;
+    reason?: string | null;
   },
 ) {
   const action = isFinalDisclosureStatus(params.status) ? "review" : "disclosure.flag";
@@ -393,15 +404,30 @@ export async function reviewDisclosureCandidate(
     )
     .limit(1);
   if (!existing) throw new ProsecutionError("NOT_FOUND", "Disclosure candidate not found.", 404);
-  const status = transitionDisclosure({
-    next: params.status as Parameters<typeof transitionDisclosure>[0]["next"],
+  // Consequential withhold/escalate must include a reason on this transition — do not reuse prior notes alone.
+  const status = transitionDisclosureWithGuards({
+    next: params.status,
     humanActor: true,
+    notes: params.notes ?? null,
+    reason: params.reason ?? null,
+  });
+  const nextNotes = params.notes !== undefined ? params.notes : existing.notes;
+  const nextReason = params.reason !== undefined ? params.reason : existing.reason;
+  const reviewHistory = appendDisclosureReviewHistory({
+    history: existing.reviewHistory ?? [],
+    priorStatus: existing.status,
+    nextStatus: status,
+    actorUserId: params.userId,
+    reason: params.reason ?? null,
+    notes: params.notes ?? null,
   });
   const [updated] = await db
     .update(prosecutionDisclosureCandidates)
     .set({
       status,
-      notes: params.notes !== undefined ? params.notes : existing.notes,
+      notes: nextNotes,
+      reason: nextReason,
+      reviewHistory,
       humanActorId: params.userId,
       updatedAt: new Date(),
     })
@@ -419,7 +445,9 @@ export async function reviewDisclosureCandidate(
       criminalCaseId: criminalCase.id,
       previousStatus: existing.status,
       status: updated.status,
+      reason: params.reason ?? null,
       finalDetermination: isFinalDisclosureStatus(updated.status),
+      reviewHistoryLength: reviewHistory.length,
     },
   });
   return updated;
@@ -454,6 +482,7 @@ export async function getProsecutionOverview(
     timeline,
     statements,
     evidenceLinks,
+    productions,
   ] = await Promise.all([
     db
       .select()
@@ -524,6 +553,10 @@ export async function getProsecutionOverview(
       .select()
       .from(prosecutionEvidenceLinks)
       .where(eq(prosecutionEvidenceLinks.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionDisclosureProductions)
+      .where(eq(prosecutionDisclosureProductions.criminalCaseId, criminalCase.id)),
   ]);
   const warrantIds = warrants.map((warrant) => warrant.id);
   const affidavits = warrantIds.length
@@ -745,6 +778,111 @@ export async function getProsecutionOverview(
           .where(inArray(users.id, reviewerIds))
       : [];
   const reviewerById = new Map(reviewers.map((row) => [row.id, row]));
+  const surfacedDisclosureCandidates = buildDisclosureCandidateProposals({
+    contraryEvidenceIds: [...new Set(matrix.flatMap((row) => row.contraryEvidenceIds))],
+    weakElementIds: matrix
+      .filter((row) => row.status === "NO_EVIDENCE_FOUND" || row.status === "UNKNOWN")
+      .map((row) => row.elementId),
+    conflictedElementIds: matrix
+      .filter((row) => row.status === "CONFLICTED")
+      .map((row) => row.elementId),
+    witnessConflictWitnessIds: [
+      ...new Set(
+        caseIntelligence.witnessIntelligence.contradictions.flatMap((row) => {
+          const a = statements.find((s) => s.id === row.statementA.id)?.witnessId;
+          const b = statements.find((s) => s.id === row.statementB.id)?.witnessId;
+          return [a, b].filter((id): id is string => Boolean(id));
+        }),
+      ),
+    ],
+    witnessConflictKeys: caseIntelligence.witnessIntelligence.contradictions.map((row) => row.key),
+    timelineConflictIds: caseIntelligence.timelineConflicts.flatMap((c) => [
+      c.versionA.id,
+      c.versionB.id,
+    ]),
+    procedureIssueIds: issues
+      .filter((i) => i.status === "open" || i.status === "OPEN")
+      .map((i) => i.id),
+  });
+  const supervisorQueue = buildSupervisorDisclosureQueue({
+    candidates: disclosures.map((item) => ({
+      id: item.id,
+      category: item.category,
+      status: item.status,
+      priority: item.priority,
+    })),
+    discovery: discovery.map((item) => ({
+      id: item.id,
+      category: item.category,
+      reviewStatus: item.reviewStatus,
+      productionStatus: item.productionStatus,
+      priority: item.priority,
+    })),
+    productions: productions.map((item) => ({
+      id: item.id,
+      label: item.label,
+      status: item.status,
+    })),
+  });
+  const discoveryQueue = {
+    total: discovery.length,
+    unreviewed: discovery.filter((item) => ["RECEIVED", "UNREVIEWED"].includes(item.reviewStatus))
+      .length,
+    reviewRequired: discovery.filter((item) => item.disclosureReviewStatus === "REVIEW_REQUIRED")
+      .length,
+    flagged: discovery.filter((item) => item.reviewStatus === "FLAGGED").length,
+    potentialDisclosureCandidate: disclosures.filter((item) =>
+      ["UNREVIEWED", "REVIEW_REQUIRED", "ESCALATE"].includes(item.status),
+    ).length,
+    produced: discovery.filter((item) => item.productionStatus === "PRODUCED").length,
+    pendingProduction: discovery.filter(
+      (item) =>
+        item.productionStatus !== "PRODUCED" &&
+        item.productionStatus !== "WITHHELD_FOR_ATTORNEY_REVIEW",
+    ).length,
+    withheldForAttorneyReview: discovery.filter(
+      (item) => item.productionStatus === "WITHHELD_FOR_ATTORNEY_REVIEW",
+    ).length,
+    escalated: disclosures.filter((item) => item.status === "ESCALATE").length,
+    missingOrExpected: discovery.filter(
+      (item) => item.category === "MISSING_EXPECTED" || item.reviewStatus === "UNKNOWN",
+    ).length,
+    unknown: discovery.filter((item) => item.reviewStatus === "UNKNOWN").length,
+    items: paginateRows(discovery, 1, 50),
+    filtered: filterDiscoveryItems(discovery, {}),
+  };
+  const disclosureAskContext = formatProsecutionDisclosureAskContext({
+    discoveryCount: discovery.length,
+    unreviewedDiscovery: discoveryQueue.unreviewed,
+    producedDiscovery: discoveryQueue.produced,
+    candidates: disclosures.map((item) => ({
+      id: item.id,
+      category: item.category,
+      status: item.status,
+      reason: item.reason,
+      origin: item.origin,
+    })),
+    productions: productions.map((item) => ({
+      id: item.id,
+      label: item.label,
+      status: item.status,
+      isSupplemental: item.isSupplemental,
+    })),
+    supervisorQueueCount: supervisorQueue.length,
+  });
+  const matrixWithDisclosure = matrix.map((row) => {
+    const relatedCandidates = disclosures.filter(
+      (candidate) =>
+        (candidate.relatedElementIds ?? []).includes(row.elementId) ||
+        row.contraryEvidenceIds.some((id) => (candidate.relatedEvidenceIds ?? []).includes(id)),
+    );
+    return {
+      ...row,
+      disclosureCandidateCount: relatedCandidates.length,
+      disclosureCandidateStatuses: relatedCandidates.map((c) => c.status),
+      disclosureProductionStatuses: relatedCandidates.map((c) => c.productionStatus),
+    };
+  });
   return {
     case: criminalCase,
     defendants,
@@ -763,18 +901,30 @@ export async function getProsecutionOverview(
     witnesses: witnessProfiles,
     statements,
     discoveryItems: discovery,
+    discoveryQueue,
+    disclosureProductions: productions,
+    supervisorDisclosureQueue: supervisorQueue,
+    surfacedDisclosureCandidates,
     timelineEvents: caseIntelligence.timelineEvents,
     timelineConflicts: caseIntelligence.timelineConflicts,
     investigationGaps: caseIntelligence.investigationGaps,
     suggestedDisclosureCandidates: caseIntelligence.suggestedDisclosureCandidates,
     witnessIntelligence: caseIntelligence.witnessIntelligence,
     caseIntelligenceStats: caseIntelligence.overviewStats,
-    askIntelligenceContext: formatProsecutionAskIntelligenceContext(caseIntelligence),
+    askIntelligenceContext: [
+      formatProsecutionAskIntelligenceContext(caseIntelligence),
+      disclosureAskContext,
+    ].join("\n\n"),
+    disclosureAskContext,
     disclosureCandidates: disclosures.map((item) => ({
       ...item,
       label: "Potential disclosure candidate",
       reviewer: item.humanActorId ? (reviewerById.get(item.humanActorId) ?? null) : null,
       reviewedAt: item.humanActorId ? item.updatedAt : null,
+      bradyViolationConclusion: null as null,
+      giglioViolationConclusion: null as null,
+      mustDiscloseConclusion: null as null,
+      witnessCredibilityScore: null as null,
     })),
     assignableMembers,
     viewerCapabilities,
@@ -782,11 +932,15 @@ export async function getProsecutionOverview(
     canManageCase: prosecutionCapabilityAllows(new Set(viewerCapabilities), "case.manage"),
     canManageEvidence: prosecutionCapabilityAllows(new Set(viewerCapabilities), "evidence.manage"),
     canManageWitnesses: prosecutionCapabilityAllows(new Set(viewerCapabilities), "witness.manage"),
+    canManageDiscovery: prosecutionCapabilityAllows(
+      new Set(viewerCapabilities),
+      "discovery.manage",
+    ),
     elementGaps,
     issueFlags: issues,
     issueSeparation,
     evidenceScope,
-    matrix,
+    matrix: matrixWithDisclosure,
     discoveryDashboard,
     ...suppressionPayload({
       jurisdiction: criminalCase.jurisdiction,
@@ -1273,17 +1427,47 @@ export async function addProsecutionRecord(
         }
       }
     }
+    const reviewStatus = (params.body.reviewStatus as string) ?? "RECEIVED";
+    const productionStatus = (params.body.productionStatus as string) ?? "RECEIVED";
+    assertSafeDisclosureCopy((params.body.notes as string) ?? null);
     const [row] = await db
       .insert(prosecutionDiscoveryItems)
       .values({
         organizationId,
         criminalCaseId,
+        title: (params.body.title as string) ?? null,
         source: String(params.body.source ?? ""),
-        category: String(params.body.category ?? ""),
-        reviewStatus: (params.body.reviewStatus as string) ?? "RECEIVED",
-        productionStatus: (params.body.productionStatus as string) ?? "RECEIVED",
+        sourceAgency: (params.body.sourceAgency as string) ?? null,
+        category: String(params.body.category ?? "unknown"),
+        receivedDate: (params.body.receivedDate as string) ?? null,
+        reviewStatus,
+        productionStatus,
+        producedDate: (params.body.producedDate as string) ?? null,
         notes: (params.body.notes as string) ?? null,
         relatedDocumentIds,
+        relatedEvidenceIds: Array.isArray(params.body.relatedEvidenceIds)
+          ? params.body.relatedEvidenceIds.map(String)
+          : [],
+        relatedWitnessIds: Array.isArray(params.body.relatedWitnessIds)
+          ? params.body.relatedWitnessIds.map(String)
+          : [],
+        relatedDefendantIds: Array.isArray(params.body.relatedDefendantIds)
+          ? params.body.relatedDefendantIds.map(String)
+          : [],
+        relatedChargeIds: Array.isArray(params.body.relatedChargeIds)
+          ? params.body.relatedChargeIds.map(String)
+          : [],
+        relatedElementIds: Array.isArray(params.body.relatedElementIds)
+          ? params.body.relatedElementIds.map(String)
+          : [],
+        privilegeReviewStatus: (params.body.privilegeReviewStatus as string) ?? "UNREVIEWED",
+        confidentialityReviewStatus:
+          (params.body.confidentialityReviewStatus as string) ?? "UNREVIEWED",
+        priority: (params.body.priority as string) ?? "normal",
+        createdByUserId: params.userId,
+        auditHistory: [
+          `created:${params.userId}:${new Date().toISOString()}:status=${reviewStatus}`,
+        ],
         provenance,
       })
       .returning();
@@ -1291,19 +1475,38 @@ export async function addProsecutionRecord(
       organizationId,
       actorUserId: params.userId,
       matterId: criminalCase.matterId,
-      action: "prosecution.discovery_review_changed",
+      action: "prosecution.discovery_intake",
       targetType: "discovery_item",
       targetId: row?.id,
-      metadata: { criminalCaseId },
+      metadata: { criminalCaseId, reviewStatus, productionStatus },
     });
+    if (productionStatus === "PRODUCED" || reviewStatus === "RECEIVED") {
+      await db.insert(prosecutionTimelineEvents).values({
+        organizationId,
+        criminalCaseId,
+        matterId: criminalCase.matterId,
+        eventType: productionStatus === "PRODUCED" ? "DISCOVERY_PRODUCED" : "DISCOVERY_RECEIVED",
+        title:
+          productionStatus === "PRODUCED"
+            ? `Discovery produced: ${row?.category ?? "item"}`
+            : `Discovery received: ${row?.category ?? "item"}`,
+        eventDate: new Date(),
+        provenance,
+      });
+    }
     return row;
   }
 
   if (params.resource === "disclosure") {
-    const status = transitionDisclosure({
-      next: (params.body.status as "UNREVIEWED") ?? "UNREVIEWED",
+    const status = transitionDisclosureWithGuards({
+      next: (params.body.status as string) ?? "UNREVIEWED",
       humanActor: true,
+      notes: (params.body.notes as string) ?? null,
+      reason: (params.body.reason as string) ?? null,
     });
+    const reason = (params.body.reason as string) ?? null;
+    assertSafeDisclosureCopy(reason);
+    assertSafeDisclosureCopy((params.body.notes as string) ?? null);
     const [row] = await db
       .insert(prosecutionDisclosureCandidates)
       .values({
@@ -1311,8 +1514,44 @@ export async function addProsecutionRecord(
         criminalCaseId,
         category: String(params.body.category ?? "UNKNOWN"),
         status,
+        reason,
+        origin: (params.body.origin as string) ?? "human",
+        relatedEvidenceIds: Array.isArray(params.body.relatedEvidenceIds)
+          ? params.body.relatedEvidenceIds.map(String)
+          : [],
+        relatedWitnessIds: Array.isArray(params.body.relatedWitnessIds)
+          ? params.body.relatedWitnessIds.map(String)
+          : [],
+        relatedDefendantIds: Array.isArray(params.body.relatedDefendantIds)
+          ? params.body.relatedDefendantIds.map(String)
+          : [],
+        relatedChargeIds: Array.isArray(params.body.relatedChargeIds)
+          ? params.body.relatedChargeIds.map(String)
+          : [],
+        relatedElementIds: Array.isArray(params.body.relatedElementIds)
+          ? params.body.relatedElementIds.map(String)
+          : [],
+        relatedDiscoveryIds: Array.isArray(params.body.relatedDiscoveryIds)
+          ? params.body.relatedDiscoveryIds.map(String)
+          : [],
+        relatedIssueIds: Array.isArray(params.body.relatedIssueIds)
+          ? params.body.relatedIssueIds.map(String)
+          : [],
+        confidence: (params.body.confidence as string) ?? "low",
+        priority: (params.body.priority as string) ?? "normal",
+        reviewHistory: [
+          {
+            priorStatus: "NONE",
+            nextStatus: status,
+            actorUserId: params.userId,
+            timestamp: new Date().toISOString(),
+            reason,
+            notes: (params.body.notes as string) ?? null,
+          },
+        ],
         notes: (params.body.notes as string) ?? null,
         humanActorId: params.userId,
+        flaggedByUserId: params.userId,
         provenance,
       })
       .returning();
@@ -1320,10 +1559,105 @@ export async function addProsecutionRecord(
       organizationId,
       actorUserId: params.userId,
       matterId: criminalCase.matterId,
-      action: "prosecution.disclosure_review_changed",
+      action: "prosecution.disclosure_candidate_created",
       targetType: "disclosure_review",
       targetId: row?.id,
-      metadata: { criminalCaseId },
+      metadata: { criminalCaseId, status, category: row?.category },
+    });
+    return row;
+  }
+
+  if (params.resource === "productions") {
+    const candidateIds = Array.isArray(params.body.candidateIds)
+      ? params.body.candidateIds.map(String)
+      : [];
+    const discoveryItemIds = Array.isArray(params.body.discoveryItemIds)
+      ? params.body.discoveryItemIds.map(String)
+      : [];
+    const status = (params.body.status as string) ?? "PREPARED";
+    assertSafeDisclosureCopy((params.body.notes as string) ?? null);
+    const [row] = await db
+      .insert(prosecutionDisclosureProductions)
+      .values({
+        organizationId,
+        criminalCaseId,
+        label: String(params.body.label ?? "Production set"),
+        productionDate: (params.body.productionDate as string) ?? null,
+        recipientReference: (params.body.recipientReference as string) ?? null,
+        deliveryMethod: (params.body.deliveryMethod as string) ?? null,
+        batesReference: (params.body.batesReference as string) ?? null,
+        candidateIds,
+        discoveryItemIds,
+        isSupplemental: Boolean(params.body.isSupplemental),
+        status,
+        notes: (params.body.notes as string) ?? null,
+        producedByUserId: params.userId,
+        provenance,
+      })
+      .returning();
+    if (candidateIds.length > 0) {
+      for (const candidateId of candidateIds) {
+        const [candidate] = await db
+          .select()
+          .from(prosecutionDisclosureCandidates)
+          .where(
+            and(
+              eq(prosecutionDisclosureCandidates.id, candidateId),
+              eq(prosecutionDisclosureCandidates.criminalCaseId, criminalCaseId),
+              eq(prosecutionDisclosureCandidates.organizationId, organizationId),
+            ),
+          )
+          .limit(1);
+        if (!candidate) {
+          throw new ProsecutionError(
+            "CROSS_CASE",
+            "Production cannot include a candidate from another case.",
+            403,
+          );
+        }
+        await db
+          .update(prosecutionDisclosureCandidates)
+          .set({
+            productionStatus: status === "PRODUCED" ? "PRODUCED" : "IN_PRODUCTION_SET",
+            reviewHistory: appendDisclosureReviewHistory({
+              history: candidate.reviewHistory ?? [],
+              priorStatus: candidate.status,
+              nextStatus: candidate.status,
+              actorUserId: params.userId,
+              reason: "production_set_link",
+              notes: (params.body.notes as string) ?? null,
+              productionId: row?.id ?? null,
+            }),
+            updatedAt: new Date(),
+          })
+          .where(eq(prosecutionDisclosureCandidates.id, candidate.id));
+      }
+    }
+    if (status === "PRODUCED") {
+      await db.insert(prosecutionTimelineEvents).values({
+        organizationId,
+        criminalCaseId,
+        matterId: criminalCase.matterId,
+        eventType: "DISCOVERY_PRODUCED",
+        title: `Disclosure production prepared: ${row?.label ?? "set"}`,
+        eventDate: new Date(),
+        provenance,
+      });
+    }
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.disclosure_production_created",
+      targetType: "disclosure_production",
+      targetId: row?.id,
+      metadata: {
+        criminalCaseId,
+        status,
+        candidateCount: candidateIds.length,
+        discoveryItemCount: discoveryItemIds.length,
+        externalSend: false,
+      },
     });
     return row;
   }
