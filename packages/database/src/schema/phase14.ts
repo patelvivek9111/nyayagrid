@@ -1,4 +1,15 @@
-import { boolean, date, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  date,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { matters, organizations, users } from "./index";
 import { legalAuthorities } from "./phase6";
@@ -25,7 +36,9 @@ export const legalStandards = pgTable(
     organizationId: uuid("organization_id")
       .notNull()
       .references(() => organizations.id, { onDelete: "cascade" }),
-    authorityId: uuid("authority_id").references(() => legalAuthorities.id, { onDelete: "set null" }),
+    authorityId: uuid("authority_id").references(() => legalAuthorities.id, {
+      onDelete: "set null",
+    }),
     issueId: uuid("issue_id"),
     ruleText: text("rule_text").notNull(),
     standardType: text("standard_type").notNull(),
@@ -97,7 +110,11 @@ export const legalIssueAuthorities = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
-    uniqueIndex("legal_issue_authorities_edge_uidx").on(table.issueId, table.authorityId, table.relation),
+    uniqueIndex("legal_issue_authorities_edge_uidx").on(
+      table.issueId,
+      table.authorityId,
+      table.relation,
+    ),
     index("legal_issue_authorities_org_idx").on(table.organizationId),
   ],
 );
@@ -226,7 +243,10 @@ export const prosecutionDefendants = pgTable(
     notes: text("notes"),
     status: text("status").notNull().default("active"),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
-    privacy: jsonb("privacy").$type<{ dobRestricted: boolean }>().notNull().default({ dobRestricted: true }),
+    privacy: jsonb("privacy")
+      .$type<{ dobRestricted: boolean }>()
+      .notNull()
+      .default({ dobRestricted: true }),
     ...timestamps,
   },
   (table) => [
@@ -275,7 +295,9 @@ export const prosecutionCharges = pgTable(
       .notNull()
       .references(() => prosecutionDefendants.id, { onDelete: "cascade" }),
     countNumber: text("count_number").notNull(),
-    statuteAuthorityId: uuid("statute_authority_id").references(() => legalAuthorities.id, { onDelete: "set null" }),
+    statuteAuthorityId: uuid("statute_authority_id").references(() => legalAuthorities.id, {
+      onDelete: "set null",
+    }),
     statuteCitation: text("statute_citation"),
     offenseName: text("offense_name").notNull(),
     offenseClassification: text("offense_classification"),
@@ -289,7 +311,11 @@ export const prosecutionCharges = pgTable(
   },
   (table) => [
     index("prosecution_charges_case_idx").on(table.criminalCaseId),
-    uniqueIndex("prosecution_charges_count_uidx").on(table.criminalCaseId, table.defendantId, table.countNumber),
+    uniqueIndex("prosecution_charges_count_uidx").on(
+      table.criminalCaseId,
+      table.defendantId,
+      table.countNumber,
+    ),
   ],
 );
 
@@ -309,7 +335,9 @@ export const prosecutionChargeElements = pgTable(
     elementOrder: integer("element_order").notNull(),
     elementText: text("element_text").notNull(),
     elementType: text("element_type").notNull(),
-    legalStandardId: uuid("legal_standard_id").references(() => legalStandards.id, { onDelete: "set null" }),
+    legalStandardId: uuid("legal_standard_id").references(() => legalStandards.id, {
+      onDelete: "set null",
+    }),
     supportingEvidenceIds: jsonb("supporting_evidence_ids").$type<string[]>().notNull().default([]),
     contraryEvidenceIds: jsonb("contrary_evidence_ids").$type<string[]>().notNull().default([]),
     uncertainEvidenceIds: jsonb("uncertain_evidence_ids").$type<string[]>().notNull().default([]),
@@ -421,7 +449,10 @@ export const prosecutionWitnessStatements = pgTable(
     sourceSpan: text("source_span"),
     interviewer: text("interviewer"),
     eventContext: text("event_context"),
-    claims: jsonb("claims").$type<Array<{ key: string; value: string; kind?: string }>>().notNull().default([]),
+    claims: jsonb("claims")
+      .$type<Array<{ key: string; value: string; kind?: string }>>()
+      .notNull()
+      .default([]),
     confidence: text("confidence").notNull().default("low"),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -470,7 +501,9 @@ export const prosecutionDiscoveryItems = pgTable(
       .default("UNREVIEWED"),
     priority: text("priority").notNull().default("normal"),
     notes: text("notes"),
-    createdByUserId: uuid("created_by_user_id").references(() => users.id, { onDelete: "set null" }),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
     reviewedByUserId: uuid("reviewed_by_user_id").references(() => users.id, {
       onDelete: "set null",
     }),
@@ -603,7 +636,10 @@ export const prosecutionWarrants = pgTable(
     sourceFactIds: jsonb("source_fact_ids").$type<string[]>().notNull().default([]),
     seizedEvidenceIds: jsonb("seized_evidence_ids").$type<string[]>().notNull().default([]),
     returnNotes: text("return_notes"),
-    relatedSuppressionIssueIds: jsonb("related_suppression_issue_ids").$type<string[]>().notNull().default([]),
+    relatedSuppressionIssueIds: jsonb("related_suppression_issue_ids")
+      .$type<string[]>()
+      .notNull()
+      .default([]),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
     ...timestamps,
   },
@@ -850,7 +886,11 @@ export const prosecutionGraphNodes = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
-    uniqueIndex("prosecution_graph_nodes_ref_uidx").on(table.criminalCaseId, table.nodeType, table.refId),
+    uniqueIndex("prosecution_graph_nodes_ref_uidx").on(
+      table.criminalCaseId,
+      table.nodeType,
+      table.refId,
+    ),
     index("prosecution_graph_nodes_case_idx").on(table.criminalCaseId),
   ],
 );
