@@ -1,10 +1,9 @@
 /**
- * Non-professional workspaces: Nyaya Professor (Student Workspace) and, once its domain lands,
- * Nyaya Guide (Public Workspace).
+ * Former home of Nyaya Professor (Student Workspace) and Nyaya Guide (Public Workspace).
+ * Those product surfaces were removed from active runtime. Historical phase-8 tables remain
+ * in the database for a coordinated schema drop; lifecycle export/delete still covers them.
  *
- * Everything in this package is user-scoped. No module here reads matters, matter documents, or
- * document chunks; the shared legal authority corpus is the only cross-boundary store it touches,
- * and that corpus holds non-confidential reference material.
+ * This package intentionally exports nothing. Do not reintroduce student/public product APIs here.
  */
-export * from "./professor";
-export * from "./guide";
+
+export {};

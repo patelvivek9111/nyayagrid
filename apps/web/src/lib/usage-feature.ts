@@ -17,10 +17,6 @@ export function featureFromRouterSubsystem(subsystem: RouterSubsystem | string):
       return "extraction.analysis";
     case "timeline":
       return "document.processing";
-    case "guide":
-      return "guide.ask";
-    case "professor":
-      return "professor.ask";
     default:
       return `other.${subsystem}`;
   }

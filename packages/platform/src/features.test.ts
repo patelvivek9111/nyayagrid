@@ -1,17 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getFeatureFlags, isFeatureEnabled } from "./features";
 
-describe("FEATURE_PROFESSOR", () => {
-  it("is a deployment switch and does not grant ownership", () => {
-    expect(isFeatureEnabled("professor", { APP_ENV: "test" })).toBe(true);
-    expect(isFeatureEnabled("professor", { APP_ENV: "production" })).toBe(false);
-    expect(isFeatureEnabled("professor", { APP_ENV: "staging" })).toBe(false);
-    expect(isFeatureEnabled("professor", { APP_ENV: "production", FEATURE_PROFESSOR: "1" })).toBe(
-      true,
-    );
-  });
-});
-
 describe("FEATURE_AGENTS", () => {
   it("stays off in staging and production unless explicitly enabled", () => {
     expect(getFeatureFlags({ APP_ENV: "staging" }).agents).toBe(false);
@@ -37,5 +26,13 @@ describe("FEATURE_NYAYA_MODEL_ROUTER_V2", () => {
         FEATURE_NYAYA_MODEL_ROUTER_V2: "1",
       }),
     ).toBe(true);
+  });
+});
+
+describe("retired Professor/Guide flags", () => {
+  it("are no longer feature flags", () => {
+    const flags = getFeatureFlags({ APP_ENV: "test" });
+    expect("professor" in flags).toBe(false);
+    expect("guide" in flags).toBe(false);
   });
 });

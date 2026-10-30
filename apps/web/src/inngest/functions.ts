@@ -272,42 +272,6 @@ export const agentContinueRunJob = inngest.createFunction(
   },
 );
 
-export const studentIngestCaseJob = inngest.createFunction(
-  { id: "nyayagrid-student-ingest-case", retries: 2 },
-  { event: "nyayagrid/student.ingest_case" },
-  async ({ event }) => {
-    const payload = event.data as JobPayload;
-    const handler = domainHandlers["student.ingest_case"];
-    if (!handler) {
-      return {
-        ok: true,
-        message:
-          "Student case ingestion event received; domain API invokes ingestStudentCase directly.",
-        data: { userId: payload.userId, caseId: payload.caseId },
-      };
-    }
-    return handler(payload);
-  },
-);
-
-export const guideIngestDocumentJob = inngest.createFunction(
-  { id: "nyayagrid-guide-ingest-document", retries: 2 },
-  { event: "nyayagrid/guide.ingest_document" },
-  async ({ event }) => {
-    const payload = event.data as JobPayload;
-    const handler = domainHandlers["guide.ingest_document"];
-    if (!handler) {
-      return {
-        ok: true,
-        message:
-          "Guide document ingestion event received; domain API invokes ingestGuideDocument directly.",
-        data: { userId: payload.userId, documentId: payload.documentId },
-      };
-    }
-    return handler(payload);
-  },
-);
-
 export const functions = [
   pingJob,
   documentMalwareScanJob,
@@ -324,6 +288,4 @@ export const functions = [
   researchRunQueryJob,
   agentExecuteRunJob,
   agentContinueRunJob,
-  studentIngestCaseJob,
-  guideIngestDocumentJob,
 ];

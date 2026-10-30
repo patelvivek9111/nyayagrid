@@ -14,9 +14,6 @@ import { namedInstrumentFromQuestion, instrumentMentionedInText } from "../opera
 
 const SCHEMA_TO_SUBSYSTEM: Record<string, RouterSubsystem> = {
   evidence_assessment: "evidence",
-  student_case_brief: "professor",
-  professor_answer: "professor",
-  student_case_comparison: "professor",
   matter_intelligence_extraction: "timeline",
   graph_relationship_extraction: "graph",
   matter_memory_proposal: "memory",
@@ -35,9 +32,6 @@ const SCHEMA_TO_SUBSYSTEM: Record<string, RouterSubsystem> = {
   intent_classification: "agents",
   agent_plan: "agents",
   document_comparison_summary: "compare",
-  guideAnswer: "guide",
-  guideDocumentExplanation: "guide",
-  consultationPacket: "guide",
 };
 
 export function isKnownRouterSchemaName(schemaName: string): boolean {
@@ -62,10 +56,11 @@ export function classifyTask(request: AiGenerateRequest): RouterSubsystem {
   if (/extract proposed matter intelligence|Extract proposed timeline/i.test(system)) {
     return "timeline";
   }
-  if (/Nyaya Guide|plain language/i.test(system)) return "guide";
-  if (/nyaya professor|student case/i.test(system)) return "professor";
   if (/classify the user's request intent|operational agent execution/i.test(system)) {
     return "agents";
+  }
+  if (/prosecution|criminal case|suppression|disclosure review/i.test(system)) {
+    return "prosecution";
   }
   return "ask";
 }
@@ -74,7 +69,7 @@ export function toCertificationSubsystem(subsystem: RouterSubsystem): Certificat
   if ((CERTIFICATION_SUBSYSTEMS as readonly string[]).includes(subsystem)) {
     return subsystem as CertificationSubsystem;
   }
-  if (subsystem === "professor" || subsystem === "guide") return "ask";
+  if (subsystem === "prosecution") return "ask";
   return "ask";
 }
 

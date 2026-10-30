@@ -13,10 +13,15 @@ import type { ModelCapability } from "./models";
 
 const logger = createLogger("platform.usage");
 
+/**
+ * Matches `OperationalWorkspace` / `ai_usage_events.workspace` column typing.
+ * Active product surfaces write `professional` (including Prosecution until a coordinated
+ * schema change adds a dedicated value). Historical `student`/`public` rows may still exist.
+ */
 export type AiUsageWorkspace = "professional" | "student" | "public";
 
 export type AiUsageEventInput = {
-  /** Null for student and public workspaces, which have no organization by design. */
+  /** Null only for legacy student/public rows; Professional and Prosecution are organization-scoped. */
   organizationId?: string | null;
   userId: string;
   matterId?: string | null;

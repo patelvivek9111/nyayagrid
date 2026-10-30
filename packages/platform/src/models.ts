@@ -18,8 +18,6 @@ export const MODEL_CAPABILITIES = [
   "draft",
   "research",
   "agents",
-  "professor",
-  "guide",
   "embeddings",
 ] as const;
 
@@ -42,8 +40,6 @@ const CAPABILITY_ENV_VAR: Record<ModelCapability, string> = {
   draft: "MODEL_DRAFT",
   research: "MODEL_RESEARCH",
   agents: "MODEL_AGENTS",
-  professor: "MODEL_PROFESSOR",
-  guide: "MODEL_GUIDE",
   embeddings: "MODEL_EMBEDDING",
 };
 
@@ -64,8 +60,6 @@ const OPENAI_DEFAULTS: Record<ModelCapability, string> = {
   draft: "gpt-4o",
   research: "gpt-4o",
   agents: "gpt-4o",
-  professor: "gpt-4o-mini",
-  guide: "gpt-4o-mini",
   /**
    * Changing this is a migration, not a setting: `document_chunks.embedding` is `vector(384)` and
    * every stored vector came from one model. @nyayagrid/ai pins the OpenAI request to 384

@@ -15,8 +15,6 @@ import { getAppEnv, type AppEnv, type EnvSource } from "./config";
 
 export const FEATURE_FLAGS = [
   "agents",
-  "professor",
-  "guide",
   "research",
   "ocr",
   "live_ai",
@@ -30,8 +28,6 @@ export type FeatureFlagState = Record<FeatureFlag, boolean>;
 
 const FLAG_ENV_VAR: Record<FeatureFlag, string> = {
   agents: "FEATURE_AGENTS",
-  professor: "FEATURE_PROFESSOR",
-  guide: "FEATURE_GUIDE",
   research: "FEATURE_RESEARCH",
   ocr: "FEATURE_OCR",
   live_ai: "FEATURE_LIVE_AI",
@@ -48,8 +44,6 @@ const FLAG_ENV_VAR: Record<FeatureFlag, string> = {
 const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
   development: {
     agents: true,
-    professor: true,
-    guide: true,
     research: true,
     ocr: false,
     live_ai: false,
@@ -57,8 +51,6 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
   },
   test: {
     agents: true,
-    professor: true,
-    guide: true,
     research: true,
     ocr: false,
     live_ai: false,
@@ -66,8 +58,6 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
   },
   staging: {
     agents: false,
-    professor: false,
-    guide: false,
     research: false,
     ocr: false,
     live_ai: false,
@@ -75,8 +65,6 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
   },
   production: {
     agents: false,
-    professor: false,
-    guide: false,
     research: false,
     ocr: false,
     live_ai: false,

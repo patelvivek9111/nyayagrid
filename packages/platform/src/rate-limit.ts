@@ -18,8 +18,7 @@ export const ENDPOINT_CLASSES = [
   "ask_nyaya",
   "research",
   "agent_run",
-  "professor",
-  "guide",
+  "prosecution",
   "expensive_ai",
 ] as const;
 
@@ -49,8 +48,7 @@ export const RATE_LIMIT_PRESETS: Record<EndpointClass, RateLimitPreset> = {
   ask_nyaya: { limit: 60, windowMs: HOUR, scope: "user" },
   research: { limit: 40, windowMs: HOUR, scope: "organization" },
   agent_run: { limit: 20, windowMs: HOUR, scope: "organization" },
-  professor: { limit: 60, windowMs: HOUR, scope: "user" },
-  guide: { limit: 30, windowMs: HOUR, scope: "user" },
+  prosecution: { limit: 60, windowMs: HOUR, scope: "organization" },
   expensive_ai: { limit: 10, windowMs: HOUR, scope: "organization" },
 };
 

@@ -47,8 +47,6 @@ import {
   mockResearchSynthesis,
 } from "./research";
 import { mockAgentPlan, mockIntentClassification } from "./agents";
-import { mockCaseBrief, mockCaseComparison, mockProfessorAnswer } from "./professor";
-import { mockConsultationPacket, mockGuideAnswer, mockGuideDocumentExplanation } from "./guide";
 import { validateQuoteAgainstText } from "./quotes";
 import {
   ensureSourceScopedAbstentionAnswer,
@@ -257,31 +255,6 @@ export class MockAIProvider implements AIProvider {
       };
     }
 
-    if (request.schemaName === "student_case_brief") {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockCaseBrief(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-    if (request.schemaName === "professor_answer") {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockProfessorAnswer(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-    if (request.schemaName === "student_case_comparison") {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockCaseComparison(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-
     if (
       /extract proposed matter intelligence/i.test(system) ||
       /Extract proposed timeline/i.test(user)
@@ -463,60 +436,6 @@ export class MockAIProvider implements AIProvider {
         provider: "mock",
         model: "mock-1",
         text: JSON.stringify(mockAgentPlan(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-
-    if (/generate a student case brief/i.test(system)) {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockCaseBrief(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-
-    if (/compare two uploaded cases/i.test(system)) {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockCaseComparison(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-
-    if (/you are nyaya professor/i.test(system)) {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockProfessorAnswer(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-
-    if (/Nyaya Guide assistant/i.test(system)) {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockGuideAnswer(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-
-    if (/explain a legal document in plain language/i.test(system)) {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockGuideDocumentExplanation(user)),
-        usage: { inputTokens: 0, outputTokens: 0 },
-      };
-    }
-
-    if (/generate a consultation-preparation packet/i.test(system)) {
-      return {
-        provider: "mock",
-        model: "mock-1",
-        text: JSON.stringify(mockConsultationPacket(user)),
         usage: { inputTokens: 0, outputTokens: 0 },
       };
     }
@@ -1437,8 +1356,6 @@ export * from "./graph-memory";
 export * from "./professional";
 export * from "./research";
 export * from "./agents";
-export * from "./professor";
-export * from "./guide";
 export * from "./quotes";
 export * from "./need-more-docs";
 export * from "./qa06";

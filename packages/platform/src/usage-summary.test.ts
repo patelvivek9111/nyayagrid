@@ -31,7 +31,7 @@ describe("classifyUsageFeature", () => {
     expect(classifyUsageFeature("extraction", "extraction.analysis")).toBe("analysis");
     expect(classifyUsageFeature("embeddings", "embedding")).toBe("processing");
     expect(classifyUsageFeature("qa", "document.processing")).toBe("processing");
-    expect(classifyUsageFeature("guide", "guide.ask")).toBe("other");
+    expect(classifyUsageFeature("agents", "unknown.feature")).toBe("other");
   });
 });
 

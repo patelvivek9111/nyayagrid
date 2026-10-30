@@ -24,8 +24,6 @@ export const ENTITLEMENT_KEYS = [
   "research",
   "ocr",
   "expensive_ai",
-  "professor",
-  "guide",
   "client_portal",
 ] as const;
 export type EntitlementKey = (typeof ENTITLEMENT_KEYS)[number];
@@ -51,11 +49,11 @@ const ENTITLING_STATUSES: readonly SubscriptionStatus[] = ["active", "trialing"]
 
 export const PLAN_ENTITLEMENTS: Record<PlanKey, Entitlements> = {
   free: {
-    features: { professor: true, guide: true },
+    features: {},
     limits: { seats: 1, storage_gb: 1 },
   },
   solo: {
-    features: { research: true, professor: true, guide: true, ocr: true },
+    features: { research: true, ocr: true },
     limits: { seats: 1, storage_gb: 25, monthly_research_queries: 200 },
   },
   firm: {
@@ -64,8 +62,6 @@ export const PLAN_ENTITLEMENTS: Record<PlanKey, Entitlements> = {
       research: true,
       ocr: true,
       expensive_ai: true,
-      professor: true,
-      guide: true,
       client_portal: true,
     },
     limits: {

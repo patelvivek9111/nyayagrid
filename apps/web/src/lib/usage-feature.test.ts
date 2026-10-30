@@ -9,6 +9,5 @@ describe("featureFromRouterSubsystem", () => {
     expect(featureFromRouterSubsystem("compare")).toBe("analysis.compare");
     expect(featureFromRouterSubsystem("contract")).toBe("extraction.analysis");
     expect(featureFromRouterSubsystem("timeline")).toBe("document.processing");
-    expect(featureFromRouterSubsystem("guide")).toBe("guide.ask");
   });
 });

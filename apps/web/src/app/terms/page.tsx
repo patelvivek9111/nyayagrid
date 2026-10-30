@@ -45,9 +45,10 @@ export default function TermsPage() {
       <Panel title="2. Description of service">
         <p className="text-sm text-ink/70">
           Placeholder. NyayaGrid provides matter management, document intelligence and AI-assisted
-          drafting/research tools for the Professional workspace, and separate Nyaya Professor
-          (student) and Nyaya Guide (public) workspaces. None of these tools provide legal advice on
-          their own; a licensed attorney remains responsible for advice given to a client.
+          drafting/research tools for the Professional workspace (law firms and solo lawyers) and
+          Nyaya Prosecution (district attorney / prosecution offices). None of these tools provide
+          legal advice on their own; a licensed attorney remains responsible for advice given to a
+          client, and consequential prosecution decisions remain human-controlled.
         </p>
       </Panel>
       <Panel title="3. Client data and confidentiality">

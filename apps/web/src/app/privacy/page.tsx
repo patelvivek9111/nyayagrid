@@ -44,9 +44,9 @@ export default function PrivacyPage() {
       <Panel title="4. Data export and deletion">
         <p className="text-sm text-ink/70">
           Placeholder. An organization admin can request an export of the organization&apos;s
-          matters, clients and document metadata, or a user can request an export of their own Nyaya
-          Professor / Nyaya Guide data. Deletion requests are reviewed, checked against any active
-          legal hold, and — once approved — scheduled rather than executed immediately.
+          matters, clients, prosecution cases, and document metadata, or a user can request an
+          export of their own account-scoped data. Deletion requests are reviewed, checked against
+          any active legal hold, and — once approved — scheduled rather than executed immediately.
         </p>
       </Panel>
       <Panel title="5. Data retention">

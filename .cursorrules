@@ -5,11 +5,11 @@ Build NyayaGrid as an AI-native legal operating system that does two things equa
 1. Answers legal questions with source-grounded, jurisdiction-aware responses.
 2. Manages legal work from intake through resolution.
 
-NyayaGrid serves four user groups only in the initial product:
-- Law firms
-- Solo lawyers
-- Law students
-- Public users
+NyayaGrid primary product workspaces:
+- Professional — law firms and solo lawyers
+- Nyaya Prosecution — district attorney / prosecution offices
+
+Removed from product scope (do not rebuild): law students, public users, Nyaya Professor, Nyaya Guide.
 
 ## 1.1 Brand and Product Architecture
 NyayaGrid is the single platform, ecosystem, company-facing product name, and primary domain: `NyayaGrid.com`.
@@ -21,8 +21,7 @@ The following are built-in NyayaGrid modules/capabilities. They are NOT separate
 - **Nyaya Timeline** — automatically generated and user-verified chronology for matters.
 - **Nyaya Research** — source-grounded legal research experience.
 - **Nyaya Draft** — drafting, editing, review, citation, and document-generation experience.
-- **Nyaya Professor** — law-student learning experience.
-- **Nyaya Guide** — public legal-information and document-understanding experience.
+- **Nyaya Prosecution** — criminal case workspace for DA / prosecution offices.
 
 Brand rules:
 - Use `NyayaGrid` for the overall platform and website.
@@ -32,7 +31,8 @@ Brand rules:
 - All modules share one identity system, design system, API surface, security model, and core data platform.
 - Nyaya Graph and Nyaya Memory are primarily platform capabilities and may appear contextually inside matters rather than as disconnected standalone apps.
 
-Do not add government, corporate legal department, insurance, or general enterprise workspaces unless explicitly requested.
+Nyaya Prosecution is a first-class primary workspace. Do not treat DA / prosecution offices as a “government non-goal.”
+Do not add corporate legal department, insurance, or general enterprise workspaces unless explicitly requested.
 
 ## 2. Core Product Principle
 NyayaGrid is not a generic chatbot and not a traditional practice-management app with an AI button.
@@ -44,9 +44,9 @@ Every feature must support at least one of these outcomes:
 - Organize evidence and documents.
 - Track tasks, deadlines, and events.
 - Improve collaboration and accountability.
-- Explain legal information safely to students or the public.
+- Support human-controlled prosecution case operations when in Nyaya Prosecution.
 
-The central object in the system is a Matter. Documents, people, organizations, facts, events, evidence, deadlines, notes, tasks, drafts, communications, research, and AI outputs must connect to a Matter whenever applicable.
+The central object for Professional work is a Matter. For Nyaya Prosecution the central object is a Criminal Case. Documents, people, organizations, facts, events, evidence, deadlines, notes, tasks, drafts, communications, research, and AI outputs must connect to a Matter or Case whenever applicable.
 
 ## 3. Non-Negotiable Constraints
 - Never present AI output as guaranteed legal advice.
@@ -94,36 +94,35 @@ Use the same core system as Law Firm Workspace with:
 
 Do not create a separate codebase for solo lawyers.
 
-### 4.3 Law Student Workspace
-Support only:
-- Nyaya Professor
-- Legal concept explanations
-- Case upload and case brief generation
-- Interactive follow-up questions about uploaded cases
-- Comparison of cases, rules, holdings, reasoning, and hypotheticals
-- Citation-backed study answers
-- Saved study conversations and case notebooks
+### 4.3 Nyaya Prosecution Workspace
+Primary product workspace for district attorney / prosecution offices.
 
-Explicitly exclude for now:
-- Flashcards
-- Quiz generation
-- Bar exam coaching
-- Grade prediction
-- Academic dishonesty features
+Roles:
+- Prosecution Office Admin
+- Supervising Prosecutor
+- Prosecutor
+- Investigator
+- Legal Support
+- Prosecution Read-Only
 
-### 4.4 Public Workspace
 Support:
-- Plain-language legal information
-- Legal document explanation
-- Court notice explanation
-- General process explanation
-- Event timeline builder
-- Evidence and document organizer
-- Attorney consultation summary
-- Lawyer-type guidance, not lawyer selection guarantees
-- Clear escalation to a qualified attorney when risk is high
+- Criminal case intake, assignment, and status
+- Defendants, charges, elements matrix
+- Evidence with provenance and chain of custody
+- Witnesses and statements
+- Discovery intake and production tracking
+- Human disclosure review (Brady/Giglio candidates) — no autonomous final determinations
+- Warrants, suppression issues, motions, subpoenas, hearings, pleas (tracking only)
+- Case timeline, research, tasks, supervisor operations, audit
 
-The public workspace must never imply attorney-client privilege or an attorney-client relationship.
+Safety (non-negotiable):
+- No guilt verdicts or probability-of-guilt scores
+- No autonomous charging, plea, disclosure, or filing decisions
+- No cross-case or cross-tenant bleed
+- Consequential legal decisions remain human-controlled
+
+### 4.4 Removed workspaces
+Nyaya Professor (student) and Nyaya Guide (public) are removed from product scope. Do not restore runtime surfaces, feature flags, or navigation for them.
 
 ## 5. Primary Navigation
 
@@ -140,23 +139,14 @@ The public workspace must never imply attorney-client privilege or an attorney-c
 - Nyaya
 - Settings
 
-### Student Navigation
-- Home
-- Nyaya Professor
+### Prosecution Navigation
+- Home / Caseload
 - Cases
-- Case Briefs
-- Notes
-- Saved Conversations
-- Settings
-
-### Public Navigation
-- Nyaya Guide
-- Explain a Document
-- Build My Timeline
-- Prepare for a Lawyer
-- My Files
-- Saved Conversations
-- Safety and Privacy
+- Discovery / Disclosure queues
+- Research
+- Tasks / Deadlines
+- Audit (authorized roles)
+- Settings / Office configuration
 
 ## 6. Required Core Experiences
 
@@ -190,10 +180,9 @@ The assistant must operate in explicit modes:
 - Selected documents
 - Drafting
 - Review
-- Student explanation
-- Public explanation
+- Current prosecution case
 
-Always show the active context. Never silently mix unrelated matters or workspaces.
+Always show the active context. Never silently mix unrelated matters, cases, or workspaces.
 
 ### 6.3 Nyaya Memory
 Nyaya Memory must store structured, reviewable information:
@@ -339,7 +328,15 @@ Initial professional roles:
 
 Permissions must be capability-based, not hard-coded only by title.
 
-Student and Public accounts must be isolated from professional organizations unless a user is explicitly invited into a client portal or shared workspace.
+Initial prosecution roles:
+- Prosecution Office Admin
+- Supervising Prosecutor
+- Prosecutor
+- Investigator
+- Legal Support
+- Prosecution Read-Only
+
+Professional and Prosecution organizations stay isolated unless a user is explicitly invited into a shared portal or dual membership.
 
 ## 12. Data Model Principles
 Use globally unique IDs. Include `tenantId` on all tenant-owned records and `matterId` on all matter-child records where applicable.
@@ -378,9 +375,9 @@ Core entities:
 - AuditEvent
 - TimeEntry
 - Invoice
-- StudentCase
-- CaseBrief
-- PublicIntake
+- CriminalCase
+- ProsecutionEvidence
+- ProsecutionDisclosure
 
 ## 13. UI Rules
 - The interface must feel like a professional legal workspace, not a consumer chatbot.
@@ -400,19 +397,13 @@ Core entities:
 - Warn when citations cannot be verified.
 - Preserve confidentiality and access boundaries.
 
-### Student
-- Encourage learning and reasoning.
-- Do not impersonate a professor or claim academic authority.
-- Do not knowingly complete restricted examinations.
-- Show case sources and distinguish holding from commentary.
-
-### Public
-- Provide legal information, not definitive legal advice.
-- Explain that laws vary by jurisdiction and facts.
-- Ask for jurisdiction before jurisdiction-dependent guidance.
-- Highlight urgent deadlines and recommend qualified legal help for high-risk matters.
-- Do not predict guaranteed outcomes.
-- Do not create false expectations of confidentiality or privilege.
+### Prosecution
+- Label all AI output as draft work product for office use.
+- No guilt verdicts or probability-of-guilt scores.
+- No autonomous charging, plea, Brady/Giglio, or filing decisions.
+- Require human review for consequential disclosure and charging actions.
+- Preserve case and tenant isolation.
+- Do not claim CJIS or government certification unless separately and explicitly achieved.
 
 ## 15. Build Order
 Follow this order unless explicitly changed:
@@ -458,19 +449,19 @@ Phase 5: Matter Intelligence
 - AI insights
 - Cross-document contradiction detection
 
-Phase 6: Student Workspace
-- Nyaya Professor
-- Case upload
-- Case brief generator
-- Interactive case Q&A
-- Notes and saved sessions
+Phase 6: Nyaya Prosecution Foundation
+- Prosecution roles and RBAC
+- Criminal case intake and assignment
+- Charges, elements, evidence, witnesses
+- Discovery / human disclosure review
+- Warrants, motions, subpoenas, hearings, pleas tracking
+- Case timeline, research, tasks, supervisor operations
 
-Phase 7: Public Workspace
-- Plain-language Q&A
-- Document explanation
-- Timeline builder
-- Consultation summary
-- Risk and escalation flows
+Phase 7: Prosecution Design-Partner Hardening
+- Disclosure workflow UI completeness
+- Chain of custody productization
+- Model-router high-stakes prosecution mapping
+- E2E / load / isolation acceptance
 
 Phase 8: Firm Operations
 - Email and calendar integrations
@@ -484,11 +475,14 @@ Do not build unless requested:
 - A proprietary foundation model
 - Autonomous court filing
 - Autonomous legal representation
-- Government workspace
 - Corporate legal department workspace
+- Insurance or general enterprise workspaces
+- Student workspace / Nyaya Professor
+- Public workspace / Nyaya Guide
 - Jury prediction
 - Judge outcome guarantees
-- Settlement probability presented as fact
+- Settlement or guilt probability presented as fact
+- Autonomous charging, plea, or Brady/Giglio decisions
 - Flashcards
 - Quizzes
 - Bar exam coaching
@@ -498,6 +492,7 @@ Do not build unless requested:
 - Complex accounting
 - Full e-discovery production platform in the MVP
 - Direct replacement for Westlaw or Lexis without licensed data
+- Claiming CJIS or government certification without an explicit certified program
 
 ## 17. Definition of Done
 A feature is not complete until it has:

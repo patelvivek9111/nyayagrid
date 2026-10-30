@@ -533,12 +533,7 @@ describe("P0 security gates", () => {
     expect(problems.some((p) => p.includes("INNGEST_DISABLED"))).toBe(true);
   });
 
-  it("rejects Professor, Agents, and authority HTTP import on the professional beta profile", () => {
-    expect(
-      collectProductionConfigProblems({ ...SAFE_PRODUCTION_ENV, FEATURE_PROFESSOR: "1" }).some((p) =>
-        p.includes("FEATURE_PROFESSOR"),
-      ),
-    ).toBe(true);
+  it("rejects Agents and authority HTTP import on the professional beta profile", () => {
     expect(
       collectProductionConfigProblems({ ...SAFE_PRODUCTION_ENV, FEATURE_AGENTS: "1" }).some((p) =>
         p.includes("FEATURE_AGENTS"),

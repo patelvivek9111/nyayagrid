@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { AuthorizationError } from "@nyayagrid/permissions";
 import { InviteError, UnauthenticatedError, ClerkHandshakeError, userFacingInviteMessage, USER_FACING_AUTH } from "@nyayagrid/auth";
 import { appendClerkAuthHeaders } from "./clerk-session";
-import { StudentAccessError, GuideAuthorizationError } from "@nyayagrid/workspaces";
 import { DocumentDownloadError } from "@nyayagrid/documents";
 import {
   RateLimitExceededError,
@@ -64,9 +63,6 @@ export function handleRouteError(error: unknown) {
   }
   if (error instanceof AuthorizationError) {
     return jsonError(error.code, USER_FACING_AUTH.forbidden, 403);
-  }
-  if (error instanceof StudentAccessError || error instanceof GuideAuthorizationError) {
-    return jsonError(error.code, error.message, 404);
   }
   if (error instanceof DocumentDownloadError) {
     return jsonError(error.code, error.message, error.code === "NOT_FOUND" ? 404 : 409);

@@ -416,11 +416,6 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     }
   }
 
-  if (isTruthyFlag(read(env, "FEATURE_PROFESSOR")) && !isTruthyFlag(read(env, "ALLOW_PROFESSOR_IN_PRODUCTION"))) {
-    problems.push(
-      "FEATURE_PROFESSOR is enabled. Professional controlled beta keeps Nyaya Professor off. Unset FEATURE_PROFESSOR or set ALLOW_PROFESSOR_IN_PRODUCTION=1 only for a dedicated student cluster.",
-    );
-  }
   if (isTruthyFlag(read(env, "FEATURE_AGENTS")) && !isTruthyFlag(read(env, "ALLOW_AGENTS_IN_PRODUCTION"))) {
     problems.push(
       "FEATURE_AGENTS is enabled. Agent reliability is not proven for beta. Unset FEATURE_AGENTS.",

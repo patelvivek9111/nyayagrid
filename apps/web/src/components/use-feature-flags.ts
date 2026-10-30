@@ -5,8 +5,6 @@ import type { FeatureFlagState } from "@nyayagrid/platform";
 
 const STAGING_DEFAULTS: FeatureFlagState = {
   agents: false,
-  professor: false,
-  guide: false,
   research: false,
   ocr: false,
   live_ai: false,

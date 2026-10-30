@@ -25,8 +25,6 @@ export type JobName =
   | "research.run_query"
   | "agent.execute_run"
   | "agent.continue_run"
-  | "student.ingest_case"
-  | "guide.ingest_document"
   | "ping";
 
 export type JobPayload = {

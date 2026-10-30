@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cx } from "@nyayagrid/ui";
 import { useActiveOrganization } from "@/components/use-active-organization";
-import { useFeatureFlags } from "@/components/use-feature-flags";
 import { useOrgCapability } from "@/components/use-org-capability";
 import { IntelligenceDialog } from "@/components/ux/case-intelligence";
 import { shouldShowWorkspaceSwitcher } from "@/lib/workspace-ux";
@@ -18,7 +17,6 @@ type ChatRow = { id: string; title: string };
 export function GlobalSidebar() {
   const pathname = usePathname();
   const { organizationId, organizations, selectOrganization, loading } = useActiveOrganization();
-  const { flags } = useFeatureFlags();
   const complianceCap = useOrgCapability(organizationId, "compliance.manage");
   const prosecutionView = useOrgCapability(organizationId, "prosecution.view");
   const prosecutionAdmin = useOrgCapability(organizationId, "organization.manage");
@@ -139,22 +137,6 @@ export function GlobalSidebar() {
               >
                 Client view
               </Link>
-              {flags.professor ? (
-                <Link
-                  href="/professor"
-                  className="rounded-md px-1 py-0.5 text-xs text-ink/60 hover:bg-black/[0.03] hover:text-ink"
-                >
-                  Professor
-                </Link>
-              ) : null}
-              {flags.guide ? (
-                <Link
-                  href="/guide"
-                  className="rounded-md px-1 py-0.5 text-xs text-ink/60 hover:bg-black/[0.03] hover:text-ink"
-                >
-                  Guide
-                </Link>
-              ) : null}
               <SignOutControl className="mt-1 rounded-md px-1 py-0.5 text-left text-xs font-semibold text-ink/70 hover:bg-black/[0.03] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" />
             </div>
           </div>

@@ -158,7 +158,7 @@ export default function PortalPage() {
           description={
             guestPortalOnly
               ? "This is your workspace. Open an assigned case to review shared documents. Asking Nyaya is optional — you do not need it to continue."
-              : "Documents and limited Ask for cases you have been assigned. This is not a student or public workspace."
+              : "Documents and limited Ask for cases you have been assigned. This is a client portal view, not a Professional or Prosecution workspace."
           }
         />
         {error ? (

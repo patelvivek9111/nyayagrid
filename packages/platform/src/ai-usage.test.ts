@@ -21,18 +21,13 @@ function fakeDb(behavior: { returning: () => unknown[] } | { throwOnValues: Erro
 }
 
 describe("inferWorkspaceFromFeature / inferCapabilityFromFeature", () => {
-  it("maps guide.* to the public workspace and guide capability", () => {
-    expect(inferWorkspaceFromFeature("guide.ask")).toBe("public");
-    expect(inferCapabilityFromFeature("guide.ask")).toBe("guide");
-  });
-
   it("maps agent.* to the agents capability regardless of workspace", () => {
     expect(inferCapabilityFromFeature("agent.draft")).toBe("agents");
   });
 
-  it("maps a feature with an organization to the professional workspace", () => {
+  it("maps organization-scoped features to the professional workspace", () => {
     expect(inferWorkspaceFromFeature("nyaya.ask", "org_1")).toBe("professional");
-    expect(inferWorkspaceFromFeature("nyaya.ask", null)).toBe("public");
+    expect(inferWorkspaceFromFeature("nyaya.ask", null)).toBe("professional");
   });
 });
 
@@ -73,7 +68,7 @@ describe("recordUsage", () => {
     const db = { insert } as unknown as Database;
 
     const result = await recordUsage(db, {
-      feature: "guide.ask",
+      feature: "nyaya.ask",
       provider: "mock",
       model: "mock-1",
     });

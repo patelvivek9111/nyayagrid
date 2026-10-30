@@ -19,7 +19,7 @@ export type RecordUsageInput = {
   organizationId?: string | null;
   userId?: string | null;
   matterId?: string | null;
-  /** Short, stable identifier for the call site, e.g. "nyaya.ask", "guide.ask", "agent.draft". */
+  /** Short, stable identifier for the call site, e.g. "nyaya.ask", "agent.draft". */
   feature: string;
   provider: string;
   model: string;
@@ -38,8 +38,6 @@ export type RecordUsageInput = {
 const FEATURE_CAPABILITY_PREFIXES: Array<[string, ModelCapability]> = [
   ["agent.", "agents"],
   ["nyaya.", "qa"],
-  ["guide.", "guide"],
-  ["professor.", "professor"],
   ["research.", "research"],
   ["draft.", "draft"],
   ["extraction.", "extraction"],
@@ -53,16 +51,16 @@ export function inferCapabilityFromFeature(feature: string): ModelCapability {
 }
 
 /**
- * Best-effort mapping from a feature string (and whether an organization is present) to the
- * workspace enum. Guide/Professor are user-scoped workspaces with no organization by design.
+ * Best-effort mapping from a feature string to the workspace column enum.
+ * Prosecution and Professional both persist as `professional` until schema coordination
+ * adds a dedicated prosecution workspace value. Put `productWorkspace: "prosecution"` in
+ * metadata when callers need product-level distinction.
  */
 export function inferWorkspaceFromFeature(
-  feature: string,
-  organizationId?: string | null,
+  _feature: string,
+  _organizationId?: string | null,
 ): AiUsageWorkspace {
-  if (feature.startsWith("guide.")) return "public";
-  if (feature.startsWith("professor.")) return "student";
-  return organizationId ? "professional" : "public";
+  return "professional";
 }
 
 /**

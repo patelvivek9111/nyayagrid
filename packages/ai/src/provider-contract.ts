@@ -23,8 +23,7 @@ export type RouterSubsystem =
   | "graph"
   | "memory"
   | "agents"
-  | "professor"
-  | "guide";
+  | "prosecution";
 
 export const CERTIFICATION_SUBSYSTEMS = [
   "ask",

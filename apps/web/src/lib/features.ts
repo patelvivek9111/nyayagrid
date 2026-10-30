@@ -17,13 +17,3 @@ export function assertFeatureEnabled(flag: FeatureFlag): void {
     throw new FeatureDisabledError(flag);
   }
 }
-
-export async function requireGuideUser(headers: Headers) {
-  assertFeatureEnabled("guide");
-  return requireUser(headers);
-}
-
-export async function requireProfessorUser(headers: Headers) {
-  assertFeatureEnabled("professor");
-  return requireUser(headers);
-}

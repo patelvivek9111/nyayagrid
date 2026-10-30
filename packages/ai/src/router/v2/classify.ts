@@ -108,12 +108,7 @@ function mapSubsystemToCategory(
     }
     return { category: "STRUCTURED_EXTRACTION", reasons };
   }
-  if (
-    subsystem === "ask" ||
-    subsystem === "agents" ||
-    subsystem === "professor" ||
-    subsystem === "guide"
-  ) {
+  if (subsystem === "ask" || subsystem === "agents") {
     if (highRisk) {
       reasons.push("SUBSYSTEM_ASK_HIGH_RISK");
       return { category: "HARD_LEGAL_REASONING", reasons };

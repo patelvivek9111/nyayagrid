@@ -16,8 +16,7 @@ export function safeAuthReturnTo(raw: string | null | undefined): string {
     trimmed.startsWith("/app") ||
     trimmed.startsWith("/invites/accept") ||
     trimmed.startsWith("/invites/resume") ||
-    trimmed.startsWith("/portal") ||
-    trimmed.startsWith("/professor")
+    trimmed.startsWith("/portal")
   ) {
     return trimmed;
   }
