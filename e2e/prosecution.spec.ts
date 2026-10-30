@@ -493,7 +493,7 @@ test.describe.serial("signed-in prosecution workspace", () => {
     await expect(page.getByText(/Chain of custody/i).first()).toBeVisible();
 
     await page.goto(`/app/prosecution/${caseId}/witnesses`);
-    await expect(page.getByText(`P0 Witness ${suffix}`)).toBeVisible();
+    await expect(page.getByText(`P0 Witness ${suffix}`).first()).toBeVisible();
     await expect(page.getByText(/Contradictory/i).first()).toBeVisible();
 
     // Cross-org isolation: second org cannot read this case.
