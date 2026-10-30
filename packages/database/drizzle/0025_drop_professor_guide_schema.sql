@@ -1,15 +1,13 @@
--- Drop retired Nyaya Professor (Student Workspace) and Nyaya Guide (Public Workspace) tables.
--- Historical migrations 0007/0009 remain immutable. Active product surfaces already removed.
--- Retains workspace_type enum values student/public for historical usage/audit decode only.
--- Explicit child-to-parent drop order. No FKs from Professional, Prosecution, Research, or
--- authority corpus into these tables (user-scoped phase8 only).
--- Reverse: 0025_drop_professor_guide_schema.down.sql is a no-op marker (no row restoration).
+-- Drop retired Nyaya Professor / Nyaya Guide schema (forward-only).
+-- Historical migrations 0007/0009 remain immutable.
+-- workspace_type student/public retained for historical usage decode.
+-- Drop order respects FKs (student_notes -> student_case_briefs; children before parents).
 
 DROP TABLE IF EXISTS "student_messages";--> statement-breakpoint
+DROP TABLE IF EXISTS "student_notes";--> statement-breakpoint
 DROP TABLE IF EXISTS "student_case_chunks";--> statement-breakpoint
 DROP TABLE IF EXISTS "student_case_briefs";--> statement-breakpoint
 DROP TABLE IF EXISTS "student_case_comparisons";--> statement-breakpoint
-DROP TABLE IF EXISTS "student_notes";--> statement-breakpoint
 DROP TABLE IF EXISTS "student_saved_items";--> statement-breakpoint
 DROP TABLE IF EXISTS "student_conversations";--> statement-breakpoint
 DROP TABLE IF EXISTS "student_case_versions";--> statement-breakpoint
