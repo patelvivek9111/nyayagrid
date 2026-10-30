@@ -177,8 +177,7 @@ describe("collectProductionConfigProblems", () => {
     } catch (error) {
       expect(error).toBeInstanceOf(ConfigurationError);
       const message = error instanceof ConfigurationError ? error.message : String(error);
-      const details =
-        error instanceof ConfigurationError ? error.problems.join("\n") : message;
+      const details = error instanceof ConfigurationError ? error.problems.join("\n") : message;
       expect(details).toMatch(/EMBEDDING_PROVIDER resolves to mock/);
       expect(details).not.toMatch(/sk-openai-test/);
     }
@@ -548,9 +547,9 @@ describe("P0 security gates", () => {
   });
 
   it("refuses synthetic writers against APP_ENV=production", () => {
-    expect(() =>
-      assertNotProductionDataTarget("nyaya-bench", { APP_ENV: "production" }),
-    ).toThrow(ConfigurationError);
+    expect(() => assertNotProductionDataTarget("nyaya-bench", { APP_ENV: "production" })).toThrow(
+      ConfigurationError,
+    );
     expect(() =>
       assertNotProductionDataTarget("nyaya-bench", {
         APP_ENV: "production",

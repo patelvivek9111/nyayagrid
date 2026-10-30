@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { AuthorizationError } from "@nyayagrid/permissions";
-import { InviteError, UnauthenticatedError, ClerkHandshakeError, userFacingInviteMessage, USER_FACING_AUTH } from "@nyayagrid/auth";
+import {
+  InviteError,
+  UnauthenticatedError,
+  ClerkHandshakeError,
+  userFacingInviteMessage,
+  USER_FACING_AUTH,
+} from "@nyayagrid/auth";
 import { appendClerkAuthHeaders } from "./clerk-session";
 import { DocumentDownloadError } from "@nyayagrid/documents";
 import {

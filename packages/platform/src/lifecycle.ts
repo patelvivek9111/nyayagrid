@@ -704,7 +704,10 @@ export async function getActiveTrainingConsent(params: {
     .select()
     .from(trainingConsents)
     .where(
-      and(eq(trainingConsents.organizationId, params.organizationId), isNull(trainingConsents.withdrawnAt)),
+      and(
+        eq(trainingConsents.organizationId, params.organizationId),
+        isNull(trainingConsents.withdrawnAt),
+      ),
     )
     .orderBy(desc(trainingConsents.recordedAt))
     .limit(1);

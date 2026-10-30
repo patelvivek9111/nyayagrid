@@ -295,7 +295,7 @@ export function GlobalSidebar() {
           title="Search legal sources"
           active={pathname.startsWith("/app/research")}
         />
-        {(prosecutionView.allowed || prosecutionAdmin.allowed) ? (
+        {prosecutionView.allowed || prosecutionAdmin.allowed ? (
           <WorkspaceNavLink
             href="/app/prosecution"
             label="Prosecution"

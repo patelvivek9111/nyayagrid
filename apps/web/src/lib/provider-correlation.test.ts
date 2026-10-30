@@ -6,10 +6,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createAIProviderFromEnv, MockAIProvider } from "@nyayagrid/ai";
-import {
-  CORRELATION_ID_HEADER,
-  withCorrelationId,
-} from "@nyayagrid/observability";
+import { CORRELATION_ID_HEADER, withCorrelationId } from "@nyayagrid/observability";
 import { beginRouteCorrelation } from "./request-correlation";
 
 const webRoot = resolve(__dirname, "../..");

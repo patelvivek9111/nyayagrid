@@ -202,7 +202,14 @@ export function isDevAuthAllowed(env: EnvSource = process.env): boolean {
   return isExplicitLocalDevAuthAllowed(env) || isStagingDevAuthAllowed(env);
 }
 
-const WEAK_INNGEST_SECRETS = new Set(["local", "test", "changeme", "placeholder", "secret", "inngest"]);
+const WEAK_INNGEST_SECRETS = new Set([
+  "local",
+  "test",
+  "changeme",
+  "placeholder",
+  "secret",
+  "inngest",
+]);
 
 export function isWeakInngestSigningKey(value: string | undefined): boolean {
   if (!value) return true;
@@ -375,7 +382,9 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     problems.push("S3_BUCKET is required for document storage.");
   }
   if (!read(env, "NEXT_PUBLIC_APP_URL")) {
-    problems.push("NEXT_PUBLIC_APP_URL is required so invite and webhook callbacks have a public origin.");
+    problems.push(
+      "NEXT_PUBLIC_APP_URL is required so invite and webhook callbacks have a public origin.",
+    );
   }
 
   if (isTruthyFlag(read(env, "ALLOW_MINIO_IN_PRODUCTION"))) {
@@ -416,7 +425,10 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     }
   }
 
-  if (isTruthyFlag(read(env, "FEATURE_AGENTS")) && !isTruthyFlag(read(env, "ALLOW_AGENTS_IN_PRODUCTION"))) {
+  if (
+    isTruthyFlag(read(env, "FEATURE_AGENTS")) &&
+    !isTruthyFlag(read(env, "ALLOW_AGENTS_IN_PRODUCTION"))
+  ) {
     problems.push(
       "FEATURE_AGENTS is enabled. Agent reliability is not proven for beta. Unset FEATURE_AGENTS.",
     );
@@ -579,10 +591,9 @@ export function validateConfigForEnv(env: EnvSource = process.env): ConfigValida
   // Every environment: unknown EMBEDDING_PROVIDER must fail closed (never silent Mock).
   const embeddingProvider = resolveEmbeddingProvider(env);
   if (!isSupportedEmbeddingProvider(embeddingProvider)) {
-    throw new ConfigurationError(
-      "Refusing to start: unsupported EMBEDDING_PROVIDER",
-      [unsupportedEmbeddingProviderProblem(embeddingProvider)],
-    );
+    throw new ConfigurationError("Refusing to start: unsupported EMBEDDING_PROVIDER", [
+      unsupportedEmbeddingProviderProblem(embeddingProvider),
+    ]);
   }
 
   if (appEnv === "production") {

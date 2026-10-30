@@ -28,14 +28,14 @@ Do not add corporate legal-department, insurance, or general enterprise workspac
 
 Built-in capabilities (not separate companies, codebases, or `{module}.com` products):
 
-| Module | Role |
-| --- | --- |
-| **Nyaya** | Conversational AI and orchestration |
-| **Nyaya Graph** | Matter / case knowledge graph |
-| **Nyaya Memory** | Persistent, reviewable matter intelligence |
-| **Nyaya Timeline** | Source-linked chronology |
-| **Nyaya Research** | Source-grounded legal research |
-| **Nyaya Draft** | Drafting, editing, citation, document generation |
+| Module                | Role                                                 |
+| --------------------- | ---------------------------------------------------- |
+| **Nyaya**             | Conversational AI and orchestration                  |
+| **Nyaya Graph**       | Matter / case knowledge graph                        |
+| **Nyaya Memory**      | Persistent, reviewable matter intelligence           |
+| **Nyaya Timeline**    | Source-linked chronology                             |
+| **Nyaya Research**    | Source-grounded legal research                       |
+| **Nyaya Draft**       | Drafting, editing, citation, document generation     |
 | **Nyaya Prosecution** | Criminal case workspace for DA / prosecution offices |
 
 All modules share one identity system, design system, API surface, security model, and data platform.
@@ -171,16 +171,16 @@ Professional and Prosecution organization memberships stay isolated unless a use
 
 ## 9. Technical stack (default)
 
-| Layer | Choice |
-| --- | --- |
-| Frontend | Next.js, React, TypeScript (`apps/web`) |
-| Worker | `apps/worker` |
-| Database | PostgreSQL + pgvector |
-| Schema | Drizzle (`packages/database`, SQL migrations under `drizzle/`) |
-| Auth | Provider adapter (dev / Clerk) with MFA path for enterprise |
-| Object storage | S3-compatible (MinIO locally) |
-| AI | Provider-agnostic adapters (OpenAI, Anthropic, Google, …) |
-| Jobs | Durable queue (Inngest via `@nyayagrid/jobs`) |
+| Layer          | Choice                                                         |
+| -------------- | -------------------------------------------------------------- |
+| Frontend       | Next.js, React, TypeScript (`apps/web`)                        |
+| Worker         | `apps/worker`                                                  |
+| Database       | PostgreSQL + pgvector                                          |
+| Schema         | Drizzle (`packages/database`, SQL migrations under `drizzle/`) |
+| Auth           | Provider adapter (dev / Clerk) with MFA path for enterprise    |
+| Object storage | S3-compatible (MinIO locally)                                  |
+| AI             | Provider-agnostic adapters (OpenAI, Anthropic, Google, …)      |
+| Jobs           | Durable queue (Inngest via `@nyayagrid/jobs`)                  |
 
 Do not introduce microservices until boundaries require them.
 

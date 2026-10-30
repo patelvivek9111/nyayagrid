@@ -11,7 +11,8 @@ export function safeAuthReturnTo(raw: string | null | undefined): string {
   if (!trimmed.startsWith("/")) return DEFAULT_AFTER_SIGN_IN;
   if (trimmed.startsWith("//")) return DEFAULT_AFTER_SIGN_IN;
   if (trimmed.includes("://")) return DEFAULT_AFTER_SIGN_IN;
-  if (trimmed.startsWith("/sign-in") || trimmed.startsWith("/sign-up")) return DEFAULT_AFTER_SIGN_IN;
+  if (trimmed.startsWith("/sign-in") || trimmed.startsWith("/sign-up"))
+    return DEFAULT_AFTER_SIGN_IN;
   if (
     trimmed.startsWith("/app") ||
     trimmed.startsWith("/invites/accept") ||
@@ -25,9 +26,7 @@ export function safeAuthReturnTo(raw: string | null | undefined): string {
 
 type PublicEnv = Record<string, string | undefined>;
 
-export function clerkHostedSignInUrl(
-  env: PublicEnv = process.env,
-): string | null {
+export function clerkHostedSignInUrl(env: PublicEnv = process.env): string | null {
   const url = env.NEXT_PUBLIC_CLERK_SIGN_IN_URL?.trim();
   if (!url || url.startsWith("/")) return null;
   try {
@@ -39,9 +38,7 @@ export function clerkHostedSignInUrl(
   }
 }
 
-export function clerkHostedSignUpUrl(
-  env: PublicEnv = process.env,
-): string | null {
+export function clerkHostedSignUpUrl(env: PublicEnv = process.env): string | null {
   const url = env.NEXT_PUBLIC_CLERK_SIGN_UP_URL?.trim();
   if (!url || url.startsWith("/")) return null;
   try {
@@ -54,9 +51,7 @@ export function clerkHostedSignUpUrl(
 }
 
 /** Clerk Account Portal user profile. Password, email, and devices stay on Clerk. */
-export function clerkHostedUserProfileUrl(
-  env: PublicEnv = process.env,
-): string | null {
+export function clerkHostedUserProfileUrl(env: PublicEnv = process.env): string | null {
   const hosted = clerkHostedSignInUrl(env);
   if (!hosted) return null;
   try {
@@ -70,9 +65,7 @@ export function clerkHostedUserProfileUrl(
   }
 }
 
-export function isClerkPublishableConfigured(
-  env: PublicEnv = process.env,
-): boolean {
+export function isClerkPublishableConfigured(env: PublicEnv = process.env): boolean {
   const key = env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY?.trim() ?? "";
   return key.startsWith("pk_");
 }
@@ -98,7 +91,11 @@ export function applyClerkAfterAuthRedirect(targetUrl: string, redirectUrl: stri
   return url.toString();
 }
 
-export function clerkContinueHref(hostedSignInUrl: string, returnTo: string, appOrigin: string): string {
+export function clerkContinueHref(
+  hostedSignInUrl: string,
+  returnTo: string,
+  appOrigin: string,
+): string {
   return applyClerkAfterAuthRedirect(hostedSignInUrl, absoluteInviteResumeUrl(returnTo, appOrigin));
 }
 
@@ -117,7 +114,9 @@ export function isSafeInviteResumeUrl(url: string, appOrigin: string): boolean {
     const origin = new URL(appOrigin);
     if (parsed.origin !== origin.origin) return false;
     if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
-    return parsed.pathname === "/invites/accept" && Boolean(parsed.searchParams.get("token")?.trim());
+    return (
+      parsed.pathname === "/invites/accept" && Boolean(parsed.searchParams.get("token")?.trim())
+    );
   } catch {
     return false;
   }
@@ -145,10 +144,7 @@ export function inviteReturnCookieValue(returnTo: string | null | undefined): st
   return path;
 }
 
-export function inviteAuthContinueHref(
-  returnTo: string,
-  intent: "signin" | "signup",
-): string {
+export function inviteAuthContinueHref(returnTo: string, intent: "signin" | "signup"): string {
   const params = new URLSearchParams();
   params.set("returnTo", safeAuthReturnTo(returnTo));
   params.set("intent", intent);

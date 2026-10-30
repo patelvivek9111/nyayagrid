@@ -49,9 +49,7 @@ export default function PortalPage() {
         const data = await res.json();
         if (cancelled) return;
         if (res.ok) {
-          setRoleKey(
-            typeof data.membership?.roleKey === "string" ? data.membership.roleKey : null,
-          );
+          setRoleKey(typeof data.membership?.roleKey === "string" ? data.membership.roleKey : null);
         } else {
           setRoleKey(null);
         }
@@ -251,7 +249,9 @@ export default function PortalPage() {
                 {busy ? "Asking…" : "Ask"}
               </Button>
             </form>
-            {answer ? <p className="mt-3 whitespace-pre-wrap text-sm text-ink/80">{answer}</p> : null}
+            {answer ? (
+              <p className="mt-3 whitespace-pre-wrap text-sm text-ink/80">{answer}</p>
+            ) : null}
           </Panel>
         </div>
       </main>
