@@ -22,26 +22,54 @@ export const OWNER_CAPABILITIES: Capability[] = [
   "prosecution.view",
   "prosecution.edit",
   "prosecution.review",
+  "prosecution.case.manage",
+  "prosecution.charge.manage",
+  "prosecution.evidence.manage",
+  "prosecution.witness.manage",
+  "prosecution.discovery.manage",
+  "prosecution.disclosure.review",
+  "prosecution.procedure.manage",
+  "prosecution.motion.manage",
+  "prosecution.task.manage",
 ];
 
-const PROSECUTION_VIEW = ["prosecution.view", "documents.view"] as const satisfies readonly Capability[];
-const PROSECUTION_WORK = [
+const PROSECUTION_VIEW = [
   "prosecution.view",
-  "prosecution.edit",
+  "documents.view",
+] as const satisfies readonly Capability[];
+
+/** Full operational case-work capabilities shared by prosecutors and supervisors. */
+const PROSECUTION_OPERATIONAL = [
+  "prosecution.view",
+  "prosecution.case.manage",
+  "prosecution.charge.manage",
+  "prosecution.evidence.manage",
+  "prosecution.witness.manage",
+  "prosecution.discovery.manage",
+  "prosecution.procedure.manage",
+  "prosecution.motion.manage",
+  "prosecution.task.manage",
   "documents.view",
   "documents.upload",
   "timeline.manage",
   "research.run",
+  "drafts.create",
 ] as const satisfies readonly Capability[];
 
+/**
+ * Broad `prosecution.edit` is retained for Owner and office admin backward compatibility.
+ * Legal Support must NOT receive prosecution.edit or charge/plea/disclosure finalization.
+ */
 export const PROSECUTION_ROLE_DEFINITIONS = [
   {
     key: "prosecution_office_admin",
     name: "Prosecution office admin",
     description: "Administer a prosecution office inside the organization",
     capabilities: [
-      ...PROSECUTION_WORK,
+      ...PROSECUTION_OPERATIONAL,
+      "prosecution.edit",
       "prosecution.review",
+      "prosecution.disclosure.review",
       "audit.view",
       "organization.manage",
     ] as Capability[],
@@ -50,25 +78,43 @@ export const PROSECUTION_ROLE_DEFINITIONS = [
     key: "supervising_prosecutor",
     name: "Supervising prosecutor",
     description: "Review prosecutors' work, including disclosure review",
-    capabilities: [...PROSECUTION_WORK, "prosecution.review"] as Capability[],
+    capabilities: [
+      ...PROSECUTION_OPERATIONAL,
+      "prosecution.review",
+      "prosecution.disclosure.review",
+      "audit.view",
+    ] as Capability[],
   },
   {
     key: "prosecutor",
     name: "Prosecutor",
     description: "Work a criminal case. Disclosure decisions stay with a reviewer.",
-    capabilities: [...PROSECUTION_WORK] as Capability[],
+    capabilities: [...PROSECUTION_OPERATIONAL] as Capability[],
   },
   {
     key: "investigator",
     name: "Investigator",
     description: "Add evidence and documents. Cannot edit charges or disclosure decisions.",
-    capabilities: ["prosecution.view", "documents.view", "documents.upload"] as Capability[],
+    capabilities: [
+      "prosecution.view",
+      "prosecution.evidence.manage",
+      "prosecution.witness.manage",
+      "documents.view",
+      "documents.upload",
+    ] as Capability[],
   },
   {
     key: "legal_support",
     name: "Legal support",
-    description: "Prepare files and discovery intake without final disclosure authority",
-    capabilities: ["prosecution.view", "prosecution.edit", "documents.view", "documents.upload"] as Capability[],
+    description:
+      "Prepare files and discovery intake without charge edit or final disclosure authority",
+    capabilities: [
+      "prosecution.view",
+      "prosecution.discovery.manage",
+      "prosecution.task.manage",
+      "documents.view",
+      "documents.upload",
+    ] as Capability[],
   },
   {
     key: "prosecution_read_only",

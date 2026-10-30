@@ -8,7 +8,11 @@ describe("prosecution elements matrix", () => {
     const workspace = buildProsecutorDemo();
     const criminalCase = workspace.snapshot("org-synthetic-prosecution").cases[0]!;
     const matrix = workspace.matrix("org-synthetic-prosecution", criminalCase.id);
-    expect(matrix.map((row) => row.status)).toEqual(["SUPPORTED", "CONFLICTED", "NO_EVIDENCE_FOUND"]);
+    expect(matrix.map((row) => row.status)).toEqual([
+      "SUPPORTED",
+      "CONFLICTED",
+      "NO_EVIDENCE_FOUND",
+    ]);
     expect(matrix.every((row) => row.guiltConclusion === null)).toBe(true);
     const overview = workspace.overview("org-synthetic-prosecution", criminalCase.id);
     expect(overview.charges).toHaveLength(2);
@@ -81,7 +85,11 @@ describe("prosecution isolation", () => {
     ).toThrow(/another criminal case/i);
     expect(() => workspace.overview("org-b", a.id)).toThrow(/not found/i);
     expect(workspace.snapshot("org-b").cases).toHaveLength(0);
-    expect(workspace.snapshot("org-a").audits.some((event) => event.action === "prosecution.case_created")).toBe(true);
+    expect(
+      workspace
+        .snapshot("org-a")
+        .audits.some((event) => event.action === "prosecution.case_created"),
+    ).toBe(true);
   });
 });
 
@@ -95,7 +103,9 @@ describe("prosecution graph, timeline, and roles", () => {
     expect(types.has("ChargeElement")).toBe(true);
     expect(types.has("Warrant")).toBe(true);
     expect(graph.edges.every((edge) => edge.provenance.extractionOrigin)).toBe(true);
-    expect(workspace.snapshot("org-synthetic-prosecution").timeline[0]?.eventType).toBe("CHARGE_FILED");
+    expect(workspace.snapshot("org-synthetic-prosecution").timeline[0]?.eventType).toBe(
+      "CHARGE_FILED",
+    );
   });
 
   it("separates read, edit, and disclosure review", () => {
@@ -103,6 +113,21 @@ describe("prosecution graph, timeline, and roles", () => {
     expect(prosecutionCapabilityAllows(new Set(["prosecution.edit"]), "edit")).toBe(true);
     expect(prosecutionCapabilityAllows(new Set(["prosecution.edit"]), "review")).toBe(false);
     expect(prosecutionCapabilityAllows(new Set(["prosecution.review"]), "review")).toBe(true);
+    expect(
+      prosecutionCapabilityAllows(new Set(["prosecution.charge.manage"]), "charge.manage"),
+    ).toBe(true);
+    expect(
+      prosecutionCapabilityAllows(new Set(["prosecution.discovery.manage"]), "charge.manage"),
+    ).toBe(false);
+    expect(
+      prosecutionCapabilityAllows(new Set(["prosecution.discovery.manage"]), "disclosure.flag"),
+    ).toBe(true);
+    expect(prosecutionCapabilityAllows(new Set(["prosecution.discovery.manage"]), "review")).toBe(
+      false,
+    );
+    expect(
+      prosecutionCapabilityAllows(new Set(["prosecution.evidence.manage"]), "evidence.manage"),
+    ).toBe(true);
   });
 });
 

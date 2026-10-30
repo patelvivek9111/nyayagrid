@@ -28,11 +28,22 @@ describe("system roles", () => {
       "legal_support",
       "prosecution_read_only",
     ]);
-    const reader = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "prosecution_read_only");
+    const reader = PROSECUTION_ROLE_DEFINITIONS.find(
+      (role) => role.key === "prosecution_read_only",
+    );
     expect(reader?.capabilities).not.toContain("prosecution.edit");
     expect(reader?.capabilities).not.toContain("prosecution.review");
     const prosecutor = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "prosecutor");
-    expect(prosecutor?.capabilities).toContain("prosecution.edit");
+    expect(prosecutor?.capabilities).toContain("prosecution.charge.manage");
+    expect(prosecutor?.capabilities).toContain("drafts.create");
     expect(prosecutor?.capabilities).not.toContain("prosecution.review");
+    const support = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "legal_support");
+    expect(support?.capabilities).toContain("prosecution.discovery.manage");
+    expect(support?.capabilities).not.toContain("prosecution.edit");
+    expect(support?.capabilities).not.toContain("prosecution.charge.manage");
+    expect(support?.capabilities).not.toContain("prosecution.review");
+    const investigator = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "investigator");
+    expect(investigator?.capabilities).toContain("prosecution.evidence.manage");
+    expect(investigator?.capabilities).not.toContain("prosecution.charge.manage");
   });
 });

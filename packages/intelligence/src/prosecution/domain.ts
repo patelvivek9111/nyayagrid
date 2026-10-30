@@ -146,19 +146,30 @@ export class ProsecutionError extends LegalIntelligenceError {
 
 export function assertTenant(organizationId: string, resourceOrganizationId: string): void {
   if (organizationId !== resourceOrganizationId) {
-    throw new ProsecutionError("CROSS_TENANT", "Organization cannot access another organization's prosecution data.", 403);
+    throw new ProsecutionError(
+      "CROSS_TENANT",
+      "Organization cannot access another organization's prosecution data.",
+      403,
+    );
   }
 }
 
 export function assertSameCase(caseId: string, resourceCaseId: string): void {
   if (caseId !== resourceCaseId) {
-    throw new ProsecutionError("CROSS_CASE", "Evidence and charges cannot reference another criminal case.", 403);
+    throw new ProsecutionError(
+      "CROSS_CASE",
+      "Evidence and charges cannot reference another criminal case.",
+      403,
+    );
   }
 }
 
 export function assertElementStatus(status: string): asserts status is ChargeElementStatus {
   if (status === "GUILTY" || status === "NOT_GUILTY") {
-    throw new ProsecutionError("GUILT_STATUS_FORBIDDEN", "Element status cannot be a guilt verdict.");
+    throw new ProsecutionError(
+      "GUILT_STATUS_FORBIDDEN",
+      "Element status cannot be a guilt verdict.",
+    );
   }
   if (!(CHARGE_ELEMENT_STATUSES as readonly string[]).includes(status)) {
     throw new ProsecutionError("INVALID_ELEMENT_STATUS", "Unsupported element status.");
@@ -189,7 +200,10 @@ export type StatementClaim = {
   kind?: "fact" | "time";
 };
 
-export function compareWitnessStatements(left: StatementClaim[], right: StatementClaim[]): Array<{
+export function compareWitnessStatements(
+  left: StatementClaim[],
+  right: StatementClaim[],
+): Array<{
   key: string;
   label: WitnessComparisonLabel;
   detail: string;
@@ -200,17 +214,29 @@ export function compareWitnessStatements(left: StatementClaim[], right: Statemen
   for (const claim of left) {
     const other = rightByKey.get(claim.key);
     if (!other) {
-      out.push({ key: claim.key, label: "OMISSION", detail: "The claim appears in one statement only." });
+      out.push({
+        key: claim.key,
+        label: "OMISSION",
+        detail: "The claim appears in one statement only.",
+      });
       continue;
     }
     if (claim.kind === "time" || other.kind === "time") {
       if (claim.value !== other.value) {
-        out.push({ key: claim.key, label: "TIMELINE_DIFFERENCE", detail: "The statements give different times." });
+        out.push({
+          key: claim.key,
+          label: "TIMELINE_DIFFERENCE",
+          detail: "The statements give different times.",
+        });
         continue;
       }
     }
     if (claim.value === other.value) {
-      out.push({ key: claim.key, label: "CONSISTENT", detail: "The statements match on this claim." });
+      out.push({
+        key: claim.key,
+        label: "CONSISTENT",
+        detail: "The statements match on this claim.",
+      });
     } else {
       out.push({
         key: claim.key,
@@ -221,7 +247,11 @@ export function compareWitnessStatements(left: StatementClaim[], right: Statemen
   }
   for (const claim of right) {
     if (!leftKeys.has(claim.key)) {
-      out.push({ key: claim.key, label: "ADDED_DETAIL", detail: "The later statement adds a claim." });
+      out.push({
+        key: claim.key,
+        label: "ADDED_DETAIL",
+        detail: "The later statement adds a claim.",
+      });
     }
   }
   if (out.length === 0) {
@@ -237,7 +267,10 @@ export function transitionDisclosure(params: {
   if (!DISCLOSURE_STATUSES.includes(params.next)) {
     throw new ProsecutionError("INVALID_DISCLOSURE_STATUS", "Unsupported disclosure status.");
   }
-  if ((params.next === "REVIEWED_DISCLOSE" || params.next === "REVIEWED_NOT_DISCLOSE") && !params.humanActor) {
+  if (
+    (params.next === "REVIEWED_DISCLOSE" || params.next === "REVIEWED_NOT_DISCLOSE") &&
+    !params.humanActor
+  ) {
     throw new ProsecutionError(
       "DISCLOSURE_HUMAN_REQUIRED",
       "Nyaya does not make the final disclosure determination.",
@@ -246,19 +279,115 @@ export function transitionDisclosure(params: {
   return params.next;
 }
 
-export function assertTimelineEventType(eventType: string): asserts eventType is ProsecutionTimelineEventType {
+export function assertTimelineEventType(
+  eventType: string,
+): asserts eventType is ProsecutionTimelineEventType {
   if (!(PROSECUTION_TIMELINE_EVENT_TYPES as readonly string[]).includes(eventType)) {
     throw new ProsecutionError("INVALID_TIMELINE_EVENT", "Unsupported prosecution timeline event.");
   }
 }
 
+export type ProsecutionResourceAction =
+  | "view"
+  | "edit"
+  | "review"
+  | "evidence"
+  | "case.manage"
+  | "charge.manage"
+  | "evidence.manage"
+  | "witness.manage"
+  | "discovery.manage"
+  | "procedure.manage"
+  | "motion.manage"
+  | "task.manage"
+  | "disclosure.flag";
+
+const FINAL_DISCLOSURE_STATUSES = new Set(["REVIEWED_DISCLOSE", "REVIEWED_NOT_DISCLOSE"]);
+
+export function isFinalDisclosureStatus(status: string): boolean {
+  return FINAL_DISCLOSURE_STATUSES.has(status);
+}
+
+export function prosecutionResourceCapability(resource: string): ProsecutionResourceAction {
+  switch (resource) {
+    case "defendants":
+    case "agencies":
+    case "officers":
+      return "case.manage";
+    case "charges":
+    case "elements":
+      return "charge.manage";
+    case "evidence":
+    case "evidence-links":
+      return "evidence.manage";
+    case "witnesses":
+    case "statements":
+      return "witness.manage";
+    case "discovery":
+      return "discovery.manage";
+    case "disclosure":
+      return "disclosure.flag";
+    case "procedure-issues":
+    case "warrants":
+    case "warrant-affidavits":
+    case "warrant-executions":
+    case "warrant-returns":
+      return "procedure.manage";
+    case "motions":
+    case "subpoenas":
+    case "hearings":
+    case "pleas":
+    case "dispositions":
+    case "sentences":
+      return "motion.manage";
+    case "tasks":
+      return "task.manage";
+    case "timeline":
+      return "case.manage";
+    default:
+      return "edit";
+  }
+}
+
 export function prosecutionCapabilityAllows(
   capabilities: ReadonlySet<string>,
-  action: "view" | "edit" | "review",
+  action: ProsecutionResourceAction,
 ): boolean {
-  if (action === "view") return capabilities.has("prosecution.view") || capabilities.has("prosecution.edit") || capabilities.has("prosecution.review");
-  if (action === "edit") return capabilities.has("prosecution.edit");
-  return capabilities.has("prosecution.review");
+  if (action === "view") {
+    return (
+      capabilities.has("prosecution.view") ||
+      capabilities.has("prosecution.edit") ||
+      capabilities.has("prosecution.review") ||
+      [...capabilities].some((cap) => cap.startsWith("prosecution.") && cap.endsWith(".manage"))
+    );
+  }
+  if (action === "review") {
+    return (
+      capabilities.has("prosecution.review") || capabilities.has("prosecution.disclosure.review")
+    );
+  }
+  // Broad edit still grants operational writes for Owner / office admin compatibility.
+  // It never grants disclosure finalization (handled above via "review").
+  if (capabilities.has("prosecution.edit")) {
+    return true;
+  }
+  if (action === "edit") return false;
+  if (action === "evidence" || action === "evidence.manage") {
+    return (
+      capabilities.has("prosecution.evidence.manage") ||
+      (capabilities.has("documents.upload") && capabilities.has("prosecution.view"))
+    );
+  }
+  if (action === "disclosure.flag") {
+    return (
+      capabilities.has("prosecution.discovery.manage") ||
+      capabilities.has("prosecution.case.manage") ||
+      capabilities.has("prosecution.review") ||
+      capabilities.has("prosecution.disclosure.review")
+    );
+  }
+  const cap = `prosecution.${action}` as const;
+  return capabilities.has(cap);
 }
 
 export type ElementMatrixRow = {
@@ -283,9 +412,24 @@ export type ElementMatrixRow = {
         authorityId: string;
       }
     | "STANDARD_NOT_EXTRACTED";
-  bindingAuthorities: Array<{ authorityId: string; status: string; reasonCode: string; citation: string | null }>;
-  persuasiveAuthorities: Array<{ authorityId: string; status: string; reasonCode: string; citation: string | null }>;
-  contraryAuthorities: Array<{ authorityId: string; status: string; reasonCode: string; citation: string | null }>;
+  bindingAuthorities: Array<{
+    authorityId: string;
+    status: string;
+    reasonCode: string;
+    citation: string | null;
+  }>;
+  persuasiveAuthorities: Array<{
+    authorityId: string;
+    status: string;
+    reasonCode: string;
+    citation: string | null;
+  }>;
+  contraryAuthorities: Array<{
+    authorityId: string;
+    status: string;
+    reasonCode: string;
+    citation: string | null;
+  }>;
   guiltConclusion: null;
 };
 
