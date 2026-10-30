@@ -54,7 +54,11 @@ export function estimateWorkloadCostCents(params: {
   embeddingTokens: number;
   generationInputTokens: number;
   generationOutputTokens: number;
-}): { status: "MEASURED" | "COST_NOT_FULLY_MEASURED"; totalCents: number | null; breakdown: Record<string, number | null> } {
+}): {
+  status: "MEASURED" | "COST_NOT_FULLY_MEASURED";
+  totalCents: number | null;
+  breakdown: Record<string, number | null>;
+} {
   const ask = estimateCostCents({
     model: "gpt-4o-mini",
     inputTokens: params.askQueries * 3_000,
@@ -231,32 +235,22 @@ function checkContextBudgetWarning(): OpsCheckResult {
 }
 
 function checkGuidePacketContract(): OpsCheckResult {
-  const route = join(REPO_ROOT, "apps/web/src/app/api/v1/guide/situations/[id]/consultation/route.ts");
+  /** Guide product removed — pass when runtime surfaces are absent. */
+  const route = join(
+    REPO_ROOT,
+    "apps/web/src/app/api/v1/guide/situations/[id]/consultation/route.ts",
+  );
   const page = join(REPO_ROOT, "apps/web/src/app/guide/prepare/page.tsx");
   const consultation = join(REPO_ROOT, "packages/workspaces/src/guide/consultation.ts");
-  if (!existsSync(route) || !existsSync(page) || !existsSync(consultation)) {
-    return {
-      id: "W6-GUIDE-P1",
-      name: "Guide prepare packet shape + rate limit",
-      passed: false,
-      severity: "HIGH",
-      detail: "Missing Guide prepare files",
-    };
-  }
-  const routeSrc = readFileSync(route, "utf8");
-  const pageSrc = readFileSync(page, "utf8");
-  const consultSrc = readFileSync(consultation, "utf8");
-  const hasRateLimit = /endpointClass:\s*"guide"/.test(routeSrc);
-  const returnsUiPacket = /packet:\s*result\.packet/.test(routeSrc);
-  const normalizes = /peopleInvolved:\s*raw\.peopleInvolved\s*\?\?/.test(pageSrc);
-  const hasUiShape = /peopleInvolved/.test(consultSrc) && /toPacketContent/.test(consultSrc);
-  const passed = hasRateLimit && returnsUiPacket && normalizes && hasUiShape;
+  const absent = !existsSync(route) && !existsSync(page) && !existsSync(consultation);
   return {
     id: "W6-GUIDE-P1",
-    name: "Guide prepare packet shape + rate limit",
-    passed,
+    name: "Guide prepare packet retired (surfaces absent)",
+    passed: absent,
     severity: "HIGH",
-    detail: `rateLimit=${hasRateLimit}; uiPacket=${returnsUiPacket}; normalize=${normalizes}; toPacketContent=${hasUiShape}`,
+    detail: absent
+      ? "Guide UI/API/workspace package removed from active product"
+      : "Guide surfaces still present; expected removed",
   };
 }
 

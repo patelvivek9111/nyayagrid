@@ -26,7 +26,9 @@ function exists(rel: string): boolean {
 }
 
 function checkSurfaceInventory(): ProductCheck {
-  const belowValidated = WEEK7_SURFACES.filter((s) => s.classification !== "COMPLETE" && s.classification !== "VALIDATED");
+  const belowValidated = WEEK7_SURFACES.filter(
+    (s) => s.classification !== "COMPLETE" && s.classification !== "VALIDATED",
+  );
   return {
     id: "W7-SURFACES",
     name: "Major product surfaces inventoried at VALIDATED/COMPLETE",
@@ -60,7 +62,12 @@ function checkProsecutionNav(): ProductCheck {
 function checkStatusLabels(): ProductCheck {
   const labels = read("apps/web/src/lib/plain-labels.ts");
   const trust = read("apps/web/src/components/ux/trust.tsx");
-  const required = ["NO_EVIDENCE_FOUND", "CONTEXT_LIMIT_REACHED", "REVIEW_REQUIRED", "formatCoverageWarning"];
+  const required = [
+    "NO_EVIDENCE_FOUND",
+    "CONTEXT_LIMIT_REACHED",
+    "REVIEW_REQUIRED",
+    "formatCoverageWarning",
+  ];
   const missing = required.filter((k) => !labels.includes(k));
   return {
     id: "W7-STATUS-LABELS",
@@ -88,19 +95,19 @@ function checkAskNyayaUx(): ProductCheck {
 }
 
 function checkGuidePrepare(): ProductCheck {
-  const page = read("apps/web/src/app/guide/prepare/page.tsx");
-  const route = read("apps/web/src/app/api/v1/guide/situations/[id]/consultation/route.ts");
-  const e2e = read("e2e/guide.spec.ts");
-  const passed =
-    page.includes("peopleInvolved") &&
-    route.includes('endpointClass: "guide"') &&
-    e2e.includes("Print packet");
+  /** Guide product removed — certify absence of runtime surfaces. */
+  const pageMissing = !exists("apps/web/src/app/guide/prepare/page.tsx");
+  const routeMissing = !exists(
+    "apps/web/src/app/api/v1/guide/situations/[id]/consultation/route.ts",
+  );
+  const e2eMissing = !exists("e2e/guide.spec.ts");
+  const passed = pageMissing && routeMissing && e2eMissing;
   return {
     id: "W7-GUIDE-PREPARE",
-    name: "Guide prepare packet remains rendered after API success",
+    name: "Guide prepare packet retired (surfaces absent)",
     passed,
     severity: "HIGH",
-    detail: `normalize=${page.includes("peopleInvolved")}; rateLimit=${route.includes("guide")}; e2e=${e2e.includes("Print packet")}`,
+    detail: `pageAbsent=${pageMissing}; routeAbsent=${routeMissing}; e2eAbsent=${e2eMissing}`,
   };
 }
 
@@ -112,7 +119,7 @@ function checkEmptyLoadingError(): ProductCheck {
     pros.includes("LoadingState") &&
     pros.includes("ErrorState") &&
     list.includes("Clear filters") &&
-    list.includes("aria-label=\"Search criminal cases\"");
+    list.includes('aria-label="Search criminal cases"');
   return {
     id: "W7-EMPTY-LOAD-ERR",
     name: "Prosecution list/case have empty/loading/error + a11y labels",
@@ -142,7 +149,10 @@ function checkNoGuiltUi(): ProductCheck {
 function checkResponsiveTables(): ProductCheck {
   const pros = read("apps/web/src/components/prosecution/case-section.tsx");
   const list = read("apps/web/src/app/app/prosecution/page.tsx");
-  const passed = pros.includes("overflow-x-auto") && list.includes("overflow-x-auto") && pros.includes("min-w-[720px]");
+  const passed =
+    pros.includes("overflow-x-auto") &&
+    list.includes("overflow-x-auto") &&
+    pros.includes("min-w-[720px]");
   return {
     id: "W7-RESPONSIVE-TABLES",
     name: "Large prosecution tables use horizontal scroll / min width",
@@ -161,7 +171,12 @@ function checkP1Dispositions(): ProductCheck {
     pitr: "ENVIRONMENT_DEPENDENT",
     prosecutionNotifications: "ACCEPTED_NONBLOCKING",
   };
-  const allowed = new Set(["FIXED", "FINAL_CERT_ITEM", "ENVIRONMENT_DEPENDENT", "ACCEPTED_NONBLOCKING"]);
+  const allowed = new Set([
+    "FIXED",
+    "FINAL_CERT_ITEM",
+    "ENVIRONMENT_DEPENDENT",
+    "ACCEPTED_NONBLOCKING",
+  ]);
   const passed = Object.values(dispositions).every((d) => allowed.has(d));
   return {
     id: "W7-P1-DISPOSITION",

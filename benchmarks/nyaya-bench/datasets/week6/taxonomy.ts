@@ -30,7 +30,7 @@ export const WEEK6_AUDIT = {
   VALIDATE: [
     "npm run bench:week6",
     "npm run bench:week5",
-    "e2e/guide.spec.ts prepare packet UI",
+    "e2e/prosecution.spec.ts",
     "e2e/security.spec.ts",
     "ops:backup-rehearse (when docker available)",
     "npm audit --omit=dev",

@@ -15,7 +15,14 @@ export type SecurityCheckResult = {
 };
 
 function checkRateLimitCoverage(): SecurityCheckResult {
-  const required = ["auth", "upload", "ask_nyaya", "research", "guide", "expensive_ai"] as const;
+  const required = [
+    "auth",
+    "upload",
+    "ask_nyaya",
+    "research",
+    "prosecution",
+    "expensive_ai",
+  ] as const;
   const missing = required.filter((k) => !(k in RATE_LIMIT_PRESETS));
   const classesOk = ENDPOINT_CLASSES.length >= required.length;
   return {
@@ -25,7 +32,7 @@ function checkRateLimitCoverage(): SecurityCheckResult {
     severity: "HIGH",
     detail:
       missing.length === 0
-        ? `Presets present for ${required.join(", ")}; guide=${RATE_LIMIT_PRESETS.guide.limit}/h`
+        ? `Presets present for ${required.join(", ")}; prosecution=${RATE_LIMIT_PRESETS.prosecution.limit}/h`
         : `Missing presets: ${missing.join(", ")}`,
   };
 }
@@ -95,7 +102,9 @@ function checkUploadPolicyBounds(): SecurityCheckResult {
   ];
   const decisions = cases.map((c) => {
     const reject =
-      c.size <= 0 || c.size > MAX_BYTES || !/^application\/(pdf|msword|vnd\.)|^text\//i.test(c.mime);
+      c.size <= 0 ||
+      c.size > MAX_BYTES ||
+      !/^application\/(pdf|msword|vnd\.)|^text\//i.test(c.mime);
     return { ...c, reject };
   });
   const passed = decisions.every((d) => d.reject === d.expectReject);
@@ -121,7 +130,9 @@ function checkIdorDenialMatrix(): SecurityCheckResult {
   ];
   const decide = (actor: Actor, org: string, matter: string) =>
     actor.orgId === org && actor.matterIds.includes(matter) ? "allow" : "deny";
-  const passed = attempts.every((a) => decide(a.actor, a.resourceOrg, a.resourceMatter) === a.expect);
+  const passed = attempts.every(
+    (a) => decide(a.actor, a.resourceOrg, a.resourceMatter) === a.expect,
+  );
   return {
     id: "W6-SEC-IDOR",
     name: "IDOR denial matrix for cross-matter/org access",
@@ -170,7 +181,9 @@ function checkSecretScanHeuristics(): SecurityCheckResult {
     name: "Week 6 cert fixtures contain no live-looking secrets",
     passed: !found,
     severity: "CRITICAL",
-    detail: found ? "Possible secret pattern detected in cert data" : "No live secret patterns in threat matrix",
+    detail: found
+      ? "Possible secret pattern detected in cert data"
+      : "No live secret patterns in threat matrix",
   };
 }
 

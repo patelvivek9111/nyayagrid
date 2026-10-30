@@ -31,7 +31,7 @@ export const WEEK7_AUDIT = {
 
 export type SurfaceRow = {
   id: string;
-  workspace: "global" | "firm" | "prosecution" | "professor" | "guide";
+  workspace: "global" | "firm" | "prosecution" | "retired";
   surface: string;
   classification: "COMPLETE" | "ROUGH" | "VALIDATED";
 };
@@ -45,14 +45,49 @@ export const WEEK7_SURFACES: SurfaceRow[] = [
   { id: "S-FIRM-RESEARCH", workspace: "firm", surface: "Research", classification: "COMPLETE" },
   { id: "S-FIRM-TIMELINE", workspace: "firm", surface: "Timeline", classification: "COMPLETE" },
   { id: "S-FIRM-GRAPH", workspace: "firm", surface: "Graph", classification: "COMPLETE" },
-  { id: "S-FIRM-EVIDENCE", workspace: "firm", surface: "Evidence matrix", classification: "COMPLETE" },
+  {
+    id: "S-FIRM-EVIDENCE",
+    workspace: "firm",
+    surface: "Evidence matrix",
+    classification: "COMPLETE",
+  },
   { id: "S-FIRM-DRAFT", workspace: "firm", surface: "Draft", classification: "COMPLETE" },
   { id: "S-FIRM-TASKS", workspace: "firm", surface: "Tasks/calendar", classification: "COMPLETE" },
   { id: "S-PROS-LIST", workspace: "prosecution", surface: "Case list", classification: "COMPLETE" },
-  { id: "S-PROS-OVERVIEW", workspace: "prosecution", surface: "Case overview", classification: "COMPLETE" },
-  { id: "S-PROS-ELEMENTS", workspace: "prosecution", surface: "Elements Matrix", classification: "COMPLETE" },
-  { id: "S-PROS-DISCOVERY", workspace: "prosecution", surface: "Discovery/disclosure", classification: "COMPLETE" },
-  { id: "S-PROS-NAV", workspace: "prosecution", surface: "Warrants/subpoenas/pleas nav", classification: "COMPLETE" },
-  { id: "S-PROF", workspace: "professor", surface: "Professor workspace", classification: "COMPLETE" },
-  { id: "S-GUIDE", workspace: "guide", surface: "Guide + prepare", classification: "COMPLETE" },
+  {
+    id: "S-PROS-OVERVIEW",
+    workspace: "prosecution",
+    surface: "Case overview",
+    classification: "COMPLETE",
+  },
+  {
+    id: "S-PROS-ELEMENTS",
+    workspace: "prosecution",
+    surface: "Elements Matrix",
+    classification: "COMPLETE",
+  },
+  {
+    id: "S-PROS-DISCOVERY",
+    workspace: "prosecution",
+    surface: "Discovery/disclosure",
+    classification: "COMPLETE",
+  },
+  {
+    id: "S-PROS-NAV",
+    workspace: "prosecution",
+    surface: "Warrants/subpoenas/pleas nav",
+    classification: "COMPLETE",
+  },
+  {
+    id: "S-PROF",
+    workspace: "retired",
+    surface: "Professor workspace (removed)",
+    classification: "COMPLETE",
+  },
+  {
+    id: "S-GUIDE",
+    workspace: "retired",
+    surface: "Guide + prepare (removed)",
+    classification: "COMPLETE",
+  },
 ];
