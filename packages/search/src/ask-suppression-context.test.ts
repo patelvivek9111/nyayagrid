@@ -35,7 +35,9 @@ describe("Ask Nyaya suppression context gating", () => {
     expect(block!).toContain("SUPPRESSION_CONCLUSION: null");
     expect(block!).toContain("WARRANT_VALIDITY_CONCLUSION: null");
     expect(block!).toContain("GUILT_CONCLUSION: null");
-    expect(block!).not.toMatch(/The warrant was valid\.|The evidence should be suppressed\.|The defendant is guilty\./i);
+    expect(block!).not.toMatch(
+      /The warrant was valid\.|The evidence should be suppressed\.|The defendant is guilty\./i,
+    );
 
     const merged = mergeAskContextText(WEEK4_STUB, block);
     expect(merged).toContain(WEEK4_STUB);
@@ -83,7 +85,9 @@ describe("Ask Nyaya suppression context gating", () => {
 
   it("TEST 10: gating does not trigger from warrant text elsewhere in the case", () => {
     const question = "What discovery is still missing?";
-    expect(question.toLowerCase()).not.toMatch(/warrant|suppression|probable cause|miranda|exigen|good faith|knock/);
+    expect(question.toLowerCase()).not.toMatch(
+      /warrant|suppression|probable cause|miranda|exigen|good faith|knock/,
+    );
     expect(JSON.stringify(review).toLowerCase()).toContain("warrant");
     expect(isSuppressionAskQuestion(question)).toBe(false);
     expect(
