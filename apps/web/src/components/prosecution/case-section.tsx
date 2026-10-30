@@ -868,8 +868,8 @@ function DisclosureBody({
       <div className="rounded-md border border-line p-3">
         <h2 className="text-sm font-semibold text-ink">Potential disclosure candidates</h2>
         <p className="mt-2 text-xs text-ink/55">
-          These are potential disclosure candidates for human review. They are not Brady or Giglio
-          violations, constitutional findings, or mandatory disclosure orders.
+          These are potential disclosure candidates for human review. They are not final disclosure
+          determinations, constitutional findings, or mandatory disclosure orders.
         </p>
       </div>
       <form className="rounded-md border border-line p-3 space-y-2" onSubmit={createCandidate}>

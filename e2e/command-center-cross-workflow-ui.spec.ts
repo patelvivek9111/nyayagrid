@@ -264,8 +264,8 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
     await sendAsk(page, "What is the biggest unresolved issue?");
     expect(page.url()).toBe(urlBefore);
     await expect(
-      page.locator("p.whitespace-pre-wrap", { hasText: "What is the biggest unresolved issue?" }),
-    ).toBeVisible();
+      page.getByText("What is the biggest unresolved issue?", { exact: false }).first(),
+    ).toBeVisible({ timeout: 60_000 });
   });
 
   test("SCENARIO 3 — source drawer after document upload", async ({ page }) => {

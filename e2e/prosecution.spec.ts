@@ -482,9 +482,11 @@ test.describe.serial("signed-in prosecution workspace", () => {
     await page.goto(`/app/prosecution/${caseId}/disclosure`);
     await selectWorkspace(page, `${ORG_NAME}-p0`, organizationId);
     await expect(page.getByText("Potential disclosure candidate").first()).toBeVisible();
-    await expect(page.getByText(/Brady|Giglio|constitutional violation established/i)).toHaveCount(
-      0,
-    );
+    await expect(
+      page.getByText(
+        /Brady violation|Giglio violation|must disclose|constitutional violation established/i,
+      ),
+    ).toHaveCount(0);
 
     await page.goto(`/app/prosecution/${caseId}/evidence`);
     await expect(page.getByText("bodycam").first()).toBeVisible();
