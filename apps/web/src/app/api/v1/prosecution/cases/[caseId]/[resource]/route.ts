@@ -141,8 +141,11 @@ const prosecutionResourceSchemas = {
     provenance: provenanceSchema,
   }),
   discovery: z.object({
+    title: optionalText,
     source: text,
+    sourceAgency: optionalText,
     category: text,
+    receivedDate: z.string().trim().max(40).nullable().optional(),
     reviewStatus: z
       .enum([
         "RECEIVED",
@@ -163,8 +166,17 @@ const prosecutionResourceSchemas = {
         "UNKNOWN",
       ])
       .optional(),
+    producedDate: z.string().trim().max(40).nullable().optional(),
     notes: optionalText,
     relatedDocumentIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedEvidenceIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedWitnessIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedDefendantIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedChargeIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedElementIds: z.array(z.string().uuid()).max(100).optional(),
+    privilegeReviewStatus: z.string().trim().max(40).optional(),
+    confidentialityReviewStatus: z.string().trim().max(40).optional(),
+    priority: z.enum(["high", "medium", "normal", "low"]).optional(),
     provenance: provenanceSchema,
   }),
   disclosure: z.object({
@@ -188,6 +200,30 @@ const prosecutionResourceSchemas = {
         "ESCALATE",
       ])
       .optional(),
+    reason: optionalText,
+    origin: z.enum(["human", "deterministic", "ai_proposal", "imported"]).optional(),
+    relatedEvidenceIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedWitnessIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedDefendantIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedChargeIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedElementIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedDiscoveryIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedIssueIds: z.array(z.string().uuid()).max(100).optional(),
+    confidence: z.enum(["high", "medium", "low"]).optional(),
+    priority: z.enum(["high", "medium", "normal", "low"]).optional(),
+    notes: optionalText,
+    provenance: provenanceSchema,
+  }),
+  productions: z.object({
+    label: text,
+    productionDate: z.string().trim().max(40).nullable().optional(),
+    recipientReference: optionalText,
+    deliveryMethod: optionalText,
+    batesReference: optionalText,
+    candidateIds: z.array(z.string().uuid()).max(200).optional(),
+    discoveryItemIds: z.array(z.string().uuid()).max(200).optional(),
+    isSupplemental: z.boolean().optional(),
+    status: z.enum(["PREPARED", "PENDING", "PRODUCED", "CORRECTED"]).optional(),
     notes: optionalText,
     provenance: provenanceSchema,
   }),
@@ -319,6 +355,7 @@ const disclosureReviewSchema = z.object({
     "ESCALATE",
   ]),
   notes: optionalText,
+  reason: optionalText,
 });
 
 export async function POST(
@@ -376,6 +413,7 @@ export async function PATCH(
       candidateId: body.candidateId,
       status: body.status,
       notes: body.notes,
+      reason: body.reason,
     });
     return jsonOk({ record });
   } catch (error) {

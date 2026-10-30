@@ -181,13 +181,67 @@ type DisclosureCandidateView = {
   category: string;
   status: string;
   notes: string | null;
+  reason?: string | null;
+  origin?: string | null;
   label: string;
   humanActorId: string | null;
   reviewedAt: string | null;
   reviewer: { id: string; name: string | null; email: string } | null;
+  relatedEvidenceIds?: string[];
+  relatedWitnessIds?: string[];
+  relatedElementIds?: string[];
+  relatedDiscoveryIds?: string[];
+  reviewHistory?: Array<{
+    priorStatus: string;
+    nextStatus: string;
+    actorUserId: string;
+    timestamp: string;
+    reason: string | null;
+    notes: string | null;
+  }>;
+  productionStatus?: string;
   provenance: { documentId?: string | null; sourceSpan?: string | null; humanEntered?: boolean };
   createdAt: string;
   updatedAt: string;
+  bradyViolationConclusion?: null;
+  giglioViolationConclusion?: null;
+  mustDiscloseConclusion?: null;
+};
+
+type DiscoveryQueueView = {
+  total: number;
+  unreviewed: number;
+  flagged: number;
+  potentialDisclosureCandidate: number;
+  produced: number;
+  pendingProduction: number;
+  withheldForAttorneyReview: number;
+  escalated: number;
+  missingOrExpected: number;
+};
+
+type SupervisorQueueItemView = {
+  id: string;
+  kind: string;
+  category: string;
+  status: string;
+  priority: string;
+  label: string;
+  awaitingFinalReview: boolean;
+  escalated: boolean;
+};
+
+type DisclosureProductionView = {
+  id: string;
+  label: string;
+  status: string;
+  productionDate: string | null;
+  recipientReference: string | null;
+  batesReference: string | null;
+  isSupplemental: boolean;
+  candidateIds: string[];
+  discoveryItemIds: string[];
+  notes: string | null;
 };
 
 type Overview = {
@@ -223,12 +277,33 @@ type Overview = {
   witnessCount: number;
   evidenceItems?: EvidenceItemView[];
   witnesses?: WitnessView[];
+  discoveryItems?: Array<{
+    id: string;
+    title?: string | null;
+    source: string;
+    category: string;
+    reviewStatus: string;
+    productionStatus: string;
+    privilegeReviewStatus?: string;
+    confidentialityReviewStatus?: string;
+    notes?: string | null;
+  }>;
+  discoveryQueue?: DiscoveryQueueView;
   disclosureCandidates?: DisclosureCandidateView[];
+  disclosureProductions?: DisclosureProductionView[];
+  supervisorDisclosureQueue?: SupervisorQueueItemView[];
+  surfacedDisclosureCandidates?: Array<{
+    category: string;
+    reason: string;
+    origin: string;
+    status: string;
+  }>;
   assignableMembers?: AssignableMember[];
   canReviewDisclosure?: boolean;
   canManageCase?: boolean;
   canManageEvidence?: boolean;
   canManageWitnesses?: boolean;
+  canManageDiscovery?: boolean;
   elementGaps: Array<{ elementText: string; status: string }>;
   issueFlags: Array<{ id: string; issueType: string; status: string }>;
   issueSeparation?: Array<{
@@ -399,7 +474,14 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
           onUpdated={reload}
         />
       ) : null}
-      {section === "discovery" ? <DiscoveryBody overview={overview} /> : null}
+      {section === "discovery" ? (
+        <DiscoveryBody
+          overview={overview}
+          organizationId={organizationId}
+          caseId={caseId}
+          onUpdated={reload}
+        />
+      ) : null}
       {section === "disclosure" ? (
         <DisclosureBody
           overview={overview}
@@ -690,6 +772,29 @@ function OverviewBody({
         )}
       </section>
       <section className="rounded-md border border-line p-3 md:col-span-2">
+        <h2 className="text-sm font-semibold text-ink">Supervisor disclosure queue</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Candidates awaiting final review, escalations, and pending production sets. Final disclose
+          / not-disclose remains human-controlled.
+        </p>
+        {(overview.supervisorDisclosureQueue ?? []).length === 0 ? (
+          <p className="mt-2 text-sm text-ink/60">No supervisor disclosure items are open.</p>
+        ) : (
+          <ul className="mt-2 space-y-2">
+            {(overview.supervisorDisclosureQueue ?? []).slice(0, 20).map((item) => (
+              <li key={`${item.kind}-${item.id}`} className="text-sm">
+                <StatusLabel label={humanizeKey(item.kind)} tone="info" />{" "}
+                <StatusLabel
+                  label={humanizeKey(item.status)}
+                  tone={item.escalated ? "warn" : "neutral"}
+                />{" "}
+                <span className="text-ink/80">{item.label}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+      <section className="rounded-md border border-line p-3 md:col-span-2">
         <h2 className="text-sm font-semibold text-ink">Investigation gap queue</h2>
         <p className="mt-1 text-sm text-ink/70">
           Source-grounded review items for missing support, conflicts, custody warnings, and
@@ -891,30 +996,93 @@ function ElementsMatrixBody({ overview }: { overview: Overview }) {
   );
 }
 
-function DiscoveryBody({ overview }: { overview: Overview }) {
+function DiscoveryBody({
+  overview,
+  organizationId,
+  caseId,
+  onUpdated,
+}: {
+  overview: Overview;
+  organizationId: string;
+  caseId: string;
+  onUpdated: () => Promise<void>;
+}) {
   const dash = overview.discoveryDashboard;
-  if (!dash || overview.discoveryCount === 0) {
-    return (
-      <div className="mt-4">
-        <EmptyState
-          title="No discovery items yet"
-          description="Track received, flagged, produced, and pending discovery for this case."
-        />
-      </div>
-    );
+  const queue = overview.discoveryQueue;
+  const items = overview.discoveryItems ?? [];
+  const [error, setError] = useState("");
+  const [source, setSource] = useState("police");
+  const [category, setCategory] = useState("police_report");
+  const [title, setTitle] = useState("");
+  const [filterStatus, setFilterStatus] = useState("all");
+
+  async function createDiscovery(event: FormEvent) {
+    event.preventDefault();
+    if (!overview.canManageDiscovery) {
+      setError("You do not have discovery management permission.");
+      return;
+    }
+    setError("");
+    try {
+      const response = await fetch(
+        `/api/v1/prosecution/cases/${caseId}/discovery?organizationId=${organizationId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: title || null,
+            source,
+            category,
+            reviewStatus: "RECEIVED",
+            productionStatus: "RECEIVED",
+            provenance: { humanEntered: true, extractionOrigin: "human" },
+          }),
+        },
+      );
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.error?.message ?? "Could not add discovery.");
+      setTitle("");
+      await onUpdated();
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Could not add discovery.");
+    }
   }
+
+  const visible =
+    filterStatus === "all"
+      ? items
+      : items.filter(
+          (item) => item.reviewStatus === filterStatus || item.productionStatus === filterStatus,
+        );
+
   const cards = [
-    { label: "Total", value: dash.totalItems },
-    { label: "Unreviewed", value: dash.unreviewed },
-    { label: "Flagged", value: dash.flagged },
-    { label: "Disclosure review", value: dash.potentialDisclosureReview },
-    { label: "Produced", value: dash.produced },
-    { label: "Pending production", value: dash.pendingProduction },
-    { label: "Missing / expected", value: dash.missingOrExpected },
+    { label: "Total", value: queue?.total ?? dash?.totalItems ?? items.length },
+    { label: "Unreviewed", value: queue?.unreviewed ?? dash?.unreviewed ?? 0 },
+    { label: "Flagged", value: queue?.flagged ?? dash?.flagged ?? 0 },
+    {
+      label: "Disclosure review",
+      value: queue?.potentialDisclosureCandidate ?? dash?.potentialDisclosureReview ?? 0,
+    },
+    { label: "Produced", value: queue?.produced ?? dash?.produced ?? 0 },
+    {
+      label: "Pending production",
+      value: queue?.pendingProduction ?? dash?.pendingProduction ?? 0,
+    },
+    { label: "Withheld", value: queue?.withheldForAttorneyReview ?? 0 },
+    { label: "Escalated", value: queue?.escalated ?? 0 },
+    {
+      label: "Missing / expected",
+      value: queue?.missingOrExpected ?? dash?.missingOrExpected ?? 0,
+    },
   ];
+
   return (
     <div className="mt-4 space-y-3">
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <p className="text-xs text-ink/55">
+        Privilege, confidentiality, Brady/Giglio disclosure, and production are separate review
+        dimensions. Nyaya does not make the final disclosure call.
+      </p>
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {cards.map((card) => (
           <div key={card.label} className="rounded-md border border-line p-3">
             <p className="text-xs uppercase tracking-wide text-ink/55">{card.label}</p>
@@ -922,10 +1090,94 @@ function DiscoveryBody({ overview }: { overview: Overview }) {
           </div>
         ))}
       </div>
-      <p className="text-xs text-ink/55">
-        Disclosure decisions require human confirmation. Nyaya does not make the final disclosure
-        call.
-      </p>
+      {overview.canManageDiscovery ? (
+        <form
+          className="rounded-md border border-line p-3 grid gap-2 md:grid-cols-2"
+          onSubmit={createDiscovery}
+        >
+          <h3 className="text-sm font-semibold md:col-span-2">Add discovery item</h3>
+          <label className="text-sm">
+            <span className="mb-1 block text-ink/70">Title</span>
+            <input
+              className="w-full rounded border border-line px-2 py-1"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </label>
+          <label className="text-sm">
+            <span className="mb-1 block text-ink/70">Source</span>
+            <input
+              className="w-full rounded border border-line px-2 py-1"
+              value={source}
+              onChange={(e) => setSource(e.target.value)}
+              required
+            />
+          </label>
+          <label className="text-sm md:col-span-2">
+            <span className="mb-1 block text-ink/70">Category</span>
+            <input
+              className="w-full rounded border border-line px-2 py-1"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            />
+          </label>
+          <button
+            type="submit"
+            className="rounded bg-accent px-3 py-2 text-sm font-semibold text-white md:col-span-2"
+          >
+            Add discovery
+          </button>
+        </form>
+      ) : null}
+      {error ? <p className="text-sm text-[var(--ng-danger)]">{error}</p> : null}
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Discovery status filter">
+        {["all", "RECEIVED", "FLAGGED", "PRODUCED", "WITHHELD_FOR_ATTORNEY_REVIEW", "UNKNOWN"].map(
+          (status) => (
+            <button
+              key={status}
+              type="button"
+              className={
+                filterStatus === status
+                  ? "rounded border border-accent px-2 py-1 text-xs font-semibold text-accent"
+                  : "rounded border border-line px-2 py-1 text-xs"
+              }
+              onClick={() => setFilterStatus(status)}
+              aria-pressed={filterStatus === status}
+            >
+              {status === "all" ? "All" : humanizeKey(status)}
+            </button>
+          ),
+        )}
+      </div>
+      {visible.length === 0 ? (
+        <EmptyState
+          title="No discovery items yet"
+          description="Track received, flagged, produced, and pending discovery for this case."
+        />
+      ) : (
+        <ul className="space-y-2">
+          {visible.map((item) => (
+            <li key={item.id} className="rounded-md border border-line p-3 text-sm">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-semibold">{item.title || item.category}</span>
+                <StatusLabel label={humanizeKey(item.reviewStatus)} />
+                <StatusLabel label={humanizeKey(item.productionStatus)} tone="info" />
+              </div>
+              <p className="mt-1 text-ink/70">
+                Source: {item.source}
+                {item.privilegeReviewStatus
+                  ? ` · Privilege: ${humanizeKey(item.privilegeReviewStatus)}`
+                  : ""}
+                {item.confidentialityReviewStatus
+                  ? ` · Confidentiality: ${humanizeKey(item.confidentialityReviewStatus)}`
+                  : ""}
+              </p>
+              {item.notes ? <p className="mt-1 text-ink/80">{item.notes}</p> : null}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -942,11 +1194,15 @@ function DisclosureBody({
   onUpdated: () => Promise<void>;
 }) {
   const candidates = overview.disclosureCandidates ?? [];
+  const productions = overview.disclosureProductions ?? [];
   const canReview = Boolean(overview.canReviewDisclosure);
   const [error, setError] = useState("");
   const [busyId, setBusyId] = useState("");
   const [category, setCategory] = useState("POTENTIALLY_EXCULPATORY");
   const [notes, setNotes] = useState("");
+  const [reason, setReason] = useState("");
+  const [selectedCandidateId, setSelectedCandidateId] = useState("");
+  const [productionLabel, setProductionLabel] = useState("Defense production set");
 
   async function reviewCandidate(candidateId: string, status: string) {
     if (status === "REVIEWED_DISCLOSE" || status === "REVIEWED_NOT_DISCLOSE") {
@@ -959,6 +1215,14 @@ function DisclosureBody({
       );
       if (!ok) return;
     }
+    if (
+      (status === "REVIEWED_NOT_DISCLOSE" || status === "ESCALATE") &&
+      !reason.trim() &&
+      !notes.trim()
+    ) {
+      setError("Withhold, escalate, or not-disclose requires a human-entered reason.");
+      return;
+    }
     setBusyId(candidateId);
     setError("");
     try {
@@ -967,12 +1231,18 @@ function DisclosureBody({
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ candidateId, status }),
+          body: JSON.stringify({
+            candidateId,
+            status,
+            notes: notes || null,
+            reason: reason || null,
+          }),
         },
       );
       const data = await response.json();
       if (!response.ok)
         throw new Error(data?.error?.message ?? "Could not update disclosure review.");
+      setReason("");
       await onUpdated();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Could not update disclosure review.");
@@ -993,7 +1263,9 @@ function DisclosureBody({
           body: JSON.stringify({
             category,
             status: "REVIEW_REQUIRED",
+            reason: reason || notes || "Human-flagged potential disclosure candidate",
             notes: notes || null,
+            origin: "human",
             provenance: { humanEntered: true, extractionOrigin: "human" },
           }),
         },
@@ -1002,9 +1274,42 @@ function DisclosureBody({
       if (!response.ok)
         throw new Error(data?.error?.message ?? "Could not create disclosure candidate.");
       setNotes("");
+      setReason("");
       await onUpdated();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Could not create disclosure candidate.");
+    }
+  }
+
+  async function createProduction(event: FormEvent) {
+    event.preventDefault();
+    if (!overview.canManageDiscovery) {
+      setError("You do not have discovery/production management permission.");
+      return;
+    }
+    setError("");
+    try {
+      const response = await fetch(
+        `/api/v1/prosecution/cases/${caseId}/productions?organizationId=${organizationId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            label: productionLabel,
+            status: "PRODUCED",
+            productionDate: new Date().toISOString().slice(0, 10),
+            candidateIds: selectedCandidateId ? [selectedCandidateId] : [],
+            isSupplemental: false,
+            notes: "Production tracking only — no external send.",
+            provenance: { humanEntered: true, extractionOrigin: "human" },
+          }),
+        },
+      );
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.error?.message ?? "Could not create production set.");
+      await onUpdated();
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Could not create production set.");
     }
   }
 
@@ -1044,7 +1349,16 @@ function DisclosureBody({
           </select>
         </label>
         <label className="block text-sm">
-          <span className="mb-1 block text-ink/70">Reason / detected issue</span>
+          <span className="mb-1 block text-ink/70">Why surfaced / reason</span>
+          <textarea
+            className="w-full rounded border border-line px-2 py-1"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            rows={2}
+          />
+        </label>
+        <label className="block text-sm">
+          <span className="mb-1 block text-ink/70">Notes</span>
           <textarea
             className="w-full rounded border border-line px-2 py-1"
             value={notes}
@@ -1059,6 +1373,72 @@ function DisclosureBody({
           Flag for review
         </button>
       </form>
+      {(overview.surfacedDisclosureCandidates ?? []).length > 0 ? (
+        <section className="rounded-md border border-line p-3">
+          <h3 className="text-sm font-semibold">Deterministic proposals (not final)</h3>
+          <ul className="mt-2 space-y-1 text-sm text-ink/80">
+            {(overview.surfacedDisclosureCandidates ?? []).slice(0, 8).map((row, index) => (
+              <li key={`${row.category}-${index}`}>
+                <StatusLabel label={humanizeKey(row.category)} tone="warn" /> {row.reason}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {overview.canManageDiscovery ? (
+        <form
+          className="rounded-md border border-line p-3 grid gap-2 md:grid-cols-2"
+          onSubmit={createProduction}
+        >
+          <h3 className="text-sm font-semibold md:col-span-2">
+            Production tracking (no external send)
+          </h3>
+          <label className="text-sm">
+            <span className="mb-1 block text-ink/70">Label</span>
+            <input
+              className="w-full rounded border border-line px-2 py-1"
+              value={productionLabel}
+              onChange={(e) => setProductionLabel(e.target.value)}
+              required
+            />
+          </label>
+          <label className="text-sm">
+            <span className="mb-1 block text-ink/70">Candidate to include</span>
+            <select
+              className="w-full rounded border border-line px-2 py-1"
+              value={selectedCandidateId}
+              onChange={(e) => setSelectedCandidateId(e.target.value)}
+            >
+              <option value="">None</option>
+              {candidates.map((candidate) => (
+                <option key={candidate.id} value={candidate.id}>
+                  {humanizeKey(candidate.category)}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button
+            type="submit"
+            className="rounded bg-accent px-3 py-2 text-sm font-semibold text-white md:col-span-2"
+          >
+            Record production set
+          </button>
+        </form>
+      ) : null}
+      {productions.length > 0 ? (
+        <section className="rounded-md border border-line p-3">
+          <h3 className="text-sm font-semibold">Production history</h3>
+          <ul className="mt-2 space-y-2 text-sm">
+            {productions.map((production) => (
+              <li key={production.id}>
+                <StatusLabel label={humanizeKey(production.status)} /> {production.label}
+                {production.isSupplemental ? " · supplemental" : ""}
+                {production.productionDate ? ` · ${production.productionDate}` : ""}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
       {error ? <p className="text-sm text-[var(--ng-danger)]">{error}</p> : null}
       {candidates.length === 0 ? (
         <EmptyState
@@ -1073,8 +1453,14 @@ function DisclosureBody({
                 <span className="font-semibold">{candidate.label}</span>
                 <StatusLabel label={humanizeKey(candidate.category)} tone="warn" />
                 <StatusLabel label={humanizeKey(candidate.status)} />
+                {candidate.origin ? (
+                  <StatusLabel label={humanizeKey(candidate.origin)} tone="neutral" />
+                ) : null}
               </div>
-              {candidate.notes ? <p className="mt-2 text-ink/80">{candidate.notes}</p> : null}
+              {candidate.reason ? (
+                <p className="mt-2 text-ink/80">Why surfaced: {candidate.reason}</p>
+              ) : null}
+              {candidate.notes ? <p className="mt-1 text-ink/80">{candidate.notes}</p> : null}
               <p className="mt-2 text-xs text-ink/55">
                 Provenance:{" "}
                 {candidate.provenance.documentId
@@ -1084,6 +1470,15 @@ function DisclosureBody({
                     : candidate.provenance.humanEntered
                       ? "human-entered"
                       : "recorded"}
+                {(candidate.relatedEvidenceIds?.length ?? 0) > 0
+                  ? ` · evidence ${candidate.relatedEvidenceIds!.length}`
+                  : ""}
+                {(candidate.relatedWitnessIds?.length ?? 0) > 0
+                  ? ` · witnesses ${candidate.relatedWitnessIds!.length}`
+                  : ""}
+                {(candidate.relatedElementIds?.length ?? 0) > 0
+                  ? ` · elements ${candidate.relatedElementIds!.length}`
+                  : ""}
               </p>
               <p className="mt-1 text-xs text-ink/55">
                 Reviewer:{" "}
@@ -1093,7 +1488,26 @@ function DisclosureBody({
                 {candidate.reviewedAt
                   ? ` · ${new Date(candidate.reviewedAt).toLocaleString()}`
                   : ""}
+                {candidate.productionStatus
+                  ? ` · production ${humanizeKey(candidate.productionStatus)}`
+                  : ""}
               </p>
+              {(candidate.reviewHistory ?? []).length > 0 ? (
+                <div className="mt-2">
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-ink/55">
+                    Review history
+                  </h4>
+                  <ul className="mt-1 space-y-1 text-xs text-ink/70">
+                    {(candidate.reviewHistory ?? []).map((entry, index) => (
+                      <li key={`${candidate.id}-hist-${index}`}>
+                        {entry.priorStatus} → {entry.nextStatus} ·{" "}
+                        {new Date(entry.timestamp).toLocaleString()}
+                        {entry.reason ? ` · ${entry.reason}` : ""}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
               <div className="mt-3 flex flex-wrap gap-2">
                 <button
                   type="button"
