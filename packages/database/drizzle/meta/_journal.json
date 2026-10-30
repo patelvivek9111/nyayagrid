@@ -183,6 +183,13 @@
       "when": 1788300000000,
       "tag": "0025_drop_professor_guide_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1788400000000,
+      "tag": "0026_prosecution_disclosure_deepening",
+      "breakpoints": true
     }
   ]
 }

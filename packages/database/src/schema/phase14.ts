@@ -429,6 +429,16 @@ export const prosecutionWitnessStatements = pgTable(
   (table) => [index("prosecution_witness_statements_witness_idx").on(table.witnessId)],
 );
 
+export type DisclosureReviewHistoryEntry = {
+  priorStatus: string;
+  nextStatus: string;
+  actorUserId: string;
+  timestamp: string;
+  reason: string | null;
+  notes: string | null;
+  productionId?: string | null;
+};
+
 export const prosecutionDiscoveryItems = pgTable(
   "prosecution_discovery_items",
   {
@@ -439,7 +449,9 @@ export const prosecutionDiscoveryItems = pgTable(
     criminalCaseId: uuid("criminal_case_id")
       .notNull()
       .references(() => criminalCases.id, { onDelete: "cascade" }),
+    title: text("title"),
     source: text("source").notNull(),
+    sourceAgency: text("source_agency"),
     category: text("category").notNull(),
     receivedDate: date("received_date"),
     reviewStatus: text("review_status").notNull().default("RECEIVED"),
@@ -447,13 +459,33 @@ export const prosecutionDiscoveryItems = pgTable(
     producedDate: date("produced_date"),
     relatedDocumentIds: jsonb("related_document_ids").$type<string[]>().notNull().default([]),
     relatedEvidenceIds: jsonb("related_evidence_ids").$type<string[]>().notNull().default([]),
+    relatedWitnessIds: jsonb("related_witness_ids").$type<string[]>().notNull().default([]),
+    relatedDefendantIds: jsonb("related_defendant_ids").$type<string[]>().notNull().default([]),
+    relatedChargeIds: jsonb("related_charge_ids").$type<string[]>().notNull().default([]),
+    relatedElementIds: jsonb("related_element_ids").$type<string[]>().notNull().default([]),
     disclosureReviewStatus: text("disclosure_review_status").notNull().default("UNREVIEWED"),
+    privilegeReviewStatus: text("privilege_review_status").notNull().default("UNREVIEWED"),
+    confidentialityReviewStatus: text("confidentiality_review_status")
+      .notNull()
+      .default("UNREVIEWED"),
+    priority: text("priority").notNull().default("normal"),
     notes: text("notes"),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id, { onDelete: "set null" }),
+    reviewedByUserId: uuid("reviewed_by_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
     auditHistory: jsonb("audit_history").$type<string[]>().notNull().default([]),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
     ...timestamps,
   },
-  (table) => [index("prosecution_discovery_case_idx").on(table.criminalCaseId)],
+  (table) => [
+    index("prosecution_discovery_case_idx").on(table.criminalCaseId),
+    index("prosecution_discovery_case_status_idx").on(table.criminalCaseId, table.reviewStatus),
+    index("prosecution_discovery_case_production_idx").on(
+      table.criminalCaseId,
+      table.productionStatus,
+    ),
+  ],
 );
 
 export const prosecutionDisclosureCandidates = pgTable(
@@ -468,12 +500,63 @@ export const prosecutionDisclosureCandidates = pgTable(
       .references(() => criminalCases.id, { onDelete: "cascade" }),
     category: text("category").notNull(),
     status: text("status").notNull().default("UNREVIEWED"),
+    reason: text("reason"),
+    origin: text("origin").notNull().default("human"),
+    relatedEvidenceIds: jsonb("related_evidence_ids").$type<string[]>().notNull().default([]),
+    relatedWitnessIds: jsonb("related_witness_ids").$type<string[]>().notNull().default([]),
+    relatedDefendantIds: jsonb("related_defendant_ids").$type<string[]>().notNull().default([]),
+    relatedChargeIds: jsonb("related_charge_ids").$type<string[]>().notNull().default([]),
+    relatedElementIds: jsonb("related_element_ids").$type<string[]>().notNull().default([]),
+    relatedDiscoveryIds: jsonb("related_discovery_ids").$type<string[]>().notNull().default([]),
+    relatedIssueIds: jsonb("related_issue_ids").$type<string[]>().notNull().default([]),
+    confidence: text("confidence").notNull().default("low"),
+    priority: text("priority").notNull().default("normal"),
+    reviewHistory: jsonb("review_history")
+      .$type<DisclosureReviewHistoryEntry[]>()
+      .notNull()
+      .default([]),
+    productionStatus: text("production_status").notNull().default("NOT_IN_PRODUCTION"),
     notes: text("notes"),
     humanActorId: uuid("human_actor_id").references(() => users.id),
+    flaggedByUserId: uuid("flagged_by_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
     ...timestamps,
   },
-  (table) => [index("prosecution_disclosure_case_idx").on(table.criminalCaseId)],
+  (table) => [
+    index("prosecution_disclosure_case_idx").on(table.criminalCaseId),
+    index("prosecution_disclosure_case_status_idx").on(table.criminalCaseId, table.status),
+  ],
+);
+
+export const prosecutionDisclosureProductions = pgTable(
+  "prosecution_disclosure_productions",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    criminalCaseId: uuid("criminal_case_id")
+      .notNull()
+      .references(() => criminalCases.id, { onDelete: "cascade" }),
+    label: text("label").notNull(),
+    productionDate: date("production_date"),
+    recipientReference: text("recipient_reference"),
+    deliveryMethod: text("delivery_method"),
+    batesReference: text("bates_reference"),
+    candidateIds: jsonb("candidate_ids").$type<string[]>().notNull().default([]),
+    discoveryItemIds: jsonb("discovery_item_ids").$type<string[]>().notNull().default([]),
+    isSupplemental: boolean("is_supplemental").notNull().default(false),
+    status: text("status").notNull().default("PREPARED"),
+    notes: text("notes"),
+    producedByUserId: uuid("produced_by_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
+    ...timestamps,
+  },
+  (table) => [index("prosecution_disclosure_productions_case_idx").on(table.criminalCaseId)],
 );
 
 export const prosecutionProcedureIssues = pgTable(
