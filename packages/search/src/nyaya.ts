@@ -385,13 +385,18 @@ export function mergeAskContextText(...parts: Array<string | null | undefined>):
   return merged.length > 0 ? merged.join("\n\n") : null;
 }
 
-async function loadProsecutionSuppressionReviewForMatter(params: {
+async function loadProsecutionAskBundleForMatter(params: {
   db: Database;
   userId: string;
   organizationId: string;
   matterId: string;
   criminalCaseId?: string | null;
-}): Promise<{ workspaceType: "prosecution"; suppressionReview: SuppressionReview } | null> {
+}): Promise<{
+  workspaceType: "prosecution";
+  criminalCaseId: string;
+  suppressionReview: SuppressionReview | null;
+  askIntelligenceContext: string | null;
+} | null> {
   const caseFilter = params.criminalCaseId
     ? and(
         eq(criminalCases.organizationId, params.organizationId),
@@ -413,8 +418,26 @@ async function loadProsecutionSuppressionReviewForMatter(params: {
     organizationId: params.organizationId,
     caseId: row.id,
   });
-  if (!overview.suppressionReview) return null;
-  return { workspaceType: "prosecution", suppressionReview: overview.suppressionReview };
+  return {
+    workspaceType: "prosecution",
+    criminalCaseId: row.id,
+    suppressionReview: overview.suppressionReview ?? null,
+    askIntelligenceContext:
+      typeof overview.askIntelligenceContext === "string" ? overview.askIntelligenceContext : null,
+  };
+}
+
+/** @deprecated Prefer loadProsecutionAskBundleForMatter — kept for suppression-only call sites. */
+async function loadProsecutionSuppressionReviewForMatter(params: {
+  db: Database;
+  userId: string;
+  organizationId: string;
+  matterId: string;
+  criminalCaseId?: string | null;
+}): Promise<{ workspaceType: "prosecution"; suppressionReview: SuppressionReview } | null> {
+  const bundle = await loadProsecutionAskBundleForMatter(params);
+  if (!bundle?.suppressionReview) return null;
+  return { workspaceType: "prosecution", suppressionReview: bundle.suppressionReview };
 }
 
 async function loadAmendmentHits(params: {
@@ -1513,27 +1536,29 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let suppressionContextText: string | null = null;
-    if (isSuppressionAskQuestion(params.question) && params.workspaceType !== "professional") {
+    let prosecutionAskIntelligenceText: string | null = null;
+    if (params.workspaceType !== "professional") {
       let workspaceType = params.workspaceType ?? null;
       let suppressionReview = params.suppressionReview ?? null;
-      if (workspaceType !== "prosecution" || !suppressionReview) {
-        const loaded = await loadProsecutionSuppressionReviewForMatter({
-          db: params.db,
-          userId: params.userId,
-          organizationId: params.organizationId,
-          matterId: params.matterId,
-          criminalCaseId: params.criminalCaseId,
-        });
-        if (loaded) {
-          workspaceType = workspaceType === "prosecution" ? workspaceType : loaded.workspaceType;
-          suppressionReview = suppressionReview ?? loaded.suppressionReview;
-        }
-      }
-      suppressionContextText = buildSuppressionAskContextBlock({
-        workspaceType,
-        question: params.question,
-        suppressionReview,
+      const loaded = await loadProsecutionAskBundleForMatter({
+        db: params.db,
+        userId: params.userId,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        criminalCaseId: params.criminalCaseId,
       });
+      if (loaded) {
+        workspaceType = workspaceType === "prosecution" ? workspaceType : loaded.workspaceType;
+        suppressionReview = suppressionReview ?? loaded.suppressionReview;
+        prosecutionAskIntelligenceText = loaded.askIntelligenceContext;
+      }
+      if (isSuppressionAskQuestion(params.question)) {
+        suppressionContextText = buildSuppressionAskContextBlock({
+          workspaceType,
+          question: params.question,
+          suppressionReview,
+        });
+      }
     }
 
     // Phase 3 — assemble prior conversation + resolve referents BEFORE domain routing.
@@ -3138,6 +3163,7 @@ export async function askNyayaAboutMatter(params: {
     // Placeholder; rebuilt once prior turns are loaded.
     let askStructuredContextText = mergeAskContextText(
       week4ContextText,
+      prosecutionAskIntelligenceText,
       suppressionContextText,
       civilContextText,
       discoveryContextText,
@@ -3235,6 +3261,7 @@ export async function askNyayaAboutMatter(params: {
       askStructuredContextText = mergeAskContextText(
         conversationAskContext.promptBlock,
         week4ContextText,
+        prosecutionAskIntelligenceText,
         suppressionContextText,
         civilContextText,
         discoveryContextText,
@@ -3279,6 +3306,7 @@ export async function askNyayaAboutMatter(params: {
     } else {
       askStructuredContextText = mergeAskContextText(
         week4ContextText,
+        prosecutionAskIntelligenceText,
         suppressionContextText,
         civilContextText,
         discoveryContextText,
