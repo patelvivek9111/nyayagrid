@@ -100,6 +100,86 @@ describe("task → tier mapping", () => {
     expect(decision.selectedModelId).toBe("claude-opus-5-5");
   });
 
+  it("routes high-stakes prosecution intents to Claude (never GPT/Gemini)", () => {
+    const cases: Array<{ label: string; content: string; category?: string }> = [
+      { label: "suppression", content: "Analyze suppression issues for this warrant." },
+      { label: "authority", content: "Perform authority analysis for the charged offense." },
+      {
+        label: "disclosure legal",
+        content: "Provide disclosure-related legal analysis for candidates.",
+      },
+      {
+        label: "complex synthesis",
+        content: "Produce complex case synthesis across charges and evidence.",
+      },
+    ];
+    for (const item of cases) {
+      const { decision } = planBenchmarkRoute({
+        request: req({
+          routing: { subsystem: "prosecution" },
+          messages: [
+            { role: "system", content: `prosecution criminal case ${item.content}` },
+            { role: "user", content: item.content },
+          ],
+        }),
+      });
+      expect(decision.routingTier, item.label).toBe(1);
+      expect(decision.selectedModelId, item.label).toBe(PINNED_BENCHMARK_MODEL_IDS.claude);
+      expect(decision.fallbackModelId, item.label).toBe(PINNED_BENCHMARK_MODEL_IDS.grok);
+      expect(decision.afterFallbackFailure, item.label).toBe("FAIL_CLOSED");
+      expect(decision.highStakesLegal, item.label).toBe(true);
+      expect(decision.selectedModelId, item.label).not.toBe(PINNED_BENCHMARK_MODEL_IDS.gpt);
+      expect(decision.selectedModelId, item.label).not.toBe(PINNED_BENCHMARK_MODEL_IDS.gemini);
+    }
+  });
+
+  it("allows GPT only for prosecution structured extraction", () => {
+    const { decision } = planBenchmarkRoute({
+      request: req({
+        routing: { subsystem: "prosecution" },
+        schemaName: "matter_intelligence_extraction",
+        messages: [
+          { role: "system", content: "prosecution structured extraction of metadata only" },
+          { role: "user", content: "Extract dates and parties." },
+        ],
+      }),
+    });
+    expect(decision.routingTier).toBe(3);
+    expect(decision.selectedModelId).toBe(PINNED_BENCHMARK_MODEL_IDS.gpt);
+    expect(decision.highStakesLegal).toBe(false);
+  });
+
+  it("prosecution Claude failure falls back only to Grok then fail-closed", () => {
+    const { decision } = planBenchmarkRoute({
+      request: req({
+        routing: { subsystem: "prosecution" },
+        messages: [
+          { role: "system", content: "prosecution suppression analysis" },
+          { role: "user", content: "Was the search lawful?" },
+        ],
+      }),
+    });
+    const toGrok = planHighStakesFallback({
+      decision,
+      primaryFailedModelId: PINNED_BENCHMARK_MODEL_IDS.claude,
+      failureCode: "timeout",
+    });
+    expect(toGrok.allowed).toBe(true);
+    expect(toGrok.toModelId).toBe(PINNED_BENCHMARK_MODEL_IDS.grok);
+    const afterGrok = resolveFallbackAfterPrimaryFailure({
+      decision: { ...decision, selectedModelId: PINNED_BENCHMARK_MODEL_IDS.grok },
+      failureCode: "server_error",
+    });
+    expect(afterGrok.allowed).toBe(false);
+    expect(afterGrok.failClosed).toBe(true);
+    expect(isIllegalHighStakesDowngrade({ highStakesLegal: true, toModelId: "gpt-6.1-sol" })).toBe(
+      true,
+    );
+    expect(
+      isIllegalHighStakesDowngrade({ highStakesLegal: true, toModelId: "gemini-4-argon" }),
+    ).toBe(true);
+  });
+
   it("requires experimental opt-in for Tier-4 Gemini", () => {
     expect(() =>
       planBenchmarkRoute({

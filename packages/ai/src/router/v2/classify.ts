@@ -57,10 +57,29 @@ function riskForTier(tier: RoutingTier, experimental: boolean): RiskTier {
   return "STANDARD";
 }
 
+const PROSECUTION_ROUTINE_SCHEMAS = new Set([
+  "discovery_classification",
+  "matter_intelligence_extraction",
+  "graph_relationship_extraction",
+  "document_comparison_summary",
+]);
+
+function isProsecutionRoutineExtraction(request: AiGenerateRequest): boolean {
+  if (request.routing?.benchmarkTaskCategory === "STRUCTURED_EXTRACTION") return true;
+  if (request.routing?.benchmarkTaskCategory === "STRUCTURED_TRANSFORMATION") return true;
+  if (request.routing?.benchmarkTaskCategory === "BACKGROUND_PROCESSING") return true;
+  if (request.schemaName && PROSECUTION_ROUTINE_SCHEMAS.has(request.schemaName)) return true;
+  const system = request.messages.find((m) => m.role === "system")?.content ?? "";
+  return /structured extraction|extract metadata|metadata extraction|format transformation|classify document type without legal determination|non-conclusive summar(?:y|ization)|background processing only/i.test(
+    system,
+  );
+}
+
 function mapSubsystemToCategory(
   subsystem: RouterSubsystem,
   signals: string[],
-  draftType?: string,
+  draftType: string | undefined,
+  request: AiGenerateRequest,
 ): { category: BenchmarkTaskCategory; reasons: ClassificationReasonCode[] } {
   const reasons: ClassificationReasonCode[] = [];
   const highRisk =
@@ -115,6 +134,31 @@ function mapSubsystemToCategory(
     }
     reasons.push("SUBSYSTEM_ASK_ROUTINE");
     return { category: "ROUTINE_MATTER_SYNTHESIS", reasons };
+  }
+  if (subsystem === "prosecution") {
+    // Prosecution subsystem alone never authorizes Tier 3. Risk takes precedence.
+    if (isProsecutionRoutineExtraction(request) && !highRisk) {
+      reasons.push("SUBSYSTEM_PROSECUTION_ROUTINE");
+      return { category: "STRUCTURED_EXTRACTION", reasons };
+    }
+    reasons.push("SUBSYSTEM_PROSECUTION_HIGH_STAKES");
+    if (signals.includes("conflicting_authorities") || signals.includes("uncertain_currentness")) {
+      return { category: "AUTHORITY_ANALYSIS", reasons };
+    }
+    if (signals.includes("contradiction_request") || signals.includes("conflicting_evidence")) {
+      return { category: "CONFLICT_ANALYSIS", reasons };
+    }
+    const system = request.messages.find((m) => m.role === "system")?.content ?? "";
+    const user = request.messages.find((m) => m.role === "user")?.content ?? "";
+    const blob = `${system}\n${user}`;
+    if (/legal research|authority analysis/i.test(blob)) {
+      return { category: "LEGAL_RESEARCH_ANSWER", reasons };
+    }
+    if (/complex (?:case )?synthesis|matter synthesis/i.test(blob)) {
+      return { category: "MATTER_SYNTHESIS_COMPLEX", reasons };
+    }
+    // Default high-stakes: suppression, warrant, disclosure legal analysis, elements, constitutional procedure.
+    return { category: "HARD_LEGAL_REASONING", reasons };
   }
   reasons.push("DEFAULT_STANDARD");
   return { category: "ROUTINE_MATTER_SYNTHESIS", reasons };
@@ -212,7 +256,12 @@ export function classifyBenchmarkTask(input: BenchmarkClassifyInput): BenchmarkR
     };
   }
 
-  const mapped = mapSubsystemToCategory(subsystem, risk.signals, input.request.routing?.draftType);
+  const mapped = mapSubsystemToCategory(
+    subsystem,
+    risk.signals,
+    input.request.routing?.draftType,
+    input.request,
+  );
   reasonCodes.push(...mapped.reasons);
 
   let tier = tierForCategory(mapped.category);
