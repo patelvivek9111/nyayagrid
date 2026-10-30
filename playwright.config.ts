@@ -52,7 +52,9 @@ export default defineConfig({
   testDir: "./e2e",
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
-  retries: process.env.CI ? 1 : 0,
+  // Command Center follow-up Ask has residual SSE/Stop races; one retry was not
+  // enough on CI #373/#374 when the flake hit twice. Keep non-CI at 0 for signal.
+  retries: process.env.CI ? 2 : 0,
   workers: 1,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
   timeout: 30_000,

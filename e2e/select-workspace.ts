@@ -84,7 +84,8 @@ export async function selectWorkspace(
   }
 
   if (options.organizationId && storageChanged && !switchedViaUi) {
-    await page.reload();
-    await page.waitForLoadState("networkidle");
+    // domcontentloaded only — networkidle hangs under Inngest polling / Ask SSE and
+    // has burned full Command Center E2E budgets on CI (SCENARIO 2/3 follow-up Ask).
+    await page.reload({ waitUntil: "domcontentloaded" });
   }
 }
