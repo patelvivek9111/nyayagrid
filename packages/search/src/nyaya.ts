@@ -1469,7 +1469,9 @@ export async function askNyayaAboutMatter(params: {
       const combined = buildAskNyayaCombinedContext({
         context: {
           organizationId: params.organizationId,
-          workspaceType: "professional",
+          // Semantic workspace identity: use caller workspace when provided.
+          // Historical persisted usage rows may still decode as "professional".
+          workspaceType: params.workspaceType === "prosecution" ? "prosecution" : "professional",
           matterId: params.matterId,
           jurisdiction:
             jurisdictionContext?.governingLawState ?? jurisdictionContext?.primaryState ?? null,

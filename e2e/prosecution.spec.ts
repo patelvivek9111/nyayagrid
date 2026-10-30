@@ -306,4 +306,233 @@ test.describe.serial("signed-in prosecution workspace", () => {
     ).toBe(true);
     expect(body.overview?.issueSeparation?.some((row) => row.kind === "procedure")).toBe(true);
   });
+
+  test("P0 office flow: assignment, evidence CoC, witnesses, disclosure human review, isolation", async ({
+    page,
+  }) => {
+    const created = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-p0`, slug: `${ORG_SLUG}-p0`, type: "firm" },
+    });
+    expect(created.ok(), await created.text()).toBeTruthy();
+    const orgBody = (await created.json()) as { organization?: { id?: string }; id?: string };
+    const organizationId = orgBody.organization?.id ?? orgBody.id!;
+    expect(organizationId).toBeTruthy();
+
+    await page.goto("/app/prosecution");
+    await selectWorkspace(page, `${ORG_NAME}-p0`, organizationId);
+
+    const opened = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-p0`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(opened.ok(), await opened.text()).toBeTruthy();
+    const caseId = ((await opened.json()) as { criminalCase: { id: string } }).criminalCase.id;
+
+    const seedOverview = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${organizationId}`,
+    );
+    expect(seedOverview.ok(), await seedOverview.text()).toBeTruthy();
+    const seedBody = (await seedOverview.json()) as {
+      overview: {
+        assignableMembers: Array<{
+          userId: string;
+          canBeProsecutor: boolean;
+          canBeSupervisor: boolean;
+        }>;
+      };
+    };
+    const assignee =
+      seedBody.overview.assignableMembers.find((m) => m.canBeProsecutor && m.canBeSupervisor) ??
+      seedBody.overview.assignableMembers.find((m) => m.canBeProsecutor);
+    expect(assignee?.userId).toBeTruthy();
+    const userId = assignee!.userId;
+
+    const assigned = await page.request.patch(`/api/v1/prosecution/cases/${caseId}`, {
+      data: {
+        organizationId,
+        assignedProsecutorId: userId,
+        supervisingProsecutorId: userId,
+        summary: "P0 assignment smoke",
+        priority: "high",
+      },
+    });
+    expect(assigned.ok(), await assigned.text()).toBeTruthy();
+
+    async function post(resource: string, data: Record<string, unknown>) {
+      const response = await page.request.post(
+        `/api/v1/prosecution/cases/${caseId}/${resource}?organizationId=${organizationId}`,
+        { data },
+      );
+      expect(response.ok(), await response.text()).toBeTruthy();
+      return ((await response.json()) as { record: { id: string } }).record;
+    }
+
+    const agency = await post("agencies", {
+      name: `P0 Agency ${suffix}`,
+      agencyType: "police",
+      jurisdiction: "PA",
+    });
+    const agencyPatch = await page.request.patch(`/api/v1/prosecution/cases/${caseId}`, {
+      data: { organizationId, investigatingAgencyId: agency.id },
+    });
+    expect(agencyPatch.ok(), await agencyPatch.text()).toBeTruthy();
+
+    const defendant = await post("defendants", {
+      displayName: `P0 Defendant ${suffix}`,
+      provenance,
+    });
+    await post("charges", {
+      defendantId: defendant.id,
+      countNumber: "p0-1",
+      offenseName: "Synthetic P0 count",
+      jurisdiction: "PA",
+      provenance,
+    });
+    const evidence = await post("evidence", {
+      evidenceType: "bodycam",
+      collector: "Officer P0",
+      collectionDate: "2024-01-02",
+      storageReference: "BOX-P0",
+      chainOfCustody: ["Collected by Officer P0", "Logged to evidence room"],
+      relatedDefendantIds: [defendant.id],
+      provenance,
+    });
+    const witness = await post("witnesses", {
+      displayName: `P0 Witness ${suffix}`,
+      witnessType: "civilian",
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "Main St", kind: "fact" }],
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "Oak Ave", kind: "fact" }],
+      provenance,
+    });
+    await post("discovery", {
+      source: "police",
+      category: "report",
+      notes: "P0 discovery",
+      provenance,
+    });
+    const candidate = await post("disclosure", {
+      category: "POTENTIALLY_EXCULPATORY",
+      status: "REVIEW_REQUIRED",
+      notes: "Potential disclosure candidate for human review",
+      provenance,
+    });
+
+    const overview = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${organizationId}`,
+    );
+    expect(overview.ok(), await overview.text()).toBeTruthy();
+    const body = (await overview.json()) as {
+      overview: {
+        case: {
+          assignedProsecutorId: string | null;
+          supervisingProsecutorId: string | null;
+          investigatingAgencyId: string | null;
+        };
+        evidenceItems: Array<{
+          id: string;
+          custodyFindings: Array<{ code: string }>;
+          custodyTransfers: unknown[];
+        }>;
+        witnesses: Array<{ statementComparison: Array<{ label: string }> }>;
+        disclosureCandidates: Array<{ id: string; status: string; label: string }>;
+        canReviewDisclosure: boolean;
+        guiltConclusion: null;
+      };
+    };
+    expect(body.overview.guiltConclusion).toBeNull();
+    expect(body.overview.case.assignedProsecutorId).toBe(userId);
+    expect(body.overview.case.supervisingProsecutorId).toBe(userId);
+    expect(body.overview.case.investigatingAgencyId).toBe(agency.id);
+    expect(body.overview.evidenceItems.some((item) => item.id === evidence.id)).toBe(true);
+    expect(
+      body.overview.evidenceItems.find((item) => item.id === evidence.id)?.custodyTransfers.length,
+    ).toBeGreaterThan(0);
+    expect(
+      body.overview.witnesses[0]?.statementComparison.some((row) => row.label === "CONTRADICTORY"),
+    ).toBe(true);
+    expect(body.overview.disclosureCandidates[0]?.label).toBe("Potential disclosure candidate");
+    expect(body.overview.canReviewDisclosure).toBe(true);
+
+    const reviewed = await page.request.patch(
+      `/api/v1/prosecution/cases/${caseId}/disclosure?organizationId=${organizationId}`,
+      {
+        data: {
+          candidateId: candidate.id,
+          status: "REVIEWED_NOT_DISCLOSE",
+          notes: "Human final determination",
+        },
+      },
+    );
+    expect(reviewed.ok(), await reviewed.text()).toBeTruthy();
+
+    await page.goto(`/app/prosecution/${caseId}/disclosure`);
+    await selectWorkspace(page, `${ORG_NAME}-p0`, organizationId);
+    await expect(page.getByText("Potential disclosure candidate").first()).toBeVisible();
+    await expect(page.getByText(/Brady|Giglio|constitutional violation established/i)).toHaveCount(
+      0,
+    );
+
+    await page.goto(`/app/prosecution/${caseId}/evidence`);
+    await expect(page.getByText("bodycam").first()).toBeVisible();
+    await expect(page.getByText(/Chain of custody/i).first()).toBeVisible();
+
+    await page.goto(`/app/prosecution/${caseId}/witnesses`);
+    await expect(page.getByText(`P0 Witness ${suffix}`)).toBeVisible();
+    await expect(page.getByText(/Contradictory/i).first()).toBeVisible();
+
+    // Cross-org isolation: second org cannot read this case.
+    const otherCreated = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-isol`, slug: `${ORG_SLUG}-isol`, type: "firm" },
+    });
+    expect(otherCreated.ok(), await otherCreated.text()).toBeTruthy();
+    const isolBody = (await otherCreated.json()) as {
+      organization?: { id?: string };
+      id?: string;
+    };
+    const isolOrgId = isolBody.organization?.id ?? isolBody.id;
+    expect(isolOrgId).toBeTruthy();
+    const cross = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${isolOrgId}`,
+    );
+    expect(cross.ok()).toBeFalsy();
+
+    // Second case cannot attach first-case evidence id via link to foreign case inventively:
+    const caseB = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-p0-b`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(caseB.ok(), await caseB.text()).toBeTruthy();
+    const caseBId = ((await caseB.json()) as { criminalCase: { id: string } }).criminalCase.id;
+    const badLink = await page.request.post(
+      `/api/v1/prosecution/cases/${caseBId}/evidence-links?organizationId=${organizationId}`,
+      {
+        data: {
+          evidenceId: evidence.id,
+          relationship: "RELATED_TO",
+          targetType: "charge",
+          targetId: "00000000-0000-4000-8000-000000000099",
+          provenance,
+        },
+      },
+    );
+    expect(badLink.ok()).toBeFalsy();
+  });
 });

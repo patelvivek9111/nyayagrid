@@ -3,6 +3,8 @@ import {
   criminalCases,
   documents,
   ensureProsecutionRoles,
+  memberships,
+  permissions,
   prosecutionAgencies,
   prosecutionChargeElements,
   prosecutionCharges,
@@ -27,13 +29,23 @@ import {
   prosecutionWarrants,
   prosecutionWitnesses,
   prosecutionWitnessStatements,
+  roles,
+  users,
   type Database,
   type RecordProvenance,
 } from "@nyayagrid/database";
-import { requireAnyCapability, requireCapability, writeAuditEvent } from "@nyayagrid/permissions";
+import {
+  AuthorizationError,
+  getMembershipCapabilities,
+  writeAuditEvent,
+} from "@nyayagrid/permissions";
 import { assertProvenance } from "../legal/standards";
-import { partitionEvidenceByDefendant, separateProsecutionCaseIssues } from "../deepening/evidence-scope";
+import {
+  partitionEvidenceByDefendant,
+  separateProsecutionCaseIssues,
+} from "../deepening/evidence-scope";
 import { notifyProsecutionEvent } from "../week4/notifications";
+import { normalizeCustody, validateChainOfCustody } from "../week4/chain-of-custody";
 import { suppressionPayload } from "./suppression-review";
 import {
   EVIDENCE_RELATIONSHIPS,
@@ -44,49 +56,34 @@ import {
   assertTenant,
   assertTimelineEventType,
   buildElementsMatrix,
+  compareWitnessStatements,
   deriveElementStatus,
+  isFinalDisclosureStatus,
+  prosecutionCapabilityAllows,
+  prosecutionResourceCapability,
   transitionDisclosure,
   type ChargeElementStatus,
+  type ProsecutionResourceAction,
+  type StatementClaim,
 } from "./domain";
 import { buildDiscoveryDashboard } from "../week4/discovery-ops";
 
 async function authorize(
   db: Database,
-  params: { userId: string; organizationId: string; action: "view" | "edit" | "review" | "evidence" },
+  params: {
+    userId: string;
+    organizationId: string;
+    action: ProsecutionResourceAction;
+  },
 ) {
   await ensureProsecutionRoles(db, params.organizationId);
-  if (params.action === "view") {
-    await requireAnyCapability(db, {
-      userId: params.userId,
-      organizationId: params.organizationId,
-      capabilities: ["prosecution.view", "prosecution.edit", "prosecution.review"],
-    });
-    return;
-  }
-  if (params.action === "review") {
-    await requireCapability(db, {
-      userId: params.userId,
-      organizationId: params.organizationId,
-      capability: "prosecution.review",
-    });
-    return;
-  }
-  if (params.action === "evidence") {
-    const membership = await requireAnyCapability(db, {
-      userId: params.userId,
-      organizationId: params.organizationId,
-      capabilities: ["prosecution.edit", "documents.upload"],
-    });
-    if (!membership.capabilities.has("prosecution.view") && !membership.capabilities.has("prosecution.edit")) {
-      throw new ProsecutionError("FORBIDDEN", "Evidence writes require prosecution access.", 403);
-    }
-    return;
-  }
-  await requireCapability(db, {
+  const membership = await getMembershipCapabilities(db, {
     userId: params.userId,
     organizationId: params.organizationId,
-    capability: "prosecution.edit",
   });
+  if (!membership || !prosecutionCapabilityAllows(membership.capabilities, params.action)) {
+    throw new AuthorizationError("Missing prosecution capability for this action.");
+  }
 }
 
 async function requireCase(db: Database, organizationId: string, caseId: string) {
@@ -105,9 +102,15 @@ function provenanceOf(value: RecordProvenance): RecordProvenance {
   return value;
 }
 
-export async function listCriminalCases(db: Database, params: { userId: string; organizationId: string }) {
+export async function listCriminalCases(
+  db: Database,
+  params: { userId: string; organizationId: string },
+) {
   await authorize(db, { ...params, action: "view" });
-  return db.select().from(criminalCases).where(eq(criminalCases.organizationId, params.organizationId));
+  return db
+    .select()
+    .from(criminalCases)
+    .where(eq(criminalCases.organizationId, params.organizationId));
 }
 
 export async function createCriminalCase(
@@ -125,7 +128,11 @@ export async function createCriminalCase(
     matterId?: string | null;
   },
 ) {
-  await authorize(db, { userId: params.userId, organizationId: params.organizationId, action: "edit" });
+  await authorize(db, {
+    userId: params.userId,
+    organizationId: params.organizationId,
+    action: "case.manage",
+  });
   const [created] = await db
     .insert(criminalCases)
     .values({
@@ -160,47 +167,387 @@ function dateLabel(value: Date | string | null | undefined): string | null {
   return String(value);
 }
 
-export async function getProsecutionOverview(db: Database, params: { userId: string; organizationId: string; caseId: string }) {
-  await authorize(db, { userId: params.userId, organizationId: params.organizationId, action: "view" });
+async function listAssignableProsecutionMembers(db: Database, organizationId: string) {
+  const rows = await db
+    .select({
+      userId: users.id,
+      name: users.name,
+      email: users.email,
+      roleKey: roles.key,
+      capability: permissions.capability,
+    })
+    .from(memberships)
+    .innerJoin(users, eq(memberships.userId, users.id))
+    .innerJoin(roles, eq(memberships.roleId, roles.id))
+    .innerJoin(permissions, eq(permissions.roleId, roles.id))
+    .where(and(eq(memberships.organizationId, organizationId), eq(memberships.status, "active")));
+  const byUser = new Map<
+    string,
+    {
+      userId: string;
+      name: string | null;
+      email: string;
+      roleKey: string;
+      capabilities: Set<string>;
+    }
+  >();
+  for (const row of rows) {
+    const existing = byUser.get(row.userId) ?? {
+      userId: row.userId,
+      name: row.name,
+      email: row.email,
+      roleKey: row.roleKey,
+      capabilities: new Set<string>(),
+    };
+    existing.capabilities.add(row.capability);
+    byUser.set(row.userId, existing);
+  }
+  return [...byUser.values()]
+    .filter(
+      (member) =>
+        member.capabilities.has("prosecution.view") || member.capabilities.has("prosecution.edit"),
+    )
+    .map((member) => ({
+      userId: member.userId,
+      name: member.name,
+      email: member.email,
+      roleKey: member.roleKey,
+      canBeProsecutor:
+        prosecutionCapabilityAllows(member.capabilities, "charge.manage") ||
+        prosecutionCapabilityAllows(member.capabilities, "case.manage"),
+      canBeSupervisor: prosecutionCapabilityAllows(member.capabilities, "review"),
+    }));
+}
+
+async function assertAssignableProsecutor(
+  db: Database,
+  params: { organizationId: string; userId: string },
+) {
+  const membership = await getMembershipCapabilities(db, params);
+  if (
+    !membership ||
+    !(
+      prosecutionCapabilityAllows(membership.capabilities, "charge.manage") ||
+      prosecutionCapabilityAllows(membership.capabilities, "case.manage")
+    )
+  ) {
+    throw new ProsecutionError(
+      "INVALID_ASSIGNMENT",
+      "Assigned prosecutor must belong to this organization with an allowed prosecution role.",
+      400,
+    );
+  }
+}
+
+async function assertAssignableSupervisor(
+  db: Database,
+  params: { organizationId: string; userId: string },
+) {
+  const membership = await getMembershipCapabilities(db, params);
+  if (!membership || !prosecutionCapabilityAllows(membership.capabilities, "review")) {
+    throw new ProsecutionError(
+      "INVALID_ASSIGNMENT",
+      "Assigned supervisor must belong to this organization with review authority.",
+      400,
+    );
+  }
+}
+
+export async function updateCriminalCase(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    caseId: string;
+    patch: {
+      caseNumber?: string;
+      caseStatus?: string;
+      jurisdiction?: string;
+      court?: string;
+      courthouse?: string | null;
+      priority?: string;
+      summary?: string | null;
+      notes?: string | null;
+      assignedProsecutorId?: string | null;
+      supervisingProsecutorId?: string | null;
+      investigatingAgencyId?: string | null;
+      closedDate?: string | null;
+    };
+  },
+) {
+  await authorize(db, {
+    userId: params.userId,
+    organizationId: params.organizationId,
+    action: "case.manage",
+  });
   const criminalCase = await requireCase(db, params.organizationId, params.caseId);
-  const [defendants, charges, elements, evidence, discovery, disclosures, witnesses, hearings, motions, subpoenas, tasks, issues, agencies, officers, warrants, timeline, statements] =
-    await Promise.all([
-      db.select().from(prosecutionDefendants).where(eq(prosecutionDefendants.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionCharges).where(eq(prosecutionCharges.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionChargeElements).where(eq(prosecutionChargeElements.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionEvidenceItems).where(eq(prosecutionEvidenceItems.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionDiscoveryItems).where(eq(prosecutionDiscoveryItems.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionDisclosureCandidates).where(eq(prosecutionDisclosureCandidates.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionWitnesses).where(eq(prosecutionWitnesses.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionHearings).where(eq(prosecutionHearings.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionMotions).where(eq(prosecutionMotions.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionSubpoenas).where(eq(prosecutionSubpoenas.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionTasks).where(eq(prosecutionTasks.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionProcedureIssues).where(eq(prosecutionProcedureIssues.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionAgencies).where(eq(prosecutionAgencies.organizationId, params.organizationId)),
-      db.select().from(prosecutionOfficers).where(eq(prosecutionOfficers.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionWarrants).where(eq(prosecutionWarrants.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionTimelineEvents).where(eq(prosecutionTimelineEvents.criminalCaseId, criminalCase.id)),
-      db.select().from(prosecutionWitnessStatements).where(eq(prosecutionWitnessStatements.criminalCaseId, criminalCase.id)),
-    ]);
+  const patch = params.patch;
+  if (patch.assignedProsecutorId) {
+    await assertAssignableProsecutor(db, {
+      organizationId: params.organizationId,
+      userId: patch.assignedProsecutorId,
+    });
+  }
+  if (patch.supervisingProsecutorId) {
+    await assertAssignableSupervisor(db, {
+      organizationId: params.organizationId,
+      userId: patch.supervisingProsecutorId,
+    });
+  }
+  if (patch.investigatingAgencyId) {
+    const [agency] = await db
+      .select()
+      .from(prosecutionAgencies)
+      .where(
+        and(
+          eq(prosecutionAgencies.id, patch.investigatingAgencyId),
+          eq(prosecutionAgencies.organizationId, params.organizationId),
+        ),
+      )
+      .limit(1);
+    if (!agency) {
+      throw new ProsecutionError(
+        "ORPHAN_REFERENCE",
+        "Investigating agency not found in this organization.",
+        404,
+      );
+    }
+  }
+  const [updated] = await db
+    .update(criminalCases)
+    .set({
+      ...(patch.caseNumber !== undefined ? { caseNumber: patch.caseNumber } : {}),
+      ...(patch.caseStatus !== undefined ? { caseStatus: patch.caseStatus } : {}),
+      ...(patch.jurisdiction !== undefined ? { jurisdiction: patch.jurisdiction } : {}),
+      ...(patch.court !== undefined ? { court: patch.court } : {}),
+      ...(patch.courthouse !== undefined ? { courthouse: patch.courthouse } : {}),
+      ...(patch.priority !== undefined ? { priority: patch.priority } : {}),
+      ...(patch.summary !== undefined ? { summary: patch.summary } : {}),
+      ...(patch.notes !== undefined ? { notes: patch.notes } : {}),
+      ...(patch.assignedProsecutorId !== undefined
+        ? { assignedProsecutorId: patch.assignedProsecutorId }
+        : {}),
+      ...(patch.supervisingProsecutorId !== undefined
+        ? { supervisingProsecutorId: patch.supervisingProsecutorId }
+        : {}),
+      ...(patch.investigatingAgencyId !== undefined
+        ? { investigatingAgencyId: patch.investigatingAgencyId }
+        : {}),
+      ...(patch.closedDate !== undefined ? { closedDate: patch.closedDate } : {}),
+      updatedByUserId: params.userId,
+      updatedAt: new Date(),
+    })
+    .where(
+      and(
+        eq(criminalCases.id, criminalCase.id),
+        eq(criminalCases.organizationId, params.organizationId),
+      ),
+    )
+    .returning();
+  if (!updated) throw new ProsecutionError("NOT_FOUND", "Criminal case not found.", 404);
+  await writeAuditEvent(db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    matterId: updated.matterId,
+    action: "prosecution.case_updated",
+    targetType: "criminal_case",
+    targetId: updated.id,
+    metadata: {
+      fields: Object.keys(patch),
+      assignedProsecutorId: updated.assignedProsecutorId,
+      supervisingProsecutorId: updated.supervisingProsecutorId,
+      investigatingAgencyId: updated.investigatingAgencyId,
+    },
+  });
+  return updated;
+}
+
+export async function reviewDisclosureCandidate(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    caseId: string;
+    candidateId: string;
+    status: string;
+    notes?: string | null;
+  },
+) {
+  const action = isFinalDisclosureStatus(params.status) ? "review" : "disclosure.flag";
+  await authorize(db, { userId: params.userId, organizationId: params.organizationId, action });
+  const criminalCase = await requireCase(db, params.organizationId, params.caseId);
+  const [existing] = await db
+    .select()
+    .from(prosecutionDisclosureCandidates)
+    .where(
+      and(
+        eq(prosecutionDisclosureCandidates.id, params.candidateId),
+        eq(prosecutionDisclosureCandidates.organizationId, params.organizationId),
+        eq(prosecutionDisclosureCandidates.criminalCaseId, criminalCase.id),
+      ),
+    )
+    .limit(1);
+  if (!existing) throw new ProsecutionError("NOT_FOUND", "Disclosure candidate not found.", 404);
+  const status = transitionDisclosure({
+    next: params.status as Parameters<typeof transitionDisclosure>[0]["next"],
+    humanActor: true,
+  });
+  const [updated] = await db
+    .update(prosecutionDisclosureCandidates)
+    .set({
+      status,
+      notes: params.notes !== undefined ? params.notes : existing.notes,
+      humanActorId: params.userId,
+      updatedAt: new Date(),
+    })
+    .where(eq(prosecutionDisclosureCandidates.id, existing.id))
+    .returning();
+  if (!updated) throw new ProsecutionError("NOT_FOUND", "Disclosure candidate not found.", 404);
+  await writeAuditEvent(db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    matterId: criminalCase.matterId,
+    action: "prosecution.disclosure_review_changed",
+    targetType: "disclosure_review",
+    targetId: updated.id,
+    metadata: {
+      criminalCaseId: criminalCase.id,
+      previousStatus: existing.status,
+      status: updated.status,
+      finalDetermination: isFinalDisclosureStatus(updated.status),
+    },
+  });
+  return updated;
+}
+
+export async function getProsecutionOverview(
+  db: Database,
+  params: { userId: string; organizationId: string; caseId: string },
+) {
+  await authorize(db, {
+    userId: params.userId,
+    organizationId: params.organizationId,
+    action: "view",
+  });
+  const criminalCase = await requireCase(db, params.organizationId, params.caseId);
+  const [
+    defendants,
+    charges,
+    elements,
+    evidence,
+    discovery,
+    disclosures,
+    witnesses,
+    hearings,
+    motions,
+    subpoenas,
+    tasks,
+    issues,
+    agencies,
+    officers,
+    warrants,
+    timeline,
+    statements,
+  ] = await Promise.all([
+    db
+      .select()
+      .from(prosecutionDefendants)
+      .where(eq(prosecutionDefendants.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionCharges)
+      .where(eq(prosecutionCharges.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionChargeElements)
+      .where(eq(prosecutionChargeElements.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionEvidenceItems)
+      .where(eq(prosecutionEvidenceItems.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionDiscoveryItems)
+      .where(eq(prosecutionDiscoveryItems.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionDisclosureCandidates)
+      .where(eq(prosecutionDisclosureCandidates.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionWitnesses)
+      .where(eq(prosecutionWitnesses.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionHearings)
+      .where(eq(prosecutionHearings.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionMotions)
+      .where(eq(prosecutionMotions.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionSubpoenas)
+      .where(eq(prosecutionSubpoenas.criminalCaseId, criminalCase.id)),
+    db.select().from(prosecutionTasks).where(eq(prosecutionTasks.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionProcedureIssues)
+      .where(eq(prosecutionProcedureIssues.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionAgencies)
+      .where(eq(prosecutionAgencies.organizationId, params.organizationId)),
+    db
+      .select()
+      .from(prosecutionOfficers)
+      .where(eq(prosecutionOfficers.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionWarrants)
+      .where(eq(prosecutionWarrants.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionTimelineEvents)
+      .where(eq(prosecutionTimelineEvents.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionWitnessStatements)
+      .where(eq(prosecutionWitnessStatements.criminalCaseId, criminalCase.id)),
+  ]);
   const warrantIds = warrants.map((warrant) => warrant.id);
   const affidavits = warrantIds.length
     ? await db
         .select()
         .from(prosecutionWarrantAffidavits)
-        .where(and(eq(prosecutionWarrantAffidavits.organizationId, params.organizationId), inArray(prosecutionWarrantAffidavits.warrantId, warrantIds)))
+        .where(
+          and(
+            eq(prosecutionWarrantAffidavits.organizationId, params.organizationId),
+            inArray(prosecutionWarrantAffidavits.warrantId, warrantIds),
+          ),
+        )
     : [];
   const executions = warrantIds.length
     ? await db
         .select()
         .from(prosecutionWarrantExecutions)
-        .where(and(eq(prosecutionWarrantExecutions.organizationId, params.organizationId), inArray(prosecutionWarrantExecutions.warrantId, warrantIds)))
+        .where(
+          and(
+            eq(prosecutionWarrantExecutions.organizationId, params.organizationId),
+            inArray(prosecutionWarrantExecutions.warrantId, warrantIds),
+          ),
+        )
     : [];
   const returns = warrantIds.length
     ? await db
         .select()
         .from(prosecutionWarrantReturns)
-        .where(and(eq(prosecutionWarrantReturns.organizationId, params.organizationId), inArray(prosecutionWarrantReturns.warrantId, warrantIds)))
+        .where(
+          and(
+            eq(prosecutionWarrantReturns.organizationId, params.organizationId),
+            inArray(prosecutionWarrantReturns.warrantId, warrantIds),
+          ),
+        )
     : [];
   const matrix = buildElementsMatrix({
     charges: charges.map((charge) => ({ id: charge.id, offenseName: charge.offenseName })),
@@ -258,12 +605,72 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
     })),
   });
   const evidenceScope = partitionEvidenceByDefendant({
-    defendants: defendants.map((defendant) => ({ id: defendant.id, displayName: defendant.displayName })),
+    defendants: defendants.map((defendant) => ({
+      id: defendant.id,
+      displayName: defendant.displayName,
+    })),
     evidence: evidence.map((item) => ({
       id: item.id,
       relatedDefendantIds: item.relatedDefendantIds ?? [],
     })),
   });
+  const evidenceItems = evidence.map((item) => {
+    const transfers = normalizeCustody(item.chainOfCustody);
+    const custodyFindings = validateChainOfCustody(transfers);
+    return {
+      ...item,
+      custodyTransfers: transfers,
+      custodyFindings,
+      scope:
+        (item.relatedDefendantIds?.length ?? 0) === 0
+          ? "joint_or_unassigned"
+          : (item.relatedDefendantIds?.length ?? 0) > 1
+            ? "joint"
+            : "defendant_specific",
+    };
+  });
+  const witnessProfiles = witnesses.map((witness) => {
+    const witnessStatements = statements.filter((statement) => statement.witnessId === witness.id);
+    const comparison =
+      witnessStatements.length >= 2
+        ? compareWitnessStatements(
+            (witnessStatements[0]!.claims ?? []).map((claim): StatementClaim => ({
+              key: claim.key,
+              value: claim.value,
+              kind: claim.kind === "time" ? "time" : "fact",
+            })),
+            (witnessStatements[1]!.claims ?? []).map((claim): StatementClaim => ({
+              key: claim.key,
+              value: claim.value,
+              kind: claim.kind === "time" ? "time" : "fact",
+            })),
+          )
+        : [];
+    return {
+      ...witness,
+      statements: witnessStatements,
+      statementComparison: comparison,
+    };
+  });
+  const membership = await getMembershipCapabilities(db, {
+    userId: params.userId,
+    organizationId: params.organizationId,
+  });
+  const viewerCapabilities = membership ? [...membership.capabilities] : [];
+  const assignableMembers = await listAssignableProsecutionMembers(db, params.organizationId);
+  const reviewerIds = [
+    ...new Set(
+      disclosures.map((item) => item.humanActorId).filter((id): id is string => Boolean(id)),
+    ),
+  ];
+  const reviewers =
+    reviewerIds.length > 0
+      ? await db
+          .select({ id: users.id, name: users.name, email: users.email })
+          .from(users)
+          .where(inArray(users.id, reviewerIds))
+      : [];
+  const reviewerById = new Map(reviewers.map((row) => [row.id, row]));
   return {
     case: criminalCase,
     defendants,
@@ -277,6 +684,22 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
     evidenceCount: evidence.length,
     discoveryCount: discovery.length,
     witnessCount: witnesses.length,
+    evidenceItems,
+    witnesses: witnessProfiles,
+    statements,
+    discoveryItems: discovery,
+    disclosureCandidates: disclosures.map((item) => ({
+      ...item,
+      label: "Potential disclosure candidate",
+      reviewer: item.humanActorId ? (reviewerById.get(item.humanActorId) ?? null) : null,
+      reviewedAt: item.humanActorId ? item.updatedAt : null,
+    })),
+    assignableMembers,
+    viewerCapabilities,
+    canReviewDisclosure: prosecutionCapabilityAllows(new Set(viewerCapabilities), "review"),
+    canManageCase: prosecutionCapabilityAllows(new Set(viewerCapabilities), "case.manage"),
+    canManageEvidence: prosecutionCapabilityAllows(new Set(viewerCapabilities), "evidence.manage"),
+    canManageWitnesses: prosecutionCapabilityAllows(new Set(viewerCapabilities), "witness.manage"),
     elementGaps,
     issueFlags: issues,
     issueSeparation,
@@ -293,16 +716,25 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
         issuingJudge: warrant.issuingJudge,
         applicationDate: dateLabel(warrant.applicationDate),
         issueDate: dateLabel(warrant.issueDate),
-        executionDate: dateLabel(warrant.executionDate) ?? dateLabel(executions.find((row) => row.warrantId === warrant.id)?.executedAt),
+        executionDate:
+          dateLabel(warrant.executionDate) ??
+          dateLabel(executions.find((row) => row.warrantId === warrant.id)?.executedAt),
         scope: warrant.scope,
         probableCauseFacts: warrant.probableCauseFacts ?? [],
         sourceFactIds: warrant.sourceFactIds ?? [],
         seizedEvidenceIds: warrant.seizedEvidenceIds ?? [],
         returnNotes: warrant.returnNotes,
         relatedSuppressionIssueIds: warrant.relatedSuppressionIssueIds ?? [],
-        affidavitStatements: affidavits.filter((row) => row.warrantId === warrant.id).map((row) => row.statement),
-        executionNotes: executions.filter((row) => row.warrantId === warrant.id).map((row) => row.notes).filter((note): note is string => Boolean(note)),
-        returnInventory: returns.filter((row) => row.warrantId === warrant.id).flatMap((row) => row.inventory ?? []),
+        affidavitStatements: affidavits
+          .filter((row) => row.warrantId === warrant.id)
+          .map((row) => row.statement),
+        executionNotes: executions
+          .filter((row) => row.warrantId === warrant.id)
+          .map((row) => row.notes)
+          .filter((note): note is string => Boolean(note)),
+        returnInventory: returns
+          .filter((row) => row.warrantId === warrant.id)
+          .flatMap((row) => row.inventory ?? []),
       })),
       procedureIssues: issues.map((issue) => ({
         id: issue.id,
@@ -333,7 +765,7 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
         claims: (statement.claims ?? []).map((claim) => ({
           key: claim.key,
           value: claim.value,
-          kind: claim.kind === "time" ? "time" as const : "fact" as const,
+          kind: claim.kind === "time" ? ("time" as const) : ("fact" as const),
         })),
       })),
       timeline: timeline.map((event) => ({
@@ -356,7 +788,12 @@ async function assertLinkTarget(
     const [row] = await db
       .select()
       .from(prosecutionCharges)
-      .where(and(eq(prosecutionCharges.id, params.targetId), eq(prosecutionCharges.organizationId, params.organizationId)))
+      .where(
+        and(
+          eq(prosecutionCharges.id, params.targetId),
+          eq(prosecutionCharges.organizationId, params.organizationId),
+        ),
+      )
       .limit(1);
     if (!row) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge not found.", 404);
     assertSameCase(params.criminalCaseId, row.criminalCaseId);
@@ -366,7 +803,12 @@ async function assertLinkTarget(
     const [row] = await db
       .select()
       .from(prosecutionChargeElements)
-      .where(and(eq(prosecutionChargeElements.id, params.targetId), eq(prosecutionChargeElements.organizationId, params.organizationId)))
+      .where(
+        and(
+          eq(prosecutionChargeElements.id, params.targetId),
+          eq(prosecutionChargeElements.organizationId, params.organizationId),
+        ),
+      )
       .limit(1);
     if (!row) throw new ProsecutionError("ORPHAN_REFERENCE", "Element not found.", 404);
     assertSameCase(params.criminalCaseId, row.criminalCaseId);
@@ -376,7 +818,12 @@ async function assertLinkTarget(
     const [row] = await db
       .select()
       .from(prosecutionWarrants)
-      .where(and(eq(prosecutionWarrants.id, params.targetId), eq(prosecutionWarrants.organizationId, params.organizationId)))
+      .where(
+        and(
+          eq(prosecutionWarrants.id, params.targetId),
+          eq(prosecutionWarrants.organizationId, params.organizationId),
+        ),
+      )
       .limit(1);
     if (!row) throw new ProsecutionError("ORPHAN_REFERENCE", "Warrant not found.", 404);
     assertSameCase(params.criminalCaseId, row.criminalCaseId);
@@ -391,7 +838,12 @@ async function assertEvidenceIdsInCase(
   const rows = await db
     .select()
     .from(prosecutionEvidenceItems)
-    .where(and(eq(prosecutionEvidenceItems.organizationId, params.organizationId), inArray(prosecutionEvidenceItems.id, params.evidenceIds)));
+    .where(
+      and(
+        eq(prosecutionEvidenceItems.organizationId, params.organizationId),
+        inArray(prosecutionEvidenceItems.id, params.evidenceIds),
+      ),
+    );
   if (rows.length !== params.evidenceIds.length) {
     throw new ProsecutionError("ORPHAN_REFERENCE", "Evidence item not found.", 404);
   }
@@ -400,14 +852,23 @@ async function assertEvidenceIdsInCase(
 
 export async function addProsecutionRecord(
   db: Database,
-  params: { userId: string; organizationId: string; caseId: string; resource: string; body: Record<string, unknown> },
+  params: {
+    userId: string;
+    organizationId: string;
+    caseId: string;
+    resource: string;
+    body: Record<string, unknown>;
+  },
 ) {
-  const reviewResources = new Set(["disclosure"]);
-  const evidenceResources = new Set(["evidence", "evidence-links"]);
+  let action = prosecutionResourceCapability(params.resource);
+  if (params.resource === "disclosure") {
+    const requested = String(params.body.status ?? "UNREVIEWED");
+    action = isFinalDisclosureStatus(requested) ? "review" : "disclosure.flag";
+  }
   await authorize(db, {
     userId: params.userId,
     organizationId: params.organizationId,
-    action: reviewResources.has(params.resource) ? "review" : evidenceResources.has(params.resource) ? "evidence" : "edit",
+    action,
   });
   const criminalCase = await requireCase(db, params.organizationId, params.caseId);
   const needsProvenance = !["agencies", "officers", "tasks"].includes(params.resource);
@@ -441,7 +902,12 @@ export async function addProsecutionRecord(
     const [defendant] = await db
       .select()
       .from(prosecutionDefendants)
-      .where(and(eq(prosecutionDefendants.id, defendantId), eq(prosecutionDefendants.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionDefendants.id, defendantId),
+          eq(prosecutionDefendants.organizationId, organizationId),
+        ),
+      )
       .limit(1);
     if (!defendant) throw new ProsecutionError("ORPHAN_REFERENCE", "Defendant not found.");
     assertSameCase(criminalCaseId, defendant.criminalCaseId);
@@ -477,7 +943,12 @@ export async function addProsecutionRecord(
     const [charge] = await db
       .select()
       .from(prosecutionCharges)
-      .where(and(eq(prosecutionCharges.id, chargeId), eq(prosecutionCharges.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionCharges.id, chargeId),
+          eq(prosecutionCharges.organizationId, organizationId),
+        ),
+      )
       .limit(1);
     if (!charge) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge not found.");
     assertSameCase(criminalCaseId, charge.criminalCaseId);
@@ -485,12 +956,14 @@ export async function addProsecutionRecord(
     const contraryEvidenceIds = (params.body.contraryEvidenceIds as string[]) ?? [];
     const uncertainEvidenceIds = (params.body.uncertainEvidenceIds as string[]) ?? [];
     const missingEvidenceIds = (params.body.missingEvidenceIds as string[]) ?? [];
-    const status = (params.body.status as string) ?? deriveElementStatus({
-      supportingEvidenceIds,
-      contraryEvidenceIds,
-      uncertainEvidenceIds,
-      missingEvidenceIds,
-    });
+    const status =
+      (params.body.status as string) ??
+      deriveElementStatus({
+        supportingEvidenceIds,
+        contraryEvidenceIds,
+        uncertainEvidenceIds,
+        missingEvidenceIds,
+      });
     assertElementStatus(status);
     const [row] = await db
       .insert(prosecutionChargeElements)
@@ -533,7 +1006,10 @@ export async function addProsecutionRecord(
         .select({ id: prosecutionDefendants.id })
         .from(prosecutionDefendants)
         .where(
-          and(eq(prosecutionDefendants.organizationId, organizationId), eq(prosecutionDefendants.criminalCaseId, criminalCaseId)),
+          and(
+            eq(prosecutionDefendants.organizationId, organizationId),
+            eq(prosecutionDefendants.criminalCaseId, criminalCaseId),
+          ),
         );
       const knownIds = new Set(known.map((defendant) => defendant.id));
       if (relatedDefendantIds.some((id) => !knownIds.has(id))) {
@@ -548,9 +1024,19 @@ export async function addProsecutionRecord(
         evidenceType: String(params.body.evidenceType ?? "other"),
         sourceAgency: (params.body.sourceAgency as string) ?? null,
         collector: (params.body.collector as string) ?? null,
+        collectionDate: (params.body.collectionDate as string) ?? null,
         storageReference: (params.body.storageReference as string) ?? null,
         chainOfCustody: (params.body.chainOfCustody as string[]) ?? [],
         relatedDefendantIds,
+        relatedChargeIds: Array.isArray(params.body.relatedChargeIds)
+          ? params.body.relatedChargeIds.map(String)
+          : [],
+        relatedElementIds: Array.isArray(params.body.relatedElementIds)
+          ? params.body.relatedElementIds.map(String)
+          : [],
+        relatedWitnessIds: Array.isArray(params.body.relatedWitnessIds)
+          ? params.body.relatedWitnessIds.map(String)
+          : [],
         sensitivity: (params.body.sensitivity as string) ?? "standard",
         reviewStatus: (params.body.reviewStatus as string) ?? "received",
         provenance,
@@ -564,13 +1050,21 @@ export async function addProsecutionRecord(
     const [evidence] = await db
       .select()
       .from(prosecutionEvidenceItems)
-      .where(and(eq(prosecutionEvidenceItems.id, evidenceId), eq(prosecutionEvidenceItems.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionEvidenceItems.id, evidenceId),
+          eq(prosecutionEvidenceItems.organizationId, organizationId),
+        ),
+      )
       .limit(1);
     if (!evidence) throw new ProsecutionError("ORPHAN_REFERENCE", "Evidence item not found.");
     assertSameCase(criminalCaseId, evidence.criminalCaseId);
     const relationship = String(params.body.relationship ?? "");
     if (!(EVIDENCE_RELATIONSHIPS as readonly string[]).includes(relationship)) {
-      throw new ProsecutionError("INVALID_EVIDENCE_RELATIONSHIP", "Unsupported evidence relationship.");
+      throw new ProsecutionError(
+        "INVALID_EVIDENCE_RELATIONSHIP",
+        "Unsupported evidence relationship.",
+      );
     }
     await assertLinkTarget(db, {
       organizationId,
@@ -624,7 +1118,12 @@ export async function addProsecutionRecord(
     const [witness] = await db
       .select()
       .from(prosecutionWitnesses)
-      .where(and(eq(prosecutionWitnesses.id, witnessId), eq(prosecutionWitnesses.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionWitnesses.id, witnessId),
+          eq(prosecutionWitnesses.organizationId, organizationId),
+        ),
+      )
       .limit(1);
     if (!witness) throw new ProsecutionError("ORPHAN_REFERENCE", "Witness not found.");
     assertSameCase(criminalCaseId, witness.criminalCaseId);
@@ -654,13 +1153,30 @@ export async function addProsecutionRecord(
       const rows = await db
         .select()
         .from(documents)
-        .where(and(eq(documents.organizationId, organizationId), inArray(documents.id, relatedDocumentIds)));
+        .where(
+          and(
+            eq(documents.organizationId, organizationId),
+            inArray(documents.id, relatedDocumentIds),
+          ),
+        );
       if (rows.length !== relatedDocumentIds.length) {
-        throw new ProsecutionError("ORPHAN_REFERENCE", "A discovery document was not found in this organization.", 404);
+        throw new ProsecutionError(
+          "ORPHAN_REFERENCE",
+          "A discovery document was not found in this organization.",
+          404,
+        );
       }
       for (const document of rows) {
-        if (criminalCase.matterId && document.matterId && document.matterId !== criminalCase.matterId) {
-          throw new ProsecutionError("CROSS_CASE", "Discovery cannot attach a document from another matter.", 403);
+        if (
+          criminalCase.matterId &&
+          document.matterId &&
+          document.matterId !== criminalCase.matterId
+        ) {
+          throw new ProsecutionError(
+            "CROSS_CASE",
+            "Discovery cannot attach a document from another matter.",
+            403,
+          );
         }
       }
     }
@@ -740,8 +1256,14 @@ export async function addProsecutionRecord(
   }
 
   if (params.resource === "warrants") {
-    const seizedEvidenceIds = Array.isArray(params.body.seizedEvidenceIds) ? params.body.seizedEvidenceIds.map(String) : [];
-    await assertEvidenceIdsInCase(db, { organizationId, criminalCaseId, evidenceIds: seizedEvidenceIds });
+    const seizedEvidenceIds = Array.isArray(params.body.seizedEvidenceIds)
+      ? params.body.seizedEvidenceIds.map(String)
+      : [];
+    await assertEvidenceIdsInCase(db, {
+      organizationId,
+      criminalCaseId,
+      evidenceIds: seizedEvidenceIds,
+    });
     const [row] = await db
       .insert(prosecutionWarrants)
       .values({
@@ -759,12 +1281,21 @@ export async function addProsecutionRecord(
     return row;
   }
 
-  if (params.resource === "warrant-affidavits" || params.resource === "warrant-executions" || params.resource === "warrant-returns") {
+  if (
+    params.resource === "warrant-affidavits" ||
+    params.resource === "warrant-executions" ||
+    params.resource === "warrant-returns"
+  ) {
     const warrantId = String(params.body.warrantId ?? "");
     const [warrant] = await db
       .select()
       .from(prosecutionWarrants)
-      .where(and(eq(prosecutionWarrants.id, warrantId), eq(prosecutionWarrants.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionWarrants.id, warrantId),
+          eq(prosecutionWarrants.organizationId, organizationId),
+        ),
+      )
       .limit(1);
     if (!warrant) throw new ProsecutionError("ORPHAN_REFERENCE", "Warrant not found.");
     assertSameCase(criminalCaseId, warrant.criminalCaseId);
@@ -935,7 +1466,12 @@ export async function addProsecutionRecord(
     const [charge] = await db
       .select()
       .from(prosecutionCharges)
-      .where(and(eq(prosecutionCharges.id, chargeId), eq(prosecutionCharges.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionCharges.id, chargeId),
+          eq(prosecutionCharges.organizationId, organizationId),
+        ),
+      )
       .limit(1);
     if (!charge) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge not found.");
     assertSameCase(criminalCaseId, charge.criminalCaseId);
@@ -967,7 +1503,12 @@ export async function addProsecutionRecord(
     const [charge] = await db
       .select()
       .from(prosecutionCharges)
-      .where(and(eq(prosecutionCharges.id, chargeId), eq(prosecutionCharges.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionCharges.id, chargeId),
+          eq(prosecutionCharges.organizationId, organizationId),
+        ),
+      )
       .limit(1);
     if (!charge) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge not found.");
     assertSameCase(criminalCaseId, charge.criminalCaseId);
@@ -1046,9 +1587,15 @@ export async function addProsecutionRecord(
     const [agency] = await db
       .select()
       .from(prosecutionAgencies)
-      .where(and(eq(prosecutionAgencies.id, agencyId), eq(prosecutionAgencies.organizationId, organizationId)))
+      .where(
+        and(
+          eq(prosecutionAgencies.id, agencyId),
+          eq(prosecutionAgencies.organizationId, organizationId),
+        ),
+      )
       .limit(1);
-    if (!agency) throw new ProsecutionError("ORPHAN_REFERENCE", "Agency not found in this organization.");
+    if (!agency)
+      throw new ProsecutionError("ORPHAN_REFERENCE", "Agency not found in this organization.");
     const [row] = await db
       .insert(prosecutionOfficers)
       .values({
@@ -1098,62 +1645,73 @@ export async function createChargeWithElements(
     }>;
   },
 ) {
-  await authorize(db, { userId: params.userId, organizationId: params.organizationId, action: "edit" });
+  await authorize(db, {
+    userId: params.userId,
+    organizationId: params.organizationId,
+    action: "charge.manage",
+  });
   const criminalCase = await requireCase(db, params.organizationId, params.caseId);
   const provenance = provenanceOf(params.charge.provenance);
   for (const element of params.elements) provenanceOf(element.provenance);
-  return db.transaction(async (tx) => {
-    const [defendant] = await tx
-      .select()
-      .from(prosecutionDefendants)
-      .where(and(eq(prosecutionDefendants.id, params.charge.defendantId), eq(prosecutionDefendants.organizationId, params.organizationId)))
-      .limit(1);
-    if (!defendant) throw new ProsecutionError("ORPHAN_REFERENCE", "Defendant not found.", 404);
-    assertSameCase(criminalCase.id, defendant.criminalCaseId);
-    const [charge] = await tx
-      .insert(prosecutionCharges)
-      .values({
-        organizationId: params.organizationId,
-        criminalCaseId: criminalCase.id,
-        defendantId: defendant.id,
-        countNumber: params.charge.countNumber,
-        offenseName: params.charge.offenseName,
-        jurisdiction: params.charge.jurisdiction,
-        statuteCitation: params.charge.statuteCitation ?? null,
-        provenance,
-      })
-      .returning();
-    if (!charge) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge was not created.");
-    const elements = [];
-    for (const element of params.elements) {
-      const status = element.status ?? "UNKNOWN";
-      assertElementStatus(status);
-      const [row] = await tx
-        .insert(prosecutionChargeElements)
+  return db
+    .transaction(async (tx) => {
+      const [defendant] = await tx
+        .select()
+        .from(prosecutionDefendants)
+        .where(
+          and(
+            eq(prosecutionDefendants.id, params.charge.defendantId),
+            eq(prosecutionDefendants.organizationId, params.organizationId),
+          ),
+        )
+        .limit(1);
+      if (!defendant) throw new ProsecutionError("ORPHAN_REFERENCE", "Defendant not found.", 404);
+      assertSameCase(criminalCase.id, defendant.criminalCaseId);
+      const [charge] = await tx
+        .insert(prosecutionCharges)
         .values({
           organizationId: params.organizationId,
           criminalCaseId: criminalCase.id,
-          chargeId: charge.id,
-          elementOrder: element.elementOrder,
-          elementText: element.elementText,
-          elementType: element.elementType,
-          status,
-          provenance: provenanceOf(element.provenance),
+          defendantId: defendant.id,
+          countNumber: params.charge.countNumber,
+          offenseName: params.charge.offenseName,
+          jurisdiction: params.charge.jurisdiction,
+          statuteCitation: params.charge.statuteCitation ?? null,
+          provenance,
         })
         .returning();
-      elements.push(row);
-    }
-    return { charge, elements };
-  }).then(async (created) => {
-    await writeAuditEvent(db, {
-      organizationId: params.organizationId,
-      actorUserId: params.userId,
-      matterId: criminalCase.matterId,
-      action: "prosecution.charge_modified",
-      targetType: "charge",
-      targetId: created.charge.id,
-      metadata: { criminalCaseId: criminalCase.id, elementCount: created.elements.length },
+      if (!charge) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge was not created.");
+      const elements = [];
+      for (const element of params.elements) {
+        const status = element.status ?? "UNKNOWN";
+        assertElementStatus(status);
+        const [row] = await tx
+          .insert(prosecutionChargeElements)
+          .values({
+            organizationId: params.organizationId,
+            criminalCaseId: criminalCase.id,
+            chargeId: charge.id,
+            elementOrder: element.elementOrder,
+            elementText: element.elementText,
+            elementType: element.elementType,
+            status,
+            provenance: provenanceOf(element.provenance),
+          })
+          .returning();
+        elements.push(row);
+      }
+      return { charge, elements };
+    })
+    .then(async (created) => {
+      await writeAuditEvent(db, {
+        organizationId: params.organizationId,
+        actorUserId: params.userId,
+        matterId: criminalCase.matterId,
+        action: "prosecution.charge_modified",
+        targetType: "charge",
+        targetId: created.charge.id,
+        metadata: { criminalCaseId: criminalCase.id, elementCount: created.elements.length },
+      });
+      return created;
     });
-    return created;
-  });
 }
