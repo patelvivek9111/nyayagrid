@@ -57,8 +57,7 @@ let organizationId = "";
 
 async function ensureOrgClientMatter(page: Page) {
   // Mirror professional.spec.ts setup — proven against this local runtime.
-  await page.goto("/app/onboarding");
-  await page.waitForLoadState("networkidle");
+  await page.goto("/app/onboarding", { waitUntil: "domcontentloaded" });
   const nameField = page.getByLabel("Firm or practice name");
   if (await nameField.isVisible({ timeout: 5_000 }).catch(() => false)) {
     await nameField.fill(ORG_NAME);
@@ -78,12 +77,10 @@ async function ensureOrgClientMatter(page: Page) {
     organizationId = (await res.json()).organization.id as string;
   }
   expect(organizationId.length).toBeGreaterThan(0);
-  await page.goto("/app/cases");
-  await page.waitForLoadState("networkidle");
+  await page.goto("/app/cases", { waitUntil: "domcontentloaded" });
   await selectWorkspace(page, ORG_NAME, organizationId);
 
-  await page.goto("/app/clients");
-  await page.waitForLoadState("networkidle");
+  await page.goto("/app/clients", { waitUntil: "domcontentloaded" });
   await selectWorkspace(page, ORG_NAME, organizationId);
   await page
     .getByRole("heading", { name: "Clients", exact: true })
@@ -99,8 +96,7 @@ async function ensureOrgClientMatter(page: Page) {
       .first(),
   ).toBeVisible({ timeout: 30_000 });
 
-  await page.goto("/app/cases/new");
-  await page.waitForLoadState("networkidle");
+  await page.goto("/app/cases/new", { waitUntil: "domcontentloaded" });
   await selectWorkspace(page, ORG_NAME, organizationId);
   const clientSelect = page.locator("main select").first();
   await expect(clientSelect.locator("option", { hasText: CLIENT_NAME })).toHaveCount(1, {
@@ -119,8 +115,9 @@ async function ensureOrgClientMatter(page: Page) {
 
 async function openCommandCenter(page: Page) {
   const started = Date.now();
-  await page.goto(`/app/cases/${matterId}/chats`);
-  await page.waitForLoadState("networkidle");
+  // Avoid networkidle: Inngest/dev polling and lingering Ask SSE keep the network busy
+  // and can burn the full test timeout on follow-up navigations (CI flake on SCENARIO 2).
+  await page.goto(`/app/cases/${matterId}/chats`, { waitUntil: "domcontentloaded" });
   await selectWorkspace(page, ORG_NAME, organizationId);
   metrics.threadLoadMs = Date.now() - started;
   await expect(page.getByRole("heading", { name: "Nyaya Command Center" })).toBeVisible({
@@ -132,8 +129,9 @@ async function openCommandCenter(page: Page) {
 async function ensureThread(page: Page) {
   await openCommandCenter(page);
   if (conversationId) {
-    await page.goto(`/app/cases/${matterId}/chats/${conversationId}`);
-    await page.waitForLoadState("networkidle");
+    await page.goto(`/app/cases/${matterId}/chats/${conversationId}`, {
+      waitUntil: "domcontentloaded",
+    });
     await selectWorkspace(page, ORG_NAME, organizationId);
   } else {
     const createRes = await page.request.post(`/api/v1/matters/${matterId}/conversations`, {
@@ -143,8 +141,9 @@ async function ensureThread(page: Page) {
     const body = (await createRes.json()) as { conversation?: { id?: string } };
     conversationId = body.conversation?.id ?? "";
     expect(conversationId).toBeTruthy();
-    await page.goto(`/app/cases/${matterId}/chats/${conversationId}`);
-    await page.waitForLoadState("networkidle");
+    await page.goto(`/app/cases/${matterId}/chats/${conversationId}`, {
+      waitUntil: "domcontentloaded",
+    });
     await selectWorkspace(page, ORG_NAME, organizationId);
   }
   await expect(page.getByText("Loading conversation…")).toHaveCount(0, { timeout: 30_000 });
@@ -193,28 +192,34 @@ async function sendAsk(page: Page, question: string) {
     }
   }
   metrics.firstAnswerMs = Date.now() - started;
-  // CI can leave Stop stuck when the Ask SSE stalls past the client watchdog.
-  // Prefer natural idle; if stuck: cancel, then reload the same thread and require idle.
+  // Client unlockWatchdog clears busy at 45s. Prefer natural idle; if stuck: cancel,
+  // then reload without networkidle so recovery finishes inside the 180s test budget.
   try {
-    await expect(stop).toHaveCount(0, { timeout: 60_000 });
+    await expect(stop).toHaveCount(0, { timeout: 55_000 });
   } catch {
     if (await stop.isVisible().catch(() => false)) {
       await stop.click({ timeout: 5_000 }).catch(() => undefined);
       await expect(stop)
-        .toHaveCount(0, { timeout: 15_000 })
+        .toHaveCount(0, { timeout: 10_000 })
         .catch(() => undefined);
     }
-    if ((await stop.count()) > 0) {
+    let stillBusy = false;
+    try {
+      stillBusy = (await stop.count()) > 0;
+    } catch {
+      // Page may already be closing under test timeout — treat as stuck and exit recovery.
+      stillBusy = false;
+    }
+    if (stillBusy) {
       const url = page.url();
-      await page.goto(url);
-      await page.waitForLoadState("networkidle");
+      await page.goto(url, { waitUntil: "domcontentloaded" });
       await selectWorkspace(page, ORG_NAME, organizationId);
       await expect(page.getByPlaceholder(/Ask Nyaya about this Case/)).toBeVisible({
         timeout: 30_000,
       });
     }
     await expect(page.getByRole("button", { name: "Stop generating" })).toHaveCount(0, {
-      timeout: 30_000,
+      timeout: 15_000,
     });
   }
   metrics.fullAnswerMs = Date.now() - started;
@@ -269,8 +274,7 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
       process.cwd(),
       "packages/ai/src/evals/golden-fixtures/synth-master-lease-agreement.txt",
     );
-    await page.goto(`/app/cases/${matterId}/documents`);
-    await page.waitForLoadState("networkidle");
+    await page.goto(`/app/cases/${matterId}/documents`, { waitUntil: "domcontentloaded" });
     await selectWorkspace(page, ORG_NAME, organizationId);
     const addMore = page.getByRole("button", { name: "+ Upload documents" });
     if (await addMore.isVisible().catch(() => false)) {
@@ -469,8 +473,7 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
   test("responsive narrow width does not hide composer", async ({ page }) => {
     trackPageHealth(page);
     await page.setViewportSize({ width: 900, height: 900 });
-    await page.goto(`/app/cases/${matterId}/chats`);
-    await page.waitForLoadState("networkidle");
+    await page.goto(`/app/cases/${matterId}/chats`, { waitUntil: "domcontentloaded" });
     // Narrow layouts may collapse the workspace switcher; composer must remain usable.
     await expect(page.getByRole("heading", { name: "Nyaya Command Center" })).toBeVisible({
       timeout: 30_000,
