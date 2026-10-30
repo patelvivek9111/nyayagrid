@@ -7,8 +7,8 @@ const ORG_SLUG = `e2e-pros-${suffix}`;
 const CASE_NUMBER = `SYN-E2E-${suffix}`;
 const provenance = { extractionOrigin: "human", humanEntered: true };
 
-test.describe.serial("signed-in prosecution workspace", () => {
-  test.setTimeout(120_000);
+test.describe("signed-in prosecution workspace", () => {
+  test.setTimeout(180_000);
 
   test("dev identity opens a criminal case and walks the prosecution sections", async ({
     page,
@@ -63,7 +63,8 @@ test.describe.serial("signed-in prosecution workspace", () => {
     const sections = page.getByRole("navigation", { name: "Prosecution sections" });
     for (const { label, path } of sectionRoutes) {
       const link = sections.getByRole("link", { name: label, exact: true });
-      await Promise.all([page.waitForURL(path, { timeout: 15_000 }), link.click()]);
+      await link.click();
+      await expect(page).toHaveURL(path, { timeout: 30_000 });
       await expect(link).toHaveAttribute("aria-current", "page");
     }
 
@@ -393,7 +394,7 @@ test.describe.serial("signed-in prosecution workspace", () => {
       provenance,
     });
     const evidence = await post("evidence", {
-      evidenceType: "bodycam",
+      evidenceType: "body_camera",
       collector: "Officer P0",
       collectionDate: "2024-01-02",
       storageReference: "BOX-P0",
@@ -489,7 +490,13 @@ test.describe.serial("signed-in prosecution workspace", () => {
     ).toHaveCount(0);
 
     await page.goto(`/app/prosecution/${caseId}/evidence`);
-    await expect(page.getByText("bodycam").first()).toBeVisible();
+    // Prefer the evidence list item — the type <option> matches the same text but is not visible.
+    await expect(
+      page
+        .locator("li")
+        .filter({ hasText: /body.?camera/i })
+        .first(),
+    ).toBeVisible();
     await expect(page.getByText(/Chain of custody/i).first()).toBeVisible();
 
     await page.goto(`/app/prosecution/${caseId}/witnesses`);
@@ -537,6 +544,298 @@ test.describe.serial("signed-in prosecution workspace", () => {
           relationship: "RELATED_TO",
           targetType: "charge",
           targetId: "00000000-0000-4000-8000-000000000099",
+          provenance,
+        },
+      },
+    );
+    expect(badLink.ok()).toBeFalsy();
+  });
+
+  test("Stage 3 evidence intelligence: gaps, CoC gap, witness conflict, ask context, isolation", async ({
+    page,
+  }) => {
+    const created = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s3`, slug: `${ORG_SLUG}-s3`, type: "firm" },
+    });
+    expect(created.ok(), await created.text()).toBeTruthy();
+    const orgBody = (await created.json()) as { organization?: { id?: string }; id?: string };
+    const organizationId = orgBody.organization?.id ?? orgBody.id!;
+
+    await page.goto("/app/prosecution");
+    await selectWorkspace(page, `${ORG_NAME}-s3`, organizationId);
+
+    const opened = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-s3`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(opened.ok(), await opened.text()).toBeTruthy();
+    const caseId = ((await opened.json()) as { criminalCase: { id: string } }).criminalCase.id;
+
+    async function post(resource: string, data: Record<string, unknown>) {
+      const response = await page.request.post(
+        `/api/v1/prosecution/cases/${caseId}/${resource}?organizationId=${organizationId}`,
+        { data },
+      );
+      expect(response.ok(), await response.text()).toBeTruthy();
+      return ((await response.json()) as { record: { id: string } }).record;
+    }
+
+    const ada = await post("defendants", { displayName: `S3 Ada ${suffix}`, provenance });
+    const ben = await post("defendants", { displayName: `S3 Ben ${suffix}`, provenance });
+    const charge1 = await post("charges", {
+      defendantId: ada.id,
+      countNumber: "1",
+      offenseName: "Synthetic S3 Count 1",
+      jurisdiction: "PA",
+      provenance,
+    });
+    await post("charges", {
+      defendantId: ben.id,
+      countNumber: "2",
+      offenseName: "Synthetic S3 Count 2",
+      jurisdiction: "PA",
+      provenance,
+    });
+
+    const joint = await post("evidence", {
+      evidenceType: "photograph",
+      relatedDefendantIds: [ada.id, ben.id],
+      relatedChargeIds: [charge1.id],
+      chainOfCustody: [
+        {
+          actor: "Officer A",
+          timestamp: "2024-02-01T10:00:00Z",
+          from: null,
+          to: "Officer A",
+          source: provenance,
+        },
+        {
+          actor: "Evidence Room",
+          timestamp: "2024-02-01T12:00:00Z",
+          from: "Officer B",
+          to: "Evidence Room",
+          source: provenance,
+        },
+      ],
+      provenance,
+    });
+    const supportEv = await post("evidence", {
+      evidenceType: "police_report",
+      relatedDefendantIds: [ada.id],
+      relatedChargeIds: [charge1.id],
+      chainOfCustody: [
+        {
+          actor: "Officer A",
+          timestamp: "2024-02-01T09:00:00Z",
+          from: null,
+          to: "Officer A",
+          source: provenance,
+        },
+      ],
+      provenance,
+    });
+    const contraryEv = await post("evidence", {
+      evidenceType: "witness_statement",
+      relatedDefendantIds: [ada.id],
+      relatedChargeIds: [charge1.id],
+      provenance,
+    });
+    await post("evidence", {
+      evidenceType: "defendant_statement",
+      relatedDefendantIds: [ben.id],
+      provenance,
+    });
+
+    const elSupported = await post("elements", {
+      chargeId: charge1.id,
+      elementOrder: 1,
+      elementType: "element",
+      elementText: "Identity of actor",
+      supportingEvidenceIds: [joint.id, supportEv.id],
+      contraryEvidenceIds: [],
+      uncertainEvidenceIds: [],
+      missingEvidenceIds: [],
+      relatedAuthorityIds: [],
+      provenance,
+    });
+    const elConflict = await post("elements", {
+      chargeId: charge1.id,
+      elementOrder: 2,
+      elementType: "element",
+      elementText: "Possession of item",
+      supportingEvidenceIds: [supportEv.id],
+      contraryEvidenceIds: [contraryEv.id],
+      uncertainEvidenceIds: [],
+      missingEvidenceIds: [],
+      relatedAuthorityIds: [],
+      provenance,
+    });
+    await post("elements", {
+      chargeId: charge1.id,
+      elementOrder: 3,
+      elementType: "element",
+      elementText: "Intent",
+      supportingEvidenceIds: [],
+      contraryEvidenceIds: [],
+      uncertainEvidenceIds: [],
+      missingEvidenceIds: ["expected-lab"],
+      relatedAuthorityIds: [],
+      provenance,
+    });
+
+    await post("evidence-links", {
+      evidenceId: joint.id,
+      relationship: "SUPPORTS_ELEMENT",
+      targetType: "ChargeElement",
+      targetId: elSupported.id,
+      provenance,
+    });
+    await post("evidence-links", {
+      evidenceId: contraryEv.id,
+      relationship: "UNDERMINES_ELEMENT",
+      targetType: "ChargeElement",
+      targetId: elConflict.id,
+      provenance,
+    });
+
+    const witness = await post("witnesses", {
+      displayName: `S3 Witness ${suffix}`,
+      witnessType: "civilian",
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "Main St", kind: "fact" }],
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "Oak Ave", kind: "fact" }],
+      provenance,
+    });
+
+    await post("timeline", {
+      eventType: "ARREST",
+      title: "Arrest note A",
+      eventDate: "2024-02-02T08:00:00.000Z",
+      provenance,
+    });
+    await post("timeline", {
+      eventType: "ARREST",
+      title: "Arrest note B",
+      eventDate: "2024-02-03T08:00:00.000Z",
+      provenance: { ...provenance, sourceSpan: "alternate arrest chronology source" },
+    });
+
+    await post("procedure-issues", {
+      issueType: "WARRANT",
+      missingFacts: ["Affidavit device identity missing"],
+      status: "open",
+      provenance,
+    });
+    await post("disclosure", {
+      category: "POTENTIALLY_EXCULPATORY",
+      status: "REVIEW_REQUIRED",
+      notes: "Stage 3 candidate — human review required",
+      provenance,
+    });
+
+    const overview = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${organizationId}`,
+    );
+    expect(overview.ok(), await overview.text()).toBeTruthy();
+    const body = (await overview.json()) as {
+      overview: {
+        guiltConclusion: null;
+        chargingRecommendation: null;
+        witnessCredibilityScore: null;
+        investigationGaps: Array<{ gapType: string }>;
+        caseIntelligenceStats: {
+          elementConflicted: number;
+          elementMissingSupport: number;
+          custodyWarningCount: number;
+          witnessConflictCount: number;
+          disclosureReviewRequired: number;
+        };
+        askIntelligenceContext: string;
+        evidenceScope: { jointEvidenceIds: string[] };
+        matrix: Array<{ status: string; guiltConclusion: null }>;
+      };
+    };
+    expect(body.overview.guiltConclusion).toBeNull();
+    expect(body.overview.chargingRecommendation ?? null).toBeNull();
+    expect(body.overview.witnessCredibilityScore ?? null).toBeNull();
+    expect(body.overview.caseIntelligenceStats.custodyWarningCount).toBeGreaterThan(0);
+    expect(body.overview.caseIntelligenceStats.witnessConflictCount).toBeGreaterThan(0);
+    expect(body.overview.caseIntelligenceStats.disclosureReviewRequired).toBeGreaterThan(0);
+    expect(body.overview.investigationGaps.some((g) => g.gapType === "CHAIN_OF_CUSTODY")).toBe(
+      true,
+    );
+    expect(body.overview.investigationGaps.some((g) => g.gapType === "WITNESS_CONFLICT")).toBe(
+      true,
+    );
+    expect(body.overview.evidenceScope.jointEvidenceIds.length).toBeGreaterThan(0);
+    expect(body.overview.matrix.every((row) => row.guiltConclusion === null)).toBe(true);
+    expect(body.overview.askIntelligenceContext).toContain("PROSECUTION_CASE_INTELLIGENCE");
+    expect(body.overview.askIntelligenceContext).toContain("GUILT_CONCLUSION: null");
+    expect(body.overview.askIntelligenceContext).not.toMatch(/probability of guilt/i);
+
+    await page.goto(`/app/prosecution/${caseId}`);
+    await selectWorkspace(page, `${ORG_NAME}-s3`, organizationId);
+    await expect(page.getByRole("heading", { name: "Investigation gap queue" })).toBeVisible();
+    await expect(page.getByText(/Coverage counts describe evidence organization/i)).toBeVisible();
+
+    await page.goto(`/app/prosecution/${caseId}/elements`);
+    await expect(page.getByText("Identity of actor")).toBeVisible();
+    await expect(page.getByText(/Guilt conclusion: none/i)).toBeVisible();
+
+    await page.goto(`/app/prosecution/${caseId}/timeline`);
+    await expect(page.getByText(/Arrest note/i).first()).toBeVisible();
+
+    await page.goto(`/app/prosecution/${caseId}/disclosure`);
+    await expect(page.getByText("Potential disclosure candidate").first()).toBeVisible();
+    await expect(
+      page.getByText(/Brady violation|must disclose|constitutional violation established/i),
+    ).toHaveCount(0);
+
+    const otherCreated = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s3-isol`, slug: `${ORG_SLUG}-s3-isol`, type: "firm" },
+    });
+    expect(otherCreated.ok(), await otherCreated.text()).toBeTruthy();
+    const isolBody = (await otherCreated.json()) as {
+      organization?: { id?: string };
+      id?: string;
+    };
+    const isolOrgId = isolBody.organization?.id ?? isolBody.id!;
+    const cross = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${isolOrgId}`,
+    );
+    expect(cross.ok()).toBeFalsy();
+
+    const caseB = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-s3-b`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(caseB.ok(), await caseB.text()).toBeTruthy();
+    const caseBId = ((await caseB.json()) as { criminalCase: { id: string } }).criminalCase.id;
+    const badLink = await page.request.post(
+      `/api/v1/prosecution/cases/${caseBId}/evidence-links?organizationId=${organizationId}`,
+      {
+        data: {
+          evidenceId: joint.id,
+          relationship: "RELATED_TO",
+          targetType: "charge",
+          targetId: charge1.id,
           provenance,
         },
       },
