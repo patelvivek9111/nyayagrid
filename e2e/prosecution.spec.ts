@@ -493,7 +493,13 @@ test.describe.serial("signed-in prosecution workspace", () => {
     await expect(page.getByText(/Chain of custody/i).first()).toBeVisible();
 
     await page.goto(`/app/prosecution/${caseId}/witnesses`);
-    await expect(page.getByText(`P0 Witness ${suffix}`).first()).toBeVisible();
+    // Prefer the profile list item — the statement form <option> matches the same text but is not visible.
+    await expect(
+      page
+        .locator("li")
+        .filter({ hasText: `P0 Witness ${suffix}` })
+        .first(),
+    ).toBeVisible();
     await expect(page.getByText(/Contradictory/i).first()).toBeVisible();
 
     // Cross-org isolation: second org cannot read this case.
