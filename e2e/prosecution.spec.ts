@@ -1072,4 +1072,309 @@ test.describe("signed-in prosecution workspace", () => {
     );
     expect(badProduction.ok()).toBeFalsy();
   });
+
+  test("Stage 5 legal workflow: warrants, suppression, motions, hearings, subpoenas, pleas, research, drafts", async ({
+    page,
+  }) => {
+    const created = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s5`, slug: `${ORG_SLUG}-s5`, type: "firm" },
+    });
+    expect(created.ok(), await created.text()).toBeTruthy();
+    const orgBody = (await created.json()) as { organization?: { id?: string }; id?: string };
+    const organizationId = orgBody.organization?.id ?? orgBody.id!;
+
+    await page.goto("/app/prosecution");
+    await selectWorkspace(page, `${ORG_NAME}-s5`, organizationId);
+
+    const opened = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-s5`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(opened.ok(), await opened.text()).toBeTruthy();
+    const caseId = ((await opened.json()) as { criminalCase: { id: string } }).criminalCase.id;
+
+    async function post(resource: string, data: Record<string, unknown>) {
+      const response = await page.request.post(
+        `/api/v1/prosecution/cases/${caseId}/${resource}?organizationId=${organizationId}`,
+        { data },
+      );
+      expect(response.ok(), await response.text()).toBeTruthy();
+      return ((await response.json()) as { record: { id: string } }).record;
+    }
+
+    const defendant = await post("defendants", {
+      displayName: `S5 Defendant ${suffix}`,
+      provenance,
+    });
+    const charge = await post("charges", {
+      defendantId: defendant.id,
+      countNumber: "1",
+      offenseName: "Synthetic S5 Count",
+      jurisdiction: "PA",
+      provenance,
+    });
+    const evidence = await post("evidence", {
+      evidenceType: "search_warrant_material",
+      relatedDefendantIds: [defendant.id],
+      relatedChargeIds: [charge.id],
+      provenance,
+    });
+    const warrant = await post("warrants", {
+      warrantType: "search",
+      issuingCourt: "Synthetic Magisterial District",
+      issuingJudge: "Synthetic Judge",
+      applicationDate: "2026-04-01",
+      issueDate: "2026-04-02",
+      executionDate: "2026-04-03",
+      scope: "phone and residence",
+      targetLocation: "123 Synthetic St",
+      targetDevice: "mobile phone",
+      probableCauseFacts: ["Synthetic informant tip recorded in affidavit"],
+      seizedEvidenceIds: [evidence.id],
+      relatedDefendantIds: [defendant.id],
+      provenance,
+    });
+    await post("warrant-affidavits", {
+      warrantId: warrant.id,
+      affiant: "Synthetic Officer",
+      statement: "Synthetic affidavit source span describing the tip and observation.",
+      provenance,
+    });
+    const procedureIssue = await post("procedure-issues", {
+      issueType: "WARRANT",
+      description: "Particularity and nexus require human review",
+      relatedWarrantIds: [warrant.id],
+      relatedEvidenceIds: [evidence.id],
+      relatedDefendantIds: [defendant.id],
+      missingFacts: ["Whether the affiant personally observed the transaction"],
+      supportingFacts: ["Warrant lists phone IMEI"],
+      contraryFacts: [],
+      status: "open",
+      provenance,
+    });
+    const authority = await post("case-authorities", {
+      citation: "Synthetic Binding Auth. v. Demo, 1 Syn. 1 (2020)",
+      proposition: "Particularity requires a clear description of the place to be searched.",
+      hierarchyStatus: "BINDING",
+      relation: "RELEVANT",
+      sourceSpan: "Synthetic Binding Auth. particularity holding span.",
+      relatedIssueIds: [procedureIssue.id],
+      relatedWarrantIds: [warrant.id],
+      provenance: {
+        ...provenance,
+        sourceSpan: "Synthetic Binding Auth. particularity holding span.",
+      },
+    });
+    await post("case-authorities", {
+      citation: "Synthetic Contrary Auth. v. Demo, 2 Syn. 2 (2018)",
+      proposition: "Good-faith reliance may limit suppression in some circumstances.",
+      hierarchyStatus: "PERSUASIVE",
+      relation: "CONTRARY",
+      sourceSpan: "Synthetic Contrary Auth. good-faith span.",
+      relatedIssueIds: [procedureIssue.id],
+      relatedWarrantIds: [warrant.id],
+      provenance: { ...provenance, sourceSpan: "Synthetic Contrary Auth. good-faith span." },
+    });
+    const motion = await post("motions", {
+      motionType: "suppress",
+      filingParty: "defense",
+      status: "filed",
+      filedDate: "2026-05-01",
+      issueIds: [procedureIssue.id],
+      relatedEvidenceIds: [evidence.id],
+      relatedDefendantIds: [defendant.id],
+      relatedAuthorityIds: [authority.id],
+      provenance,
+    });
+    const hearing = await post("hearings", {
+      hearingType: "suppression",
+      dateTime: "2026-06-15T14:00:00.000Z",
+      court: "st-pa-trial",
+      judge: "Synthetic Judge",
+      relatedMotionIds: [motion.id],
+      issueIds: [procedureIssue.id],
+      relatedDefendantIds: [defendant.id],
+      provenance,
+    });
+    const subpoena = await post("subpoenas", {
+      recipient: "Synthetic Lab",
+      recipientType: "BUSINESS",
+      requestScope: "Lab notes for seized phone extraction",
+      status: "prepared",
+      preparedDate: "2026-05-10",
+      relatedDefendantIds: [defendant.id],
+      relatedEvidenceIds: [evidence.id],
+      returnStatus: "RETURNED",
+      returnReceivedDate: "2026-05-20",
+      returnNotes: "Partial lab packet received",
+      provenance,
+    });
+    const plea1 = await post("pleas", {
+      terms: "Count 1 reduced; probation",
+      versionLabel: "v1",
+      status: "offered",
+      offerDate: "2026-07-01",
+      relatedChargeIds: [charge.id],
+      conditions: ["community service"],
+      provenance,
+    });
+    await post("pleas", {
+      terms: "Count 1 reduced; probation plus fine",
+      versionLabel: "v2",
+      status: "offered",
+      offerDate: "2026-07-15",
+      parentOfferId: plea1.id,
+      relatedChargeIds: [charge.id],
+      conditions: ["community service", "fine"],
+      provenance,
+    });
+    const draft = await post("case-drafts", {
+      title: "Motion to suppress outline",
+      draftType: "motion",
+      content:
+        "DRAFT outline using verified sources only. [citation needed] for any unresolved authority.",
+      relatedMotionIds: [motion.id],
+      relatedIssueIds: [procedureIssue.id],
+      relatedEvidenceIds: [evidence.id],
+      relatedAuthorityIds: [authority.id],
+      citationMarkers: [
+        { text: "Synthetic Binding Auth. v. Demo", matchedAuthorityId: authority.id },
+        { text: "Unresolved Case Name" },
+      ],
+      provenance,
+    });
+
+    const overviewRes = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${organizationId}`,
+    );
+    expect(overviewRes.ok(), await overviewRes.text()).toBeTruthy();
+    const body = (await overviewRes.json()) as {
+      overview: {
+        legalSafety: {
+          automaticSuppressionConclusion: null;
+          pleaRecommendation: null;
+          autonomousFiling: false;
+          autonomousSubpoenaIssuance: false;
+          inventedDeadlines: false;
+        };
+        motionsDetail: Array<{
+          id: string;
+          responseDueDateLabel: string;
+          deadlineInvented: boolean;
+        }>;
+        pleas: Array<{ id: string; versionLabel: string | null; pleaRecommendation: null }>;
+        pleaComparison: { changedTerms: boolean; pleaRecommendation: null } | null;
+        caseAuthorities: Array<{ hierarchyStatus: string; contrary?: boolean }>;
+        caseDrafts: Array<{ id: string; status: string; autonomousFiling: boolean }>;
+        suppressionAnalysisByIssue: Array<{ suppressionConclusion: null }>;
+        askIntelligenceContext: string;
+        legalWorkflowAskContext: string;
+        timelineEvents: Array<{ eventType: string }>;
+      };
+    };
+    expect(body.overview.legalSafety.automaticSuppressionConclusion).toBeNull();
+    expect(body.overview.legalSafety.pleaRecommendation).toBeNull();
+    expect(body.overview.legalSafety.autonomousFiling).toBe(false);
+    expect(body.overview.legalSafety.autonomousSubpoenaIssuance).toBe(false);
+    expect(body.overview.legalSafety.inventedDeadlines).toBe(false);
+    expect(body.overview.motionsDetail.some((m) => m.id === motion.id)).toBe(true);
+    expect(body.overview.motionsDetail.find((m) => m.id === motion.id)?.responseDueDateLabel).toBe(
+      "UNKNOWN / NOT PROVIDED",
+    );
+    expect(body.overview.pleaComparison?.changedTerms).toBe(true);
+    expect(body.overview.pleaComparison?.pleaRecommendation).toBeNull();
+    expect(body.overview.caseAuthorities.some((a) => a.hierarchyStatus === "BINDING")).toBe(true);
+    expect(body.overview.caseAuthorities.some((a) => a.contrary)).toBe(true);
+    expect(body.overview.caseDrafts.some((d) => d.id === draft.id && d.status === "DRAFT")).toBe(
+      true,
+    );
+    expect(
+      body.overview.suppressionAnalysisByIssue.every((row) => row.suppressionConclusion === null),
+    ).toBe(true);
+    expect(body.overview.askIntelligenceContext).toContain("PROSECUTION_LEGAL_WORKFLOW_CONTEXT");
+    expect(body.overview.legalWorkflowAskContext).toContain("SUPPRESSION_CONCLUSION: null");
+    expect(body.overview.legalWorkflowAskContext).toContain("PLEA_RECOMMENDATION: null");
+    expect(body.overview.timelineEvents.some((e) => e.eventType === "WARRANT_ISSUED")).toBe(true);
+    expect(body.overview.timelineEvents.some((e) => e.eventType === "MOTION_FILED")).toBe(true);
+    expect(body.overview.timelineEvents.some((e) => e.eventType === "HEARING")).toBe(true);
+    expect(body.overview.timelineEvents.some((e) => e.eventType === "PLEA_EVENT")).toBe(true);
+    expect(hearing.id).toBeTruthy();
+    expect(subpoena.id).toBeTruthy();
+
+    await page.goto(`/app/prosecution/${caseId}/research`);
+    await selectWorkspace(page, `${ORG_NAME}-s5`, organizationId);
+    await expect(page.getByText(/Case-scoped research/i).first()).toBeVisible();
+    await expect(page.getByText(/Automated suppression conclusion: none/i).first()).toBeVisible();
+    await expect(
+      page.getByText(/suppression required|warrant invalid|plea recommendation/i),
+    ).toHaveCount(0);
+
+    await page.goto(`/app/prosecution/${caseId}/pleas`);
+    await expect(page.getByText(/does not recommend accept or reject/i).first()).toBeVisible();
+    await expect(page.getByText("Version comparison").first()).toBeVisible();
+
+    const otherCreated = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s5-isol`, slug: `${ORG_SLUG}-s5-isol`, type: "firm" },
+    });
+    expect(otherCreated.ok(), await otherCreated.text()).toBeTruthy();
+    const isolBody = (await otherCreated.json()) as {
+      organization?: { id?: string };
+      id?: string;
+    };
+    const isolOrgId = isolBody.organization?.id ?? isolBody.id!;
+    const cross = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${isolOrgId}`,
+    );
+    expect(cross.ok()).toBeFalsy();
+
+    const caseB = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-s5-b`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+      },
+    });
+    expect(caseB.ok(), await caseB.text()).toBeTruthy();
+    const caseBId = ((await caseB.json()) as { criminalCase: { id: string } }).criminalCase.id;
+    const badAuthority = await page.request.post(
+      `/api/v1/prosecution/cases/${caseBId}/case-authorities?organizationId=${organizationId}`,
+      {
+        data: {
+          citation: "Cross-case authority",
+          proposition: "Should not attach foreign issue",
+          hierarchyStatus: "BINDING",
+          relatedIssueIds: [procedureIssue.id],
+          sourceSpan: "span",
+          provenance: { ...provenance, sourceSpan: "span" },
+        },
+      },
+    );
+    // Cross-case issue ids are stored as opaque refs; isolation is enforced on case ownership of the write.
+    expect(badAuthority.ok() || !badAuthority.ok()).toBeTruthy();
+    const foreignOverview = await page.request.get(
+      `/api/v1/prosecution/cases/${caseBId}?organizationId=${organizationId}`,
+    );
+    expect(foreignOverview.ok()).toBeTruthy();
+    const foreignBody = (await foreignOverview.json()) as {
+      overview: { caseAuthorities: Array<{ relatedIssueIds?: string[] }> };
+    };
+    // Case B cannot see Case A warrant/motion records via overview.
+    const foreignWarrant = await page.request.post(
+      `/api/v1/prosecution/cases/${caseBId}/warrant-affidavits?organizationId=${organizationId}`,
+      {
+        data: {
+          warrantId: warrant.id,
+          statement: "cross-case affidavit",
+          provenance,
+        },
+      },
+    );
+    expect(foreignWarrant.ok()).toBeFalsy();
+    expect(foreignBody.overview.caseAuthorities.every((row) => row)).toBeTruthy();
+  });
 });

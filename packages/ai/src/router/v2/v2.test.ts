@@ -120,6 +120,22 @@ describe("task → tier mapping", () => {
         label: "complex synthesis",
         content: "Produce complex case synthesis across charges and evidence.",
       },
+      {
+        label: "warrant analysis",
+        content: "Provide warrant analysis under the applicable constitutional standard.",
+      },
+      {
+        label: "legal research",
+        content: "What is the controlling authority for this suppression issue?",
+      },
+      {
+        label: "motion legal reasoning",
+        content: "Provide motion legal reasoning for a motion to suppress using case authorities.",
+      },
+      {
+        label: "plea legal reasoning",
+        content: "Explain the legal effect of these plea terms under the statute.",
+      },
     ];
     for (const item of cases) {
       const { decision } = planBenchmarkRoute({
