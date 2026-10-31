@@ -13,6 +13,8 @@
     "verify": "tsx src/cli/verify.ts",
     "list": "tsx src/cli/list.ts",
     "dry-run": "tsx src/cli/dry-run.ts",
+    "prosecution-external-dry-run": "tsx src/cli/prosecution-external-dry-run.ts",
+    "prosecution-external-cost-plan": "tsx src/cli/prosecution-external-cost-plan.ts",
     "authorize-live": "tsx src/cli/authorize-live.ts",
     "cost-plan": "tsx src/cli/cost-plan.ts",
     "rebuild-commercial-screening": "tsx src/cli/rebuild-commercial-screening.ts",

@@ -313,3 +313,52 @@ export {
 } from "./selectors/screening.js";
 
 export { assertSafeArchiveEntry } from "./security/safe-extract.js";
+
+export {
+  SUITE_ID as PROSECUTION_EXTERNAL_SUITE_ID,
+  SUITE_VERSION as PROSECUTION_EXTERNAL_SUITE_VERSION,
+  DETERMINISTIC_SEED as PROSECUTION_EXTERNAL_SEED,
+  SAMPLE_TARGETS as PROSECUTION_EXTERNAL_SAMPLE_TARGETS,
+  TASK_GROUPS as PROSECUTION_EXTERNAL_TASK_GROUPS,
+  LEGAL_RAG_RESULT_LABEL,
+  LEGAL_RAG_JURISDICTION,
+} from "./prosecution-external/constants.js";
+export {
+  recordModelPin,
+  assertNoSilentSubstitution,
+  GPT_61_SOL_LIVE_VERIFIED,
+} from "./prosecution-external/model-pin.js";
+export type { ModelPinRecord } from "./prosecution-external/model-pin.js";
+export {
+  deterministicSelectTasks,
+  stratifiedDeterministicSelect,
+  hashSelectionManifest,
+} from "./prosecution-external/sampling.js";
+export {
+  classifyExternalBenchmarkLicense,
+  assertExternalDatasetMountAllowed,
+  loadProsecutionExternalLicenses,
+} from "./prosecution-external/license-gate.js";
+export {
+  buildProsecutionExternalSuitePlan,
+  loadFixtureSlice,
+  loadLegalBenchProsecutionSliceAsync,
+  loadSuiteRegistryMeta,
+} from "./prosecution-external/suite.js";
+export { runProsecutionExternalDryRun } from "./prosecution-external/dry-run.js";
+export { planProsecutionExternalLiveCost } from "./prosecution-external/cost-plan.js";
+export {
+  scoreExactLabel,
+  scoreCaseFacts,
+  scoreCitationReliability,
+  scoreLegalRagRetrieval,
+  scoreLegalRagGrounding,
+  detectAbstention,
+} from "./prosecution-external/scorers/index.js";
+export {
+  ProsecutionExternalRunReportSchema,
+  parseProsecutionExternalRunReport,
+} from "./prosecution-external/result-schema.js";
+export { LegalCiteBenchAdapter } from "./prosecution-external/adapters/legalcitebench.js";
+export { CaseFactsAdapter } from "./prosecution-external/adapters/casefacts.js";
+export { LegalRagBenchAdapter } from "./prosecution-external/adapters/legal-rag-bench.js";

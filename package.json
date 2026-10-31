@@ -47,6 +47,8 @@
     "bench:external:verify": "npm run verify -w @nyayagrid/external-bench --",
     "bench:external:list": "npm run list -w @nyayagrid/external-bench --",
     "bench:external:dry-run": "npm run dry-run -w @nyayagrid/external-bench --",
+    "bench:external:prosecution-dry-run": "npm run prosecution-external-dry-run -w @nyayagrid/external-bench --",
+    "bench:external:prosecution-cost-plan": "npm run prosecution-external-cost-plan -w @nyayagrid/external-bench --",
     "bench:external:authorize-live": "npm run authorize-live -w @nyayagrid/external-bench --",
     "perf:baseline": "npm run perf:offline -w @nyayagrid/perf-baseline",
     "perf:baseline:p2": "npm run perf:p2 -w @nyayagrid/perf-baseline",

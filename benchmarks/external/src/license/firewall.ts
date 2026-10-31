@@ -94,6 +94,10 @@ export function assertCommercialEvalAllowed(
       task.taskId.split("::")[0] ||
       "";
     status = loadRagSourceLicense(source);
+  } else if (task.benchmarkId === "legalcitebench") {
+    status = "COMMERCIAL_INTERNAL_EVAL_OK";
+  } else if (task.benchmarkId === "casefacts" || task.benchmarkId === "legal-rag-bench") {
+    status = "RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION";
   } else {
     status = "LICENSE_REVIEW_REQUIRED";
   }
