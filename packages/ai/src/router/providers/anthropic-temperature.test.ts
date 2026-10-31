@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  anthropicModelSupportsTemperature,
-  buildAnthropicMessagesBody,
-} from "./anthropic";
+import { anthropicModelSupportsTemperature, buildAnthropicMessagesBody } from "./anthropic";
 
 describe("Anthropic temperature compatibility", () => {
   it("omits temperature for Claude Opus 5.x (deprecated by provider)", () => {
