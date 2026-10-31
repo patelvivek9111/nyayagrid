@@ -283,7 +283,12 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
       organizationId: ids.orgA!,
       caseId: ids.caseA!,
       resource: "disclosure",
-      body: { category: "OTHER", status: "REVIEWED_NOT_DISCLOSE", provenance },
+      body: {
+        category: "OTHER",
+        status: "REVIEWED_NOT_DISCLOSE",
+        reason: "Human not-disclose determination after source review",
+        provenance,
+      },
     });
     expect((disclosed as { humanActorId: string }).humanActorId).toBe(ids.supervisor);
     await expect(
@@ -411,7 +416,7 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
       .where(
         and(
           eq(auditEvents.organizationId, ids.orgA!),
-          eq(auditEvents.action, "prosecution.discovery_review_changed"),
+          eq(auditEvents.action, "prosecution.discovery_intake"),
         ),
       );
     expect(discoveryAudits.length).toBeGreaterThan(0);
