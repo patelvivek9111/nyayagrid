@@ -185,6 +185,8 @@ test.describe("signed-in prosecution workspace", () => {
     expect((overviewBody.overview?.subpoenas ?? []).length).toBeGreaterThan(0);
 
     await page.goto("/app/prosecution");
+    await selectWorkspace(page, ORG_NAME, organizationId);
+    await page.getByRole("button", { name: "Caseload" }).click();
     await expect(page.getByRole("link", { name: CASE_NUMBER })).toBeVisible();
   });
 

@@ -303,13 +303,16 @@ export default function ProsecutionOfficePage() {
                         key={`${flag.caseId}-${flag.kind}`}
                         className="rounded border border-line/70 px-2 py-1"
                       >
+                        <span className="font-semibold text-ink">{flag.caseNumber}</span>
+                        {" · "}
                         <Link
-                          className="font-semibold text-accent underline"
+                          className="text-accent underline"
                           href={`/app/prosecution/${flag.caseId}`}
+                          aria-label={`Open ${flag.caseNumber} for ${flag.label}`}
                         >
-                          {flag.caseNumber}
+                          {flag.label}
                         </Link>{" "}
-                        · {flag.label} · <StatusLabel label={humanizeKey(flag.severity)} />
+                        · <StatusLabel label={humanizeKey(flag.severity)} />
                       </li>
                     ))}
                   </ul>
