@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "classification_vocabulary": [
+    "PERMITTED",
+    "PERMITTED_WITH_ATTRIBUTION",
+    "RESEARCH_ONLY",
+    "RESTRICTED",
+    "UNCLEAR"
+  ],
+  "sources": [
+    {
+      "benchmark_id": "legalbench",
+      "upstream": "HazyResearch/legalbench",
+      "revision_pin": "b46bf4ffae90524b2b72aaa30e7745fe9db64481",
+      "license": "mixed-per-task",
+      "classification": "PERMITTED_WITH_ATTRIBUTION",
+      "firewall_status_note": "Per-task map in legalbench-task-licenses.json; hearsay is CC-BY-4.0 / COMMERCIAL_INTERNAL_EVAL_OK",
+      "commit_dataset_contents": false,
+      "mount_policy": "cache_or_external_mount",
+      "attribution_required": true
+    },
+    {
+      "benchmark_id": "legalcitebench",
+      "upstream": "Sijia711/LegalCiteBench",
+      "dataset_url": "https://huggingface.co/datasets/legalcitebench/LegalCiteBench",
+      "license": "MIT",
+      "classification": "PERMITTED",
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "commit_dataset_contents": false,
+      "mount_policy": "external_mount_or_cache",
+      "attribution_required": true,
+      "notes": "GitHub repo declares MIT. Prefer external mount of official release; do not vendor ~24k instances into git."
+    },
+    {
+      "benchmark_id": "casefacts",
+      "upstream": "idirlab/CaseFacts",
+      "dataset_url": "https://huggingface.co/datasets/IDIRLab/CaseFacts",
+      "license": "CC-BY-NC-4.0",
+      "classification": "RESEARCH_ONLY",
+      "firewall_status": "RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION",
+      "commit_dataset_contents": false,
+      "mount_policy": "external_mount_research_only",
+      "attribution_required": true,
+      "notes": "Non-commercial license. Synthetic fixtures only in-repo; full dataset must stay out of production corpus."
+    },
+    {
+      "benchmark_id": "legal-rag-bench",
+      "upstream": "isaacus/legal-rag-bench",
+      "dataset_url": "https://huggingface.co/datasets/isaacus/legal-rag-bench",
+      "license": "CC-BY-NC-SA-4.0",
+      "classification": "RESEARCH_ONLY",
+      "firewall_status": "RESEARCH_ONLY_NOT_FOR_PRODUCTION_SELECTION",
+      "commit_dataset_contents": false,
+      "mount_policy": "external_mount_research_only",
+      "attribution_required": true,
+      "jurisdiction": "VICTORIA_AUSTRALIA",
+      "result_label": "NON_US_CRIMINAL_RAG_DIAGNOSTIC",
+      "notes": "README prose says CC BY-NC 4.0; HF card YAML is cc-by-nc-sa-4.0. Treat as RESEARCH_ONLY. Never score as U.S. prosecution law."
+    }
+  ]
+}

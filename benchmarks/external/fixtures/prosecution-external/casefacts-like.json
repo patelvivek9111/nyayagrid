@@ -1,0 +1,65 @@
+{
+  "benchmarkId": "casefacts",
+  "synthetic": true,
+  "note": "Synthetic fixtures only — CaseFacts CC-BY-NC-4.0 content is not committed.",
+  "prefilledResponses": {
+    "casefacts::fixture::0": "Supported",
+    "casefacts::fixture::1": "Refuted",
+    "casefacts::fixture::2": "Overruled",
+    "casefacts::fixture::3": "Refuted",
+    "casefacts::fixture::4": "Supported",
+    "casefacts::fixture::5": "Overruled",
+    "casefacts::fixture::6": "ABSTAIN: insufficient precedent source",
+    "casefacts::fixture::7": "Supported"
+  },
+  "tasks": [
+    {
+      "id": "0",
+      "claim": "SYNTH: A colloquial claim that matches a supporting SCOTUS holding.",
+      "label": "Supported",
+      "cases": ["Synthetic v. Supported"]
+    },
+    {
+      "id": "1",
+      "claim": "SYNTH: A colloquial claim contradicted by precedent.",
+      "label": "Refuted",
+      "cases": ["Synthetic v. Refuted"]
+    },
+    {
+      "id": "2",
+      "claim": "SYNTH: A claim based on a holding later overruled.",
+      "label": "Overruled",
+      "cases": ["Synthetic v. Overruled"]
+    },
+    {
+      "id": "3",
+      "claim": "SYNTH: Another refuted claim with contrary authority.",
+      "label": "Refuted",
+      "cases": ["Synthetic v. Contrary"]
+    },
+    {
+      "id": "4",
+      "claim": "SYNTH: Supported claim regarding a constitutional procedure point.",
+      "label": "Supported",
+      "cases": ["Synthetic v. Procedure"]
+    },
+    {
+      "id": "5",
+      "claim": "SYNTH: Overruled doctrine described as still controlling.",
+      "label": "Overruled",
+      "cases": ["Synthetic v. Temporal"]
+    },
+    {
+      "id": "6",
+      "claim": "SYNTH: Ambiguous claim with no attached authority in fixture.",
+      "label": "Supported",
+      "cases": []
+    },
+    {
+      "id": "7",
+      "claim": "SYNTH: Supported criminal-procedure related SCOTUS claim.",
+      "label": "Supported",
+      "cases": ["Synthetic v. Criminal"]
+    }
+  ]
+}

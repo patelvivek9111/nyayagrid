@@ -1,0 +1,67 @@
+{
+  "benchmarkId": "legal-rag-bench",
+  "synthetic": true,
+  "note": "Synthetic Victoria for Victoria/AU RAG architecture dry-run. NOT U.S. law. Upstream is CC-BY-NC-SA-4.0 — do not commit real dataset.",
+  "jurisdiction": "VICTORIA_AUSTRALIA",
+  "resultLabel": "NON_US_CRIMINAL_RAG_DIAGNOSTIC",
+  "usSubstantiveScore": false,
+  "corpusSizePublished": 4876,
+  "questionCountPublished": 100,
+  "prefilledResponses": {
+    "legal-rag-bench::qa::q0": "SYNTH answer grounded in passage p0",
+    "legal-rag-bench::qa::q1": "SYNTH answer grounded in passage p1",
+    "legal-rag-bench::qa::q2": "ABSTAIN: retrieved passages insufficient",
+    "legal-rag-bench::qa::q3": "SYNTH answer grounded in passage p3",
+    "legal-rag-bench::qa::q4": "SYNTH answer grounded in passage p4"
+  },
+  "tasks": [
+    {
+      "id": "q0",
+      "question": "SYNTH Victoria: What element must the prosecution prove for charge type A?",
+      "answer": "SYNTH answer grounded in passage p0",
+      "relevant_passage_id": "p0"
+    },
+    {
+      "id": "q1",
+      "question": "SYNTH QA: When must a jury direction on issue B be given?",
+      "answer": "SYNTH answer grounded in passage p1",
+      "relevant_passage_id": "p1"
+    },
+    {
+      "id": "q2",
+      "question": "SYNTH QA: Hard lexical-mismatch question with thin retrieval.",
+      "answer": "ABSTAIN: retrieved passages insufficient",
+      "relevant_passage_id": "p2"
+    },
+    {
+      "id": "q3",
+      "question": "SYNTH QA: Procedure timing for application C.",
+      "answer": "SYNTH answer grounded in passage p3",
+      "relevant_passage_id": "p3"
+    },
+    {
+      "id": "q4",
+      "question": "SYNTH QA: Evidence ruling guidance D.",
+      "answer": "SYNTH answer grounded in passage p4",
+      "relevant_passage_id": "p4"
+    },
+    {
+      "id": "q5",
+      "question": "SYNTH QA: Secondary hard RAG question E.",
+      "answer": "SYNTH answer grounded in passage p5",
+      "relevant_passage_id": "p5"
+    },
+    {
+      "id": "q6",
+      "question": "SYNTH QA: Secondary hard RAG question F.",
+      "answer": "SYNTH answer grounded in passage p6",
+      "relevant_passage_id": "p6"
+    },
+    {
+      "id": "q7",
+      "question": "SYNTH QA: Secondary hard RAG question G.",
+      "answer": "SYNTH answer grounded in passage p7",
+      "relevant_passage_id": "p7"
+    }
+  ]
+}

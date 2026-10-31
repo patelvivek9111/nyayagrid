@@ -1,0 +1,196 @@
+{
+  "benchmarkId": "legalbench",
+  "synthetic": true,
+  "note": "Synthetic fixtures for dry-run only — not upstream LegalBench content.",
+  "prefilledResponses": {
+    "hearsay::fixture::0": "Yes",
+    "hearsay::fixture::1": "No",
+    "hearsay::fixture::2": "Yes",
+    "personal_jurisdiction::fixture::0": "Yes",
+    "personal_jurisdiction::fixture::1": "No",
+    "diversity_1::fixture::0": "Yes",
+    "diversity_1::fixture::1": "No",
+    "overruling::fixture::0": "overruled",
+    "citation_prediction_classification::fixture::0": "relevant",
+    "citation_prediction_open::fixture::0": "ABSTAIN: insufficient authority context"
+  },
+  "tasks": [
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "hearsay::fixture::0",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "hearsay",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "SYNTH: On the issue of whether the alarm sounded, the fact that a neighbor later said 'I heard the alarm.' Is this hearsay?"
+        }
+      ],
+      "expectedAnswer": "Yes",
+      "metadata": {
+        "upstreamTask": "hearsay",
+        "stratum": "hearsay",
+        "taskGroup": "US_EVIDENCE_REASONING",
+        "license_note": "synthetic"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "hearsay::fixture::1",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "hearsay",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "SYNTH: On the issue of whether the light was red, the fact that the officer testified in court that the light was red. Is this hearsay?"
+        }
+      ],
+      "expectedAnswer": "No",
+      "metadata": {
+        "upstreamTask": "hearsay",
+        "stratum": "hearsay",
+        "taskGroup": "US_EVIDENCE_REASONING"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "hearsay::fixture::2",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "hearsay",
+      "expectedAnswer": "Yes",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "SYNTH: On the issue of whether Dana consented, the fact that Dana wrote 'I agree' in a note outside court. Is this hearsay?"
+        }
+      ],
+      "metadata": {
+        "upstreamTask": "hearsay",
+        "stratum": "hearsay",
+        "taskGroup": "US_EVIDENCE_REASONING"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "personal_jurisdiction::fixture::0",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "personal_jurisdiction",
+      "expectedAnswer": "Yes",
+      "conversation": [
+        { "role": "user", "content": "SYNTH: Personal jurisdiction mini-fact pattern A." }
+      ],
+      "metadata": {
+        "upstreamTask": "personal_jurisdiction",
+        "stratum": "personal_jurisdiction",
+        "taskGroup": "US_AUTHORITY_VERIFICATION"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "personal_jurisdiction::fixture::1",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "personal_jurisdiction",
+      "expectedAnswer": "No",
+      "conversation": [
+        { "role": "user", "content": "SYNTH: Personal jurisdiction mini-fact pattern B." }
+      ],
+      "metadata": {
+        "upstreamTask": "personal_jurisdiction",
+        "stratum": "personal_jurisdiction",
+        "taskGroup": "US_AUTHORITY_VERIFICATION"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "diversity_1::fixture::0",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "diversity_1",
+      "expectedAnswer": "Yes",
+      "conversation": [{ "role": "user", "content": "SYNTH: Diversity jurisdiction pattern A." }],
+      "metadata": {
+        "upstreamTask": "diversity_1",
+        "stratum": "diversity_1",
+        "taskGroup": "US_AUTHORITY_VERIFICATION"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "diversity_1::fixture::1",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "diversity_1",
+      "expectedAnswer": "No",
+      "conversation": [{ "role": "user", "content": "SYNTH: Diversity jurisdiction pattern B." }],
+      "metadata": {
+        "upstreamTask": "diversity_1",
+        "stratum": "diversity_1",
+        "taskGroup": "US_AUTHORITY_VERIFICATION"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "overruling::fixture::0",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "overruling",
+      "expectedAnswer": "overruled",
+      "conversation": [{ "role": "user", "content": "SYNTH: Has this precedent been overruled?" }],
+      "metadata": {
+        "upstreamTask": "overruling",
+        "stratum": "overruling",
+        "taskGroup": "US_PRECEDENT_FACT_CHECKING"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "citation_prediction_classification::fixture::0",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "citation_prediction_classification",
+      "expectedAnswer": "relevant",
+      "conversation": [
+        { "role": "user", "content": "SYNTH: Is the citation relevant to the issue?" }
+      ],
+      "metadata": {
+        "upstreamTask": "citation_prediction_classification",
+        "stratum": "citation_prediction_classification",
+        "taskGroup": "CITATION_RELIABILITY"
+      },
+      "contaminationRisk": "UNKNOWN"
+    },
+    {
+      "benchmarkId": "legalbench",
+      "taskId": "citation_prediction_open::fixture::0",
+      "split": "fixture",
+      "jurisdiction": "US",
+      "taskType": "citation_prediction_open",
+      "expectedAnswer": "ABSTAIN: insufficient authority context",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "SYNTH: Provide the controlling citation from memory alone (insufficient record)."
+        }
+      ],
+      "metadata": {
+        "upstreamTask": "citation_prediction_open",
+        "stratum": "citation_prediction_open",
+        "taskGroup": "CITATION_RELIABILITY"
+      },
+      "contaminationRisk": "UNKNOWN"
+    }
+  ]
+}

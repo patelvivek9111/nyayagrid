@@ -1,0 +1,77 @@
+{
+  "suite_id": "NYAYA_EXTERNAL_PROSECUTION_VALIDATION",
+  "version": "1.0.0",
+  "deterministic_seed": "nyaya-external-prosecution-v1",
+  "layers": {
+    "layer_1": "NYAYA_PROSECUTION_BENCH",
+    "layer_2": "NYAYA_EXTERNAL_PROSECUTION_VALIDATION",
+    "layer_3": "LIVE_PROVIDER_CANARY"
+  },
+  "score_merge_policy": "NEVER_MERGE_INTERNAL_AND_EXTERNAL",
+  "jurisdiction_merge_policy": "NEVER_MERGE_US_AND_NON_US_SUBSTANTIVE",
+  "evaluation_modes": ["RAW_MODEL_DIAGNOSTIC", "NYAYA_PIPELINE", "ROUTER_ONLY", "RETRIEVAL_ONLY"],
+  "primary_future_mode": "NYAYA_PIPELINE",
+  "paid_execution_authorized": false,
+  "courtlistener_calls": 0,
+  "contamination_caveat": "Public benchmarks may appear in model pretraining; independence means Nyaya did not author labels, not that models have never seen the data.",
+  "task_groups": [
+    "US_EVIDENCE_REASONING",
+    "US_AUTHORITY_VERIFICATION",
+    "US_PRECEDENT_FACT_CHECKING",
+    "CITATION_RELIABILITY",
+    "CRIMINAL_RAG_RETRIEVAL",
+    "CRIMINAL_RAG_GROUNDING",
+    "ABSTENTION",
+    "SOURCE_FIDELITY"
+  ],
+  "sources": [
+    {
+      "benchmark_id": "legalbench",
+      "role": "US_EVIDENCE_REASONING + US_AUTHORITY_VERIFICATION",
+      "jurisdiction": "US",
+      "planned_sample_target": { "min": 50, "max": 150, "default": 100 }
+    },
+    {
+      "benchmark_id": "legalcitebench",
+      "role": "CITATION_RELIABILITY + ABSTENTION",
+      "jurisdiction": "US",
+      "modes": ["CLOSED_BOOK_DIAGNOSTIC", "NYAYA_GROUNDED_VERIFICATION"],
+      "planned_sample_target": { "min": 50, "max": 100, "default": 80 }
+    },
+    {
+      "benchmark_id": "casefacts",
+      "role": "US_PRECEDENT_FACT_CHECKING + ABSTENTION",
+      "jurisdiction": "US_SUPREME_COURT",
+      "planned_sample_target": { "min": 50, "max": 100, "default": 80 }
+    },
+    {
+      "benchmark_id": "legal-rag-bench",
+      "role": "CRIMINAL_RAG_RETRIEVAL + CRIMINAL_RAG_GROUNDING + SOURCE_FIDELITY",
+      "jurisdiction": "VICTORIA_AUSTRALIA",
+      "result_label": "NON_US_CRIMINAL_RAG_DIAGNOSTIC",
+      "us_substantive_score": false,
+      "planned_sample_target": { "min": 25, "max": 50, "default": 40 }
+    }
+  ],
+  "future_live_plan": {
+    "mode": "NYAYA_PIPELINE",
+    "routing": {
+      "high_stakes": "claude-opus-5-5",
+      "certified_fallback": "grok-4.7",
+      "routine": "LOGICAL gpt-6.1-sol (do not silently score substitutes)",
+      "gemini_high_stakes": "FORBIDDEN"
+    },
+    "planned_examples": 300,
+    "estimated_provider_requests": 280,
+    "estimated_input_tokens": 700000,
+    "estimated_output_tokens": 220000,
+    "estimated_spend_usd": 28.5,
+    "recommended_hard_cap_usd": 40,
+    "notes": [
+      "Cost assumes majority high-stakes Claude Opus pricing; routine GPT cheaper.",
+      "gpt-6.1-sol was NOT live-served in prior canary; pin availability must be re-probed before scoring.",
+      "Do not intentionally induce Grok fallback storms.",
+      "CourtListener = 0; datasets must be frozen/local."
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "benchmarkId": "legalcitebench",
+  "synthetic": true,
+  "note": "Synthetic schema-compatible fixtures — not upstream LegalCiteBench content.",
+  "prefilledResponses": {
+    "legalcitebench::CITATION_ERROR_DETECTION::err-0": "error",
+    "legalcitebench::CITATION_ERROR_DETECTION::err-1": "correct",
+    "legalcitebench::CASE_MATCHING::match-0": "same_case",
+    "legalcitebench::CASE_VERIFICATION_CORRECTION::ver-0": "incorrect; correct citation is SYNTH 1 F.Supp. 1",
+    "legalcitebench::CITATION_RETRIEVAL::ret-0": "ABSTAIN: closed-book retrieval without grounding",
+    "legalcitebench::CITATION_COMPLETION::cmp-0": "ABSTAIN: insufficient context"
+  },
+  "tasks": [
+    {
+      "id": "err-0",
+      "citationTaskType": "CITATION_ERROR_DETECTION",
+      "prompt": "SYNTH: Does this citation string contain an error? 999 Fake Rep. 1",
+      "label": "error"
+    },
+    {
+      "id": "err-1",
+      "citationTaskType": "CITATION_ERROR_DETECTION",
+      "prompt": "SYNTH: Does this citation string contain an error? 1 U.S. 1",
+      "label": "correct"
+    },
+    {
+      "id": "match-0",
+      "citationTaskType": "CASE_MATCHING",
+      "prompt": "SYNTH: Do these captions refer to the same case?",
+      "label": "same_case"
+    },
+    {
+      "id": "ver-0",
+      "citationTaskType": "CASE_VERIFICATION_CORRECTION",
+      "prompt": "SYNTH: Verify and correct if needed: 12 Madeup 34",
+      "label": "incorrect; correct citation is SYNTH 1 F.Supp. 1"
+    },
+    {
+      "id": "ret-0",
+      "citationTaskType": "CITATION_RETRIEVAL",
+      "prompt": "SYNTH: Retrieve the authorities cited in the opinion excerpt (closed book).",
+      "label": "ABSTAIN: closed-book retrieval without grounding"
+    },
+    {
+      "id": "cmp-0",
+      "citationTaskType": "CITATION_COMPLETION",
+      "prompt": "SYNTH: Complete the citation for the referenced authority.",
+      "label": "ABSTAIN: insufficient context"
+    },
+    {
+      "id": "err-2",
+      "citationTaskType": "CITATION_ERROR_DETECTION",
+      "prompt": "SYNTH: Detect citation error in 50 Fake.2d 999",
+      "label": "error"
+    },
+    {
+      "id": "match-1",
+      "citationTaskType": "CASE_MATCHING",
+      "prompt": "SYNTH: Case matching negative pair",
+      "label": "different_case"
+    }
+  ]
+}

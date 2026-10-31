@@ -35,6 +35,47 @@
         "questions": 6889,
         "documents": 714
       }
+    },
+    {
+      "benchmark_id": "legalcitebench",
+      "upstream_repo": "Sijia711/LegalCiteBench",
+      "dataset_url": "https://huggingface.co/datasets/legalcitebench/LegalCiteBench",
+      "default_format": "jsonl",
+      "pin_policy": "external_mount",
+      "expected_published_counts": {
+        "instances": 23646,
+        "root_opinions": 1000
+      },
+      "notes": "MIT. Prefer external mount; do not vendor full ~24k into git. Modes: CLOSED_BOOK_DIAGNOSTIC vs NYAYA_GROUNDED_VERIFICATION."
+    },
+    {
+      "benchmark_id": "casefacts",
+      "upstream_repo": "idirlab/CaseFacts",
+      "dataset_url": "https://huggingface.co/datasets/IDIRLab/CaseFacts",
+      "default_format": "json",
+      "pin_policy": "external_mount",
+      "license": "CC-BY-NC-4.0",
+      "expected_published_counts": {
+        "train": 5794,
+        "test": 500,
+        "total": 6294
+      },
+      "notes": "RESEARCH_ONLY. Labels: Supported / Refuted / Overruled. Do not commit dataset contents."
+    },
+    {
+      "benchmark_id": "legal-rag-bench",
+      "upstream_repo": "isaacus/legal-rag-bench",
+      "dataset_url": "https://huggingface.co/datasets/isaacus/legal-rag-bench",
+      "default_format": "jsonl",
+      "pin_policy": "external_mount",
+      "license": "CC-BY-NC-SA-4.0",
+      "jurisdiction": "VICTORIA_AUSTRALIA",
+      "result_label": "NON_US_CRIMINAL_RAG_DIAGNOSTIC",
+      "expected_published_counts": {
+        "passages": 4876,
+        "questions": 100
+      },
+      "notes": "Architecture/RAG diagnostic only. Never merge into U.S. substantive prosecution accuracy."
     }
   ]
 }

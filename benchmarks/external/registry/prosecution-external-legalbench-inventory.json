@@ -1,0 +1,137 @@
+{
+  "benchmark_id": "legalbench",
+  "upstream_repo": "HazyResearch/legalbench",
+  "revision": "b46bf4ffae90524b2b72aaa30e7745fe9db64481",
+  "jurisdiction": "US",
+  "inventory_note": "Git pin primarily ships few-shot train.tsv; published test sizes from task READMEs / LegalBench papers. Full test splits load via cache mount or HF mirror after license gate.",
+  "tasks": [
+    {
+      "task_name": "hearsay",
+      "sample_count_published": 100,
+      "train_few_shot": 5,
+      "test_published": 95,
+      "license": "CC-BY-4.0",
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "jurisdiction": "US_FRE",
+      "decision": "INCLUDE",
+      "reason_included": "Core FRE hearsay rule-application; primary prosecution evidence-reasoning signal.",
+      "task_group": "US_EVIDENCE_REASONING"
+    },
+    {
+      "task_name": "personal_jurisdiction",
+      "sample_count_published": 55,
+      "license": "CC-BY-4.0",
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "jurisdiction": "US",
+      "decision": "INCLUDE",
+      "reason_included": "Constitutional/procedure rule application useful to criminal litigation venue/jurisdiction analysis.",
+      "task_group": "US_AUTHORITY_VERIFICATION"
+    },
+    {
+      "task_name": "diversity_1",
+      "sample_count_published": 105,
+      "license": "CC-BY-4.0",
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "jurisdiction": "US",
+      "decision": "INCLUDE",
+      "reason_included": "Representative diversity-jurisdiction rule family member (diversity_1..6).",
+      "task_group": "US_AUTHORITY_VERIFICATION"
+    },
+    {
+      "task_name": "diversity_2",
+      "sample_count_published": 105,
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "INCLUDE",
+      "reason_included": "Diversity jurisdiction family — hard negative/positive balance.",
+      "task_group": "US_AUTHORITY_VERIFICATION"
+    },
+    {
+      "task_name": "diversity_3",
+      "sample_count_published": 105,
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "INCLUDE",
+      "reason_included": "Diversity jurisdiction family.",
+      "task_group": "US_AUTHORITY_VERIFICATION"
+    },
+    {
+      "task_name": "overruling",
+      "sample_count_published": null,
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "INCLUDE",
+      "reason_included": "Precedent temporal validity / overruling signal for authority verification.",
+      "task_group": "US_PRECEDENT_FACT_CHECKING"
+    },
+    {
+      "task_name": "citation_prediction_classification",
+      "sample_count_published": null,
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "INCLUDE",
+      "reason_included": "Citation reliability / authority selection classification.",
+      "task_group": "CITATION_RELIABILITY"
+    },
+    {
+      "task_name": "citation_prediction_open",
+      "sample_count_published": null,
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "INCLUDE",
+      "reason_included": "Open citation prediction — fabrication risk diagnostic (do not reward memory guessing).",
+      "task_group": "CITATION_RELIABILITY"
+    },
+    {
+      "task_name": "scalr",
+      "sample_count_published": null,
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "INCLUDE",
+      "reason_included": "Supreme Court analogical reasoning when available in mount.",
+      "task_group": "US_AUTHORITY_VERIFICATION"
+    },
+    {
+      "task_name": "rule_qa",
+      "sample_count_published": 50,
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "INCLUDE",
+      "reason_included": "Legal rule statement / authority grounding questions.",
+      "task_group": "US_AUTHORITY_VERIFICATION"
+    },
+    {
+      "task_name": "learned_hands_crime",
+      "sample_count_published": null,
+      "firewall_status": "INTERNAL_NONCOMMERCIAL_ONLY",
+      "decision": "EXCLUDE_FROM_COMMERCIAL_PRODUCTION_SELECTION",
+      "reason_excluded": "Criminal-topic signal useful but NC-only; research mount only, not production model ranking.",
+      "task_group": "US_EVIDENCE_REASONING"
+    },
+    {
+      "task_name": "international_citizenship_questions",
+      "firewall_status": "COMMERCIAL_INTERNAL_EVAL_OK",
+      "decision": "EXCLUDE",
+      "reason_excluded": "Not materially prosecution / U.S. criminal-evidence focused.",
+      "task_group": null
+    },
+    {
+      "task_name": "cuad_*",
+      "decision": "EXCLUDE",
+      "reason_excluded": "Contract clause extraction — duplicates existing commercial LegalBench screening; low prosecution signal.",
+      "task_group": null
+    },
+    {
+      "task_name": "maud_*",
+      "decision": "EXCLUDE",
+      "reason_excluded": "M&A contract language — not prosecution-relevant.",
+      "task_group": null
+    }
+  ],
+  "selected_upstream_tasks_default": [
+    "hearsay",
+    "personal_jurisdiction",
+    "diversity_1",
+    "diversity_2",
+    "diversity_3",
+    "overruling",
+    "citation_prediction_classification",
+    "citation_prediction_open",
+    "scalr",
+    "rule_qa"
+  ],
+  "planned_sample_count": 100
+}
