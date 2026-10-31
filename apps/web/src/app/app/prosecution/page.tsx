@@ -451,8 +451,8 @@ export default function ProsecutionOfficePage() {
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                   className="w-64 rounded border border-line px-2 py-1 text-sm"
-                  placeholder="Filter case number, court…"
-                  aria-label="Filter criminal cases"
+                  placeholder="Search case number, court…"
+                  aria-label="Search criminal cases"
                 />
                 <select
                   className="rounded border border-line px-2 py-1 text-sm"
@@ -476,11 +476,35 @@ export default function ProsecutionOfficePage() {
                 <Button type="button" variant="secondary" onClick={() => void load()}>
                   Apply
                 </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    setQuery("");
+                    setStatusFilter("all");
+                    setUnassignedOnly(false);
+                  }}
+                >
+                  Clear filters
+                </Button>
               </div>
               {overview.caseload.rows.length === 0 ? (
                 <EmptyState
                   title="No matching cases"
                   description="Adjust filters or open a new case."
+                  action={
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={() => {
+                        setQuery("");
+                        setStatusFilter("all");
+                        setUnassignedOnly(false);
+                      }}
+                    >
+                      Clear filters
+                    </Button>
+                  }
                 />
               ) : (
                 <div className="overflow-x-auto rounded border border-line">
