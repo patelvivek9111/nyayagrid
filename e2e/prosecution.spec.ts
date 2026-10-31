@@ -1588,4 +1588,210 @@ test.describe("signed-in prosecution workspace", () => {
     );
     expect(crossOffice.ok()).toBeFalsy();
   });
+
+  test("Stage 7 acceptance: intake through closure with isolation and no outcome KPIs", async ({
+    page,
+  }) => {
+    const created = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s7`, slug: `${ORG_SLUG}-s7`, type: "firm" },
+    });
+    expect(created.ok(), await created.text()).toBeTruthy();
+    const orgBody = (await created.json()) as { organization?: { id?: string }; id?: string };
+    const organizationId = orgBody.organization?.id ?? orgBody.id!;
+
+    await page.goto("/app/prosecution");
+    await selectWorkspace(page, `${ORG_NAME}-s7`, organizationId);
+
+    const opened = await page.request.post("/api/v1/prosecution/cases", {
+      data: {
+        organizationId,
+        caseNumber: `${CASE_NUMBER}-s7`,
+        jurisdiction: "PA",
+        court: "st-pa-trial",
+        priority: "HIGH",
+      },
+    });
+    expect(opened.ok(), await opened.text()).toBeTruthy();
+    const caseId = ((await opened.json()) as { criminalCase: { id: string } }).criminalCase.id;
+
+    const identity = await page.request.get(
+      `/api/v1/prosecution/office?organizationId=${organizationId}`,
+    );
+    expect(identity.ok(), await identity.text()).toBeTruthy();
+    const identityBody = (await identity.json()) as {
+      overview: { viewer: { userId: string }; counts: { convictionRate: null } };
+    };
+    const userId = identityBody.overview.viewer.userId;
+    expect(identityBody.overview.counts.convictionRate).toBeNull();
+
+    const assigned = await page.request.patch(`/api/v1/prosecution/cases/${caseId}`, {
+      data: {
+        organizationId,
+        assignedProsecutorId: userId,
+        supervisingProsecutorId: userId,
+        assignmentNote: "Stage 7 handoff assignment",
+      },
+    });
+    expect(assigned.ok(), await assigned.text()).toBeTruthy();
+
+    async function post(resource: string, data: Record<string, unknown>) {
+      const response = await page.request.post(
+        `/api/v1/prosecution/cases/${caseId}/${resource}?organizationId=${organizationId}`,
+        { data },
+      );
+      expect(response.ok(), await response.text()).toBeTruthy();
+      return ((await response.json()) as { record: { id: string } }).record;
+    }
+
+    const defendant = await post("defendants", {
+      displayName: `S7 Defendant ${suffix}`,
+      provenance,
+    });
+    const agency = await post("agencies", {
+      name: `S7 Agency ${suffix}`,
+      agencyType: "police",
+      jurisdiction: "PA",
+    });
+    await page.request.patch(`/api/v1/prosecution/cases/${caseId}`, {
+      data: { organizationId, investigatingAgencyId: agency.id },
+    });
+
+    const charge = await post("charges", {
+      defendantId: defendant.id,
+      countNumber: "1",
+      offenseName: "Synthetic S7 theft",
+      jurisdiction: "PA",
+      provenance,
+    });
+    await post("elements", {
+      chargeId: charge.id,
+      elementOrder: 1,
+      elementType: "element",
+      elementText: "Taking",
+      supportingEvidenceIds: [],
+      contraryEvidenceIds: [],
+      uncertainEvidenceIds: [],
+      missingEvidenceIds: ["expected-intent"],
+      relatedAuthorityIds: [],
+      provenance,
+    });
+    await post("evidence", {
+      evidenceType: "physical",
+      chainOfCustody: [],
+      provenance,
+    });
+    const witness = await post("witnesses", {
+      displayName: `S7 Witness ${suffix}`,
+      witnessType: "civilian",
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "aisle 2", kind: "fact" }],
+      provenance,
+    });
+    await post("statements", {
+      witnessId: witness.id,
+      statementType: "interview",
+      claims: [{ key: "location", value: "aisle 9", kind: "fact" }],
+      provenance,
+    });
+    await post("hearings", {
+      hearingType: "status",
+      dateTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+      court: "st-pa-trial",
+      provenance,
+    });
+    await post("tasks", {
+      title: "Stage 7 overdue task",
+      status: "open",
+      priority: "high",
+      ownerUserId: userId,
+      dueAt: new Date(Date.now() - 60 * 60 * 1000).toISOString(),
+      dueDateOrigin: "USER_ENTERED",
+      provenance,
+    });
+    await post("disclosure", {
+      category: "POTENTIALLY_EXCULPATORY",
+      status: "REVIEW_REQUIRED",
+      reason: "Stage 7 candidate",
+      provenance,
+    });
+    await post("procedure-issues", {
+      issueType: "WARRANT",
+      description: "Stage 7 missing warrant fact",
+      missingFacts: ["affidavit page"],
+      status: "open",
+      provenance,
+    });
+
+    const review = await page.request.post("/api/v1/prosecution/office", {
+      data: {
+        action: "supervisor_review",
+        organizationId,
+        caseId,
+        note: "Stage 7 supervisor review",
+        followUpRequested: true,
+        followUpTaskTitle: "Stage 7 follow-up",
+      },
+    });
+    expect(review.ok(), await review.text()).toBeTruthy();
+
+    const office = await page.request.get(
+      `/api/v1/prosecution/office?organizationId=${organizationId}`,
+    );
+    expect(office.ok(), await office.text()).toBeTruthy();
+    const officeBody = (await office.json()) as {
+      overview: {
+        counts: {
+          totalActiveCases: number;
+          overdueTasks: number;
+          convictionRate: null;
+          prosecutorPerformanceScore: null;
+        };
+        myWork: { cases: Array<{ id: string }> };
+        safety: { outcomeBasedRanking: false; inventedDeadlines: false };
+        askOfficeContext: string;
+      };
+    };
+    expect(officeBody.overview.counts.totalActiveCases).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.overdueTasks).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.convictionRate).toBeNull();
+    expect(officeBody.overview.counts.prosecutorPerformanceScore).toBeNull();
+    expect(officeBody.overview.myWork.cases.some((c) => c.id === caseId)).toBe(true);
+    expect(officeBody.overview.safety.outcomeBasedRanking).toBe(false);
+    expect(officeBody.overview.askOfficeContext).toContain("CONVICTION_RATE: null");
+
+    const closed = await page.request.post("/api/v1/prosecution/office", {
+      data: {
+        action: "close_case",
+        organizationId,
+        caseId,
+        confirm: true,
+        closureReason: "Stage 7 controlled closure",
+      },
+    });
+    expect(closed.ok(), await closed.text()).toBeTruthy();
+
+    const stillThere = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${organizationId}`,
+    );
+    expect(stillThere.ok()).toBeTruthy();
+    const stillBody = (await stillThere.json()) as {
+      overview: { guiltConclusion: null };
+    };
+    expect(stillBody.overview.guiltConclusion ?? null).toBeNull();
+
+    const isol = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s7-isol`, slug: `${ORG_SLUG}-s7-isol`, type: "firm" },
+    });
+    expect(isol.ok(), await isol.text()).toBeTruthy();
+    const isolBody = (await isol.json()) as { organization?: { id?: string }; id?: string };
+    const otherOrg = isolBody.organization?.id ?? isolBody.id!;
+    const cross = await page.request.get(
+      `/api/v1/prosecution/cases/${caseId}?organizationId=${otherOrg}`,
+    );
+    expect(cross.ok()).toBeFalsy();
+  });
 });
