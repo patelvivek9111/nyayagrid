@@ -388,7 +388,10 @@ export function prosecutionResourceCapability(resource: string): ProsecutionReso
     case "pleas":
     case "dispositions":
     case "sentences":
+    case "case-drafts":
       return "motion.manage";
+    case "case-authorities":
+      return "procedure.manage";
     case "tasks":
       return "task.manage";
     case "timeline":
