@@ -6,6 +6,8 @@ import {
   memberships,
   permissions,
   prosecutionAgencies,
+  prosecutionCaseAuthorities,
+  prosecutionCaseDrafts,
   prosecutionChargeElements,
   prosecutionCharges,
   prosecutionDefendants,
@@ -35,6 +37,7 @@ import {
   type Database,
   type RecordProvenance,
 } from "@nyayagrid/database";
+import { createDraft } from "../draft";
 import {
   AuthorizationError,
   getMembershipCapabilities,
@@ -54,7 +57,6 @@ import {
 } from "./case-intelligence";
 import {
   EVIDENCE_RELATIONSHIPS,
-  PROCEDURE_ISSUE_TYPES,
   ProsecutionError,
   assertElementStatus,
   assertSameCase,
@@ -82,6 +84,20 @@ import {
   transitionDisclosureWithGuards,
   assertSafeDisclosureCopy,
 } from "./disclosure-workflow";
+import {
+  assertDateProvidedOrUnknown,
+  assertPersistedAuthorityGrounded,
+  assertProcedureIssueType,
+  assertSafeLegalWorkflowCopy,
+  buildHearingPrepView,
+  buildSuppressionAnalysisSections,
+  classifyDraftCitationMarker,
+  comparePleaOffers,
+  dateDisplayLabel,
+  formatProsecutionLegalWorkflowAskContext,
+  normalizeMotionType,
+  suggestLegalWorkflowTasks,
+} from "./legal-workflow";
 
 async function authorize(
   db: Database,
@@ -483,6 +499,9 @@ export async function getProsecutionOverview(
     statements,
     evidenceLinks,
     productions,
+    pleas,
+    caseAuthorities,
+    caseDrafts,
   ] = await Promise.all([
     db
       .select()
@@ -557,6 +576,18 @@ export async function getProsecutionOverview(
       .select()
       .from(prosecutionDisclosureProductions)
       .where(eq(prosecutionDisclosureProductions.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionPleaOffers)
+      .where(eq(prosecutionPleaOffers.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionCaseAuthorities)
+      .where(eq(prosecutionCaseAuthorities.criminalCaseId, criminalCase.id)),
+    db
+      .select()
+      .from(prosecutionCaseDrafts)
+      .where(eq(prosecutionCaseDrafts.criminalCaseId, criminalCase.id)),
   ]);
   const warrantIds = warrants.map((warrant) => warrant.id);
   const affidavits = warrantIds.length
@@ -870,6 +901,162 @@ export async function getProsecutionOverview(
     })),
     supervisorQueueCount: supervisorQueue.length,
   });
+  const legalWorkflowAskContext = formatProsecutionLegalWorkflowAskContext({
+    openProcedureIssues: issues.filter((i) => i.status === "open" || i.status === "OPEN").length,
+    unresolvedSuppressionIssues: issues.filter(
+      (i) =>
+        (i.humanReviewStatus ?? "UNREVIEWED") !== "REVIEWED" &&
+        [
+          "SEARCH",
+          "SEIZURE",
+          "WARRANT",
+          "PROBABLE_CAUSE",
+          "MIRANDA",
+          "CUSTODY",
+          "INTERROGATION",
+        ].includes(i.issueType),
+    ).length,
+    motions: motions.map((m) => ({ id: m.id, motionType: m.motionType, status: m.status })),
+    hearings: hearings.map((h) => ({
+      id: h.id,
+      hearingType: h.hearingType,
+      dateTime: h.dateTime ? h.dateTime.toISOString() : null,
+    })),
+    subpoenas: subpoenas.map((s) => ({
+      id: s.id,
+      recipient: s.recipient,
+      status: s.status,
+      returnStatus: s.returnStatus ?? "PENDING",
+    })),
+    pleas: pleas.map((p) => ({
+      id: p.id,
+      versionLabel: p.versionLabel,
+      status: p.status,
+    })),
+    authorities: caseAuthorities.map((a) => ({
+      id: a.id,
+      citation: a.citation,
+      hierarchyStatus: a.hierarchyStatus,
+      relation: a.relation,
+    })),
+    drafts: caseDrafts.map((d) => ({ id: d.id, title: d.title, status: d.status })),
+  });
+  const sortedPleas = [...pleas].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+  );
+  const pleaComparison =
+    sortedPleas.length >= 2
+      ? comparePleaOffers(
+          {
+            id: sortedPleas[0]!.id,
+            versionLabel: sortedPleas[0]!.versionLabel,
+            terms: sortedPleas[0]!.terms,
+            conditions: sortedPleas[0]!.conditions ?? [],
+            relatedChargeIds: sortedPleas[0]!.relatedChargeIds ?? [],
+            status: sortedPleas[0]!.status,
+            offerDate: sortedPleas[0]!.offerDate,
+            expiration: sortedPleas[0]!.expiration,
+            defenseResponse: sortedPleas[0]!.defenseResponse,
+            prosecutorNotes: sortedPleas[0]!.prosecutorNotes,
+          },
+          {
+            id: sortedPleas[sortedPleas.length - 1]!.id,
+            versionLabel: sortedPleas[sortedPleas.length - 1]!.versionLabel,
+            terms: sortedPleas[sortedPleas.length - 1]!.terms,
+            conditions: sortedPleas[sortedPleas.length - 1]!.conditions ?? [],
+            relatedChargeIds: sortedPleas[sortedPleas.length - 1]!.relatedChargeIds ?? [],
+            status: sortedPleas[sortedPleas.length - 1]!.status,
+            offerDate: sortedPleas[sortedPleas.length - 1]!.offerDate,
+            expiration: sortedPleas[sortedPleas.length - 1]!.expiration,
+            defenseResponse: sortedPleas[sortedPleas.length - 1]!.defenseResponse,
+            prosecutorNotes: sortedPleas[sortedPleas.length - 1]!.prosecutorNotes,
+          },
+        )
+      : null;
+  const hearingPrep = hearings.slice(0, 20).map((hearing) =>
+    buildHearingPrepView({
+      hearingId: hearing.id,
+      hearingType: hearing.hearingType,
+      dateTime: hearing.dateTime ? hearing.dateTime.toISOString() : null,
+      issuesToAddress: issues
+        .filter(
+          (issue) =>
+            (hearing.issueIds ?? []).includes(issue.id) ||
+            (hearing.relatedMotionIds ?? []).some((motionId) =>
+              (motions.find((m) => m.id === motionId)?.issueIds ?? []).includes(issue.id),
+            ),
+        )
+        .map((issue) => `${issue.issueType}: ${issue.description ?? "procedure issue"}`),
+      relevantFacts: issues.flatMap((issue) => issue.supportingFacts ?? []).slice(0, 20),
+      contraryFacts: issues.flatMap((issue) => issue.contraryFacts ?? []).slice(0, 20),
+      witnesses: witnesses.map((w) => w.displayName).slice(0, 20),
+      evidence: evidence.map((e) => e.evidenceType).slice(0, 20),
+      motions: motions
+        .filter((m) => (hearing.relatedMotionIds ?? []).includes(m.id))
+        .map((m) => m.motionType),
+      authorities: caseAuthorities.map((a) => `${a.citation} (${a.hierarchyStatus})`).slice(0, 20),
+      unresolvedGaps: [
+        ...issues
+          .filter((i) => (i.missingFacts ?? []).length > 0)
+          .flatMap((i) => i.missingFacts ?? []),
+        ...disclosures
+          .filter((d) => ["UNREVIEWED", "REVIEW_REQUIRED", "ESCALATE"].includes(d.status))
+          .map((d) => `Unresolved disclosure candidate: ${d.category}`),
+      ].slice(0, 30),
+      openTasks: tasks.filter((t) => t.status === "open").map((t) => t.title),
+      drafts: caseDrafts.map((d) => d.title),
+      recentDisclosureChanges: disclosures
+        .filter((d) => isFinalDisclosureStatus(d.status))
+        .map((d) => `${d.category}:${d.status}`)
+        .slice(0, 10),
+    }),
+  );
+  const suggestedLegalTasks = suggestLegalWorkflowTasks({
+    openProcedureIssues: issues.filter((i) => i.status === "open" || i.status === "OPEN").length,
+    motionsNeedingResponse: motions.filter((m) =>
+      ["filed", "PENDING_RESPONSE", "pending_response"].includes(m.status),
+    ).length,
+    hearingsWithoutPrep: hearings.filter((h) => !h.dateTime).length,
+    pendingSubpoenaReturns: subpoenas.filter((s) => (s.returnStatus ?? "PENDING") === "PENDING")
+      .length,
+    pleaVersions: pleas.length,
+    researchOpen: caseAuthorities.filter((a) => a.humanReviewStatus === "UNREVIEWED").length,
+  });
+  const suppressionAnalysisByIssue = issues.map((issue) => {
+    const relatedAuthorities = caseAuthorities.filter((a) =>
+      (a.relatedIssueIds ?? []).includes(issue.id),
+    );
+    return {
+      issueId: issue.id,
+      issueType: issue.issueType,
+      ...buildSuppressionAnalysisSections({
+        knownFacts: issue.supportingFacts ?? [],
+        disputedFacts: issue.contraryFacts ?? [],
+        missingFacts: issue.missingFacts ?? [],
+        legalStandard: null,
+        supportingAuthority: relatedAuthorities
+          .filter((a) => a.relation !== "CONTRARY")
+          .map((a) => ({
+            citation: a.citation,
+            proposition: a.proposition,
+            hierarchyStatus: a.hierarchyStatus,
+          })),
+        contraryAuthority: relatedAuthorities
+          .filter((a) => a.relation === "CONTRARY")
+          .map((a) => ({
+            citation: a.citation,
+            proposition: a.proposition,
+            hierarchyStatus: a.hierarchyStatus,
+          })),
+        potentialArguments: [
+          "Potential issue requiring review",
+          ...(issue.missingFacts ?? []).map((fact) => `Record is incomplete: ${fact}`),
+        ],
+        uncertainty: issue.missingFacts ?? [],
+        humanConclusion: issue.humanConclusion,
+      }),
+    };
+  });
   const matrixWithDisclosure = matrix.map((row) => {
     const relatedCandidates = disclosures.filter(
       (candidate) =>
@@ -914,8 +1101,70 @@ export async function getProsecutionOverview(
     askIntelligenceContext: [
       formatProsecutionAskIntelligenceContext(caseIntelligence),
       disclosureAskContext,
+      legalWorkflowAskContext,
     ].join("\n\n"),
     disclosureAskContext,
+    legalWorkflowAskContext,
+    pleas: pleas.map((plea) => ({
+      ...plea,
+      offerDateLabel: dateDisplayLabel(plea.offerDate),
+      expirationLabel: dateDisplayLabel(plea.expiration),
+      pleaRecommendation: null as null,
+      acceptRejectRecommendation: null as null,
+      pleaValueScore: null as null,
+    })),
+    pleaComparison,
+    hearingPrep,
+    suggestedLegalTasks,
+    suppressionAnalysisByIssue,
+    caseAuthorities: caseAuthorities.map((authority) => ({
+      ...authority,
+      binding: authority.hierarchyStatus === "BINDING",
+      persuasive: authority.hierarchyStatus === "PERSUASIVE",
+      contrary: authority.relation === "CONTRARY" || authority.hierarchyStatus === "CONTRARY",
+    })),
+    caseDrafts: caseDrafts.map((draft) => ({
+      ...draft,
+      remainsDraftUntilApproved: draft.status === "DRAFT",
+      autonomousFiling: false as const,
+    })),
+    procedureIssues: issues.map((issue) => ({
+      ...issue,
+      humanConclusion: issue.humanConclusion,
+      automaticSuppressionConclusion: null as null,
+      automaticValidityConclusion: null as null,
+    })),
+    motionsDetail: motions.map((motion) => ({
+      ...motion,
+      responseDueDateLabel: dateDisplayLabel(motion.responseDueDate),
+      hearingDateLabel: dateDisplayLabel(motion.hearingDate),
+      rulingDateLabel: dateDisplayLabel(motion.rulingDate),
+      filedDateLabel: dateDisplayLabel(motion.filedDate),
+      deadlineInvented: false as const,
+    })),
+    subpoenasDetail: subpoenas.map((subpoena) => ({
+      ...subpoena,
+      issueDateLabel: dateDisplayLabel(subpoena.issueDate),
+      serviceDateLabel: dateDisplayLabel(subpoena.serviceDate),
+      returnDateLabel: dateDisplayLabel(subpoena.returnDate),
+      autonomousIssuance: false as const,
+    })),
+    warrantsDetail: warrants.map((warrant) => ({
+      ...warrant,
+      applicationDateLabel: dateDisplayLabel(warrant.applicationDate),
+      issueDateLabel: dateDisplayLabel(warrant.issueDate),
+      executionDateLabel: dateDisplayLabel(warrant.executionDate),
+      automaticInvalidityConclusion: null as null,
+    })),
+    legalSafety: {
+      automaticSuppressionConclusion: null as null,
+      automaticWarrantInvalidity: null as null,
+      automaticProbableCauseConclusion: null as null,
+      pleaRecommendation: null as null,
+      autonomousFiling: false as const,
+      autonomousSubpoenaIssuance: false as const,
+      inventedDeadlines: false as const,
+    },
     disclosureCandidates: disclosures.map((item) => ({
       ...item,
       label: "Potential disclosure candidate",
@@ -1664,8 +1913,21 @@ export async function addProsecutionRecord(
 
   if (params.resource === "procedure-issues") {
     const issueType = String(params.body.issueType ?? "UNKNOWN");
-    if (!(PROCEDURE_ISSUE_TYPES as readonly string[]).includes(issueType)) {
-      throw new ProsecutionError("INVALID_PROCEDURE_ISSUE", "Unsupported suppression issue type.");
+    assertProcedureIssueType(issueType);
+    assertSafeLegalWorkflowCopy(params.body.description as string | undefined);
+    assertSafeLegalWorkflowCopy(params.body.humanConclusion as string | undefined);
+    if (params.body.humanConclusion) {
+      const membership = await getMembershipCapabilities(db, {
+        userId: params.userId,
+        organizationId,
+      });
+      if (!membership || !prosecutionCapabilityAllows(membership.capabilities, "review")) {
+        throw new ProsecutionError(
+          "LEGAL_CONCLUSION_REVIEW_REQUIRED",
+          "Final suppression conclusions require prosecution.review.",
+          403,
+        );
+      }
     }
     const [row] = await db
       .insert(prosecutionProcedureIssues)
@@ -1673,12 +1935,38 @@ export async function addProsecutionRecord(
         organizationId,
         criminalCaseId,
         issueType,
+        description: (params.body.description as string) ?? null,
+        relatedEvidenceIds: (params.body.relatedEvidenceIds as string[]) ?? [],
+        relatedAuthorityIds: (params.body.relatedAuthorityIds as string[]) ?? [],
+        relatedWarrantIds: (params.body.relatedWarrantIds as string[]) ?? [],
+        relatedDefendantIds: (params.body.relatedDefendantIds as string[]) ?? [],
+        relatedOfficerIds: (params.body.relatedOfficerIds as string[]) ?? [],
+        relatedWitnessIds: (params.body.relatedWitnessIds as string[]) ?? [],
+        relatedTimelineEventIds: (params.body.relatedTimelineEventIds as string[]) ?? [],
         missingFacts: (params.body.missingFacts as string[]) ?? [],
+        supportingFacts: (params.body.supportingFacts as string[]) ?? [],
+        contraryFacts: (params.body.contraryFacts as string[]) ?? [],
         status: (params.body.status as string) ?? "open",
+        humanReviewStatus: (params.body.humanReviewStatus as string) ?? "UNREVIEWED",
+        humanConclusion: (params.body.humanConclusion as string) ?? null,
+        notes: (params.body.notes as string) ?? null,
         confidence: (params.body.confidence as string) ?? "low",
         provenance,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.procedure_issue_modified",
+      targetType: "procedure_issue",
+      targetId: row?.id,
+      metadata: {
+        criminalCaseId,
+        issueType,
+        hasHumanConclusion: Boolean(params.body.humanConclusion),
+      },
+    });
     return row;
   }
 
@@ -1691,6 +1979,18 @@ export async function addProsecutionRecord(
       criminalCaseId,
       evidenceIds: seizedEvidenceIds,
     });
+    const applicationDate = assertDateProvidedOrUnknown({
+      value: params.body.applicationDate as string | null | undefined,
+      fieldLabel: "applicationDate",
+    });
+    const issueDate = assertDateProvidedOrUnknown({
+      value: params.body.issueDate as string | null | undefined,
+      fieldLabel: "issueDate",
+    });
+    const executionDate = assertDateProvidedOrUnknown({
+      value: params.body.executionDate as string | null | undefined,
+      fieldLabel: "executionDate",
+    });
     const [row] = await db
       .insert(prosecutionWarrants)
       .values({
@@ -1699,12 +1999,56 @@ export async function addProsecutionRecord(
         warrantType: String(params.body.warrantType ?? "search"),
         issuingCourt: (params.body.issuingCourt as string) ?? null,
         issuingJudge: (params.body.issuingJudge as string) ?? null,
+        applicationDate: applicationDate,
+        issueDate: issueDate,
+        executionDate: executionDate,
         scope: (params.body.scope as string) ?? null,
+        targetLocation: (params.body.targetLocation as string) ?? null,
+        targetPerson: (params.body.targetPerson as string) ?? null,
+        targetDevice: (params.body.targetDevice as string) ?? null,
+        targetProperty: (params.body.targetProperty as string) ?? null,
         probableCauseFacts: (params.body.probableCauseFacts as string[]) ?? [],
         seizedEvidenceIds,
+        relatedDefendantIds: (params.body.relatedDefendantIds as string[]) ?? [],
+        relatedOfficerIds: (params.body.relatedOfficerIds as string[]) ?? [],
+        relatedDocumentIds: (params.body.relatedDocumentIds as string[]) ?? [],
+        relatedSuppressionIssueIds: (params.body.relatedSuppressionIssueIds as string[]) ?? [],
+        status: (params.body.status as string) ?? "RECORDED",
+        notes: (params.body.notes as string) ?? null,
         provenance,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.warrant_modified",
+      targetType: "warrant",
+      targetId: row?.id,
+      metadata: { criminalCaseId, automaticInvalidityConclusion: null },
+    });
+    if (issueDate) {
+      await db.insert(prosecutionTimelineEvents).values({
+        organizationId,
+        criminalCaseId,
+        matterId: criminalCase.matterId,
+        eventType: "WARRANT_ISSUED",
+        title: `Warrant recorded: ${String(params.body.warrantType ?? "warrant")}`,
+        eventDate: new Date(`${issueDate}T12:00:00.000Z`),
+        provenance,
+      });
+    }
+    if (executionDate) {
+      await db.insert(prosecutionTimelineEvents).values({
+        organizationId,
+        criminalCaseId,
+        matterId: criminalCase.matterId,
+        eventType: "WARRANT_EXECUTED",
+        title: `Warrant execution recorded: ${String(params.body.warrantType ?? "warrant")}`,
+        eventDate: new Date(`${executionDate}T12:00:00.000Z`),
+        provenance,
+      });
+    }
     return row;
   }
 
@@ -1770,16 +2114,45 @@ export async function addProsecutionRecord(
   }
 
   if (params.resource === "motions") {
+    const motionType = normalizeMotionType(String(params.body.motionType ?? "OTHER"));
+    const filedDate = assertDateProvidedOrUnknown({
+      value: params.body.filedDate as string | null | undefined,
+      fieldLabel: "filedDate",
+    });
+    const responseDueDate = assertDateProvidedOrUnknown({
+      value: params.body.responseDueDate as string | null | undefined,
+      fieldLabel: "responseDueDate",
+    });
+    const hearingDate = assertDateProvidedOrUnknown({
+      value: params.body.hearingDate as string | null | undefined,
+      fieldLabel: "hearingDate",
+    });
+    const rulingDate = assertDateProvidedOrUnknown({
+      value: params.body.rulingDate as string | null | undefined,
+      fieldLabel: "rulingDate",
+    });
     const [row] = await db
       .insert(prosecutionMotions)
       .values({
         organizationId,
         criminalCaseId,
-        motionType: String(params.body.motionType ?? ""),
+        motionType: String(motionType),
         filingParty: String(params.body.filingParty ?? ""),
+        filedDate,
+        responseDueDate,
+        hearingDate,
+        rulingDate,
+        issueIds: (params.body.issueIds as string[]) ?? [],
+        relatedAuthorityIds: (params.body.relatedAuthorityIds as string[]) ?? [],
+        relatedEvidenceIds: (params.body.relatedEvidenceIds as string[]) ?? [],
+        relatedDefendantIds: (params.body.relatedDefendantIds as string[]) ?? [],
+        relatedDocumentIds: (params.body.relatedDocumentIds as string[]) ?? [],
+        relatedDraftIds: (params.body.relatedDraftIds as string[]) ?? [],
+        assignedAttorneyUserId: (params.body.assignedAttorneyUserId as string) ?? null,
         status: (params.body.status as string) ?? "filed",
         response: (params.body.response as string) ?? null,
         ruling: (params.body.ruling as string) ?? null,
+        notes: (params.body.notes as string) ?? null,
         provenance,
       })
       .returning();
@@ -1790,22 +2163,51 @@ export async function addProsecutionRecord(
       action: "prosecution.motion_modified",
       targetType: "motion",
       targetId: row?.id,
-      metadata: { criminalCaseId },
+      metadata: { criminalCaseId, inventedDeadline: false, autonomousFiling: false },
     });
+    if (filedDate) {
+      await db.insert(prosecutionTimelineEvents).values({
+        organizationId,
+        criminalCaseId,
+        matterId: criminalCase.matterId,
+        eventType: "MOTION_FILED",
+        title: `Motion recorded: ${String(motionType)}`,
+        eventDate: new Date(`${filedDate}T12:00:00.000Z`),
+        provenance,
+      });
+    }
     return row;
   }
 
   if (params.resource === "hearings") {
+    const dateTimeRaw = assertDateProvidedOrUnknown({
+      value: params.body.dateTime as string | null | undefined,
+      fieldLabel: "dateTime",
+    });
+    const dateTime = dateTimeRaw ? new Date(dateTimeRaw) : null;
+    if (dateTimeRaw && Number.isNaN(dateTime?.getTime())) {
+      throw new ProsecutionError(
+        "INVALID_HEARING_DATE",
+        "Hearing date must be a valid source-backed or human-entered timestamp, or omitted as UNKNOWN / NOT PROVIDED.",
+      );
+    }
     const [row] = await db
       .insert(prosecutionHearings)
       .values({
         organizationId,
         criminalCaseId,
         hearingType: String(params.body.hearingType ?? ""),
+        dateTime,
         court: (params.body.court as string) ?? null,
+        courtroom: (params.body.courtroom as string) ?? null,
         judge: (params.body.judge as string) ?? null,
         participants: (params.body.participants as string[]) ?? [],
+        issueIds: (params.body.issueIds as string[]) ?? [],
+        relatedMotionIds: (params.body.relatedMotionIds as string[]) ?? [],
+        relatedDefendantIds: (params.body.relatedDefendantIds as string[]) ?? [],
+        relatedDraftIds: (params.body.relatedDraftIds as string[]) ?? [],
         outcome: (params.body.outcome as string) ?? null,
+        notes: (params.body.notes as string) ?? null,
         provenance,
       })
       .returning();
@@ -1816,29 +2218,78 @@ export async function addProsecutionRecord(
       action: "prosecution.hearing_modified",
       targetType: "hearing",
       targetId: row?.id,
-      metadata: { criminalCaseId },
+      metadata: { criminalCaseId, dateProvided: Boolean(dateTime) },
     });
-    await notifyProsecutionEvent(db, {
-      organizationId,
-      userId: params.userId,
-      kind: "upcoming_hearing",
-      title: `Hearing scheduled: ${String(params.body.hearingType ?? "hearing")}`,
-      body: `Case ${criminalCase.caseNumber} hearing recorded.`,
-      href: `/app/prosecution/${criminalCaseId}/hearings`,
-      matterId: criminalCase.matterId,
-    });
+    if (dateTime) {
+      await db.insert(prosecutionTimelineEvents).values({
+        organizationId,
+        criminalCaseId,
+        matterId: criminalCase.matterId,
+        eventType: "HEARING",
+        title: `Hearing recorded: ${String(params.body.hearingType ?? "hearing")}`,
+        eventDate: dateTime,
+        provenance,
+      });
+      await notifyProsecutionEvent(db, {
+        organizationId,
+        userId: params.userId,
+        kind: "upcoming_hearing",
+        title: `Hearing scheduled: ${String(params.body.hearingType ?? "hearing")}`,
+        body: `Case ${criminalCase.caseNumber} hearing recorded.`,
+        href: `/app/prosecution/${criminalCaseId}/hearings`,
+        matterId: criminalCase.matterId,
+      });
+    }
     return row;
   }
 
   if (params.resource === "subpoenas") {
+    if (params.body.autonomousIssue === true || params.body.sendExternally === true) {
+      throw new ProsecutionError(
+        "AUTONOMOUS_LEGAL_ACTION_FORBIDDEN",
+        "Nyaya does not issue or send subpoenas. Tracking only.",
+        403,
+      );
+    }
     const [row] = await db
       .insert(prosecutionSubpoenas)
       .values({
         organizationId,
         criminalCaseId,
         recipient: String(params.body.recipient ?? ""),
+        recipientType: (params.body.recipientType as string) ?? "OTHER",
         requestScope: String(params.body.requestScope ?? ""),
-        status: (params.body.status as string) ?? "issued",
+        preparedDate: assertDateProvidedOrUnknown({
+          value: params.body.preparedDate as string | null | undefined,
+          fieldLabel: "preparedDate",
+        }),
+        issueDate: assertDateProvidedOrUnknown({
+          value: params.body.issueDate as string | null | undefined,
+          fieldLabel: "issueDate",
+        }),
+        serviceDate: assertDateProvidedOrUnknown({
+          value: params.body.serviceDate as string | null | undefined,
+          fieldLabel: "serviceDate",
+        }),
+        returnDate: assertDateProvidedOrUnknown({
+          value: params.body.returnDate as string | null | undefined,
+          fieldLabel: "returnDate",
+        }),
+        issuingAuthority: (params.body.issuingAuthority as string) ?? null,
+        status: (params.body.status as string) ?? "prepared",
+        relatedDefendantIds: (params.body.relatedDefendantIds as string[]) ?? [],
+        relatedWitnessIds: (params.body.relatedWitnessIds as string[]) ?? [],
+        relatedEvidenceIds: (params.body.relatedEvidenceIds as string[]) ?? [],
+        relatedDiscoveryIds: (params.body.relatedDiscoveryIds as string[]) ?? [],
+        documentsReceived: (params.body.documentsReceived as string[]) ?? [],
+        returnStatus: (params.body.returnStatus as string) ?? "PENDING",
+        returnNotes: (params.body.returnNotes as string) ?? null,
+        returnReceivedDate: assertDateProvidedOrUnknown({
+          value: params.body.returnReceivedDate as string | null | undefined,
+          fieldLabel: "returnReceivedDate",
+        }),
+        returnDocumentIds: (params.body.returnDocumentIds as string[]) ?? [],
+        notes: (params.body.notes as string) ?? null,
         provenance,
       })
       .returning();
@@ -1849,29 +2300,59 @@ export async function addProsecutionRecord(
       action: "prosecution.subpoena_modified",
       targetType: "subpoena",
       targetId: row?.id,
-      metadata: { criminalCaseId },
+      metadata: { criminalCaseId, autonomousIssuance: false, externalSend: false },
     });
     await notifyProsecutionEvent(db, {
       organizationId,
       userId: params.userId,
       kind: "subpoena_return_due",
-      title: `Subpoena issued: ${String(params.body.recipient ?? "recipient")}`,
-      body: `Case ${criminalCase.caseNumber} subpoena recorded.`,
-      href: `/app/prosecution/${criminalCaseId}`,
+      title: `Subpoena tracked: ${String(params.body.recipient ?? "recipient")}`,
+      body: `Case ${criminalCase.caseNumber} subpoena recorded for tracking only.`,
+      href: `/app/prosecution/${criminalCaseId}/subpoenas`,
       matterId: criminalCase.matterId,
     });
     return row;
   }
 
   if (params.resource === "pleas") {
+    assertSafeLegalWorkflowCopy(params.body.terms as string | undefined);
+    assertSafeLegalWorkflowCopy(params.body.prosecutorNotes as string | undefined);
+    if (
+      params.body.pleaRecommendation != null ||
+      params.body.acceptRejectRecommendation != null ||
+      params.body.pleaValueScore != null
+    ) {
+      throw new ProsecutionError(
+        "PLEA_RECOMMENDATION_FORBIDDEN",
+        "Nyaya does not recommend accepting or rejecting pleas or score plea value.",
+      );
+    }
     const [row] = await db
       .insert(prosecutionPleaOffers)
       .values({
         organizationId,
         criminalCaseId,
         terms: String(params.body.terms ?? ""),
+        offerDate: assertDateProvidedOrUnknown({
+          value: params.body.offerDate as string | null | undefined,
+          fieldLabel: "offerDate",
+        }),
+        expiration: assertDateProvidedOrUnknown({
+          value: params.body.expiration as string | null | undefined,
+          fieldLabel: "expiration",
+        }),
         status: (params.body.status as string) ?? "draft",
         history: (params.body.history as string[]) ?? [],
+        relatedChargeIds: (params.body.relatedChargeIds as string[]) ?? [],
+        conditions: (params.body.conditions as string[]) ?? [],
+        defenseResponse: (params.body.defenseResponse as string) ?? null,
+        prosecutorNotes: (params.body.prosecutorNotes as string) ?? null,
+        supervisorReviewStatus: (params.body.supervisorReviewStatus as string) ?? "UNREVIEWED",
+        documentIds: (params.body.documentIds as string[]) ?? [],
+        versionLabel: (params.body.versionLabel as string) ?? null,
+        parentOfferId: (params.body.parentOfferId as string) ?? null,
+        sentencingRecommendationReference:
+          (params.body.sentencingRecommendationReference as string) ?? null,
         humanOwnerId: params.userId,
         provenance,
       })
@@ -1883,7 +2364,152 @@ export async function addProsecutionRecord(
       action: "prosecution.plea_modified",
       targetType: "plea_offer",
       targetId: row?.id,
-      metadata: { criminalCaseId },
+      metadata: { criminalCaseId, pleaRecommendation: null },
+    });
+    await db.insert(prosecutionTimelineEvents).values({
+      organizationId,
+      criminalCaseId,
+      matterId: criminalCase.matterId,
+      eventType: "PLEA_EVENT",
+      title: `Plea offer tracked: ${String(params.body.versionLabel ?? "offer")}`,
+      eventDate: new Date(),
+      provenance,
+    });
+    return row;
+  }
+
+  if (params.resource === "case-authorities") {
+    const persistInput = {
+      citation: String(params.body.citation ?? ""),
+      proposition: String(params.body.proposition ?? ""),
+      jurisdiction: (params.body.jurisdiction as string) ?? criminalCase.jurisdiction,
+      court: (params.body.court as string) ?? criminalCase.court,
+      hierarchyStatus: String(params.body.hierarchyStatus ?? "UNKNOWN"),
+      treatmentStatus: (params.body.treatmentStatus as string) ?? "UNKNOWN",
+      relation: (params.body.relation as string) ?? "RELEVANT",
+      sourceSpan: (params.body.sourceSpan as string) ?? null,
+      sourcePage: (params.body.sourcePage as number) ?? null,
+      authorityId: (params.body.authorityId as string) ?? null,
+      relatedIssueIds: (params.body.relatedIssueIds as string[]) ?? [],
+      relatedMotionIds: (params.body.relatedMotionIds as string[]) ?? [],
+      relatedWarrantIds: (params.body.relatedWarrantIds as string[]) ?? [],
+      provenance,
+    };
+    assertPersistedAuthorityGrounded(persistInput);
+    const [row] = await db
+      .insert(prosecutionCaseAuthorities)
+      .values({
+        organizationId,
+        criminalCaseId,
+        authorityId: persistInput.authorityId,
+        citation: persistInput.citation,
+        proposition: persistInput.proposition,
+        jurisdiction: persistInput.jurisdiction,
+        court: persistInput.court,
+        hierarchyStatus: persistInput.hierarchyStatus,
+        treatmentStatus: persistInput.treatmentStatus,
+        relation: persistInput.relation,
+        sourceSpan: persistInput.sourceSpan,
+        sourcePage: persistInput.sourcePage,
+        relatedIssueIds: persistInput.relatedIssueIds,
+        relatedMotionIds: persistInput.relatedMotionIds,
+        relatedWarrantIds: persistInput.relatedWarrantIds,
+        humanReviewStatus: (params.body.humanReviewStatus as string) ?? "UNREVIEWED",
+        provenance,
+        createdByUserId: params.userId,
+      })
+      .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.case_authority_persisted",
+      targetType: "case_authority",
+      targetId: row?.id,
+      metadata: {
+        criminalCaseId,
+        hierarchyStatus: persistInput.hierarchyStatus,
+        citation: persistInput.citation,
+      },
+    });
+    return row;
+  }
+
+  if (params.resource === "case-drafts") {
+    if (params.body.fileExternally === true || params.body.autonomousFiling === true) {
+      throw new ProsecutionError(
+        "AUTONOMOUS_LEGAL_ACTION_FORBIDDEN",
+        "Nyaya does not file drafts. Content remains DRAFT until human approval.",
+        403,
+      );
+    }
+    const title = String(params.body.title ?? "Prosecution draft");
+    const draftType = String(params.body.draftType ?? "motion");
+    const content = String(params.body.content ?? "");
+    assertSafeLegalWorkflowCopy(content);
+    const retrievedAuthorityIds = Array.isArray(params.body.relatedAuthorityIds)
+      ? params.body.relatedAuthorityIds.map(String)
+      : [];
+    const citationMarkers = Array.isArray(params.body.citationMarkers)
+      ? (
+          params.body.citationMarkers as Array<{ text: string; matchedAuthorityId?: string | null }>
+        ).map((marker) => ({
+          text: marker.text,
+          status: classifyDraftCitationMarker({
+            citationText: marker.text,
+            retrievedAuthorityIds,
+            matchedAuthorityId: marker.matchedAuthorityId,
+          }),
+        }))
+      : [];
+    let linkedDraftId: string | null = null;
+    if (criminalCase.matterId) {
+      const created = await createDraft({
+        db,
+        organizationId,
+        matterId: criminalCase.matterId,
+        userId: params.userId,
+        title,
+        draftType,
+        content,
+        aiGenerated: Boolean(params.body.aiGenerated),
+      });
+      linkedDraftId = created.draft.id;
+    }
+    const [row] = await db
+      .insert(prosecutionCaseDrafts)
+      .values({
+        organizationId,
+        criminalCaseId,
+        draftId: linkedDraftId,
+        draftType,
+        title,
+        content,
+        status: "DRAFT",
+        relatedMotionIds: (params.body.relatedMotionIds as string[]) ?? [],
+        relatedHearingIds: (params.body.relatedHearingIds as string[]) ?? [],
+        relatedIssueIds: (params.body.relatedIssueIds as string[]) ?? [],
+        relatedEvidenceIds: (params.body.relatedEvidenceIds as string[]) ?? [],
+        relatedAuthorityIds: retrievedAuthorityIds,
+        citationMarkers,
+        aiGenerated: Boolean(params.body.aiGenerated),
+        provenance,
+        createdByUserId: params.userId,
+      })
+      .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.case_draft_created",
+      targetType: "case_draft",
+      targetId: row?.id,
+      metadata: {
+        criminalCaseId,
+        draftId: linkedDraftId,
+        status: "DRAFT",
+        autonomousFiling: false,
+      },
     });
     return row;
   }
