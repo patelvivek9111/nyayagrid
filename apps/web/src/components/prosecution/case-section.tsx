@@ -270,6 +270,110 @@ type Overview = {
   hearings: Array<{ id: string; hearingType: string; outcome: string | null }>;
   motions: Array<{ id: string; motionType: string; status: string; filingParty?: string | null }>;
   subpoenas: Array<{ id: string; recipient: string; status: string; requestScope?: string | null }>;
+  motionsDetail?: Array<{
+    id: string;
+    motionType: string;
+    status: string;
+    filingParty: string;
+    responseDueDateLabel?: string;
+    hearingDateLabel?: string;
+    rulingDateLabel?: string;
+    filedDateLabel?: string;
+    notes?: string | null;
+    relatedEvidenceIds?: string[];
+    relatedAuthorityIds?: string[];
+    deadlineInvented?: boolean;
+  }>;
+  subpoenasDetail?: Array<{
+    id: string;
+    recipient: string;
+    status: string;
+    requestScope: string;
+    returnStatus?: string;
+    returnNotes?: string | null;
+    issueDateLabel?: string;
+    returnDateLabel?: string;
+    autonomousIssuance?: boolean;
+  }>;
+  pleas?: Array<{
+    id: string;
+    terms: string;
+    status: string;
+    versionLabel?: string | null;
+    relatedChargeIds?: string[];
+    conditions?: string[];
+    offerDateLabel?: string;
+    expirationLabel?: string;
+    pleaRecommendation?: null;
+  }>;
+  pleaComparison?: {
+    changedTerms: boolean;
+    termDiffSummary: string;
+    addedConditions: string[];
+    removedConditions: string[];
+    chargeSetChanged: boolean;
+    missingInformation: string[];
+    pleaRecommendation: null;
+  } | null;
+  hearingPrep?: Array<{
+    hearingId: string;
+    hearingType: string;
+    dateTime: string | null;
+    issuesToAddress: string[];
+    unresolvedGaps: string[];
+    authorities: string[];
+    argumentStrategyFinal: null;
+    dateSource: string;
+  }>;
+  caseAuthorities?: Array<{
+    id: string;
+    citation: string;
+    proposition: string;
+    hierarchyStatus: string;
+    relation: string;
+    binding?: boolean;
+    persuasive?: boolean;
+    contrary?: boolean;
+  }>;
+  caseDrafts?: Array<{
+    id: string;
+    title: string;
+    draftType: string;
+    status: string;
+    remainsDraftUntilApproved?: boolean;
+    autonomousFiling?: boolean;
+  }>;
+  procedureIssues?: Array<{
+    id: string;
+    issueType: string;
+    status: string;
+    description?: string | null;
+    missingFacts?: string[];
+    supportingFacts?: string[];
+    contraryFacts?: string[];
+    humanConclusion?: string | null;
+    automaticSuppressionConclusion?: null;
+  }>;
+  suppressionAnalysisByIssue?: Array<{
+    issueId: string;
+    issueType: string;
+    factsFromRecord: string[];
+    missingFacts: string[];
+    legalStandard: string | null;
+    supportingAuthority: Array<{ citation: string; proposition: string; hierarchyStatus: string }>;
+    contraryAuthority: Array<{ citation: string; proposition: string; hierarchyStatus: string }>;
+    humanConclusion: string | null;
+    suppressionConclusion: null;
+  }>;
+  suggestedLegalTasks?: string[];
+  legalSafety?: {
+    automaticSuppressionConclusion: null;
+    automaticWarrantInvalidity: null;
+    pleaRecommendation: null;
+    autonomousFiling: false;
+    autonomousSubpoenaIssuance: false;
+    inventedDeadlines: false;
+  };
   agencies: Array<{ id: string; name: string; agencyType: string }>;
   openTasks: Array<{ id: string; title: string; status: string }>;
   evidenceCount: number;
@@ -499,24 +603,9 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
       {section === "subpoenas" ? <SubpoenasBody overview={overview} /> : null}
       {section === "motions" ? <MotionsBody overview={overview} /> : null}
       {section === "hearings" ? <HearingsBody overview={overview} /> : null}
-      {section === "pleas" ? (
-        <EmptyState
-          title="Pleas"
-          description="Plea terms and history are human-controlled. Nyaya does not recommend accept or reject."
-        />
-      ) : null}
+      {section === "pleas" ? <PleasBody overview={overview} /> : null}
       {section === "timeline" ? <TimelineBody overview={overview} /> : null}
-      {section === "research" ? (
-        <div className="mt-4 space-y-3">
-          <p className="text-sm text-ink/80">
-            Authority lookup uses the shared Nyaya Research workspace. Results remain
-            organization-scoped.
-          </p>
-          <Link className="font-semibold text-accent underline" href="/app/research">
-            Open Nyaya Research
-          </Link>
-        </div>
-      ) : null}
+      {section === "research" ? <ResearchBody overview={overview} /> : null}
       {section === "tasks" ? <TasksBody overview={overview} /> : null}
     </div>
   );
@@ -2124,33 +2213,69 @@ function TimelineBody({ overview }: { overview: Overview }) {
 }
 
 function SubpoenasBody({ overview }: { overview: Overview }) {
-  if (overview.subpoenas.length === 0) {
+  const rows =
+    overview.subpoenasDetail ??
+    overview.subpoenas.map((item) => ({
+      id: item.id,
+      recipient: item.recipient,
+      status: item.status,
+      requestScope: item.requestScope ?? "",
+      returnStatus: undefined as string | undefined,
+      returnDateLabel: undefined as string | undefined,
+    }));
+  if (rows.length === 0) {
     return (
       <div className="mt-4">
         <EmptyState
           title="No subpoenas"
-          description="Issued subpoenas and return deadlines for this case will appear here."
+          description="Subpoena tracking only. Nyaya does not issue or send subpoenas."
         />
       </div>
     );
   }
   return (
-    <ul className="mt-4 space-y-2 text-sm">
-      {overview.subpoenas.map((item) => (
-        <li key={item.id} className="rounded border border-line px-3 py-2">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="font-semibold">{item.recipient}</span>
-            <StatusLabel label={humanizeKey(item.status)} />
-          </div>
-          {item.requestScope ? <p className="mt-1 text-ink/70">{item.requestScope}</p> : null}
-        </li>
-      ))}
-    </ul>
+    <div className="mt-4 space-y-3">
+      <p className="text-xs text-ink/60">
+        Tracking and return status only. Autonomous issuance is not available.
+      </p>
+      <ul className="space-y-2 text-sm">
+        {rows.map((item) => (
+          <li key={item.id} className="rounded border border-line px-3 py-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-semibold">{item.recipient}</span>
+              <StatusLabel label={humanizeKey(item.status)} />
+              {item.returnStatus ? (
+                <StatusLabel label={`Return ${humanizeKey(item.returnStatus)}`} />
+              ) : null}
+            </div>
+            {item.requestScope ? <p className="mt-1 text-ink/70">{item.requestScope}</p> : null}
+            {item.returnDateLabel ? (
+              <p className="mt-1 text-xs text-ink/55">Return date: {item.returnDateLabel}</p>
+            ) : (
+              <p className="mt-1 text-xs text-ink/55">Return date: UNKNOWN / NOT PROVIDED</p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 function MotionsBody({ overview }: { overview: Overview }) {
-  if (overview.motions.length === 0) {
+  const rows =
+    overview.motionsDetail ??
+    overview.motions.map((motion) => ({
+      id: motion.id,
+      motionType: motion.motionType,
+      status: motion.status,
+      filingParty: motion.filingParty ?? "",
+      responseDueDateLabel: "UNKNOWN / NOT PROVIDED",
+      hearingDateLabel: "UNKNOWN / NOT PROVIDED",
+      rulingDateLabel: "UNKNOWN / NOT PROVIDED",
+      relatedEvidenceIds: [] as string[],
+      relatedAuthorityIds: [] as string[],
+    }));
+  if (rows.length === 0) {
     return (
       <div className="mt-4">
         <EmptyState
@@ -2161,20 +2286,49 @@ function MotionsBody({ overview }: { overview: Overview }) {
     );
   }
   return (
-    <ul className="mt-4 space-y-2 text-sm">
-      {overview.motions.map((motion) => (
-        <li
-          key={motion.id}
-          className="flex flex-wrap items-center gap-2 rounded border border-line px-3 py-2"
-        >
-          <span className="font-semibold">{humanizeKey(motion.motionType)}</span>
-          <StatusLabel label={humanizeKey(motion.status)} />
-          {motion.filingParty ? (
-            <span className="text-ink/60">· {humanizeKey(motion.filingParty)}</span>
-          ) : null}
-        </li>
-      ))}
-    </ul>
+    <div className="mt-4 space-y-3">
+      <p className="text-xs text-ink/60">
+        Deadlines appear only when source-backed or human-entered. Nyaya does not invent dates or
+        file motions.
+      </p>
+      <ul className="space-y-2 text-sm">
+        {rows.map((motion) => (
+          <li key={motion.id} className="rounded border border-line px-3 py-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="font-semibold">{humanizeKey(motion.motionType)}</span>
+              <StatusLabel label={humanizeKey(motion.status)} />
+              {motion.filingParty ? (
+                <span className="text-ink/60">· {humanizeKey(motion.filingParty)}</span>
+              ) : null}
+            </div>
+            <p className="mt-1 text-xs text-ink/55">
+              Response due: {motion.responseDueDateLabel ?? "UNKNOWN / NOT PROVIDED"} · Hearing:{" "}
+              {motion.hearingDateLabel ?? "UNKNOWN / NOT PROVIDED"} · Ruling:{" "}
+              {motion.rulingDateLabel ?? "UNKNOWN / NOT PROVIDED"}
+            </p>
+            {(motion.relatedEvidenceIds?.length ?? 0) > 0 ? (
+              <p className="mt-1 text-xs text-ink/55">
+                Linked evidence: {motion.relatedEvidenceIds!.length} · Authorities:{" "}
+                {motion.relatedAuthorityIds?.length ?? 0}
+              </p>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+      {(overview.caseDrafts?.length ?? 0) > 0 ? (
+        <section>
+          <h2 className="text-sm font-semibold text-ink">Linked drafts</h2>
+          <ul className="mt-2 space-y-1 text-sm">
+            {overview.caseDrafts!.map((draft) => (
+              <li key={draft.id} className="rounded border border-line/70 px-2 py-1">
+                {draft.title} · <StatusLabel label={draft.status} /> · remains DRAFT until human
+                approval
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </div>
   );
 }
 
@@ -2190,14 +2344,163 @@ function HearingsBody({ overview }: { overview: Overview }) {
     );
   }
   return (
-    <ul className="mt-4 space-y-2 text-sm">
-      {overview.hearings.map((hearing) => (
-        <li key={hearing.id} className="rounded border border-line px-3 py-2">
-          <span className="font-semibold">{humanizeKey(hearing.hearingType)}</span>
-          {hearing.outcome ? <span className="ml-2 text-ink/70">{hearing.outcome}</span> : null}
-        </li>
-      ))}
-    </ul>
+    <div className="mt-4 space-y-4">
+      <ul className="space-y-2 text-sm">
+        {overview.hearings.map((hearing) => (
+          <li key={hearing.id} className="rounded border border-line px-3 py-2">
+            <span className="font-semibold">{humanizeKey(hearing.hearingType)}</span>
+            {hearing.outcome ? <span className="ml-2 text-ink/70">{hearing.outcome}</span> : null}
+          </li>
+        ))}
+      </ul>
+      {(overview.hearingPrep?.length ?? 0) > 0 ? (
+        <section className="space-y-2">
+          <h2 className="text-sm font-semibold text-ink">Hearing prep</h2>
+          <p className="text-xs text-ink/60">
+            Prep packages list issues, facts, gaps, and authorities for review. No automatic
+            argument strategy is presented as a final instruction.
+          </p>
+          {overview.hearingPrep!.map((prep) => (
+            <div key={prep.hearingId} className="rounded border border-line px-3 py-2 text-sm">
+              <div className="font-semibold">{humanizeKey(prep.hearingType)}</div>
+              <p className="text-xs text-ink/55">
+                Date: {prep.dateTime ?? "UNKNOWN / NOT PROVIDED"} ({humanizeKey(prep.dateSource)})
+              </p>
+              <p className="mt-1 text-ink/70">
+                Issues: {prep.issuesToAddress.slice(0, 5).join("; ") || "none listed"}
+              </p>
+              <p className="text-ink/70">
+                Unresolved gaps: {prep.unresolvedGaps.slice(0, 5).join("; ") || "none"}
+              </p>
+              <p className="text-ink/70">
+                Authorities: {prep.authorities.slice(0, 5).join("; ") || "none linked"}
+              </p>
+            </div>
+          ))}
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
+function PleasBody({ overview }: { overview: Overview }) {
+  const pleas = overview.pleas ?? [];
+  return (
+    <div className="mt-4 space-y-3">
+      <p className="text-sm text-ink/80">
+        Plea terms and history are human-controlled. Nyaya does not recommend accept or reject,
+        score plea value, or predict conviction probability.
+      </p>
+      {pleas.length === 0 ? (
+        <EmptyState
+          title="No plea offers"
+          description="Track plea offer versions and charge links here."
+        />
+      ) : (
+        <ul className="space-y-2 text-sm">
+          {pleas.map((plea) => (
+            <li key={plea.id} className="rounded border border-line px-3 py-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="font-semibold">{plea.versionLabel ?? "Plea offer"}</span>
+                <StatusLabel label={humanizeKey(plea.status)} />
+              </div>
+              <p className="mt-1 whitespace-pre-wrap text-ink/80">{plea.terms}</p>
+              <p className="mt-1 text-xs text-ink/55">
+                Offer date: {plea.offerDateLabel ?? "UNKNOWN / NOT PROVIDED"} · Expiration:{" "}
+                {plea.expirationLabel ?? "UNKNOWN / NOT PROVIDED"} · Charges linked:{" "}
+                {plea.relatedChargeIds?.length ?? 0}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+      {overview.pleaComparison ? (
+        <section className="rounded border border-line px-3 py-2 text-sm">
+          <h2 className="font-semibold text-ink">Version comparison</h2>
+          <p className="mt-1 text-ink/80">{overview.pleaComparison.termDiffSummary}</p>
+          {overview.pleaComparison.addedConditions.length > 0 ? (
+            <p className="mt-1 text-ink/70">
+              Added conditions: {overview.pleaComparison.addedConditions.join("; ")}
+            </p>
+          ) : null}
+          {overview.pleaComparison.removedConditions.length > 0 ? (
+            <p className="mt-1 text-ink/70">
+              Removed conditions: {overview.pleaComparison.removedConditions.join("; ")}
+            </p>
+          ) : null}
+          <p className="mt-1 text-xs text-ink/55">
+            Plea recommendation: none (human decision required)
+          </p>
+        </section>
+      ) : null}
+    </div>
+  );
+}
+
+function ResearchBody({ overview }: { overview: Overview }) {
+  const authorities = overview.caseAuthorities ?? [];
+  const analysis = overview.suppressionAnalysisByIssue ?? [];
+  return (
+    <div className="mt-4 space-y-4">
+      <p className="text-sm text-ink/80">
+        Case-scoped research distinguishes binding, persuasive, and contrary authority. Unsupported
+        AI-created authority is not persisted. Suppression analysis separates facts, standards, and
+        human conclusions — no automatic suppression verdict.
+      </p>
+      <Link className="font-semibold text-accent underline" href="/app/research">
+        Open Nyaya Research
+      </Link>
+      <section>
+        <h2 className="text-sm font-semibold text-ink">Persisted case authorities</h2>
+        {authorities.length === 0 ? (
+          <p className="mt-1 text-sm text-ink/60">No case authorities persisted yet.</p>
+        ) : (
+          <ul className="mt-2 space-y-2 text-sm">
+            {authorities.map((authority) => (
+              <li key={authority.id} className="rounded border border-line px-3 py-2">
+                <div className="flex flex-wrap gap-2">
+                  <span className="font-semibold">{authority.citation}</span>
+                  <StatusLabel label={humanizeKey(authority.hierarchyStatus)} />
+                  <StatusLabel label={humanizeKey(authority.relation)} />
+                </div>
+                <p className="mt-1 text-ink/75">{authority.proposition}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+      {analysis.length > 0 ? (
+        <section>
+          <h2 className="text-sm font-semibold text-ink">Suppression analysis sections</h2>
+          <ul className="mt-2 space-y-2 text-sm">
+            {analysis.map((row) => (
+              <li key={row.issueId} className="rounded border border-line px-3 py-2">
+                <div className="font-semibold">{humanizeKey(row.issueType)}</div>
+                <p className="text-xs text-ink/55">
+                  Facts from record: {row.factsFromRecord.length} · Missing:{" "}
+                  {row.missingFacts.length} · Supporting authority: {row.supportingAuthority.length}{" "}
+                  · Contrary: {row.contraryAuthority.length}
+                </p>
+                <p className="mt-1 text-xs text-ink/55">
+                  Human conclusion: {row.humanConclusion ?? "not recorded"} · Automated suppression
+                  conclusion: none
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {(overview.suggestedLegalTasks?.length ?? 0) > 0 ? (
+        <section>
+          <h2 className="text-sm font-semibold text-ink">Suggested follow-up tasks</h2>
+          <ul className="mt-1 list-disc pl-5 text-sm text-ink/75">
+            {overview.suggestedLegalTasks!.map((task) => (
+              <li key={task}>{task}</li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+    </div>
   );
 }
 
