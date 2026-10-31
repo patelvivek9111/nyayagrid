@@ -1412,6 +1412,11 @@ export {
   setRoutingAuditSink,
   newRunId,
   newUsageActionId,
+  PINNED_BENCHMARK_MODEL_IDS,
+  planBenchmarkRoute,
+  planHighStakesFallback,
+  isModelRouterV2Enabled,
+  BENCHMARK_ROUTER_V2_VERSION,
 } from "./router";
 export type {
   DirectProviderId,
@@ -1420,6 +1425,8 @@ export type {
   ModelRegistryEntry,
   CertificationEvidence,
   RoutingAuditRecord,
+  BenchmarkRouteDecision,
+  BenchmarkPinnedModelId,
 } from "./router";
 export type { RoutingOptions, RoutingOptionModel } from "./router";
 export {
