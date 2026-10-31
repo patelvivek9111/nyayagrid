@@ -1377,4 +1377,213 @@ test.describe("signed-in prosecution workspace", () => {
     expect(foreignWarrant.ok()).toBeFalsy();
     expect(foreignBody.overview.caseAuthorities.every((row) => row)).toBeTruthy();
   });
+
+  test("Stage 6 office operations: command center, assignment, queues, closure, isolation", async ({
+    page,
+  }) => {
+    const created = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s6`, slug: `${ORG_SLUG}-s6`, type: "firm" },
+    });
+    expect(created.ok(), await created.text()).toBeTruthy();
+    const orgBody = (await created.json()) as { organization?: { id?: string }; id?: string };
+    const organizationId = orgBody.organization?.id ?? orgBody.id!;
+
+    await page.goto("/app/prosecution");
+    await selectWorkspace(page, `${ORG_NAME}-s6`, organizationId);
+
+    async function createCase(caseNumber: string) {
+      const opened = await page.request.post("/api/v1/prosecution/cases", {
+        data: {
+          organizationId,
+          caseNumber,
+          jurisdiction: "PA",
+          court: "st-pa-trial",
+          priority: "HIGH",
+        },
+      });
+      expect(opened.ok(), await opened.text()).toBeTruthy();
+      return ((await opened.json()) as { criminalCase: { id: string } }).criminalCase;
+    }
+
+    const unassigned = await createCase(`${CASE_NUMBER}-s6-u`);
+    const caseA = await createCase(`${CASE_NUMBER}-s6-a`);
+    const caseB = await createCase(`${CASE_NUMBER}-s6-b`);
+
+    const identity = await page.request.get(
+      `/api/v1/prosecution/office?organizationId=${organizationId}`,
+    );
+    expect(identity.ok(), await identity.text()).toBeTruthy();
+    const identityBody = (await identity.json()) as {
+      overview: { viewer: { userId: string }; members: Array<{ userId: string }> };
+    };
+    const userId = identityBody.overview.viewer.userId;
+    expect(userId).toBeTruthy();
+
+    const assigned = await page.request.patch(`/api/v1/prosecution/cases/${caseA.id}`, {
+      data: {
+        organizationId,
+        assignedProsecutorId: userId,
+        supervisingProsecutorId: userId,
+        assignmentNote: "Stage 6 assignment note",
+        priority: "HIGH",
+      },
+    });
+    expect(assigned.ok(), await assigned.text()).toBeTruthy();
+
+    const reassigned = await page.request.patch(`/api/v1/prosecution/cases/${caseB.id}`, {
+      data: {
+        organizationId,
+        assignedProsecutorId: userId,
+        assignmentNote: "Reassigned for Stage 6",
+      },
+    });
+    expect(reassigned.ok(), await reassigned.text()).toBeTruthy();
+
+    async function post(caseId: string, resource: string, data: Record<string, unknown>) {
+      const response = await page.request.post(
+        `/api/v1/prosecution/cases/${caseId}/${resource}?organizationId=${organizationId}`,
+        { data },
+      );
+      expect(response.ok(), await response.text()).toBeTruthy();
+      return ((await response.json()) as { record: { id: string } }).record;
+    }
+
+    await post(caseA.id, "hearings", {
+      hearingType: "status",
+      dateTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+      court: "st-pa-trial",
+      provenance,
+    });
+    await post(caseA.id, "tasks", {
+      title: "Overdue Stage 6 task",
+      status: "open",
+      priority: "high",
+      ownerUserId: userId,
+      dueAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      dueDateOrigin: "USER_ENTERED",
+      provenance,
+    });
+    await post(caseA.id, "disclosure", {
+      category: "POTENTIALLY_EXCULPATORY",
+      status: "REVIEW_REQUIRED",
+      reason: "Stage 6 queue item",
+      provenance,
+    });
+    await post(caseA.id, "procedure-issues", {
+      issueType: "WARRANT",
+      description: "Stage 6 open procedure issue",
+      missingFacts: ["affidavit page"],
+      status: "open",
+      provenance,
+    });
+    await post(caseA.id, "evidence", {
+      evidenceType: "physical",
+      chainOfCustody: [],
+      provenance,
+    });
+
+    const office = await page.request.get(
+      `/api/v1/prosecution/office?organizationId=${organizationId}&unassignedOnly=1`,
+    );
+    expect(office.ok(), await office.text()).toBeTruthy();
+    const officeBody = (await office.json()) as {
+      overview: {
+        counts: {
+          totalActiveCases: number;
+          unassignedCases: number;
+          highPriorityCases: number;
+          disclosureCandidatesAwaitingFinal: number;
+          overdueTasks: number;
+          upcomingHearings: number;
+          openProcedureIssues: number;
+          chainOfCustodyWarnings: number;
+          convictionRate: null;
+          prosecutorPerformanceScore: null;
+        };
+        caseload: { rows: Array<{ id: string; caseNumber: string }>; total: number };
+        myWork: { cases: Array<{ id: string }> };
+        reviewQueues: { DISCLOSURE_REVIEW: unknown[] };
+        safety: { outcomeBasedRanking: false; inventedDeadlines: false };
+        askOfficeContext: string;
+      };
+    };
+    expect(officeBody.overview.counts.totalActiveCases).toBeGreaterThanOrEqual(3);
+    expect(officeBody.overview.counts.unassignedCases).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.highPriorityCases).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.disclosureCandidatesAwaitingFinal).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.overdueTasks).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.upcomingHearings).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.openProcedureIssues).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.chainOfCustodyWarnings).toBeGreaterThanOrEqual(1);
+    expect(officeBody.overview.counts.convictionRate).toBeNull();
+    expect(officeBody.overview.counts.prosecutorPerformanceScore).toBeNull();
+    expect(officeBody.overview.caseload.rows.some((r) => r.id === unassigned.id)).toBe(true);
+    expect(officeBody.overview.myWork.cases.some((c) => c.id === caseA.id)).toBe(true);
+    expect(officeBody.overview.reviewQueues.DISCLOSURE_REVIEW.length).toBeGreaterThan(0);
+    expect(officeBody.overview.safety.outcomeBasedRanking).toBe(false);
+    expect(officeBody.overview.safety.inventedDeadlines).toBe(false);
+    expect(officeBody.overview.askOfficeContext).toContain("CONVICTION_RATE: null");
+
+    const review = await page.request.post("/api/v1/prosecution/office", {
+      data: {
+        action: "supervisor_review",
+        organizationId,
+        caseId: caseA.id,
+        note: "Stage 6 supervisor review complete",
+        followUpRequested: true,
+        followUpTaskTitle: "Follow up after supervisor review",
+      },
+    });
+    expect(review.ok(), await review.text()).toBeTruthy();
+
+    const closed = await page.request.post("/api/v1/prosecution/office", {
+      data: {
+        action: "close_case",
+        organizationId,
+        caseId: caseB.id,
+        confirm: true,
+        closureReason: "Stage 6 controlled closure",
+      },
+    });
+    expect(closed.ok(), await closed.text()).toBeTruthy();
+    const closedBody = (await closed.json()) as {
+      case: { caseStatus: string; closureReason: string | null };
+    };
+    expect(closedBody.case.caseStatus).toBe("CLOSED");
+    expect(closedBody.case.closureReason).toBe("Stage 6 controlled closure");
+
+    const stillThere = await page.request.get(
+      `/api/v1/prosecution/cases/${caseB.id}?organizationId=${organizationId}`,
+    );
+    expect(stillThere.ok()).toBeTruthy();
+
+    await page.goto("/app/prosecution");
+    await selectWorkspace(page, `${ORG_NAME}-s6`, organizationId);
+    await expect(page.getByRole("button", { name: "Command center" })).toBeVisible();
+    await expect(page.getByText("Active cases").first()).toBeVisible();
+    await expect(page.getByText(/Conviction rate: none/i).first()).toBeVisible();
+    await page.getByRole("button", { name: "Supervisor" }).click();
+    await expect(page.getByText(/No conviction or plea-efficiency ranking/i).first()).toBeVisible();
+
+    const otherCreated = await page.request.post("/api/v1/organizations", {
+      data: { name: `${ORG_NAME}-s6-isol`, slug: `${ORG_SLUG}-s6-isol`, type: "firm" },
+    });
+    expect(otherCreated.ok(), await otherCreated.text()).toBeTruthy();
+    const isolBody = (await otherCreated.json()) as {
+      organization?: { id?: string };
+      id?: string;
+    };
+    const isolOrgId = isolBody.organization?.id ?? isolBody.id!;
+    const cross = await page.request.get(
+      `/api/v1/prosecution/office?organizationId=${isolOrgId}&q=${encodeURIComponent(caseA.caseNumber)}&mode=search`,
+    );
+    expect(cross.ok()).toBeTruthy();
+    const crossBody = (await cross.json()) as { results: Array<{ id: string }> };
+    expect(crossBody.results.some((r) => r.id === caseA.id)).toBe(false);
+
+    const crossOffice = await page.request.get(
+      `/api/v1/prosecution/cases/${caseA.id}?organizationId=${isolOrgId}`,
+    );
+    expect(crossOffice.ok()).toBeFalsy();
+  });
 });
