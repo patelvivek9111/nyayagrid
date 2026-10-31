@@ -199,6 +199,13 @@ export const criminalCases = pgTable(
     closedDate: date("closed_date"),
     summary: text("summary"),
     notes: text("notes"),
+    assignmentNote: text("assignment_note"),
+    lastSupervisorReviewAt: timestamp("last_supervisor_review_at", { withTimezone: true }),
+    lastSupervisorReviewByUserId: uuid("last_supervisor_review_by_user_id").references(
+      () => users.id,
+      { onDelete: "set null" },
+    ),
+    closureReason: text("closure_reason"),
     createdByUserId: uuid("created_by_user_id").references(() => users.id),
     updatedByUserId: uuid("updated_by_user_id").references(() => users.id),
     ...timestamps,
@@ -207,6 +214,9 @@ export const criminalCases = pgTable(
     uniqueIndex("criminal_cases_org_number_uidx").on(table.organizationId, table.caseNumber),
     index("criminal_cases_org_idx").on(table.organizationId),
     index("criminal_cases_matter_idx").on(table.matterId),
+    index("criminal_cases_org_status_idx").on(table.organizationId, table.caseStatus),
+    index("criminal_cases_org_prosecutor_idx").on(table.organizationId, table.assignedProsecutorId),
+    index("criminal_cases_org_priority_idx").on(table.organizationId, table.priority),
   ],
 );
 
@@ -221,6 +231,7 @@ export const prosecutionAgencies = pgTable(
     agencyType: text("agency_type").notNull(),
     jurisdiction: text("jurisdiction"),
     contact: jsonb("contact").$type<Record<string, string>>().notNull().default({}),
+    active: boolean("active").notNull().default(true),
     ...timestamps,
   },
   (table) => [index("prosecution_agencies_org_idx").on(table.organizationId)],
@@ -1007,11 +1018,59 @@ export const prosecutionTasks = pgTable(
       .notNull()
       .references(() => criminalCases.id, { onDelete: "cascade" }),
     title: text("title").notNull(),
+    description: text("description"),
+    ownerUserId: uuid("owner_user_id").references(() => users.id, { onDelete: "set null" }),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    priority: text("priority").notNull().default("normal"),
     status: text("status").notNull().default("open"),
     dueAt: timestamp("due_at", { withTimezone: true }),
+    dueDateOrigin: text("due_date_origin").default("USER_ENTERED"),
+    relatedEvidenceIds: jsonb("related_evidence_ids").$type<string[]>().notNull().default([]),
+    relatedWitnessIds: jsonb("related_witness_ids").$type<string[]>().notNull().default([]),
+    relatedDiscoveryIds: jsonb("related_discovery_ids").$type<string[]>().notNull().default([]),
+    relatedDisclosureIds: jsonb("related_disclosure_ids").$type<string[]>().notNull().default([]),
+    relatedMotionIds: jsonb("related_motion_ids").$type<string[]>().notNull().default([]),
+    relatedHearingIds: jsonb("related_hearing_ids").$type<string[]>().notNull().default([]),
+    relatedWarrantIds: jsonb("related_warrant_ids").$type<string[]>().notNull().default([]),
+    relatedIssueIds: jsonb("related_issue_ids").$type<string[]>().notNull().default([]),
+    completedAt: timestamp("completed_at", { withTimezone: true }),
+    notes: text("notes"),
     ...timestamps,
   },
-  (table) => [index("prosecution_tasks_case_idx").on(table.criminalCaseId)],
+  (table) => [
+    index("prosecution_tasks_case_idx").on(table.criminalCaseId),
+    index("prosecution_tasks_org_owner_idx").on(table.organizationId, table.ownerUserId),
+    index("prosecution_tasks_org_status_idx").on(table.organizationId, table.status),
+    index("prosecution_tasks_due_at_idx").on(table.dueAt),
+  ],
+);
+
+export const prosecutionSupervisorReviews = pgTable(
+  "prosecution_supervisor_reviews",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    criminalCaseId: uuid("criminal_case_id")
+      .notNull()
+      .references(() => criminalCases.id, { onDelete: "cascade" }),
+    reviewerUserId: uuid("reviewer_user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    status: text("status").notNull().default("COMPLETED"),
+    note: text("note"),
+    followUpRequested: boolean("follow_up_requested").notNull().default(false),
+    followUpTaskId: uuid("follow_up_task_id"),
+    snapshot: jsonb("snapshot").$type<Record<string, unknown>>().notNull().default({}),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("prosecution_supervisor_reviews_case_idx").on(table.criminalCaseId),
+    index("prosecution_supervisor_reviews_org_idx").on(table.organizationId),
+  ],
 );
 
 export const prosecutionGraphNodes = pgTable(
