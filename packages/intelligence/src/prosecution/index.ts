@@ -11,3 +11,5 @@ export * from "./suppression-source-backed";
 export * from "./case-intelligence";
 export * from "./disclosure-workflow";
 export * from "./legal-workflow";
+export * from "./office-ops";
+export * from "./office-ops-db";
