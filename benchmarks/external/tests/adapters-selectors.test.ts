@@ -171,9 +171,13 @@ describe("license registry + scorecard + safe extract", () => {
           "PARTIAL_CLEARED_PER_TASK_MAP",
           "PARTIAL_CLEARED_CUAD_MAUD_CONTRACTNLI",
           "DO_NOT_DISTRIBUTE",
+          "RESEARCH_ONLY",
         ].includes(l.review_status),
       ),
     ).toBe(true);
+    expect(ids).toContain("legalcitebench");
+    expect(ids).toContain("casefacts");
+    expect(ids).toContain("legal-rag-bench");
   });
 
   it("serializes scorecard", () => {
