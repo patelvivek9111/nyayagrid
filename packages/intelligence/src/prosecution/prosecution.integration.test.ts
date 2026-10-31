@@ -543,7 +543,7 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
     expect((agency as { name: string }).name).toContain("Agency");
     expect((officer as { agencyId: string }).agencyId).toBe((agency as { id: string }).id);
     expect((subpoena as { recipient: string }).recipient).toBe("Synthetic Custodian");
-    expect((motion as { motionType: string }).motionType).toBe("suppress");
+    expect((motion as { motionType: string }).motionType).toBe("MOTION_TO_SUPPRESS");
     expect((hearing as { hearingType: string }).hearingType).toBe("suppression");
     expect((disposition as { result: string }).result).toBe("pending");
 
