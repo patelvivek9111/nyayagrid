@@ -299,10 +299,12 @@ export async function updateCriminalCase(
       priority?: string;
       summary?: string | null;
       notes?: string | null;
+      assignmentNote?: string | null;
       assignedProsecutorId?: string | null;
       supervisingProsecutorId?: string | null;
       investigatingAgencyId?: string | null;
       closedDate?: string | null;
+      closureReason?: string | null;
     };
   },
 ) {
@@ -344,6 +346,7 @@ export async function updateCriminalCase(
       );
     }
   }
+  const priorProsecutor = criminalCase.assignedProsecutorId;
   const [updated] = await db
     .update(criminalCases)
     .set({
@@ -355,6 +358,7 @@ export async function updateCriminalCase(
       ...(patch.priority !== undefined ? { priority: patch.priority } : {}),
       ...(patch.summary !== undefined ? { summary: patch.summary } : {}),
       ...(patch.notes !== undefined ? { notes: patch.notes } : {}),
+      ...(patch.assignmentNote !== undefined ? { assignmentNote: patch.assignmentNote } : {}),
       ...(patch.assignedProsecutorId !== undefined
         ? { assignedProsecutorId: patch.assignedProsecutorId }
         : {}),
@@ -365,6 +369,7 @@ export async function updateCriminalCase(
         ? { investigatingAgencyId: patch.investigatingAgencyId }
         : {}),
       ...(patch.closedDate !== undefined ? { closedDate: patch.closedDate } : {}),
+      ...(patch.closureReason !== undefined ? { closureReason: patch.closureReason } : {}),
       updatedByUserId: params.userId,
       updatedAt: new Date(),
     })
@@ -376,11 +381,15 @@ export async function updateCriminalCase(
     )
     .returning();
   if (!updated) throw new ProsecutionError("NOT_FOUND", "Criminal case not found.", 404);
+  const reassigned =
+    patch.assignedProsecutorId !== undefined &&
+    patch.assignedProsecutorId !== priorProsecutor &&
+    Boolean(patch.assignedProsecutorId);
   await writeAuditEvent(db, {
     organizationId: params.organizationId,
     actorUserId: params.userId,
     matterId: updated.matterId,
-    action: "prosecution.case_updated",
+    action: reassigned ? "prosecution.case_reassigned" : "prosecution.case_updated",
     targetType: "criminal_case",
     targetId: updated.id,
     metadata: {
@@ -388,8 +397,23 @@ export async function updateCriminalCase(
       assignedProsecutorId: updated.assignedProsecutorId,
       supervisingProsecutorId: updated.supervisingProsecutorId,
       investigatingAgencyId: updated.investigatingAgencyId,
+      priorProsecutorId: priorProsecutor,
+      assignmentNote: updated.assignmentNote,
     },
   });
+  if (reassigned && updated.assignedProsecutorId) {
+    await notifyProsecutionEvent(db, {
+      organizationId: params.organizationId,
+      userId: updated.assignedProsecutorId,
+      kind: "new_assigned_case",
+      title: `Case assigned: ${updated.caseNumber}`,
+      body: priorProsecutor
+        ? `Case ${updated.caseNumber} was reassigned to you.`
+        : `Case ${updated.caseNumber} was assigned to you.`,
+      href: `/app/prosecution/${updated.id}`,
+      matterId: updated.matterId,
+    });
+  }
   return updated;
 }
 
@@ -2617,15 +2641,63 @@ export async function addProsecutionRecord(
   }
 
   if (params.resource === "tasks") {
+    const dueAtRaw = params.body.dueAt as string | null | undefined;
+    const dueAt = dueAtRaw ? new Date(dueAtRaw) : null;
+    if (dueAtRaw && Number.isNaN(dueAt?.getTime())) {
+      throw new ProsecutionError(
+        "INVALID_TASK_DUE_DATE",
+        "Task due date must be source-backed or human-entered, or omitted.",
+      );
+    }
+    const dueDateOrigin = dueAt ? String(params.body.dueDateOrigin ?? "USER_ENTERED") : "UNKNOWN";
     const [row] = await db
       .insert(prosecutionTasks)
       .values({
         organizationId,
         criminalCaseId,
         title: String(params.body.title ?? ""),
+        description: (params.body.description as string) ?? null,
+        ownerUserId: (params.body.ownerUserId as string) ?? params.userId,
+        createdByUserId: params.userId,
+        priority: (params.body.priority as string) ?? "normal",
         status: (params.body.status as string) ?? "open",
+        dueAt,
+        dueDateOrigin,
+        relatedEvidenceIds: (params.body.relatedEvidenceIds as string[]) ?? [],
+        relatedWitnessIds: (params.body.relatedWitnessIds as string[]) ?? [],
+        relatedDiscoveryIds: (params.body.relatedDiscoveryIds as string[]) ?? [],
+        relatedDisclosureIds: (params.body.relatedDisclosureIds as string[]) ?? [],
+        relatedMotionIds: (params.body.relatedMotionIds as string[]) ?? [],
+        relatedHearingIds: (params.body.relatedHearingIds as string[]) ?? [],
+        relatedWarrantIds: (params.body.relatedWarrantIds as string[]) ?? [],
+        relatedIssueIds: (params.body.relatedIssueIds as string[]) ?? [],
+        notes: (params.body.notes as string) ?? null,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.task_created",
+      targetType: "prosecution_task",
+      targetId: row?.id,
+      metadata: {
+        criminalCaseId,
+        dueDateOrigin,
+        ownerUserId: row?.ownerUserId ?? null,
+      },
+    });
+    if (row?.ownerUserId && row.ownerUserId !== params.userId) {
+      await notifyProsecutionEvent(db, {
+        organizationId,
+        userId: row.ownerUserId,
+        kind: "task_due",
+        title: `Task assigned: ${row.title}`,
+        body: `Case ${criminalCase.caseNumber}: ${row.title}`,
+        href: `/app/prosecution/${criminalCaseId}/tasks`,
+        matterId: criminalCase.matterId,
+      });
+    }
     return row;
   }
 

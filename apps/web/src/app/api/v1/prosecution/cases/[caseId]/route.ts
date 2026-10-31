@@ -16,7 +16,9 @@ const patchSchema = z.object({
   assignedProsecutorId: z.string().uuid().nullable().optional(),
   supervisingProsecutorId: z.string().uuid().nullable().optional(),
   investigatingAgencyId: z.string().uuid().nullable().optional(),
+  assignmentNote: z.string().trim().max(4000).nullable().optional(),
   closedDate: z.string().trim().max(40).nullable().optional(),
+  closureReason: z.string().trim().max(4000).nullable().optional(),
 });
 
 export async function GET(request: Request, context: { params: Promise<{ caseId: string }> }) {

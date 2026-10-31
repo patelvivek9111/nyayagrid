@@ -432,13 +432,39 @@ const prosecutionResourceSchemas = {
   }),
   tasks: z.object({
     title: text,
+    description: optionalText,
+    ownerUserId: z.string().uuid().nullable().optional(),
+    priority: z
+      .enum(["low", "normal", "high", "urgent", "LOW", "NORMAL", "HIGH", "URGENT"])
+      .optional(),
     status: z.enum(["open", "in_progress", "completed", "cancelled"]).optional(),
+    dueAt: z.string().trim().max(80).nullable().optional(),
+    dueDateOrigin: z
+      .enum([
+        "USER_ENTERED",
+        "COURT_ORDER",
+        "DOCUMENT_EXTRACTED",
+        "HEARING_DERIVED",
+        "SYSTEM_OPERATIONAL",
+        "UNKNOWN",
+      ])
+      .optional(),
+    relatedEvidenceIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedWitnessIds: z.array(z.string().uuid()).max(50).optional(),
+    relatedDiscoveryIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedDisclosureIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedMotionIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedHearingIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedWarrantIds: z.array(z.string().uuid()).max(100).optional(),
+    relatedIssueIds: z.array(z.string().uuid()).max(100).optional(),
+    notes: optionalText,
   }),
   agencies: z.object({
     name: text,
     agencyType: text,
     jurisdiction: optionalText,
     contact: z.record(z.string().max(200)).optional(),
+    active: z.boolean().optional(),
   }),
   officers: z.object({
     agencyId: z.string().uuid(),
