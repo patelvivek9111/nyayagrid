@@ -8,6 +8,11 @@ const DEFAULT_BASE = "https://api.anthropic.com";
 const ANTHROPIC_VERSION = "2023-06-01";
 const DEFAULT_MAX_TOKENS = 4096;
 
+/** Claude Opus 5.x rejects `temperature` as deprecated; omit it for those models. */
+export function anthropicModelSupportsTemperature(model: string): boolean {
+  return !/claude-opus-5(?:[.-]|$)/i.test(model);
+}
+
 export function buildAnthropicMessagesBody(params: {
   model: string;
   messages: AiGenerateRequest["messages"];
@@ -15,13 +20,15 @@ export function buildAnthropicMessagesBody(params: {
   maxTokens?: number;
 }) {
   const { system, messages } = toAnthropicBody(params.messages);
-  const body = {
+  const body: Record<string, unknown> = {
     model: params.model,
     max_tokens: params.maxTokens ?? DEFAULT_MAX_TOKENS,
-    temperature: params.temperature ?? 0,
     ...(system ? { system } : {}),
     messages,
   };
+  if (anthropicModelSupportsTemperature(params.model)) {
+    body.temperature = params.temperature ?? 0;
+  }
   assertNoSilentWebTools({ provider: "anthropic", body });
   return body;
 }
