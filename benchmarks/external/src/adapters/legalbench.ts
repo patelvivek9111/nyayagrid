@@ -214,7 +214,16 @@ export const LegalBenchAdapter: BenchmarkAdapter = {
     const inventory = inventoryLegalBenchTasks(sourcePath);
     const all: NormalizedTask[] = [];
     for (const item of inventory) {
-      all.push(...loadLegalBenchTaskDir(path.join(sourcePath, item.taskName), item.taskName));
+      // Some upstream task dirs ship empty/placeholder TSVs (e.g. rule_qa). Skip those
+      // when loading a multi-task root so one bad folder cannot zero the whole cache.
+      // Single-task load (path with test.tsv/train.tsv) still throws via loadLegalBenchTaskDir.
+      try {
+        all.push(...loadLegalBenchTaskDir(path.join(sourcePath, item.taskName), item.taskName));
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        if (/no loadable TSV rows/i.test(message)) continue;
+        throw err;
+      }
     }
     return all;
   },
