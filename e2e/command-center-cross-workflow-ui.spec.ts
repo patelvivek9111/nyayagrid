@@ -178,6 +178,9 @@ async function sendAsk(page: Page, question: string) {
   const progress = page.getByLabel("Ask progress");
   if (!sawQuestion) {
     // Composer unlock is enough to prove Ask was accepted under CI load.
+    if (await stop.isVisible().catch(() => false)) {
+      await stop.click({ force: true, timeout: 5_000 }).catch(() => undefined);
+    }
     await expect(stop).toHaveCount(0, { timeout: 60_000 });
     await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
     return;
@@ -193,8 +196,12 @@ async function sendAsk(page: Page, question: string) {
       .catch(() => false);
     if (sawProgress) {
       metrics.firstProgressMs = Date.now() - started;
-      const progressText = (await progress.innerText().catch(() => "")) ?? "";
-      if (progressText.trim()) {
+      // Do NOT use locator.innerText() here: Ask progress re-renders on every SSE
+      // event (aria-busy list). Playwright actionability retries until the test
+      // timeout (CI #403 SCENARIO 2/3 burned 180–300s on this read alone).
+      const progressText =
+        (await progress.evaluate((el) => (el.textContent ?? "").trim()).catch(() => "")) || "";
+      if (progressText) {
         expect(progressText).toMatch(
           /Request accepted|Loading matter|Preparing|Answer ready|Waiting|Cancelled|Failed|Matter sources|Retrieving|Checking|Citations/i,
         );
@@ -208,7 +215,8 @@ async function sendAsk(page: Page, question: string) {
     await expect(stop).toHaveCount(0, { timeout: 55_000 });
   } catch {
     if (await stop.isVisible().catch(() => false)) {
-      await stop.click({ timeout: 5_000 }).catch(() => undefined);
+      // Full-page busy layers can intercept the normal click hit-target in CI.
+      await stop.click({ force: true, timeout: 5_000 }).catch(() => undefined);
       await expect(stop)
         .toHaveCount(0, { timeout: 10_000 })
         .catch(() => undefined);
@@ -281,8 +289,12 @@ test.describe.serial("Phase 5 Command Center browser cert", () => {
       .then(() => true)
       .catch(() => false);
     if (!sawQuestion) {
-      await expect(page.getByRole("button", { name: "Send" })).toBeVisible({ timeout: 30_000 });
-      await expect(page.getByRole("button", { name: "Stop generating" })).toHaveCount(0);
+      const stop = page.getByRole("button", { name: "Stop generating" });
+      if (await stop.isVisible().catch(() => false)) {
+        await stop.click({ force: true, timeout: 5_000 }).catch(() => undefined);
+      }
+      await expect(stop).toHaveCount(0, { timeout: 30_000 });
+      await expect(page.getByRole("button", { name: "Send" })).toBeVisible({ timeout: 15_000 });
       return;
     }
   });
