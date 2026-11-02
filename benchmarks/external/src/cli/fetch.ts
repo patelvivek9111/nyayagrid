@@ -270,6 +270,62 @@ async function fetchLegalBenchRag(
   return assets;
 }
 
+const LEGALCITEBENCH_REV = "f9e3dc676f29aeef8028e8851660ccf2aeefe19f";
+const LEGALCITEBENCH_FILES = [
+  "cat1_citation_retrieval.jsonl",
+  "cat2_citation_completion.jsonl",
+  "cat3_citation_error_detection.jsonl",
+  "cat4_1_case_matching.jsonl",
+  "cat4_2_case_verification.jsonl",
+] as const;
+
+async function fetchLegalCiteBench(
+  cacheRoot: string,
+  force: boolean,
+): Promise<IntegrityManifestEntry[]> {
+  const base = path.join(cacheRoot, "legalcitebench", LEGALCITEBENCH_REV);
+  const dataDir = path.join(base, "data");
+  mkdirSync(dataDir, { recursive: true });
+  const assets: IntegrityManifestEntry[] = [];
+  for (const file of LEGALCITEBENCH_FILES) {
+    const url = `https://huggingface.co/datasets/legalcitebench/LegalCiteBench/resolve/${LEGALCITEBENCH_REV}/data/${file}`;
+    const dest = path.join(dataDir, file);
+    const result = await downloadToFile(url, dest, { force });
+    console.log(
+      `LegalCiteBench ${file}: ${result.bytes} bytes${result.skipped ? " (cached)" : ""}`,
+    );
+    assets.push(
+      await recordAsset({
+        relativePath: path.relative(cacheRoot, dest),
+        absolutePath: dest,
+        source: "https://huggingface.co/datasets/legalcitebench/LegalCiteBench",
+        revision: LEGALCITEBENCH_REV,
+      }),
+    );
+  }
+  await writeJson(path.join(base, "SOURCE.json"), {
+    benchmark_id: "legalcitebench",
+    revision: LEGALCITEBENCH_REV,
+    dataset_url: "https://huggingface.co/datasets/legalcitebench/LegalCiteBench",
+    upstream_repo: "Sijia711/LegalCiteBench",
+    github_license_file: "MIT",
+    huggingface_card_license: "cc0-1.0",
+    downloadedAt: new Date().toISOString(),
+    files: LEGALCITEBENCH_FILES.map((f) => `data/${f}`),
+  });
+  return assets;
+}
+
+function upsertSourceRevision(
+  sources: Array<Record<string, unknown>>,
+  benchmarkId: string,
+  patch: Record<string, unknown>,
+): Array<Record<string, unknown>> {
+  const idx = sources.findIndex((s) => s.benchmark_id === benchmarkId);
+  if (idx < 0) return [...sources, { benchmark_id: benchmarkId, ...patch }];
+  return sources.map((s, i) => (i === idx ? { ...s, ...patch } : s));
+}
+
 async function main(): Promise<void> {
   const options = parseArgs(process.argv.slice(2));
   const cacheRoot = getCacheDir();
@@ -280,6 +336,7 @@ async function main(): Promise<void> {
   assets.push(...(await fetchPrbench(cacheRoot, options.force)));
   assets.push(...(await fetchLegalBench(cacheRoot, options.force)));
   assets.push(...(await fetchLegalBenchRag(cacheRoot, options)));
+  assets.push(...(await fetchLegalCiteBench(cacheRoot, options.force)));
 
   const manifest = {
     version: 1,
@@ -289,45 +346,41 @@ async function main(): Promise<void> {
   const manifestPath = path.join(cacheRoot, "integrity-manifest.json");
   writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
-  // Also refresh pinned sources registry metadata (machine-readable, not markdown).
+  // Patch revisions into the existing sources registry — do not drop external_mount entries.
   const sourcesPath = path.join(getRegistryDir(), "sources.json");
+  const existing = existsSync(sourcesPath)
+    ? (JSON.parse(readFileSync(sourcesPath, "utf8")) as {
+        schema_version?: number;
+        sources: Array<Record<string, unknown>>;
+      })
+    : { schema_version: 1, sources: [] };
+  let sources = existing.sources ?? [];
+  sources = upsertSourceRevision(sources, "prbench", {
+    revision: PRBENCH_REV,
+    pin_policy: "git_sha",
+  });
+  sources = upsertSourceRevision(sources, "legalbench", {
+    revision: LEGALBENCH_REV,
+    pin_policy: "git_sha",
+  });
+  sources = upsertSourceRevision(sources, "legalbench-rag", {
+    revision: LEGALBENCH_RAG_DATA_REV,
+    code_revision: LEGALBENCH_RAG_CODE_REV,
+    pin_policy: "hf_sha",
+  });
+  sources = upsertSourceRevision(sources, "legalcitebench", {
+    revision: LEGALCITEBENCH_REV,
+    dataset_url: "https://huggingface.co/datasets/legalcitebench/LegalCiteBench",
+    upstream_repo: "Sijia711/LegalCiteBench",
+    default_format: "jsonl",
+    pin_policy: "hf_sha",
+    expected_published_counts: { instances: 23646 },
+    notes:
+      "GitHub LICENSE is MIT; HF dataset card declares cc0-1.0. Cache under benchmarks/external/cache; do not vendor into git.",
+  });
   writeFileSync(
     sourcesPath,
-    `${JSON.stringify(
-      {
-        schema_version: 1,
-        sources: [
-          {
-            benchmark_id: "prbench",
-            upstream_repo: "ScaleAI/PRBench",
-            revision: PRBENCH_REV,
-            dataset_url: "https://huggingface.co/datasets/ScaleAI/PRBench",
-            default_format: "parquet",
-            pin_policy: "git_sha",
-          },
-          {
-            benchmark_id: "legalbench",
-            upstream_repo: "HazyResearch/legalbench",
-            revision: LEGALBENCH_REV,
-            dataset_url: "https://github.com/HazyResearch/legalbench",
-            default_format: "tsv",
-            pin_policy: "git_sha",
-          },
-          {
-            benchmark_id: "legalbench-rag",
-            upstream_repo: "zeroentropy-ai/legalbenchrag",
-            code_revision: LEGALBENCH_RAG_CODE_REV,
-            data_mirror: "awinml/legalbench-rag",
-            revision: LEGALBENCH_RAG_DATA_REV,
-            dataset_url: "https://huggingface.co/datasets/awinml/legalbench-rag",
-            default_format: "json",
-            pin_policy: "hf_sha",
-          },
-        ],
-      },
-      null,
-      2,
-    )}\n`,
+    `${JSON.stringify({ schema_version: existing.schema_version ?? 1, sources }, null, 2)}\n`,
     "utf8",
   );
 

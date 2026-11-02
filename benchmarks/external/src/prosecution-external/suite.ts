@@ -1,4 +1,4 @@
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { getFixturesDir, getRegistryDir, getCacheDir } from "../paths.js";
 import { LegalBenchAdapter } from "../adapters/legalbench.js";
@@ -15,11 +15,33 @@ import {
 import { stratifiedDeterministicSelect, hashSelectionManifest } from "./sampling.js";
 import { classifyExternalBenchmarkLicense } from "./license-gate.js";
 import {
+  LegalCiteBenchAdapter,
   normalizeLegalCiteBenchRow,
   PRIORITY_LEGALCITE_TASK_TYPES,
 } from "./adapters/legalcitebench.js";
 import { normalizeCaseFactsRow } from "./adapters/casefacts.js";
 import { normalizeLegalRagBenchQa } from "./adapters/legal-rag-bench.js";
+
+/** Prefer newest revision directory under cache/legalcitebench that has data/*.jsonl. */
+export function resolveLegalCiteBenchMount(cacheRoot?: string): string | null {
+  const root = path.join(cacheRoot ?? getCacheDir(), "legalcitebench");
+  if (!existsSync(root)) return null;
+  const revs = readdirSync(root, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name)
+    .sort();
+  for (let i = revs.length - 1; i >= 0; i -= 1) {
+    const candidate = path.join(root, revs[i]!);
+    const dataDir = path.join(candidate, "data");
+    if (
+      existsSync(path.join(dataDir, "cat3_citation_error_detection.jsonl")) ||
+      existsSync(path.join(candidate, "cat3_citation_error_detection.jsonl"))
+    ) {
+      return candidate;
+    }
+  }
+  return null;
+}
 
 export type LoadedSuiteSlice = {
   benchmarkId: string;
@@ -217,18 +239,102 @@ function loadFixtureLegalBench(count: number = SAMPLE_TARGETS.legalbench): Loade
   };
 }
 
+export async function loadLegalCiteBenchProsecutionSliceAsync(opts?: {
+  cacheRoot?: string;
+  fixtureFallback?: boolean;
+  count?: number;
+}): Promise<LoadedSuiteSlice> {
+  const license = classifyExternalBenchmarkLicense("legalcitebench");
+  const count = opts?.count ?? SAMPLE_TARGETS.legalcitebench;
+  const mount = resolveLegalCiteBenchMount(opts?.cacheRoot);
+
+  let tasks: NormalizedTask[] = [];
+  let mountStatus: LoadedSuiteSlice["mountStatus"] = "MISSING";
+
+  if (mount) {
+    try {
+      const loaded = await LegalCiteBenchAdapter.load(mount);
+      tasks = loaded
+        .filter((t) =>
+          PRIORITY_LEGALCITE_TASK_TYPES.includes(
+            t.taskType as (typeof PRIORITY_LEGALCITE_TASK_TYPES)[number],
+          ),
+        )
+        .map((t) => ({
+          ...t,
+          metadata: {
+            ...(t.metadata ?? {}),
+            citationTaskType: t.taskType,
+            stratum: t.taskType,
+          },
+        }));
+      mountStatus = "CACHE";
+    } catch {
+      mountStatus = "MISSING";
+      tasks = [];
+    }
+  }
+
+  if (tasks.length === 0 && opts?.fixtureFallback !== false) {
+    return loadFixtureSlice("legalcitebench", count);
+  }
+
+  if (tasks.length === 0) {
+    return {
+      benchmarkId: "legalcitebench",
+      tasks: [],
+      plannedCount: count,
+      selectedCount: 0,
+      jurisdiction: "US",
+      license: license.license,
+      licenseClassification: license.classification,
+      taskGroupDefault: "CITATION_RELIABILITY",
+      mountStatus,
+    };
+  }
+
+  const selected = stratifiedDeterministicSelect(
+    tasks,
+    Math.min(count, tasks.length),
+    "citationTaskType",
+    `${DETERMINISTIC_SEED}:legalcitebench`,
+    PRIORITY_LEGALCITE_TASK_TYPES.slice(0, 3),
+  );
+
+  return {
+    benchmarkId: "legalcitebench",
+    tasks: selected,
+    plannedCount: count,
+    selectedCount: selected.length,
+    jurisdiction: "US",
+    license: license.license,
+    licenseClassification: license.classification,
+    taskGroupDefault: "CITATION_RELIABILITY",
+    mountStatus,
+  };
+}
+
 export async function buildProsecutionExternalSuitePlan(opts?: {
   useFixturesOnly?: boolean;
+  /** When true, omit RESEARCH_ONLY slices (CaseFacts / Legal RAG) from the plan. */
+  commercialOnly?: boolean;
 }): Promise<ProsecutionExternalSuitePlan> {
   const useFixturesOnly = opts?.useFixturesOnly ?? true;
+  const commercialOnly = opts?.commercialOnly ?? false;
   const legalbench = useFixturesOnly
     ? loadFixtureLegalBench()
     : await loadLegalBenchProsecutionSliceAsync({ fixtureFallback: true });
-  const legalcite = loadFixtureSlice("legalcitebench", SAMPLE_TARGETS.legalcitebench);
-  const casefacts = loadFixtureSlice("casefacts", SAMPLE_TARGETS.casefacts);
-  const legalRag = loadFixtureSlice("legal-rag-bench", SAMPLE_TARGETS.legalRagBench);
+  const legalcite = useFixturesOnly
+    ? loadFixtureSlice("legalcitebench", SAMPLE_TARGETS.legalcitebench)
+    : await loadLegalCiteBenchProsecutionSliceAsync({ fixtureFallback: true });
+  const slices: LoadedSuiteSlice[] = [legalbench, legalcite];
+  if (!commercialOnly) {
+    slices.push(
+      loadFixtureSlice("casefacts", SAMPLE_TARGETS.casefacts),
+      loadFixtureSlice("legal-rag-bench", SAMPLE_TARGETS.legalRagBench),
+    );
+  }
 
-  const slices = [legalbench, legalcite, casefacts, legalRag];
   const allIds = slices.flatMap((s) => s.tasks.map((t) => t.taskId));
   return {
     suiteId: SUITE_ID,

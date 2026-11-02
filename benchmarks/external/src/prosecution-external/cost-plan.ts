@@ -9,18 +9,39 @@ export type ProsecutionExternalLiveCostPlan = {
   suiteVersion: typeof SUITE_VERSION;
   paidExecutionAuthorized: false;
   plannedExamples: number;
+  legalbenchExamples: number;
+  legalciteExamples: number;
   estimatedProviderRequests: number;
+  maxProviderRequests: number;
   estimatedInputTokens: number;
   estimatedOutputTokens: number;
   estimatedSpendUsd: number;
+  conservativeUpperBoundUsd: number;
   recommendedHardCapUsd: number;
+  hardCapUsd: number;
+  preferredSpendUsd: number;
+  withinHardCap: boolean;
   modes: string[];
   routing: Record<string, string>;
   notes: string[];
   gpt61SolLiveVerified: false;
 };
 
-export function planProsecutionExternalLiveCost(): ProsecutionExternalLiveCostPlan {
+export type CostPlanInput = {
+  legalbenchExamples?: number;
+  legalciteExamples?: number;
+  /** Exclude RESEARCH_ONLY datasets from the plan (default true for commercial validation). */
+  commercialOnly?: boolean;
+  hardCapUsd?: number;
+  preferredSpendUsd?: number;
+  maxProviderRequests?: number;
+  /** Extra headroom multiplier for retries/fallbacks (default 1.25). */
+  contingencyMultiplier?: number;
+};
+
+export function planProsecutionExternalLiveCost(
+  input: CostPlanInput = {},
+): ProsecutionExternalLiveCostPlan {
   const meta = JSON.parse(
     readFileSync(path.join(getRegistryDir(), "prosecution-external-suite.json"), "utf8"),
   ) as {
@@ -37,11 +58,20 @@ export function planProsecutionExternalLiveCost(): ProsecutionExternalLiveCostPl
     };
   };
 
-  const plannedExamples =
-    SAMPLE_TARGETS.legalbench +
-    SAMPLE_TARGETS.legalcitebench +
-    SAMPLE_TARGETS.casefacts +
-    SAMPLE_TARGETS.legalRagBench;
+  const commercialOnly = input.commercialOnly ?? true;
+  const legalbenchExamples = input.legalbenchExamples ?? SAMPLE_TARGETS.legalbench;
+  const legalciteExamples = input.legalciteExamples ?? SAMPLE_TARGETS.legalcitebench;
+  const plannedExamples = commercialOnly
+    ? legalbenchExamples + legalciteExamples
+    : legalbenchExamples +
+      legalciteExamples +
+      SAMPLE_TARGETS.casefacts +
+      SAMPLE_TARGETS.legalRagBench;
+
+  const hardCapUsd = input.hardCapUsd ?? 25;
+  const preferredSpendUsd = input.preferredSpendUsd ?? 20;
+  const maxProviderRequests = input.maxProviderRequests ?? 220;
+  const contingencyMultiplier = input.contingencyMultiplier ?? 1.25;
 
   const pricing = loadDefaultPricingTable();
   const highStakesShare = 0.7;
@@ -76,12 +106,19 @@ export function planProsecutionExternalLiveCost(): ProsecutionExternalLiveCostPl
       gptTotal = one.totalCost;
     }
   } catch {
-    claudeTotal = meta.future_live_plan.estimated_spend_usd * 0.85;
-    gptTotal = meta.future_live_plan.estimated_spend_usd * 0.15;
+    // Fallback linear scale from registry 300-example estimate.
+    const per =
+      meta.future_live_plan.estimated_spend_usd /
+      Math.max(1, meta.future_live_plan.planned_examples);
+    claudeTotal = per * highCount;
+    gptTotal = per * routineCount * 0.35;
   }
 
-  const estimatedSpendUsd = Number(
-    Math.max(claudeTotal + gptTotal, meta.future_live_plan.estimated_spend_usd).toFixed(2),
+  const estimatedSpendUsd = Number((claudeTotal + gptTotal).toFixed(2));
+  const conservativeUpperBoundUsd = Number((estimatedSpendUsd * contingencyMultiplier).toFixed(2));
+  const estimatedProviderRequests = Math.min(
+    maxProviderRequests,
+    Math.ceil(plannedExamples * contingencyMultiplier),
   );
 
   return {
@@ -89,17 +126,28 @@ export function planProsecutionExternalLiveCost(): ProsecutionExternalLiveCostPl
     suiteVersion: SUITE_VERSION,
     paidExecutionAuthorized: false,
     plannedExamples,
-    estimatedProviderRequests: plannedExamples,
+    legalbenchExamples,
+    legalciteExamples,
+    estimatedProviderRequests,
+    maxProviderRequests,
     estimatedInputTokens: highCount * 2500 + routineCount * 1200,
     estimatedOutputTokens: highCount * 900 + routineCount * 400,
     estimatedSpendUsd,
-    recommendedHardCapUsd: meta.future_live_plan.recommended_hard_cap_usd,
+    conservativeUpperBoundUsd,
+    recommendedHardCapUsd: hardCapUsd,
+    hardCapUsd,
+    preferredSpendUsd,
+    withinHardCap: conservativeUpperBoundUsd <= hardCapUsd,
     modes: ["NYAYA_PIPELINE"],
     routing: meta.future_live_plan.routing,
     notes: [
       ...meta.future_live_plan.notes,
       "This plan is estimation-only. Do not execute without explicit paid authorization.",
-      `Fixture-derived sample targets: LB=${SAMPLE_TARGETS.legalbench}, Cite=${SAMPLE_TARGETS.legalcitebench}, CaseFacts=${SAMPLE_TARGETS.casefacts}, LegalRAG=${SAMPLE_TARGETS.legalRagBench}.`,
+      commercialOnly
+        ? `Commercial-only sample: LB=${legalbenchExamples}, Cite=${legalciteExamples} (CaseFacts/LegalRAG RESEARCH_ONLY excluded).`
+        : `Includes RESEARCH_ONLY diagnostic slices; do not merge into production acceptance.`,
+      `Hard cap $${hardCapUsd}; preferred ≤$${preferredSpendUsd}; max requests ${maxProviderRequests}.`,
+      `Contingency multiplier ${contingencyMultiplier} applied to upper-bound spend.`,
     ],
     gpt61SolLiveVerified: false,
   };

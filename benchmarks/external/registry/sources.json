@@ -40,13 +40,14 @@
       "benchmark_id": "legalcitebench",
       "upstream_repo": "Sijia711/LegalCiteBench",
       "dataset_url": "https://huggingface.co/datasets/legalcitebench/LegalCiteBench",
+      "revision": "f9e3dc676f29aeef8028e8851660ccf2aeefe19f",
       "default_format": "jsonl",
-      "pin_policy": "external_mount",
+      "pin_policy": "hf_sha",
       "expected_published_counts": {
         "instances": 23646,
         "root_opinions": 1000
       },
-      "notes": "MIT. Prefer external mount; do not vendor full ~24k into git. Modes: CLOSED_BOOK_DIAGNOSTIC vs NYAYA_GROUNDED_VERIFICATION."
+      "notes": "GitHub LICENSE is MIT; HF dataset card declares cc0-1.0. Cache under benchmarks/external/cache; do not vendor ~24k into git. Modes: CLOSED_BOOK_DIAGNOSTIC vs NYAYA_GROUNDED_VERIFICATION."
     },
     {
       "benchmark_id": "casefacts",

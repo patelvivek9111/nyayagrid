@@ -29,7 +29,7 @@
       "commit_dataset_contents": false,
       "mount_policy": "external_mount_or_cache",
       "attribution_required": true,
-      "notes": "GitHub repo declares MIT. Prefer external mount of official release; do not vendor ~24k instances into git."
+      "notes": "GitHub LICENSE is MIT; Hugging Face dataset card YAML declares cc0-1.0. Both permit commercial internal eval. Prefer cache/external mount; do not vendor ~24k instances into git."
     },
     {
       "benchmark_id": "casefacts",

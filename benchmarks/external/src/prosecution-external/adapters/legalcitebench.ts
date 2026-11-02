@@ -21,6 +21,31 @@ function parseJsonl(content: string): Record<string, unknown>[] {
     .map((l) => JSON.parse(l) as Record<string, unknown>);
 }
 
+/** Upstream HF rows use `ground_truth` (string | string[] | object | [k,v][]). */
+export function extractLegalCiteExpectedAnswer(row: Record<string, unknown>): unknown {
+  const direct =
+    row.answer ??
+    row.label ??
+    row.gold ??
+    row.expected ??
+    row.reference_citations ??
+    row.ground_truth;
+  if (direct == null) return null;
+  if (typeof direct === "string" || typeof direct === "number" || typeof direct === "boolean") {
+    return direct;
+  }
+  if (Array.isArray(direct)) {
+    if (direct.every((x) => typeof x === "string")) return direct;
+    // cat4_2 stores [[field, value], ...]
+    if (direct.every((x) => Array.isArray(x) && x.length >= 2 && typeof x[0] === "string")) {
+      return Object.fromEntries(direct as Array<[string, unknown]>);
+    }
+    return direct;
+  }
+  if (typeof direct === "object") return direct;
+  return null;
+}
+
 function rowToTask(
   taskType: LegalCiteTaskType,
   fileStem: string,
@@ -36,13 +61,13 @@ function rowToTask(
     (typeof row.question === "string" && row.question) ||
     (typeof row.input === "string" && row.input) ||
     JSON.stringify(row);
-  const expected =
-    row.answer ?? row.label ?? row.gold ?? row.expected ?? row.reference_citations ?? null;
+  const expected = extractLegalCiteExpectedAnswer(row);
+  const jurisdiction = (typeof row.jurisdiction === "string" && row.jurisdiction.trim()) || "US";
   return NormalizedTaskSchema.parse({
     benchmarkId: "legalcitebench",
     taskId: `legalcitebench::${taskType}::${id}`,
     split: "eval",
-    jurisdiction: "US",
+    jurisdiction,
     practiceArea: "citation_reliability",
     taskType,
     input: row,
@@ -54,8 +79,11 @@ function rowToTask(
       citationTaskType: taskType,
       stratum: taskType,
       license: "MIT",
+      huggingfaceCardLicense: "cc0-1.0",
       originalLabel: expected,
       originalSourceIdentifier: id,
+      qaStyle: row.qa_style ?? null,
+      fakeType: row.fake_type ?? null,
       evaluationIsolation: "EVAL_ONLY_NOT_PRODUCTION_CORPUS",
     },
     contaminationRisk: "PUBLIC_HIGH",

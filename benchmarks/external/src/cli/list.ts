@@ -82,6 +82,39 @@ async function main(): Promise<void> {
       }
     }
 
+    if (src.benchmark_id === "legalcitebench") {
+      const rev = typeof src.revision === "string" ? src.revision : "";
+      const dataDir = rev
+        ? path.join(cache, "legalcitebench", rev, "data")
+        : path.join(cache, "legalcitebench");
+      const marker = path.join(dataDir, "cat3_citation_error_detection.jsonl");
+      if (existsSync(marker)) {
+        row.localAvailability = "cached";
+        let total = 0;
+        for (const f of [
+          "cat1_citation_retrieval.jsonl",
+          "cat2_citation_completion.jsonl",
+          "cat3_citation_error_detection.jsonl",
+          "cat4_1_case_matching.jsonl",
+          "cat4_2_case_verification.jsonl",
+        ]) {
+          const p = path.join(dataDir, f);
+          if (existsSync(p)) {
+            total += readFileSync(p, "utf8")
+              .split(/\r?\n/)
+              .filter((l) => l.trim()).length;
+          }
+        }
+        row.tasks = total;
+      } else {
+        row.localAvailability = "missing";
+      }
+    }
+
+    if (src.benchmark_id === "casefacts" || src.benchmark_id === "legal-rag-bench") {
+      row.localAvailability = "missing";
+    }
+
     rows.push(row);
   }
 
