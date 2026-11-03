@@ -1,0 +1,526 @@
+{
+  "ok": true,
+  "classification": "NYAYAGRID_WP03A_CORPUS_DATABASE_ACCESS_RECOVERY",
+  "generatedAt": "2026-11-03T17:37:55.187Z",
+  "mutations": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "connection": {
+    "usedFallback": true,
+    "redacted": {
+      "protocol": "postgresql",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid",
+      "hasUser": true,
+      "hasPassword": true
+    },
+    "intended": {
+      "label": "persistent-local-docker-nyayagrid",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid"
+    }
+  },
+  "docker": {
+    "container": "nyayagrid-postgres",
+    "volume": "nyayagrid_nyayagrid_postgres_data",
+    "portMapping": "5433:5432"
+  },
+  "identity": {
+    "server": {
+      "db": "nyayagrid",
+      "usr": "nyayagrid",
+      "schema": "public",
+      "server_port": 5432,
+      "txn_ro": "on",
+      "default_ro": "on",
+      "version": "PostgreSQL 16.14 (Debian 16.14-1.pgdg12+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64"
+    },
+    "tables": [
+      "legal_authorities",
+      "legal_authority_chunks",
+      "legal_authority_citations"
+    ],
+    "prismaMigrationCount": null,
+    "identityMatch": true,
+    "readOnlyVerified": true
+  },
+  "census": {
+    "definitions": {
+      "cases": "legal_authorities WHERE authority_type = 'case'",
+      "authorities": "all rows in legal_authorities",
+      "opinions": "legal_authority_chunks.opinion_part non-empty (no authority_type=opinion enum)",
+      "clusters": "unavailable — no cluster table in this schema",
+      "federal_cases": "case rows with null/empty/US/FEDERAL/FED authority_state",
+      "state_dc_cases": "case rows with non-federal authority_state",
+      "citation_resolved": "legal_authority_citations.to_authority_id IS NOT NULL",
+      "target_absent_structural": "to_authority_id IS NULL AND normalized_citation length > 4",
+      "target_absent_classified": "citation_target_classification ILIKE target_absent"
+    },
+    "totals": {
+      "authorities": 989,
+      "cases": 843,
+      "statutes": 122,
+      "regulations": 15,
+      "rules": 7,
+      "constitutions": 1,
+      "administrative_decisions": 0,
+      "other_types": 1,
+      "opinion_parts": 43,
+      "clusters": null,
+      "federal_cases": 812,
+      "state_dc_cases": 31,
+      "scotus": 11,
+      "circuits": 3,
+      "district_or_trial": 0,
+      "state_high": 28,
+      "state_intermediate": 3,
+      "pre_2000": 26,
+      "pre_1980": 12,
+      "unique_courts": 27,
+      "jurisdiction_count": 21,
+      "oldest_created": "2026-08-19T16:09:55.551Z",
+      "newest_created": "2026-10-25T17:41:56.386Z",
+      "remaining_to_10k": 9157
+    },
+    "courtLevels": [
+      {
+        "court_level": "(null)",
+        "n": 798
+      },
+      {
+        "court_level": "state_high",
+        "n": 28
+      },
+      {
+        "court_level": "scotus",
+        "n": 11
+      },
+      {
+        "court_level": "federal_appellate",
+        "n": 3
+      },
+      {
+        "court_level": "state_intermediate",
+        "n": 2
+      },
+      {
+        "court_level": "state_appellate",
+        "n": 1
+      }
+    ],
+    "providers": [
+      {
+        "source_provider": "synthetic_d7_noise",
+        "n": 720
+      },
+      {
+        "source_provider": "us-primary-corpus",
+        "n": 186
+      },
+      {
+        "source_provider": "synthetic_d7",
+        "n": 60
+      },
+      {
+        "source_provider": "(null)",
+        "n": 9
+      },
+      {
+        "source_provider": "synthetic_p6",
+        "n": 6
+      },
+      {
+        "source_provider": "nyaya-bench-research-overlay",
+        "n": 4
+      },
+      {
+        "source_provider": "synthetic-fixtures",
+        "n": 3
+      },
+      {
+        "source_provider": "nyaya-bench-full-system",
+        "n": 1
+      }
+    ],
+    "jurisdictions": [
+      {
+        "j": "US",
+        "authorities": 866,
+        "cases": 812
+      },
+      {
+        "j": "PA",
+        "authorities": 8,
+        "cases": 3
+      },
+      {
+        "j": "CA",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "DE",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "FL",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "IL",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "MA",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "NJ",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "NY",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "TX",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "VA",
+        "authorities": 6,
+        "cases": 2
+      },
+      {
+        "j": "AZ",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "CO",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "CT",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "GA",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "MD",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "MI",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "NC",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "OH",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "WA",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "WI",
+        "authorities": 3,
+        "cases": 1
+      },
+      {
+        "j": "AK",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "AL",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "AR",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "DC",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "HI",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "IA",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "ID",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "IN",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "KS",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "KY",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "LA",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "ME",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "MN",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "MO",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "MS",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "MT",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "ND",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "NE",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "NH",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "NM",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "NV",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "OK",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "OR",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "RI",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "SC",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "SD",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "TN",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "UT",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "VT",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "WV",
+        "authorities": 1,
+        "cases": 0
+      },
+      {
+        "j": "WY",
+        "authorities": 1,
+        "cases": 0
+      }
+    ],
+    "citations": {
+      "total_edges": 7,
+      "resolved": 1,
+      "unresolved": 6,
+      "target_absent_structural": 6,
+      "target_absent_classified": 0,
+      "ambiguous_status": 0,
+      "malformed_status": 0,
+      "out_of_scope_status": 0,
+      "resolution_rate": 0.1429,
+      "resolutionBreakdown": [
+        {
+          "status": "UNKNOWN",
+          "n": 7
+        }
+      ],
+      "citeColumns": [
+        "citation_target_classification",
+        "created_at",
+        "from_authority_id",
+        "id",
+        "normalized_citation",
+        "pinpoint",
+        "raw_citation",
+        "to_authority_id"
+      ]
+    },
+    "integrity": {
+      "duplicate_case_source_ids": 0,
+      "duplicate_citation_edges": 0,
+      "orphan_chunks": 0,
+      "chunk_count": 202,
+      "authorities_with_chunks": 194,
+      "embedding_count": 202,
+      "authorities_missing_embeddings": 795,
+      "failed_ingestions": 9
+    },
+    "retrieval": {
+      "keyword": {
+        "ok": true,
+        "hits": 1,
+        "sampleTitles": [
+          "Miranda v. Arizona, 384 U.S. 436 (1966)"
+        ]
+      },
+      "fts": {
+        "chunksWithSearchVector": 0
+      },
+      "citationLookup": {
+        "ok": true,
+        "sample": 5,
+        "resolvedInSample": 1
+      },
+      "semantic": {
+        "attempted": true,
+        "mode": "index_health_only",
+        "chunks_with_embedding": 202,
+        "authorities_missing_embeddings": 795,
+        "note": "Did not run vector similarity queries (would require query embedding / paid or local model)."
+      },
+      "hybrid": {
+        "attempted": false,
+        "reason": "verification-only; no hybrid runner invoked"
+      }
+    }
+  },
+  "result": "WP03A_CORPUS_ACCESS_RECOVERED",
+  "readOnlyVerified": true,
+  "databaseIdentityVerified": true,
+  "liveCensusComplete": true,
+  "recovery": {
+    "actionTaken": "Docker Desktop/daemon became available; existing container nyayagrid-postgres already running healthy on 5433; no compose recreate; no volume create/replace",
+    "existingVolumePreserved": true,
+    "volumeName": "nyayagrid_nyayagrid_postgres_data",
+    "volumeSizeApprox": "584.3M",
+    "emptyIntegrationVolumeNotUsed": "nyayagrid-integration_nyayagrid_postgres_data (4.0K empty)",
+    "newDatabaseCreated": false,
+    "migrationsRun": false,
+    "dataModified": false,
+    "readOnlyVerified": true,
+    "permissionRisk": "Connected as app role nyayagrid (privileged relative to read-only role). Enforcement via SET default_transaction_read_only=on + BEGIN READ ONLY. No dedicated read-only DB role used.",
+    "rootCausePriorFailure": "Docker daemon unavailable / container not listening on 5433 during WP-03; DATABASE_URL unset (fallback unused because port down)"
+  },
+  "siblingDatabasesOnSameInstance": {
+    "note": "Read-only probe of other DBs on verified :5433 instance only; :5432 never queried",
+    "nyayagrid": {
+      "authorities": 989,
+      "cases": 843
+    },
+    "nyayagrid_restore_test": {
+      "authorities": 193,
+      "cases": 47
+    },
+    "nyayagrid_staging_6w": {
+      "authorities": 1,
+      "cases": 0
+    },
+    "nyayagrid_staging_6w_restore": {
+      "authorities": 1,
+      "cases": 0
+    }
+  },
+  "historicalReconciliation": {
+    "queue2LaneA_2392_cases": "NOT PRESENT on this local volume; historical Fly/staging snapshot only",
+    "reported_4680_cases": "NOT PRESENT on this local volume; REPORTED_ONLY artifact",
+    "livePrimaryUsPrimaryCorpus": 186,
+    "liveSyntheticMajority": true,
+    "note": "Do not treat historical numbers as current live state; live measured separately"
+  },
+  "verificationClasses": {
+    "DATABASE_ACCESS_RECOVERED": true,
+    "DATABASE_IDENTITY_VERIFIED": true,
+    "LIVE_CENSUS_COMPLETE": true,
+    "CITATION_INTEGRITY_VERIFIED": "PARTIAL_THIN_GRAPH",
+    "RETRIEVAL_VERIFIED": "PARTIAL_KEYWORD_AND_INDEX_HEALTH",
+    "FULL_RESEARCH_CERTIFIED": false
+  }
+}

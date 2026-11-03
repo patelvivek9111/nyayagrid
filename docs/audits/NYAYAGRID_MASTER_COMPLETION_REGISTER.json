@@ -1,12 +1,13 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-03T14:50:00.000Z",
-  "head": "e5678e06812749be1346e6afe1472a1a9e469ca3",
+  "generatedAt": "2026-11-03T17:41:09.038Z",
+  "head": "703592b17ccd3eca5a9f2f8ac35ec37bb47035d7",
   "branch": "feat/production-model-routing",
   "remoteCi": {
-    "run": "41675421499",
-    "conclusion": "SUCCESS"
+    "run": "41681610054",
+    "conclusion": "SUCCESS",
+    "note": "pre-WP03A CI; new CI pending after WP03A push"
   },
   "productScope": {
     "professional": "IN_SCOPE",
@@ -41,7 +42,10 @@
   "criticalFailureRootCause": {
     "exampleId": "legalcitebench::CITATION_COMPLETION::12576371",
     "primaryClass": "SCORER_DEFECT",
-    "secondaryClasses": ["EVALUATOR_DEFECT", "TASK_ROUTING"],
+    "secondaryClasses": [
+      "EVALUATOR_DEFECT",
+      "TASK_ROUTING"
+    ],
     "summary": "Model titled response 'Abstention' and refused to invent cites; discussed the INPUT citation '355 Or. 319, 431 P.3d 90' as potentially inconsistent. detectAbstention() previously missed 'Abstention'/'cannot recommend'. CLOSED_BOOK fabricatedAuthority heuristic then flagged the discussed reporter pattern as FABRICATED_OR_MISLEADING_AUTHORITY. Confirmed false-positive critical grounding flag (not model invention of a new authority).",
     "modelBehavior": "Policy-aligned abstention + warning about provided cite",
     "nyayaPipelineIssue": "Closed-book LegalCite completion previously scored as exact-label + citation-regex without source-aware provenance or abstention-aware classification",
@@ -72,16 +76,16 @@
   },
   "totals": {
     "requirementsInventoried": 46,
-    "note": "Includes WP-03 granular CORPUS-03..07; live corpus still ACCESS_BLOCKED",
+    "note": "WP-03A: DB access recovered + live census; FULL_RESEARCH_CERTIFIED=false; CORPUS depth still release-blocking",
     "verifiedComplete": 16,
-    "implementedUnverified": 7,
-    "partial": 9,
+    "implementedUnverified": 4,
+    "partial": 13,
     "missing": 4,
     "broken": 0,
-    "blocked": 9,
+    "blocked": 8,
     "outOfScope": 1,
-    "p0": 20,
-    "p1": 9,
+    "p0": 24,
+    "p1": 10,
     "p2": 10,
     "p3": 2
   },
@@ -95,7 +99,10 @@
       "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["apps/web/src/app/app/clients/page.tsx", "e2e/professional.spec.ts"],
+      "evidence": [
+        "apps/web/src/app/app/clients/page.tsx",
+        "e2e/professional.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -108,7 +115,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/professional.spec.ts", "e2e/case-workspace.spec.ts"],
+      "evidence": [
+        "e2e/professional.spec.ts",
+        "e2e/case-workspace.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -121,7 +131,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["e2e/document-ingest.spec.ts", "packages/documents"],
+      "evidence": [
+        "e2e/document-ingest.spec.ts",
+        "packages/documents"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -151,7 +164,9 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/case-intelligence.spec.ts"],
+      "evidence": [
+        "e2e/case-intelligence.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -164,7 +179,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/professional.spec.ts", "packages/intelligence/src/memory"],
+      "evidence": [
+        "e2e/professional.spec.ts",
+        "packages/intelligence/src/memory"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -177,7 +195,9 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/graph-relevance.spec.ts"],
+      "evidence": [
+        "e2e/graph-relevance.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -187,17 +207,18 @@
       "subsystem": "Research",
       "feature": "Nyaya Research corpus",
       "requirement": "Real licensed jurisdiction-aware authority research",
-      "status": "PARTIAL",
+      "status": "BLOCKED",
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
         "Research package hierarchy/treatment/currentness unit tests PASS",
         "Live corpus verification BLOCKED",
-        "Historical corpus far below 10k useful-cases target (2392 cases HISTORICAL)"
+        "Historical corpus far below 10k useful-cases target (2392 cases HISTORICAL)",
+        "WP-03A: local certification DB access recovered + live census complete; research go-live still blocked (843 cases, synthetic majority, thin citation graph)"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "e5678e0",
-      "remediation": "Live census + coverage acquisition plan; keep UI honesty until live depth proven",
+      "lastVerifiedSha": "703592b",
+      "remediation": "Access unblocked; depth/integrity/retrieval certification still required before research go-live",
       "priority": "P0"
     },
     {
@@ -209,7 +230,9 @@
       "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["e2e/professional.spec.ts draft generate"],
+      "evidence": [
+        "e2e/professional.spec.ts draft generate"
+      ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -222,7 +245,9 @@
       "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/firm-workspace.spec.ts smoke"],
+      "evidence": [
+        "e2e/firm-workspace.spec.ts smoke"
+      ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -235,7 +260,9 @@
       "status": "PARTIAL",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["packages/database/src/system-roles.ts owner/lawyer/staff/client_guest only"],
+      "evidence": [
+        "packages/database/src/system-roles.ts owner/lawyer/staff/client_guest only"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -248,7 +275,9 @@
       "status": "MISSING",
       "severity": "P3",
       "releaseBlocker": false,
-      "evidence": ["No contacts schema found"],
+      "evidence": [
+        "No contacts schema found"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -291,7 +320,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["e2e/prosecution.spec.ts", "packages/intelligence/src/prosecution/postgres.ts"],
+      "evidence": [
+        "e2e/prosecution.spec.ts",
+        "packages/intelligence/src/prosecution/postgres.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -304,7 +336,10 @@
       "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["week4/chain-of-custody.ts", "schema typing drift string[] vs objects"],
+      "evidence": [
+        "week4/chain-of-custody.ts",
+        "schema typing drift string[] vs objects"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -317,7 +352,11 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["disclosure-workflow.ts", "PB-DIS-01/02", "e2e Stage 4"],
+      "evidence": [
+        "disclosure-workflow.ts",
+        "PB-DIS-01/02",
+        "e2e Stage 4"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -330,7 +369,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["prosecution bench critical taxonomy", "e2e asserts"],
+      "evidence": [
+        "prosecution bench critical taxonomy",
+        "e2e asserts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -343,7 +385,11 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["PB-TEN-01", "PB-EV-03", "permissions integration tests"],
+      "evidence": [
+        "PB-TEN-01",
+        "PB-EV-03",
+        "permissions integration tests"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -356,7 +402,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["legal-workflow.ts", "e2e/prosecution-warrant.spec.ts"],
+      "evidence": [
+        "legal-workflow.ts",
+        "e2e/prosecution-warrant.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -369,7 +418,9 @@
       "status": "MISSING",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["memory.ts fixture-style only; no prosecution Memory UI"],
+      "evidence": [
+        "memory.ts fixture-style only; no prosecution Memory UI"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -382,7 +433,9 @@
       "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["phase14 tables exist; graph-bridge projection-only"],
+      "evidence": [
+        "phase14 tables exist; graph-bridge projection-only"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -395,7 +448,9 @@
       "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["Events written; no dedicated audit route"],
+      "evidence": [
+        "Events written; no dedicated audit route"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -408,7 +463,9 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["npm run bench:prosecution CURRENT_VERIFIED 39/39 this session"],
+      "evidence": [
+        "npm run bench:prosecution CURRENT_VERIFIED 39/39 this session"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -493,20 +550,27 @@
       "subsystem": "Corpus",
       "feature": "Live authority inventory",
       "requirement": "Live case/authority counts vs 10k goal",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "WP-03 probe: DATABASE_URL UNSET in process + all dotenv files",
-        "Intended certification DB localhost:5433 NOT_LISTENING; Docker daemon unavailable",
-        "Unidentified postgres on :5432 not queried (no authorized URL)",
-        "Historical ONLY queue2-lane-a snapshot 3709 auth/2392 cases @ 2026-09-28",
-        "Historical REPORTED_ONLY suppression-holding-screen identity 4680 cases/6035 authorities"
+        "WP-03A: Docker daemon recovered; nyayagrid-postgres healthy on :5433",
+        "Volume nyayagrid_nyayagrid_postgres_data preserved (584.3M); identity persistent-local-docker-nyayagrid VERIFIED",
+        "LIVE census: 989 authorities / 843 cases (us-primary-corpus 186; synthetic majority)",
+        "Remaining to 10k useful-cases target: 9157 (live)",
+        "Historical 2392/3709 and 4680/6035 NOT present on this volume (HISTORICAL_ONLY / REPORTED_ONLY)",
+        "Evidence: packages/research/corpus/reports/wp03a-corpus-access-recovery.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "e5678e0",
+      "lastVerifiedSha": "703592b",
       "priority": "P0",
-      "remediation": "Restore Docker :5433 corpus volume or supply authorized read-only DATABASE_URL; re-run staging-queue2-lane-a-corpus-snapshot.cjs READ ONLY"
+      "remediation": "Do not equate access recovery with 10k corpus certification. Grow real primary corpus under separate acquisition gate; keep synthetic labeled.",
+      "verificationClasses": {
+        "DATABASE_ACCESS_RECOVERED": true,
+        "DATABASE_IDENTITY_VERIFIED": true,
+        "LIVE_CENSUS_COMPLETE": true,
+        "FULL_RESEARCH_CERTIFIED": false
+      }
     },
     {
       "id": "CORPUS-02",
@@ -514,18 +578,19 @@
       "subsystem": "Corpus",
       "feature": "Citation integrity",
       "requirement": "Resolved citations; low TARGET_ABSENT; no orphans",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "PARTIAL",
       "severity": "P1",
       "releaseBlocker": false,
       "evidence": [
-        "Unit: citation-resolution + citations + contract tests PASS (47)",
-        "Historical snapshot orphans=0 duplicateSourceIds=0; TARGET_ABSENT sum across jurs=6972 HISTORICAL",
-        "Live citation graph census BLOCKED without DB"
+        "LIVE citation edges=7; resolved=1; unresolved=6; TARGET_ABSENT structural=6; classification all UNKNOWN",
+        "duplicate case source ids=0; duplicate edges=0; orphan chunks=0",
+        "Unit citation suites still PASS (research package)",
+        "CITATION_INTEGRITY_VERIFIED=PARTIAL_THIN_GRAPH"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "e5678e0",
+      "lastVerifiedSha": "703592b",
       "priority": "P1",
-      "remediation": "After live access, recompute TARGET_ABSENT/ambiguous/malformed denominators separately"
+      "remediation": "Citation graph on local certification DB is thin; do not claim production citation integrity from 7 edges"
     },
     {
       "id": "SEC-AUTH-01",
@@ -536,7 +601,9 @@
       "status": "BLOCKED",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["docs/PRODUCTION_READINESS.md item 2 BLOCKER"],
+      "evidence": [
+        "docs/PRODUCTION_READINESS.md item 2 BLOCKER"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -549,7 +616,11 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["permissions integration tests", "e2e/security.spec.ts", "no RLS by design"],
+      "evidence": [
+        "permissions integration tests",
+        "e2e/security.spec.ts",
+        "no RLS by design"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -562,7 +633,9 @@
       "status": "BLOCKED",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["PRODUCTION_READINESS item 5"],
+      "evidence": [
+        "PRODUCTION_READINESS item 5"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -575,7 +648,9 @@
       "status": "BLOCKED",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["apps/web terms/privacy placeholders"],
+      "evidence": [
+        "apps/web terms/privacy placeholders"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -588,7 +663,9 @@
       "status": "BLOCKED",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["PRODUCTION_READINESS backup BLOCKER; local docker rehearse only"],
+      "evidence": [
+        "PRODUCTION_READINESS backup BLOCKER; local docker rehearse only"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -601,7 +678,9 @@
       "status": "BLOCKED",
       "severity": "P1",
       "releaseBlocker": true,
-      "evidence": ["PRODUCTION_READINESS monitoring BLOCKER"],
+      "evidence": [
+        "PRODUCTION_READINESS monitoring BLOCKER"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -614,7 +693,9 @@
       "status": "MISSING",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["DEPLOYED=NO; Dockerfile READY locally"],
+      "evidence": [
+        "DEPLOYED=NO; Dockerfile READY locally"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -642,7 +723,9 @@
       "status": "OUT_OF_SCOPE",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["staging-audit cjis.certified===false; product rule"],
+      "evidence": [
+        "staging-audit cjis.certified===false; product rule"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09",
       "note": "Release blocker only if marketing claims CJIS"
@@ -683,15 +766,17 @@
       "subsystem": "Corpus",
       "feature": "Jurisdiction/historical coverage",
       "requirement": "State/DC ~7650 and federal ~2350 useful-case balance toward 10k",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "priority": "P0",
       "releaseBlocker": true,
       "confidence": "HIGH",
-      "lastVerifiedSha": "e5678e0",
+      "lastVerifiedSha": "703592b",
       "evidence": [
-        "Cannot measure live; historical intermediate depth thin (281 intermediate vs 2106 highCourt in snapshot)"
+        "LIVE: state/DC cases=31; federal cases=812; SCOTUS=11; circuits=3; state_high=28; state_intermediate=3",
+        "pre-2000=26; pre-1980=12; jurisdictions with cases=21; court_level null on 798 cases",
+        "Far below planned ~7650 state / ~2350 federal useful-case balance"
       ],
-      "remediation": "Live per-jurisdiction census then prioritized acquisition (no random inflation)"
+      "remediation": "Live coverage gap remains primary WP-03 blocker after access recovery"
     },
     {
       "id": "CORPUS-04",
@@ -699,15 +784,19 @@
       "subsystem": "Retrieval",
       "feature": "Search/index/embeddings health",
       "requirement": "Keyword/semantic/hybrid retrieval against live corpus with source fidelity",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "PARTIAL",
       "priority": "P0",
       "releaseBlocker": true,
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "e5678e0",
+      "lastVerifiedSha": "703592b",
       "evidence": [
-        "Code paths exist in packages/research + search; live bounded retrieval not executed (no DB)"
+        "Keyword lookup PASS (Miranda hit)",
+        "Citation lookup sample ok (5 rows)",
+        "Embeddings present on 202/202 chunks sampled; 795 authorities missing embeddings",
+        "search_vector empty (0); semantic=index_health_only (no query embedding / no paid model)",
+        "hybrid not invoked"
       ],
-      "remediation": "Authorized read-only retrieval validate against live index"
+      "remediation": "RETRIEVAL_VERIFIED partial; full hybrid/semantic query certification still open"
     },
     {
       "id": "CORPUS-05",
@@ -715,15 +804,18 @@
       "subsystem": "Legal intelligence",
       "feature": "Hierarchy/treatment/currentness",
       "requirement": "Binding/persuasive labels; no unverified currentness claims",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "PARTIAL",
       "priority": "P1",
       "releaseBlocker": false,
       "confidence": "HIGH",
-      "lastVerifiedSha": "e5678e0",
+      "lastVerifiedSha": "703592b",
       "evidence": [
-        "guardrails + authority-status-layer + currentness unit tests PASS; live DB unverified"
+        "LIVE currentness_status: unknown=986, historical=2, current_as_of_source_date=1",
+        "LIVE treatment_status: unknown=989",
+        "us-primary-corpus source fidelity: 186/186 with URL+external id",
+        "Unit guardrails/authority-status still PASS"
       ],
-      "remediation": "Live sample audit of treatment/currentness fields after DB access"
+      "remediation": "Do not claim live treatment/currentness readiness; nearly all unknown"
     },
     {
       "id": "CORPUS-06",
@@ -751,13 +843,16 @@
       "priority": "P0",
       "releaseBlocker": true,
       "confidence": "HIGH",
-      "lastVerifiedSha": "e5678e0",
-      "evidence": ["WP-02 routing preserved in unit tests; live corpus retrieval blocked"],
-      "remediation": "Unblock CORPUS-01 then run zero-paid retrieval fixtures against live DB"
+      "lastVerifiedSha": "703592b",
+      "evidence": [
+        "DB access recovered but live primary corpus depth insufficient for prosecution research certification",
+        "FULL_RESEARCH_CERTIFIED=false; synthetic-majority local DB"
+      ],
+      "remediation": "After corpus depth + citation graph gates, run zero-paid prosecution retrieval fixtures"
     }
   ],
   "topReleaseBlockers": [
-    "PROF-RES-01 / CORPUS-01 Live corpus unverified; research go-live claims blocked",
+    "PROF-RES-01 / CORPUS-01 Live census measured (843 cases); research go-live still blocked (depth/synthetic/citation/retrieval)",
     "PROF-DOC-02 OCR production gate",
     "SEC-AUTH-01 Clerk MFA production verification",
     "SEC-MAL-01 ClamAV production verification",
@@ -771,8 +866,12 @@
     {
       "id": "WP-01",
       "title": "Fix LegalCite evaluation integrity",
-      "closes": ["AI-EXT-SCORER-01"],
-      "partiallyAddresses": ["PROS-EXT-01"],
+      "closes": [
+        "AI-EXT-SCORER-01"
+      ],
+      "partiallyAddresses": [
+        "PROS-EXT-01"
+      ],
       "deps": [],
       "effort": "2-5 days",
       "status": "VERIFIED_COMPLETE",
@@ -782,8 +881,12 @@
     {
       "id": "WP-02",
       "title": "Activate production model-router v2 for prosecution/high-stakes",
-      "closes": ["AI-ROUTE-01"],
-      "deps": ["WP-01"],
+      "closes": [
+        "AI-ROUTE-01"
+      ],
+      "deps": [
+        "WP-01"
+      ],
       "effort": "3-7 days",
       "acceptance": "Flag ON with env/DB alignment; Ask prosecution paths set subsystem/highStakesLegal; GPT/Gemini high-stakes remain 0 in tests",
       "status": "VERIFIED_COMPLETE",
@@ -801,19 +904,36 @@
     {
       "id": "WP-03",
       "title": "Live corpus inventory + research honesty gate",
-      "closes": ["CORPUS-01", "PROF-RES-01", "CORPUS-02"],
+      "closes": [
+        "CORPUS-01",
+        "PROF-RES-01",
+        "CORPUS-02"
+      ],
       "deps": [],
       "effort": "1-3 weeks (ops+data)",
       "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots",
-      "status": "LIVE_CORPUS_ACCESS_BLOCKED",
-      "result": "WP03_LIVE_CORPUS_ACCESS_BLOCKED",
-      "evidenceArtifact": "packages/research/corpus/reports/wp03-live-corpus-access-blocked.json",
-      "note": "Live DB unavailable this session; historical snapshots preserved as HISTORICAL_ONLY / REPORTED_ONLY"
+      "status": "ACCESS_RECOVERED_RESEARCH_UNCERTIFIED",
+      "result": "WP03A_CORPUS_ACCESS_RECOVERED",
+      "evidenceArtifact": "packages/research/corpus/reports/wp03a-corpus-access-recovery.json",
+      "note": "WP-03A restored :5433 access and measured live census. FULL_RESEARCH_CERTIFIED remains false. Do not begin WP-04 as corpus depth/citation/retrieval certification incomplete.",
+      "verificationClasses": {
+        "DATABASE_ACCESS_RECOVERED": true,
+        "DATABASE_IDENTITY_VERIFIED": true,
+        "LIVE_CENSUS_COMPLETE": true,
+        "CITATION_INTEGRITY_VERIFIED": "PARTIAL_THIN_GRAPH",
+        "RETRIEVAL_VERIFIED": "PARTIAL_KEYWORD_AND_INDEX_HEALTH",
+        "FULL_RESEARCH_CERTIFIED": false
+      }
     },
     {
       "id": "WP-04",
       "title": "Production security/config gate closure",
-      "closes": ["SEC-AUTH-01", "SEC-MAL-01", "PROF-DOC-02", "SEC-LEGAL-01"],
+      "closes": [
+        "SEC-AUTH-01",
+        "SEC-MAL-01",
+        "PROF-DOC-02",
+        "SEC-LEGAL-01"
+      ],
       "deps": [],
       "effort": "2-4 weeks",
       "acceptance": "Clerk MFA verified; ClamAV prod verified; OCR policy decided; attorney Terms/Privacy"
@@ -821,23 +941,40 @@
     {
       "id": "WP-05",
       "title": "Ops resilience",
-      "closes": ["OPS-BACKUP-01", "OPS-MON-01", "OPS-DEP-01"],
-      "deps": ["WP-04"],
+      "closes": [
+        "OPS-BACKUP-01",
+        "OPS-MON-01",
+        "OPS-DEP-01"
+      ],
+      "deps": [
+        "WP-04"
+      ],
       "effort": "2-4 weeks",
       "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill"
     },
     {
       "id": "WP-06",
       "title": "Prosecution product parity polish",
-      "closes": ["PROS-MEM-01", "PROS-GRAPH-01", "PROS-AUD-01", "PROS-EV-01"],
-      "deps": ["WP-02"],
+      "closes": [
+        "PROS-MEM-01",
+        "PROS-GRAPH-01",
+        "PROS-AUD-01",
+        "PROS-EV-01"
+      ],
+      "deps": [
+        "WP-02"
+      ],
       "effort": "1-2 weeks",
       "acceptance": "Memory/Audit UX; graph writers or explicit OUT_OF_SCOPE; CoC schema aligned"
     },
     {
       "id": "WP-07",
       "title": "Professional RBAC + cleanup",
-      "closes": ["PROF-ROLE-01", "RM-PG-01", "PROF-CONTACT-01"],
+      "closes": [
+        "PROF-ROLE-01",
+        "RM-PG-01",
+        "PROF-CONTACT-01"
+      ],
       "deps": [],
       "effort": "1 week",
       "acceptance": "Spec roles or documented reduction; enum/docs cleanup; contacts decision"
@@ -845,8 +982,16 @@
     {
       "id": "WP-08",
       "title": "Design-partner external acceptance",
-      "closes": ["PROS-EXT-01", "AI-GROUND-01"],
-      "deps": ["WP-01", "WP-02", "WP-03", "WP-05"],
+      "closes": [
+        "PROS-EXT-01",
+        "AI-GROUND-01"
+      ],
+      "deps": [
+        "WP-01",
+        "WP-02",
+        "WP-03",
+        "WP-05"
+      ],
       "effort": "2-4 weeks",
       "acceptance": "Fresh authorized external Cite+LB run; attorney/DA partner written acceptance; no CJIS claims"
     }
@@ -856,7 +1001,7 @@
     "reasons": [
       "No production deployment exists (OPS-DEP-01)",
       "Multiple P0 ops/security gates open (Clerk MFA, ClamAV, backup/PITR, monitoring, Terms)",
-      "Live corpus unverified this session; research go-live still blocked",
+      "Live corpus access recovered but depth far below 10k (843 cases live; synthetic majority); research go-live still blocked",
       "Router v2 not production-default; prosecution Ask under-wired",
       "External LegalCite validation incomplete (71 unexecuted); WP-01 scorer remediation pending remote CI",
       "Calendar date 2026-11-20 is ~17 days from audit; WP-04+WP-05 alone exceed that window for production"
@@ -875,13 +1020,44 @@
   },
   "wp03Session": {
     "classification": "NYAYAGRID_WP03_LIVE_CORPUS_AND_RESEARCH_CERTIFICATION",
-    "result": "LIVE_CORPUS_ACCESS_BLOCKED",
+    "result": "SUPERSEDED_BY_WP03A",
+    "note": "Prior LIVE_CORPUS_ACCESS_BLOCKED resolved by WP-03A access recovery"
+  },
+  "wp03aSession": {
+    "classification": "NYAYAGRID_WP03A_CORPUS_DATABASE_ACCESS_RECOVERY",
+    "result": "WP03A_CORPUS_ACCESS_RECOVERED",
+    "status": "PARTIAL",
     "paidCalls": 0,
     "courtlistenerCalls": 0,
     "mutations": 0,
-    "evidenceArtifact": "packages/research/corpus/reports/wp03-live-corpus-access-blocked.json",
-    "presenceCheckScript": "scripts/corpus/wp03-env-presence-check.cjs",
-    "intendedDb": "localhost:5433/nyayagrid (Docker certification fallback)",
-    "blockReason": "DATABASE_URL unset; :5433 not listening; Docker daemon unavailable; unidentified :5432 postgres not queried"
+    "migrations": 0,
+    "newDatabaseCreated": false,
+    "volumePreserved": true,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03a-corpus-access-recovery.json",
+    "censusScript": "scripts/corpus/wp03a-identity-and-census.cjs",
+    "intendedDb": "localhost:5433/nyayagrid",
+    "identityLabel": "persistent-local-docker-nyayagrid",
+    "volume": "nyayagrid_nyayagrid_postgres_data",
+    "live": {
+      "authorities": 989,
+      "cases": 843,
+      "remainingTo10k": 9157,
+      "citationEdges": 7,
+      "resolved": 1
+    },
+    "verificationClasses": {
+      "DATABASE_ACCESS_RECOVERED": true,
+      "DATABASE_IDENTITY_VERIFIED": true,
+      "LIVE_CENSUS_COMPLETE": true,
+      "CITATION_INTEGRITY_VERIFIED": "PARTIAL_THIN_GRAPH",
+      "RETRIEVAL_VERIFIED": "PARTIAL_KEYWORD_AND_INDEX_HEALTH",
+      "FULL_RESEARCH_CERTIFIED": false
+    },
+    "regressions": {
+      "wp01Scorers": "28/28 PASS",
+      "wp02Router": "35/35 PASS",
+      "internalProsecution": "39/39 PASS",
+      "researchPackage": "160 passed / 6 skipped (live-certification skipped)"
+    }
   }
 }
