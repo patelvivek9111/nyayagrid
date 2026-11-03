@@ -1,0 +1,1051 @@
+{
+  "ok": true,
+  "classification": "NYAYAGRID_WP03C_NEON_CORPUS_RESEARCH_READINESS",
+  "generatedAt": "2026-11-03T19:38:27.183Z",
+  "mutations": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "runtimeTrace": {
+    "professionalAsk": "apps/web ask route → askNyayaAboutMatter → getDb(DATABASE_URL) + AuthorityHybridRetriever(legal_authority_chunks) when forceCorpusSearch; matter docs via PostgresHybridRetriever(document_chunks)",
+    "prosecutionAsk": "same ask route with workspaceType=prosecution via criminalCases lookup; high-stakes via Router v2; same DATABASE_URL corpus",
+    "databaseBinding": "process.env.DATABASE_URL only — Neon not wired unless env points to Neon",
+    "localCertFallback": "tests use localhost:5433/nyayagrid",
+    "neonDefaultInProduct": false
+  },
+  "neon": {
+    "label": "neon",
+    "ok": true,
+    "db": "neondb",
+    "txn_ro": "on",
+    "drizzleCount": 19,
+    "drizzleHashes": [
+      "6d4fa521cb221039b990f592f07931e24d1ab68134eb9b0900a45b5933d425dc",
+      "96f180f27fd2690a0525098aaf155d03c6c995cfcfcf720c984c5fef69b41b43",
+      "f3099bf532e868f7c32dad7b27479931f98f3638332208ec244ae569da3bcb37",
+      "31128e3c14824bf791afa14fbf5e660b06460d7b19b0cc864595ca44c953181a",
+      "eb6a05966dd2c7749c65c26716443c995b607951fb93a7b0260bed0ee6fed531",
+      "4c905c00a4ecc385b2048240d9ab40667443a3f45985bef7140aa558bc0f3d86",
+      "aa08c0b5223b5b3b0e1006879e3163b452d540820ff88cb1ab91bce883cec006",
+      "7749b6b4a4b04edefc62a0fa275cba015524dc71fc7a4369fe63b001c7549946",
+      "6761698a1b43ce65bc98af9ba0e1148820c3ef24f16161e2fbfcf38979fbbc3a",
+      "a648ffff7b17e5125acb9435cc3a177766cec053242f2607c4238c58709945d0",
+      "2c5a8594ddaab6a7417c7c34353ce8cd23cd0e809a8439511e4a231af5ffc2d7",
+      "7d2a25edd085ed6d2a7ceab42085de1abbb401d3767291d0be7a632e9266db23",
+      "53bb900eca841ec91274fa51dccbb63aca79e58c021aa4e2b5580b54f2318d62",
+      "6e992fdcd52c48b885babc2bee7030376cac477fa121d4ef6f807a006d0b9ce0",
+      "718b286234a08fd8d10ff7c456b73f1c8f0b075e7770f14f3545c89cfb3ee187",
+      "b2c88d2d1c7b618a7519876bed1fdb82647935d95b05567ad99102de88aa0932",
+      "8f1e44566ce233efba3147d149458d0f382de75606da12b27d389ba894d84f4b",
+      "2c7400dd235c35eda7c225075577d95b902095aee665d037a6d2a13559f3cd4b",
+      "9a506fdea0c1671000e7ec9cc36e6cfee0ebee07729cbb29b07cba33dd770969"
+    ],
+    "tablesPresent": [
+      "guide_document_chunks",
+      "guide_documents",
+      "legal_authorities",
+      "legal_authority_chunks",
+      "legal_authority_citations",
+      "student_case_chunks",
+      "student_cases"
+    ],
+    "professorGuideTablesRemain": true,
+    "sharedCorpusTablesIntact": true,
+    "census": {
+      "authorities": 35863,
+      "case_rows": 34508,
+      "with_text": 5621,
+      "with_emb": 5621,
+      "chunked_embedded_text": 5621,
+      "identity_only": 29403,
+      "zero_chunks": 28887,
+      "conflicting_identity_and_complete": 210,
+      "identity_only_corpus_complete_false": 28887,
+      "identity_only_with_text": 516,
+      "failed_ingest": 0,
+      "text_chars_ge_2000": 5052,
+      "text_chars_500_1999": 393,
+      "text_chars_lt_500": 176,
+      "text_with_source_url": 5621,
+      "text_with_ext_id": 5621,
+      "text_state_dc": 3457,
+      "text_federal": 2164,
+      "text_scotus": 604,
+      "text_circuit": 798,
+      "text_district": 201,
+      "text_state_high": 2958,
+      "text_state_intermediate": 575,
+      "text_pre_2000": 2319,
+      "text_pre_1980": 1151,
+      "created_le_2026_10_06": 4680,
+      "text_created_le_2026_10_06": 4680,
+      "research_ready_strict_ge500_with_provenance": 5445
+    },
+    "integrity": {
+      "dup_case_source_ids": 0,
+      "dup_cite_edges": 0,
+      "orphan_chunks": 0,
+      "orphan_cite_from": 0,
+      "orphan_cite_to": 0
+    },
+    "citations": {
+      "total": 80842,
+      "resolved": 62523,
+      "unresolved": 18319,
+      "resolution_pct": 77.34,
+      "classification": [
+        {
+          "c": "CASE_CITATION",
+          "n": 66977
+        },
+        {
+          "c": "CASE_LIKE_BUT_MALFORMED",
+          "n": 7940
+        },
+        {
+          "c": "STATUTE",
+          "n": 3442
+        },
+        {
+          "c": "PARSER_MALFORMED",
+          "n": 1056
+        },
+        {
+          "c": "RULE",
+          "n": 497
+        },
+        {
+          "c": "YYYY_PAGE_N",
+          "n": 305
+        },
+        {
+          "c": "UNKNOWN",
+          "n": 285
+        },
+        {
+          "c": "REGULATION",
+          "n": 284
+        },
+        {
+          "c": "RECORD_REFERENCE",
+          "n": 43
+        },
+        {
+          "c": "OCR_MALFORMED",
+          "n": 11
+        },
+        {
+          "c": "EXHIBIT_REFERENCE",
+          "n": 2
+        }
+      ],
+      "resolvedDepth": {
+        "resolved_edges": 62523,
+        "resolved_to_full_text": 18860,
+        "resolved_to_identity_only": 51777,
+        "resolved_to_with_url": 62523,
+        "resolved_to_zero_chunks": 43663
+      }
+    },
+    "embeddings": {
+      "chunks": 129160,
+      "with_emb": 129160,
+      "missing_emb": 0,
+      "missing_text": 0,
+      "with_search_vector": 0,
+      "models": [
+        {
+          "m": "text-embedding-3-small:384",
+          "n": 129123
+        },
+        {
+          "m": "mock-embed-384",
+          "n": 37
+        }
+      ],
+      "duplicate_authority_chunk_index": 0
+    },
+    "textSamples": [
+      {
+        "id": "58bbafd8-95e0-401a-a9b1-1a4f5c6c9bf0",
+        "title": "Marbury v. Madison, 5 U.S. (1 Cranch) 137 (1803)",
+        "citation": "5 U.S. 137",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": "true",
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 136
+      },
+      {
+        "id": "96f97066-b205-44d1-a1cb-2452bf8164c2",
+        "title": "Tincher v. Omega Flex, Inc., 104 A.3d 626 (Pa. 2014)",
+        "citation": "104 A.3d 626",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 282
+      },
+      {
+        "id": "a5a02600-e688-45b1-8d47-c673ac6d58fa",
+        "title": "Stewart v. GGNSC-Canonsburg, L.P., 9 A.3d 215 (Pa. Super. 2010)",
+        "citation": "9 A.3d 215",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 209
+      },
+      {
+        "id": "09840ef1-6ec0-440c-89cd-99e2f56e2f5f",
+        "title": "Henningsen v. Bloomfield Motors, Inc., 32 N.J. 358 (1960)",
+        "citation": "32 N.J. 358",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 186
+      },
+      {
+        "id": "d68c2861-5a34-4eb5-b69b-1757b1927860",
+        "title": "MacPherson v. Buick Motor Co., 217 N.Y. 382 (1916)",
+        "citation": "217 N.Y. 382",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 404
+      },
+      {
+        "id": "8406da45-a9ed-4a9d-89c9-d96c62aa1053",
+        "title": "Galloway v. State, 365 A.2d 866 (Del. 1976)",
+        "citation": "365 A.2d 866",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 141
+      },
+      {
+        "id": "bbd6e4bc-eb32-45a0-8c42-f5cec02ec4ea",
+        "title": "Rowland v. Christian, 69 Cal. 2d 108 (1968)",
+        "citation": "69 Cal. 2d 108",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 202
+      },
+      {
+        "id": "6d11a4e7-de76-4b08-92d6-52bc016b03a3",
+        "title": "Robinson v. Kroger Co., 268 S.W.3d 594 (Tex. 2008)",
+        "citation": "268 S.W.3d 594",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 245
+      },
+      {
+        "id": "909f706c-41af-4d55-a9e1-e5a0cc21d6e4",
+        "title": "Publix Super Markets, Inc. v. Williams, 882 So. 2d 801 (Fla. 2004)",
+        "citation": "882 So. 2d 801",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 365
+      },
+      {
+        "id": "a0fabae8-9fe3-48c3-847e-7506f869c1fc",
+        "title": "Brunton v. Schmidt, 114 Ill. 2d 380 (1986)",
+        "citation": "114 Ill. 2d 380",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 312
+      },
+      {
+        "id": "23ea0f35-eeca-4720-8e57-51adf4382738",
+        "title": "Papadopoulos v. Target Corp., 457 Mass. 368 (2010)",
+        "citation": "457 Mass. 368",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 373
+      },
+      {
+        "id": "b0001f77-4467-4b9e-9aff-85c363746788",
+        "title": "Kell v. Commonwealth, 228 Va. 11 (1984)",
+        "citation": "228 Va. 11",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 270
+      },
+      {
+        "id": "b29f2eeb-6f13-4294-9957-553fa1b2f87f",
+        "title": "Erie R.R. v. Tompkins, 304 U.S. 64 (1938)",
+        "citation": "304 U.S. 64",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 413
+      },
+      {
+        "id": "204c63ef-eb75-4bda-a389-0f186b80630d",
+        "title": "Bell Atlantic Corp. v. Twombly, 550 U.S. 544 (2007)",
+        "citation": "550 U.S. 544",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 369
+      },
+      {
+        "id": "c93d951d-57d1-41b1-ad56-387be9139f2b",
+        "title": "Ashcroft v. Iqbal, 556 U.S. 662 (2009)",
+        "citation": "556 U.S. 662",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 382
+      },
+      {
+        "id": "4a5cbc25-e94d-40f0-9387-fcad24493e34",
+        "title": "Celotex Corp. v. Catrett, 477 U.S. 317 (1986)",
+        "citation": "477 U.S. 317",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 368
+      },
+      {
+        "id": "a65988f9-6928-438a-99ac-0ebb7bd84a4a",
+        "title": "Chevron U.S.A. Inc. v. Natural Resources Defense Council, Inc., 467 U.S. 837 (1984)",
+        "citation": "467 U.S. 837",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 418
+      },
+      {
+        "id": "89959358-6e73-41a1-bc64-b60bdc82b054",
+        "title": "Loper Bright Enterprises v. Raimondo, 603 U.S. 369 (2024)",
+        "citation": "603 U.S. 369",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 417
+      },
+      {
+        "id": "c04756e3-cb21-466b-a799-e26b723b84c4",
+        "title": "Miranda v. Arizona, 384 U.S. 436 (1966)",
+        "citation": "384 U.S. 436",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 459
+      },
+      {
+        "id": "0255b1d0-dcc6-4dd2-8e71-3d4de65644bd",
+        "title": "Gideon v. Wainwright, 372 U.S. 335 (1963)",
+        "citation": "372 U.S. 335",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": "true",
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 396
+      },
+      {
+        "id": "f2945200-d52c-4f55-ace7-5f7548c2fe7f",
+        "title": "International Shoe Co. v. Washington, 326 U.S. 310 (1945)",
+        "citation": "326 U.S. 310",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": "true",
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 430
+      },
+      {
+        "id": "22b1fc2a-8d90-4211-83d3-9959411c9ac6",
+        "title": "Hertz Corp. v. Friend, 559 U.S. 77 (2010)",
+        "citation": "559 U.S. 77",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 407
+      },
+      {
+        "id": "d519e117-763e-4719-9e0c-c0974f24f09b",
+        "title": "United States v. Microsoft Corp., 253 F.3d 34 (D.C. Cir. 2001)",
+        "citation": "253 F.3d 34",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 470
+      },
+      {
+        "id": "7f733040-975e-4f2a-ae32-4129bd4e4c97",
+        "title": "In re Facebook, Inc. IPO Securities & ERISA Litigation, 821 F.3d 633 (9th Cir. 2016)",
+        "citation": "821 F.3d 633",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 432
+      },
+      {
+        "id": "bc6da2d3-a73d-4cc6-8e62-959a1dfd1d1c",
+        "title": "Harper v. Deposition Corp. of America, 954 F.2d 1140 (6th Cir. 1992)",
+        "citation": "954 F.2d 1140",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 3,
+        "chars": 350
+      }
+    ],
+    "sampleQuality": {
+      "sampled": 25,
+      "chars_ge_500": 0,
+      "chars_lt_500": 25,
+      "with_url": 25
+    },
+    "highDemandIdentityOnly": [
+      {
+        "id": "11579079-5ca2-4d12-bc05-bb693a197ed8",
+        "citation": "65 S. Ct. 1464",
+        "title": "Guaranty Trust Co. v. York",
+        "inbound": 16
+      },
+      {
+        "id": "da2b96a8-5695-4d48-a886-fdd407c1db6e",
+        "citation": "409 U.S. 942",
+        "title": "Amos v. Sims",
+        "inbound": 16
+      },
+      {
+        "id": "2198d5ed-bad7-4345-a520-ffe28bafa4ba",
+        "citation": "284 U.S. 521",
+        "title": "Matthews v. Rodgers",
+        "inbound": 15
+      },
+      {
+        "id": "46e9befc-8b85-4b64-99da-72ef460775be",
+        "citation": "92 S. Ct. 2294",
+        "title": "92 S. Ct. 2294",
+        "inbound": 13
+      },
+      {
+        "id": "b3bb80cb-9309-467e-96dc-ac21bd8692a2",
+        "citation": "46 L. Ed. 2d 29",
+        "title": "Coleman v. Conservation Society of Southern Vermont, Inc.",
+        "inbound": 13
+      },
+      {
+        "id": "d84018be-63fa-46fb-9c18-aa50a3356f2c",
+        "citation": "22 U.S. 738",
+        "title": "22 U.S. 738",
+        "inbound": 13
+      },
+      {
+        "id": "8bce284f-cd16-4483-b36c-cee94ee10a22",
+        "citation": "392 U.S. 409",
+        "title": "Jones v. Alfred H. Mayer Co.",
+        "inbound": 12
+      },
+      {
+        "id": "8bbe6303-013a-44ed-8078-18776eb1c53a",
+        "citation": "322 U.S. 596",
+        "title": "Lyons v. Oklahoma",
+        "inbound": 12
+      },
+      {
+        "id": "32e24cb7-4589-4ede-9e59-702579f15110",
+        "citation": "44 Cal. 2d 434",
+        "title": "People v. Cahan",
+        "inbound": 12
+      },
+      {
+        "id": "10876699-b3b5-453d-a9aa-6ea111996559",
+        "citation": "86 S. Ct. 1772",
+        "title": "86 S. Ct. 1772",
+        "inbound": 12
+      },
+      {
+        "id": "165e7a9a-447f-4bf5-ae62-57b871ec411e",
+        "citation": "242 N.Y. 13",
+        "title": "242 N.Y. 13",
+        "inbound": 12
+      },
+      {
+        "id": "84224dd5-098d-44f0-91b6-1b5c58a17b68",
+        "citation": "236 U.S. 273",
+        "title": "Fox v. Washington",
+        "inbound": 12
+      },
+      {
+        "id": "29c8e2a6-d535-44be-8635-8caec8bfb062",
+        "citation": "97 S. Ct. 990",
+        "title": "97 S. Ct. 990",
+        "inbound": 11
+      },
+      {
+        "id": "381f023c-70ac-4860-aeb4-b4ef53dded99",
+        "citation": "411 U.S. 279",
+        "title": "Employees of Department of Public Health v. Department of Public Health",
+        "inbound": 11
+      },
+      {
+        "id": "941bc246-fc23-42ec-ad36-5335e78598a3",
+        "citation": "300 U.S. 515",
+        "title": "Virginian Railway Co. v. System Federation No. 40",
+        "inbound": 11
+      }
+    ],
+    "retrievalSmoke": {
+      "titleCitationMiranda": {
+        "hits": 5,
+        "titles": [
+          "Miranda v. Arizona, 384 U.S. 436 (1966)",
+          "Miranda v. Julian",
+          "United States v. Miranda-Espinoza",
+          "Miranda v. Arizona",
+          "Hicks v. Miranda"
+        ]
+      },
+      "chunkFtsMiranda": {
+        "ok": true,
+        "hits": 5,
+        "titles": [
+          "State v. Fecteau",
+          "People v Fenderson",
+          "Dunaway v. New York",
+          "State v. Giovanni X. Smyczeck Rivera",
+          "Schneckloth v. Bustamonte"
+        ]
+      },
+      "semantic": {
+        "attempted": false,
+        "reason": "requires EmbeddingProvider / would be paid or local model call"
+      },
+      "hybrid": {
+        "attempted": false,
+        "reason": "AuthorityHybridRetriever.embed skipped under zero-paid rule"
+      }
+    },
+    "historicalIdentityPreservation": {
+      "method": "cohort by created_at::date <= 2026-10-06 on stable legal_authorities.id; not a dump-join proof",
+      "created_le_2026_10_06": 4680,
+      "text_created_le_2026_10_06": 4680,
+      "classification": "TIMESTAMP_COHORT_PRESERVED_TEXT_BACKED"
+    },
+    "enrichmentCandidates": {
+      "identity_only_zero_chunk": 28887,
+      "inbound_ge_5": 775,
+      "inbound_ge_20": 0
+    }
+  },
+  "local": {
+    "label": "local",
+    "ok": true,
+    "db": "nyayagrid",
+    "txn_ro": "on",
+    "drizzleCount": 29,
+    "drizzleHashes": [
+      "6c242a3c15201a0926a23286e563f1d5e4a9f3a520eef4fd973b768c2830ef95",
+      "01d99c7cfd208641a7cccfe62cd2e2eaa09ef6da3298b233e396a10f3b384de3",
+      "c5096a5b3af669afe4c7c9137607f80ae5fc87dc5264bad0a0c9ca70d68f9fd9",
+      "4c1e5d4902cca86f328e5fd1d2bc9550d806debebb2466712015389ac9dc9ce8",
+      "be17d5807088690ab3d8328a9e557b0d610e6b1c599f0e96caa2b763c50b1063",
+      "4c905c00a4ecc385b2048240d9ab40667443a3f45985bef7140aa558bc0f3d86",
+      "aa08c0b5223b5b3b0e1006879e3163b452d540820ff88cb1ab91bce883cec006",
+      "7749b6b4a4b04edefc62a0fa275cba015524dc71fc7a4369fe63b001c7549946",
+      "6761698a1b43ce65bc98af9ba0e1148820c3ef24f16161e2fbfcf38979fbbc3a",
+      "a648ffff7b17e5125acb9435cc3a177766cec053242f2607c4238c58709945d0",
+      "2c5a8594ddaab6a7417c7c34353ce8cd23cd0e809a8439511e4a231af5ffc2d7",
+      "7d2a25edd085ed6d2a7ceab42085de1abbb401d3767291d0be7a632e9266db23",
+      "53bb900eca841ec91274fa51dccbb63aca79e58c021aa4e2b5580b54f2318d62",
+      "6e992fdcd52c48b885babc2bee7030376cac477fa121d4ef6f807a006d0b9ce0",
+      "718b286234a08fd8d10ff7c456b73f1c8f0b075e7770f14f3545c89cfb3ee187",
+      "b2c88d2d1c7b618a7519876bed1fdb82647935d95b05567ad99102de88aa0932",
+      "8f1e44566ce233efba3147d149458d0f382de75606da12b27d389ba894d84f4b",
+      "2c7400dd235c35eda7c225075577d95b902095aee665d037a6d2a13559f3cd4b",
+      "cbbf020206ce067fd4a41ad224d4101edd4ffffd4228c4a9778144f42c97e2f9",
+      "ab45592e63926424af7094ffc5412a68fc712f9e13d6774cfbf942d4b7c123d3",
+      "4481d22c55b3e137b88c30031a6b26e8e1a51784d41b2a23ed5f09c101c1b31b",
+      "ba4a8f85630605f9892d254f6ae409fdab1c89ca510786729ff4650e8ddb836e",
+      "cdd3fac8c4534998901beacb84884b3f86608cb52cda30ad48686bef2a830f92",
+      "3380c809a2296432132b2dd3a0dfd593768eeccd34212c6e7d74778d99cab057",
+      "9a506fdea0c1671000e7ec9cc36e6cfee0ebee07729cbb29b07cba33dd770969",
+      "b05c7d4dc7ec010d22f118ca992ad7e66654dea315ba187c5ad3265a859dc42e",
+      "59c1e9b613b0ebb55f8fff449a3952fa979ffdd6ce8771d2f003eac15859b813",
+      "81cd91782d687a78567f224fe3221ba8d22a9013a7ea2bcac2960b65b7c58d5d",
+      "5ae28a899a6832a98657d62bd1ed137a0f8eb3a6956e8e77b4630be30201df7b"
+    ],
+    "tablesPresent": [
+      "legal_authorities",
+      "legal_authority_chunks",
+      "legal_authority_citations"
+    ],
+    "professorGuideTablesRemain": false,
+    "sharedCorpusTablesIntact": true,
+    "census": {
+      "authorities": 989,
+      "case_rows": 843,
+      "with_text": 48,
+      "with_emb": 48,
+      "chunked_embedded_text": 48,
+      "identity_only": 0,
+      "zero_chunks": 795,
+      "conflicting_identity_and_complete": 0,
+      "identity_only_corpus_complete_false": 0,
+      "identity_only_with_text": 0,
+      "failed_ingest": 9,
+      "text_chars_ge_2000": 0,
+      "text_chars_500_1999": 1,
+      "text_chars_lt_500": 47,
+      "text_with_source_url": 46,
+      "text_with_ext_id": 48,
+      "text_state_dc": 31,
+      "text_federal": 17,
+      "text_scotus": 11,
+      "text_circuit": 3,
+      "text_district": 0,
+      "text_state_high": 28,
+      "text_state_intermediate": 3,
+      "text_pre_2000": 26,
+      "text_pre_1980": 12,
+      "created_le_2026_10_06": 46,
+      "text_created_le_2026_10_06": 46,
+      "research_ready_strict_ge500_with_provenance": 1
+    },
+    "integrity": {
+      "dup_case_source_ids": 0,
+      "dup_cite_edges": 0,
+      "orphan_chunks": 0,
+      "orphan_cite_from": 0,
+      "orphan_cite_to": 0
+    },
+    "citations": {
+      "total": 7,
+      "resolved": 1,
+      "unresolved": 6,
+      "resolution_pct": 14.29,
+      "classification": [
+        {
+          "c": "UNKNOWN",
+          "n": 7
+        }
+      ],
+      "resolvedDepth": {
+        "resolved_edges": 1,
+        "resolved_to_full_text": 1,
+        "resolved_to_identity_only": 0,
+        "resolved_to_with_url": 1,
+        "resolved_to_zero_chunks": 0
+      }
+    },
+    "embeddings": {
+      "chunks": 202,
+      "with_emb": 202,
+      "missing_emb": 0,
+      "missing_text": 0,
+      "with_search_vector": 0,
+      "models": [
+        {
+          "m": "mock-embed-384",
+          "n": 165
+        },
+        {
+          "m": "text-embedding-3-small",
+          "n": 37
+        }
+      ],
+      "duplicate_authority_chunk_index": 3
+    },
+    "textSamples": [
+      {
+        "id": "be267d3e-5472-42cb-b14c-31ec7e826a74",
+        "title": "Acme Corp. v. Contoso Holdings, 888 F.3d 9 (Fed. Cir. 2098)",
+        "citation": "888 F.3d 9",
+        "source_provider": "nyaya-bench-research-overlay",
+        "has_url": false,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 368
+      },
+      {
+        "id": "0c767793-2688-4e36-a827-5b98e4ec8b98",
+        "title": "Tincher v. Omega Flex, Inc., 104 A.3d 626 (Pa. 2014)",
+        "citation": "104 A.3d 626",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 282
+      },
+      {
+        "id": "b52a69d7-88cb-42eb-ae73-5299019f6806",
+        "title": "Henningsen v. Bloomfield Motors, Inc., 32 N.J. 358 (1960)",
+        "citation": "32 N.J. 358",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 186
+      },
+      {
+        "id": "71b6fb94-0f87-4b9a-b1d4-dba51efe4d87",
+        "title": "MacPherson v. Buick Motor Co., 217 N.Y. 382 (1916)",
+        "citation": "217 N.Y. 382",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 404
+      },
+      {
+        "id": "1206f758-9afd-47ff-ba58-078d4dc135d7",
+        "title": "Galloway v. State, 365 A.2d 866 (Del. 1976)",
+        "citation": "365 A.2d 866",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 141
+      },
+      {
+        "id": "bc1380b9-317d-4ab7-8121-b345a5a070e4",
+        "title": "Rowland v. Christian, 69 Cal. 2d 108 (1968)",
+        "citation": "69 Cal. 2d 108",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 202
+      },
+      {
+        "id": "1ae2d11a-e1f0-4768-b769-a2b513136363",
+        "title": "Robinson v. Kroger Co., 268 S.W.3d 594 (Tex. 2008)",
+        "citation": "268 S.W.3d 594",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 245
+      },
+      {
+        "id": "4b0cf25e-be9e-4b1b-b1c6-4a768844460d",
+        "title": "Publix Super Markets, Inc. v. Williams, 882 So. 2d 801 (Fla. 2004)",
+        "citation": "882 So. 2d 801",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 365
+      },
+      {
+        "id": "03d43f5c-3c46-4a56-afa3-4f7117240670",
+        "title": "Brunton v. Schmidt, 114 Ill. 2d 380 (1986)",
+        "citation": "114 Ill. 2d 380",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 312
+      },
+      {
+        "id": "59548c2e-00bc-44a4-9fda-6a88b60b2fc8",
+        "title": "Papadopoulos v. Target Corp., 457 Mass. 368 (2010)",
+        "citation": "457 Mass. 368",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 373
+      },
+      {
+        "id": "186f67b3-17c0-44d3-a137-11cca9b1c139",
+        "title": "Kell v. Commonwealth, 228 Va. 11 (1984)",
+        "citation": "228 Va. 11",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 270
+      },
+      {
+        "id": "a3646e25-4d7e-449b-add4-4de802b65dbc",
+        "title": "Marbury v. Madison, 5 U.S. (1 Cranch) 137 (1803)",
+        "citation": "5 U.S. 137",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 136
+      },
+      {
+        "id": "9af2b5e2-3a31-4f5d-bf11-fd1cdd44db48",
+        "title": "Stewart v. GGNSC-Canonsburg, L.P., 9 A.3d 215 (Pa. Super. 2010)",
+        "citation": "9 A.3d 215",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 209
+      },
+      {
+        "id": "75dae766-4f6e-4676-8e36-500b16325df7",
+        "title": "Erie R.R. v. Tompkins, 304 U.S. 64 (1938)",
+        "citation": "304 U.S. 64",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 177
+      },
+      {
+        "id": "0735c160-a9d6-4ebe-bddf-c6270290e877",
+        "title": "Bell Atlantic Corp. v. Twombly, 550 U.S. 544 (2007)",
+        "citation": "550 U.S. 544",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 127
+      },
+      {
+        "id": "3eabdaa2-d011-4cf3-bcbe-b787e66b2fd3",
+        "title": "Ashcroft v. Iqbal, 556 U.S. 662 (2009)",
+        "citation": "556 U.S. 662",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 186
+      },
+      {
+        "id": "1eccf703-02e8-4f2f-b60f-d3cd9b2d4061",
+        "title": "Celotex Corp. v. Catrett, 477 U.S. 317 (1986)",
+        "citation": "477 U.S. 317",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 232
+      },
+      {
+        "id": "df71e489-2f9a-4108-aebf-fe594e03c5d0",
+        "title": "Chevron U.S.A. Inc. v. Natural Resources Defense Council, Inc., 467 U.S. 837 (1984)",
+        "citation": "467 U.S. 837",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 154
+      },
+      {
+        "id": "f34d0446-61ca-4a5f-b18f-744447a839a8",
+        "title": "Loper Bright Enterprises v. Raimondo, 603 U.S. 369 (2024)",
+        "citation": "603 U.S. 369",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 141
+      },
+      {
+        "id": "590bbe5a-c863-40e0-9a74-0388c6e7daaa",
+        "title": "Miranda v. Arizona, 384 U.S. 436 (1966)",
+        "citation": "384 U.S. 436",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 181
+      },
+      {
+        "id": "0f65bd43-fa4d-4e5e-89af-aa6b06ea730d",
+        "title": "Gideon v. Wainwright, 372 U.S. 335 (1963)",
+        "citation": "372 U.S. 335",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 150
+      },
+      {
+        "id": "4e04ab46-5a31-4bf4-82f3-f961555cc010",
+        "title": "International Shoe Co. v. Washington, 326 U.S. 310 (1945)",
+        "citation": "326 U.S. 310",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 187
+      },
+      {
+        "id": "a020f4b4-863f-4b0c-817e-f925c79038fb",
+        "title": "Hertz Corp. v. Friend, 559 U.S. 77 (2010)",
+        "citation": "559 U.S. 77",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 184
+      },
+      {
+        "id": "4b2c3f0c-08e8-4581-911d-e940911581f0",
+        "title": "United States v. Microsoft Corp., 253 F.3d 34 (D.C. Cir. 2001)",
+        "citation": "253 F.3d 34",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 127
+      },
+      {
+        "id": "74a2aa58-64bd-42c7-9558-5b04dfe21785",
+        "title": "In re Facebook, Inc. IPO Securities & ERISA Litigation, 821 F.3d 633 (9th Cir. 2016)",
+        "citation": "821 F.3d 633",
+        "source_provider": "us-primary-corpus",
+        "has_url": true,
+        "identity_only": null,
+        "corpus_complete": null,
+        "chunks": 1,
+        "chars": 158
+      }
+    ],
+    "sampleQuality": {
+      "sampled": 25,
+      "chars_ge_500": 0,
+      "chars_lt_500": 25,
+      "with_url": 24
+    },
+    "highDemandIdentityOnly": [],
+    "retrievalSmoke": {
+      "titleCitationMiranda": {
+        "hits": 1,
+        "titles": [
+          "Miranda v. Arizona, 384 U.S. 436 (1966)"
+        ]
+      },
+      "chunkFtsMiranda": {
+        "ok": true,
+        "hits": 0,
+        "titles": []
+      },
+      "semantic": {
+        "attempted": false,
+        "reason": "requires EmbeddingProvider / would be paid or local model call"
+      },
+      "hybrid": {
+        "attempted": false,
+        "reason": "AuthorityHybridRetriever.embed skipped under zero-paid rule"
+      }
+    },
+    "historicalIdentityPreservation": {
+      "method": "cohort by created_at::date <= 2026-10-06 on stable legal_authorities.id; not a dump-join proof",
+      "created_le_2026_10_06": 46,
+      "text_created_le_2026_10_06": 46,
+      "classification": "TIMESTAMP_COHORT_PARTIAL_OR_UNPROVEN"
+    },
+    "enrichmentCandidates": {
+      "identity_only_zero_chunk": 0,
+      "inbound_ge_5": 0,
+      "inbound_ge_20": 0
+    }
+  },
+  "migration0025Journal": {
+    "idx": 25,
+    "version": "7",
+    "when": 1788300000000,
+    "tag": "0025_drop_professor_guide_schema",
+    "breakpoints": true
+  },
+  "migration0025": {
+    "sqlDrops": [
+      "student_*",
+      "guide_*",
+      "related enums only — no legal_authorities/chunks/citations"
+    ],
+    "neonApplied": false,
+    "dockerApplied": true,
+    "sharedCorpusImpact": "NONE_IN_SQL — 0025 does not reference legal_authorities, legal_authority_chunks, or legal_authority_citations",
+    "neonStudentGuideStillPresent": [
+      "guide_document_chunks",
+      "guide_documents",
+      "legal_authorities",
+      "legal_authority_chunks",
+      "legal_authority_citations",
+      "student_case_chunks",
+      "student_cases"
+    ],
+    "dockerStudentGuidePresent": [
+      "legal_authorities",
+      "legal_authority_chunks",
+      "legal_authority_citations"
+    ]
+  }
+}

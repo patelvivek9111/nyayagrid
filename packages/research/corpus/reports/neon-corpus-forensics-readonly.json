@@ -1,0 +1,1118 @@
+{
+  "ok": true,
+  "mutations": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "totals": {
+    "authorities": 35863,
+    "case_rows": 34508
+  },
+  "caseDefinition": {
+    "note": "No separate public.cases corpus table. Corpus 'cases' = legal_authorities WHERE authority_type='case'. student_cases is a different product table."
+  },
+  "provenanceFlags": {
+    "case_rows": 34508,
+    "identity_only_true": 29403,
+    "has_identityonly_key": 29678,
+    "has_identityresolution": 29678,
+    "corpus_complete_true": 485,
+    "has_corpuscomplete_key": 29372,
+    "has_edgedemand": 29218,
+    "has_fulltextacquisition": 485,
+    "has_adapter": 34463,
+    "adapter_nonempty": 34463,
+    "syntheticish": 12,
+    "demand_queue_candidate": 816,
+    "a2_target_citation": 978
+  },
+  "provenanceDistributions": {
+    "identityOnlyRaw": [
+      {
+        "v": "true",
+        "n": 29403
+      },
+      {
+        "v": "(absent)",
+        "n": 4830
+      },
+      {
+        "v": "false",
+        "n": 275
+      }
+    ],
+    "corpusCompleteRaw": [
+      {
+        "v": "false",
+        "n": 28887
+      },
+      {
+        "v": "(absent)",
+        "n": 5136
+      },
+      {
+        "v": "true",
+        "n": 485
+      }
+    ],
+    "adapterVals": [
+      {
+        "v": "bulk-citation-drain-2026-10-13",
+        "n": 25215
+      },
+      {
+        "v": "courtlistener-batch-job",
+        "n": 3070
+      },
+      {
+        "v": "ambiguous-metadata-drain-2026-10-13",
+        "n": 2946
+      },
+      {
+        "v": "s3-hist-ingest",
+        "n": 912
+      },
+      {
+        "v": "courtlistener-cite-demand-multi",
+        "n": 883
+      },
+      {
+        "v": "citation-resolution-mixed-batch3-identity",
+        "n": 664
+      },
+      {
+        "v": "citation-sprint-day1-external-run1",
+        "n": 239
+      },
+      {
+        "v": "ambiguous-citing-context-drain-2026-10-13",
+        "n": 130
+      },
+      {
+        "v": "courtlistener-lean",
+        "n": 125
+      },
+      {
+        "v": "courtlistener-a2-citation-target",
+        "n": 55
+      },
+      {
+        "v": "citation-resolution-identity-batch3",
+        "n": 49
+      },
+      {
+        "v": "(absent)",
+        "n": 45
+      },
+      {
+        "v": "citation-resolution-identity-batch2",
+        "n": 44
+      },
+      {
+        "v": "courtlistener-a2-verified-batch",
+        "n": 35
+      },
+      {
+        "v": "citation-resolution-mixed-batch2-identity",
+        "n": 28
+      },
+      {
+        "v": "citation-resolution-identity-batch1",
+        "n": 17
+      },
+      {
+        "v": "strict-practice-authority-run1",
+        "n": 11
+      },
+      {
+        "v": "citation-resolution-mixed-batch1-identity",
+        "n": 9
+      },
+      {
+        "v": "absent-practice-authority-run1",
+        "n": 9
+      },
+      {
+        "v": "pass1-edpa-cluster-recovery",
+        "n": 6
+      }
+    ],
+    "identityResolutionVals": [
+      {
+        "v": "(absent)",
+        "n": 4830
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"887118\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T13:14:14.473Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"145776\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:56:06.995Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"100294\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:57:50.993Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"121166\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:46.860Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"1777712\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T13:10:46.342Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"6919821\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:57:57.933Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"108583\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:57:47.832Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"1673221\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T13:14:23.163Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"268688\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T13:01:08.963Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"7892881\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T13:12:03.413Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"111754\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T13:02:34.411Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"2115969\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:59:50.513Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"1943501\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:57:19.648Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      },
+      {
+        "v": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"1475477\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:58:12.035Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "n": 1
+      }
+    ],
+    "edgeDemandSample": [
+      {
+        "edge_demand": 1,
+        "n": 23721
+      },
+      {
+        "edge_demand": 2,
+        "n": 3242
+      },
+      {
+        "edge_demand": 3,
+        "n": 933
+      },
+      {
+        "edge_demand": 4,
+        "n": 669
+      },
+      {
+        "edge_demand": 5,
+        "n": 325
+      },
+      {
+        "edge_demand": 6,
+        "n": 157
+      },
+      {
+        "edge_demand": 7,
+        "n": 82
+      },
+      {
+        "edge_demand": 8,
+        "n": 35
+      },
+      {
+        "edge_demand": 9,
+        "n": 18
+      },
+      {
+        "edge_demand": 10,
+        "n": 13
+      }
+    ],
+    "sourceClassVals": [
+      {
+        "v": "(absent)",
+        "n": 30317
+      },
+      {
+        "v": "PRIMARY_PUBLIC_REPOSITORY",
+        "n": 4191
+      }
+    ]
+  },
+  "identityOnlyVsDepth": {
+    "identity_only_cases": 29403,
+    "identity_only_with_chunks": 516,
+    "identity_only_with_text": 516,
+    "identity_only_with_emb": 516,
+    "identity_only_false": 275,
+    "identity_only_absent": 4830,
+    "absent_flag_with_text": 4830,
+    "absent_flag_no_chunks": 0,
+    "non_identity_only_with_text": 5105
+  },
+  "timeline": {
+    "largestDays": [
+      {
+        "day": "2026-10-13T00:00:00.000Z",
+        "n": 28293
+      },
+      {
+        "day": "2026-10-10T00:00:00.000Z",
+        "n": 624
+      },
+      {
+        "day": "2026-09-28T00:00:00.000Z",
+        "n": 432
+      },
+      {
+        "day": "2026-09-23T00:00:00.000Z",
+        "n": 413
+      },
+      {
+        "day": "2026-09-21T00:00:00.000Z",
+        "n": 411
+      },
+      {
+        "day": "2026-09-30T00:00:00.000Z",
+        "n": 403
+      },
+      {
+        "day": "2026-10-05T00:00:00.000Z",
+        "n": 335
+      },
+      {
+        "day": "2026-09-29T00:00:00.000Z",
+        "n": 329
+      },
+      {
+        "day": "2026-10-02T00:00:00.000Z",
+        "n": 307
+      },
+      {
+        "day": "2026-09-24T00:00:00.000Z",
+        "n": 267
+      },
+      {
+        "day": "2026-09-22T00:00:00.000Z",
+        "n": 260
+      },
+      {
+        "day": "2026-10-01T00:00:00.000Z",
+        "n": 260
+      },
+      {
+        "day": "2026-09-27T00:00:00.000Z",
+        "n": 253
+      },
+      {
+        "day": "2026-10-03T00:00:00.000Z",
+        "n": 249
+      },
+      {
+        "day": "2026-10-07T00:00:00.000Z",
+        "n": 247
+      },
+      {
+        "day": "2026-10-12T00:00:00.000Z",
+        "n": 239
+      },
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "n": 222
+      },
+      {
+        "day": "2026-09-26T00:00:00.000Z",
+        "n": 200
+      },
+      {
+        "day": "2026-10-04T00:00:00.000Z",
+        "n": 199
+      },
+      {
+        "day": "2026-10-08T00:00:00.000Z",
+        "n": 179
+      },
+      {
+        "day": "2026-09-17T00:00:00.000Z",
+        "n": 170
+      },
+      {
+        "day": "2026-09-20T00:00:00.000Z",
+        "n": 93
+      },
+      {
+        "day": "2026-09-25T00:00:00.000Z",
+        "n": 42
+      },
+      {
+        "day": "2026-09-19T00:00:00.000Z",
+        "n": 35
+      },
+      {
+        "day": "2026-10-11T00:00:00.000Z",
+        "n": 24
+      }
+    ],
+    "byDayProvider": [
+      {
+        "day": "2026-09-17T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 125
+      },
+      {
+        "day": "2026-09-17T00:00:00.000Z",
+        "provider": "us-primary-corpus",
+        "n": 45
+      },
+      {
+        "day": "2026-09-19T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 35
+      },
+      {
+        "day": "2026-09-20T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 93
+      },
+      {
+        "day": "2026-09-21T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 411
+      },
+      {
+        "day": "2026-09-22T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 260
+      },
+      {
+        "day": "2026-09-23T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 413
+      },
+      {
+        "day": "2026-09-24T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 267
+      },
+      {
+        "day": "2026-09-25T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 42
+      },
+      {
+        "day": "2026-09-26T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 200
+      },
+      {
+        "day": "2026-09-27T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 253
+      },
+      {
+        "day": "2026-09-28T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 432
+      },
+      {
+        "day": "2026-09-29T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 329
+      },
+      {
+        "day": "2026-09-30T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 403
+      },
+      {
+        "day": "2026-10-01T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 260
+      },
+      {
+        "day": "2026-10-02T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 307
+      },
+      {
+        "day": "2026-10-03T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 249
+      },
+      {
+        "day": "2026-10-04T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 199
+      },
+      {
+        "day": "2026-10-05T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 335
+      },
+      {
+        "day": "2026-10-06T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 22
+      },
+      {
+        "day": "2026-10-07T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 247
+      },
+      {
+        "day": "2026-10-08T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 179
+      },
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 222
+      },
+      {
+        "day": "2026-10-10T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 624
+      },
+      {
+        "day": "2026-10-11T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 24
+      },
+      {
+        "day": "2026-10-12T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 239
+      },
+      {
+        "day": "2026-10-13T00:00:00.000Z",
+        "provider": "courtlistener",
+        "n": 28293
+      }
+    ],
+    "byDayIdentity": [
+      {
+        "day": "2026-09-17T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 167
+      },
+      {
+        "day": "2026-09-17T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 3
+      },
+      {
+        "day": "2026-09-19T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 35
+      },
+      {
+        "day": "2026-09-20T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 93
+      },
+      {
+        "day": "2026-09-21T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 411
+      },
+      {
+        "day": "2026-09-22T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 260
+      },
+      {
+        "day": "2026-09-23T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 413
+      },
+      {
+        "day": "2026-09-24T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 267
+      },
+      {
+        "day": "2026-09-25T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 42
+      },
+      {
+        "day": "2026-09-26T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 200
+      },
+      {
+        "day": "2026-09-27T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 253
+      },
+      {
+        "day": "2026-09-28T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 422
+      },
+      {
+        "day": "2026-09-28T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 10
+      },
+      {
+        "day": "2026-09-29T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 308
+      },
+      {
+        "day": "2026-09-29T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 21
+      },
+      {
+        "day": "2026-09-30T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 399
+      },
+      {
+        "day": "2026-09-30T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 4
+      },
+      {
+        "day": "2026-10-01T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 260
+      },
+      {
+        "day": "2026-10-02T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 305
+      },
+      {
+        "day": "2026-10-02T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 2
+      },
+      {
+        "day": "2026-10-03T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 136
+      },
+      {
+        "day": "2026-10-03T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 113
+      },
+      {
+        "day": "2026-10-04T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 137
+      },
+      {
+        "day": "2026-10-04T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 62
+      },
+      {
+        "day": "2026-10-05T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 311
+      },
+      {
+        "day": "2026-10-05T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 24
+      },
+      {
+        "day": "2026-10-06T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 20
+      },
+      {
+        "day": "2026-10-06T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 2
+      },
+      {
+        "day": "2026-10-07T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 182
+      },
+      {
+        "day": "2026-10-07T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 65
+      },
+      {
+        "day": "2026-10-08T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 179
+      },
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "kind": "identityOnly=other",
+        "n": 100
+      },
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 92
+      },
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "kind": "identityOnly=absent",
+        "n": 30
+      },
+      {
+        "day": "2026-10-10T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 477
+      },
+      {
+        "day": "2026-10-10T00:00:00.000Z",
+        "kind": "identityOnly=other",
+        "n": 147
+      },
+      {
+        "day": "2026-10-11T00:00:00.000Z",
+        "kind": "identityOnly=other",
+        "n": 18
+      },
+      {
+        "day": "2026-10-11T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 6
+      },
+      {
+        "day": "2026-10-12T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 236
+      },
+      {
+        "day": "2026-10-12T00:00:00.000Z",
+        "kind": "identityOnly=other",
+        "n": 3
+      },
+      {
+        "day": "2026-10-13T00:00:00.000Z",
+        "kind": "identityOnly=true",
+        "n": 28286
+      },
+      {
+        "day": "2026-10-13T00:00:00.000Z",
+        "kind": "identityOnly=other",
+        "n": 7
+      }
+    ],
+    "octDayTotals": [
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "n": 222
+      },
+      {
+        "day": "2026-10-10T00:00:00.000Z",
+        "n": 624
+      },
+      {
+        "day": "2026-10-11T00:00:00.000Z",
+        "n": 24
+      },
+      {
+        "day": "2026-10-12T00:00:00.000Z",
+        "n": 239
+      },
+      {
+        "day": "2026-10-13T00:00:00.000Z",
+        "n": 28293
+      }
+    ],
+    "octWindow": [
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=other",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 100
+      },
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=true",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 92
+      },
+      {
+        "day": "2026-10-09T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=absent",
+        "j": "US",
+        "court_level": "circuit",
+        "n": 30
+      },
+      {
+        "day": "2026-10-10T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=true",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 477
+      },
+      {
+        "day": "2026-10-10T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=other",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 147
+      },
+      {
+        "day": "2026-10-11T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=other",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 18
+      },
+      {
+        "day": "2026-10-11T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=true",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 6
+      },
+      {
+        "day": "2026-10-12T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=true",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 236
+      },
+      {
+        "day": "2026-10-12T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=other",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 3
+      },
+      {
+        "day": "2026-10-13T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=true",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 28286
+      },
+      {
+        "day": "2026-10-13T00:00:00.000Z",
+        "provider": "courtlistener",
+        "kind": "identityOnly=other",
+        "j": "US",
+        "court_level": "(null)",
+        "n": 7
+      }
+    ]
+  },
+  "october13": {
+    "totals": {
+      "n": 28293,
+      "cl": 28293,
+      "identity_only": 28286,
+      "with_edge_demand": 28163,
+      "with_identity_resolution": 28293,
+      "with_full_text_acq": 7,
+      "min_ts": "2026-10-13T12:54:33.743Z",
+      "max_ts": "2026-10-13T15:54:52.050Z"
+    },
+    "hourly": [
+      {
+        "hour": "2026-10-13T12:00:00.000Z",
+        "n": 4482,
+        "identity_only": 4475
+      },
+      {
+        "hour": "2026-10-13T13:00:00.000Z",
+        "n": 20733,
+        "identity_only": 20733
+      },
+      {
+        "hour": "2026-10-13T14:00:00.000Z",
+        "n": 2946,
+        "identity_only": 2946
+      },
+      {
+        "hour": "2026-10-13T15:00:00.000Z",
+        "n": 132,
+        "identity_only": 132
+      }
+    ],
+    "adapters": [
+      {
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "n": 25215
+      },
+      {
+        "adapter": "ambiguous-metadata-drain-2026-10-13",
+        "n": 2946
+      },
+      {
+        "adapter": "ambiguous-citing-context-drain-2026-10-13",
+        "n": 130
+      },
+      {
+        "adapter": "final-citation-identity-cleanup-2026-10-13",
+        "n": 2
+      }
+    ],
+    "samples": [
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-1194545",
+        "title": "511 F.3d 396",
+        "citation": "511 F.3d 396",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:33.743Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"1194545\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.314Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 3
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-789367",
+        "title": "399 F.3d 279",
+        "citation": "399 F.3d 279",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:33.878Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"789367\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.450Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-145999",
+        "title": "603 F.3d 181",
+        "citation": "603 F.3d 181",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:33.949Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"145999\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.520Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-1992638",
+        "title": "546 U.S. 81",
+        "citation": "546 U.S. 81",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:34.019Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"1992638\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.591Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-1356047",
+        "title": "592 F.3d 412",
+        "citation": "592 F.3d 412",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:34.101Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"1356047\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.672Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-365437",
+        "title": "595 F.2d 1265",
+        "citation": "595 F.2d 1265",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:34.168Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"365437\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.739Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-298476",
+        "title": "446 F.2d 1343",
+        "citation": "446 F.2d 1343",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:34.237Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"298476\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.809Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-410940",
+        "title": "692 F.2d 910",
+        "citation": "692 F.2d 910",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:34.303Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"410940\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:33.875Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-90897",
+        "title": "Civil Rights Cases",
+        "citation": "3 S. Ct. 18",
+        "ingest": "ready",
+        "created_at": "2026-10-13T12:54:34.530Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "false",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"90897\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:34.102Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "true",
+        "edge_demand": 2
+      },
+      {
+        "source_provider": "courtlistener",
+        "source_external_id": "cl-cluster-8954644",
+        "title": "9 L. Ed. 2d 719",
+        "citation": "9 L. Ed. 2d 719",
+        "ingest": "pending",
+        "created_at": "2026-10-13T12:54:34.595Z",
+        "adapter": "bulk-citation-drain-2026-10-13",
+        "identity_only": "true",
+        "identity_resolution": "{\"batch\": \"bulk-citation-drain-2026-10-13\", \"method\": \"COURTLISTENER_BULK_2026_09_30\", \"clusterId\": \"8954644\", \"treatment\": \"UNKNOWN_NOT_VERIFIED\", \"resolvedAt\": \"2026-10-13T12:54:34.167Z\", \"identityOnly\": true, \"resolverVersion\": \"citation-resolution-engine/v1\"}",
+        "corpus_complete": "false",
+        "edge_demand": 2
+      }
+    ]
+  },
+  "contentDepth": {
+    "total_cases": 34508,
+    "with_text_chunks": 5621,
+    "with_ge1_chunk": 5621,
+    "with_embeddings": 5621,
+    "with_opinion_part": 8,
+    "zero_chunks": 28887,
+    "citation_edges_only_no_chunks": 28887,
+    "citation_targets_no_chunks": 28887,
+    "referenced_as_target_not_substantive": 28887,
+    "targets_with_text": 1500
+  },
+  "trueMetrics": {
+    "a_total_case_rows": 34508,
+    "b_substantive_has_text": 5621,
+    "c_identity_or_zero_chunk": 29403,
+    "c_identity_only_flag": 29403,
+    "c_zero_chunk": 28887,
+    "d_chunked_embedded_text": 5621,
+    "b_state_dc": 3457,
+    "b_federal": 2164,
+    "b_scotus": 604,
+    "b_circuit": 798,
+    "b_district": 201,
+    "d_state_dc": 3457,
+    "d_federal": 2164,
+    "d_scotus": 604,
+    "d_circuit": 798,
+    "d_district": 201,
+    "created_before_2026_10_07": 4680,
+    "created_on_or_after_2026_10_07": 29828,
+    "substantive_before_2026_10_07": 4680,
+    "identity_only_on_or_after_2026_10_07": 29162,
+    "non_identity_substantive": 275
+  },
+  "historicalCurated": {
+    "definition": "No exclusive curated-lane label found beyond metadata.identityOnly / corpusComplete / timestamps. Pass1 neon identity ~4658 cases around 2026-10-06.",
+    "counts": {
+      "pre_oct7_non_identity": 0,
+      "pre_oct7_identity": 241,
+      "pre_oct7_total": 4680,
+      "created_on_2026_10_06": 22,
+      "created_on_or_before_2026_10_06": 4680
+    }
+  },
+  "ingestJobColumns": [
+    "id",
+    "source",
+    "court_id",
+    "cl_court",
+    "status",
+    "cursor",
+    "last_successful_external_id",
+    "completed_external_ids",
+    "items_discovered",
+    "items_fetched",
+    "items_imported",
+    "items_skipped",
+    "items_failed",
+    "items_quarantined",
+    "rate_limit_count",
+    "api_calls",
+    "target_max",
+    "batch_size",
+    "next_page_url",
+    "last_retry_after_sec",
+    "last_error",
+    "metadata",
+    "started_at",
+    "updated_at",
+    "completed_at",
+    "created_at"
+  ],
+  "ingestJobsOctWindow": [],
+  "relationships": {
+    "authorities": 35863,
+    "case_authorities": 34508,
+    "non_case_authorities": 1355,
+    "citation_edges": 80842,
+    "resolved_edges": 62523,
+    "chunks": 129160
+  },
+  "identityOnlyBreakdown": {
+    "courtLevels": [
+      {
+        "court_level": "(null)",
+        "n": 29097
+      },
+      {
+        "court_level": "scotus",
+        "n": 297
+      },
+      {
+        "court_level": "state_high",
+        "n": 9
+      }
+    ],
+    "jurisdictions": [
+      {
+        "j": "US",
+        "n": 29403
+      }
+    ]
+  }
+}
