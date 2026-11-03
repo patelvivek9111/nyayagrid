@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { NormalizedTaskSchema, type NormalizedTask } from "../../schema/normalized-task.js";
 import type { BenchmarkAdapter } from "../../adapters/types.js";
+import { citationKeysMatch, extractReporterCitations } from "../scorers/citation-utils.js";
 
 export const LEGALCITE_TASK_FILES = {
   cat1_citation_retrieval: "CITATION_RETRIEVAL",
@@ -56,6 +57,10 @@ function rowToTask(
     (typeof row.id === "string" && row.id) ||
     (typeof row.sample_id === "string" && row.sample_id) ||
     `${fileStem}-${index}`;
+  const qaStyle = typeof row.qa_style === "string" ? row.qa_style : "unknown";
+  const fakeType = typeof row.fake_type === "string" ? row.fake_type : "none";
+  // Upstream reuses numeric ids across qa_style / fake_type variants; keep ids unique.
+  const taskId = `legalcitebench::${taskType}::${id}::${qaStyle}::${fakeType}::${index}`;
   const prompt =
     (typeof row.prompt === "string" && row.prompt) ||
     (typeof row.question === "string" && row.question) ||
@@ -65,7 +70,7 @@ function rowToTask(
   const jurisdiction = (typeof row.jurisdiction === "string" && row.jurisdiction.trim()) || "US";
   return NormalizedTaskSchema.parse({
     benchmarkId: "legalcitebench",
-    taskId: `legalcitebench::${taskType}::${id}`,
+    taskId,
     split: "eval",
     jurisdiction,
     practiceArea: "citation_reliability",
@@ -82,8 +87,10 @@ function rowToTask(
       huggingfaceCardLicense: "cc0-1.0",
       originalLabel: expected,
       originalSourceIdentifier: id,
-      qaStyle: row.qa_style ?? null,
+      legacyTaskId: `legalcitebench::${taskType}::${id}`,
+      qaStyle,
       fakeType: row.fake_type ?? null,
+      rowIndex: index,
       evaluationIsolation: "EVAL_ONLY_NOT_PRODUCTION_CORPUS",
     },
     contaminationRisk: "PUBLIC_HIGH",
@@ -121,6 +128,64 @@ export const LegalCiteBenchAdapter: BenchmarkAdapter = {
     return out;
   },
 };
+
+/**
+ * Resolve a historical or current LegalCite task id to the best matching loaded task.
+ * Historical live runs used `legalcitebench::<TYPE>::<numericId>` which collides across
+ * qa_style / fake_type variants; disambiguate by prompt↔response citation overlap.
+ */
+export function resolveLegalCiteTaskForReplay(
+  loaded: readonly NormalizedTask[],
+  sampleId: string,
+  responseText: string,
+): NormalizedTask | undefined {
+  const exact = loaded.find((t) => t.taskId === sampleId);
+  if (exact) return exact;
+
+  const legacy = loaded.filter((t) => t.metadata?.legacyTaskId === sampleId);
+  if (legacy.length === 1) return legacy[0];
+  if (legacy.length === 0) {
+    // Prefix match for partially migrated ids.
+    const prefix = loaded.filter(
+      (t) => t.taskId === sampleId || t.taskId.startsWith(`${sampleId}::`),
+    );
+    if (prefix.length === 1) return prefix[0];
+    if (prefix.length === 0) return undefined;
+    return pickBestLegalCiteVariant(prefix, responseText);
+  }
+  return pickBestLegalCiteVariant(legacy, responseText);
+}
+
+function pickBestLegalCiteVariant(
+  candidates: readonly NormalizedTask[],
+  responseText: string,
+): NormalizedTask {
+  const outCites = extractReporterCitations(responseText);
+  let best = candidates[0]!;
+  let bestScore = -1;
+  for (const c of candidates) {
+    const prompt = c.conversation?.[0]?.content ?? "";
+    const inputCites = extractReporterCitations(prompt);
+    let overlap = 0;
+    for (const o of outCites) {
+      if (inputCites.some((i) => citationKeysMatch(o, i))) overlap += 1;
+    }
+    // Prefer fake variants when the response identifies an incorrect citation.
+    const identifiesError = /\b(incorrect|error|wrong|erroneous)\b/i.test(responseText);
+    const fakeBonus =
+      identifiesError && c.metadata?.qaStyle === "3-fake"
+        ? 2
+        : !identifiesError && c.metadata?.qaStyle === "3-true"
+          ? 2
+          : 0;
+    const score = overlap * 10 + fakeBonus;
+    if (score > bestScore) {
+      bestScore = score;
+      best = c;
+    }
+  }
+  return best;
+}
 
 export const PRIORITY_LEGALCITE_TASK_TYPES: LegalCiteTaskType[] = [
   "CITATION_ERROR_DETECTION",

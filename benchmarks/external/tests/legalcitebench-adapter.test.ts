@@ -48,7 +48,9 @@ describe("LegalCiteBench adapter + mount", () => {
     if (!mount) return;
     const loaded = await LegalCiteBenchAdapter.load(mount);
     expect(loaded.length).toBe(23646);
+    expect(new Set(loaded.map((t) => t.taskId)).size).toBe(loaded.length);
     expect(loaded.every((t) => t.expectedAnswer != null)).toBe(true);
+    expect(loaded.every((t) => typeof t.metadata?.legacyTaskId === "string")).toBe(true);
     const slice = await loadLegalCiteBenchProsecutionSliceAsync({
       fixtureFallback: false,
       count: 80,

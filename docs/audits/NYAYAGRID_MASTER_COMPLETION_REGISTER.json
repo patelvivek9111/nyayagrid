@@ -1,0 +1,866 @@
+{
+  "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
+  "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
+  "generatedAt": "2026-11-03T14:50:00.000Z",
+  "head": "c2c3d09ab9850b0a27a78a6164d98f378e01dde7",
+  "branch": "feat/production-model-routing",
+  "remoteCi": {
+    "run": "41648686595",
+    "conclusion": "SUCCESS"
+  },
+  "productScope": {
+    "professional": "IN_SCOPE",
+    "prosecution": "IN_SCOPE",
+    "professorGuideStudentPublic": "REMOVED_RUNTIME_PARTIAL_CLEANUP"
+  },
+  "evidenceClasses": {
+    "CURRENT_VERIFIED": "Reproduced this session or CI at matching HEAD",
+    "HISTORICAL_VERIFIED": "Prior artifact/snapshot; not re-verified live",
+    "REPORTED_ONLY": "Document claim without runtime re-check",
+    "STALE": "Contradicted by current code/state",
+    "UNKNOWN": "Environment blocked verification"
+  },
+  "externalBenchmarkSession": {
+    "status": "CLOSED",
+    "result": "EXTERNAL_PROSECUTION_GROUNDING_BLOCKED",
+    "legalbench": {
+      "executed": 37,
+      "passed": 34,
+      "accuracy": 0.9189
+    },
+    "legalcitebench": {
+      "executed": 9,
+      "passed": 0,
+      "unexecuted": 71
+    },
+    "spendUsd": 0.679894,
+    "providerRequests": 46,
+    "criticalExample": "legalcitebench::CITATION_COMPLETION::12576371",
+    "additionalPaidExecution": false
+  },
+  "criticalFailureRootCause": {
+    "exampleId": "legalcitebench::CITATION_COMPLETION::12576371",
+    "primaryClass": "SCORER_DEFECT",
+    "secondaryClasses": [
+      "EVALUATOR_DEFECT",
+      "TASK_ROUTING"
+    ],
+    "summary": "Model titled response 'Abstention' and refused to invent cites; discussed the INPUT citation '355 Or. 319, 431 P.3d 90' as potentially inconsistent. detectAbstention() previously missed 'Abstention'/'cannot recommend'. CLOSED_BOOK fabricatedAuthority heuristic then flagged the discussed reporter pattern as FABRICATED_OR_MISLEADING_AUTHORITY. Confirmed false-positive critical grounding flag (not model invention of a new authority).",
+    "modelBehavior": "Policy-aligned abstention + warning about provided cite",
+    "nyayaPipelineIssue": "Closed-book LegalCite completion previously scored as exact-label + citation-regex without source-aware provenance or abstention-aware classification",
+    "legalCiteOtherFailures": "ORIGINAL_LIVE_SCORE Cite 0/9 exact. OFFLINE_RESCORE_ONLY (zero paid): 2/9 task-correct after task-aware scorers (error-detection format mismatch fixed); prior critical 12576371 → abstained=true, fabricatedAuthority=false, still incorrect vs gold completion list (ABSTAINED_INCORRECTLY). Remaining failures include abstention on completion/retrieval and case-matching misses; grounded mode still lacks retrieved sources.",
+    "legalBenchFails": "3/3 incorrect were gpt-6.1-sol ROUTINE citation_prediction_* with abstention (EXACT_LABEL_MISMATCH); offline rescore 37/37 replayed with 34/34 correctness unchanged.",
+    "wp01Remediation": {
+      "status": "IMPLEMENTED_PENDING_REMOTE_CI",
+      "reproduced": true,
+      "inputCitationProvenPresent": "355 Or. 319, 431 P.3d 90",
+      "offlineReplayArtifact": "benchmarks/external/cache/runs/prosecution-external-live/offline-rescore-wp01.json",
+      "fixes": [
+        "Expanded abstention detection (Abstention, unable to verify, insufficient evidence, etc.)",
+        "Evidence-aware citation origin classes; input-supplied cites never fabricated solely by output presence",
+        "Task-specific LegalCite scorers (error detection, case matching, verification/correction, completion/retrieval)",
+        "Closed-book vs grounded mode separation + missing grounded source context flag",
+        "Unique LegalCite taskIds (qa_style/fake_type/index) + legacy id replay disambiguation",
+        "Gold fields excluded from input provenance extraction"
+      ],
+      "paidCalls": 0,
+      "courtlistenerCalls": 0
+    }
+  },
+  "totals": {
+    "requirementsInventoried": 41,
+    "note": "41 fully-specified core release-path requirements in this register; broader UI/API surface inventory from audit agents is rolled into these statuses rather than duplicated as one-row-per-route.",
+    "verifiedComplete": 14,
+    "implementedUnverified": 6,
+    "partial": 9,
+    "missing": 4,
+    "broken": 0,
+    "blocked": 7,
+    "outOfScope": 1,
+    "p0": 20,
+    "p1": 9,
+    "p2": 10,
+    "p3": 2
+  },
+  "requirements": [
+    {
+      "id": "PROF-CLIENT-01",
+      "product": "Professional",
+      "subsystem": "Clients",
+      "feature": "Client CRUD",
+      "requirement": "Create/update/archive clients with org isolation",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "apps/web/src/app/app/clients/page.tsx",
+        "e2e/professional.spec.ts"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-MATTER-01",
+      "product": "Professional",
+      "subsystem": "Matters",
+      "feature": "Case dashboard",
+      "requirement": "Matter create/assign/team/status/dashboard",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/professional.spec.ts",
+        "e2e/case-workspace.spec.ts"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-DOC-01",
+      "product": "Professional",
+      "subsystem": "Documents",
+      "feature": "Text ingest pipeline",
+      "requirement": "Upload→extract→chunk→embed→ready",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/document-ingest.spec.ts",
+        "packages/documents"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-DOC-02",
+      "product": "Professional",
+      "subsystem": "Documents",
+      "feature": "OCR",
+      "requirement": "Production OCR for image-only PDFs",
+      "status": "BLOCKED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "packages/platform/src/config.ts IMPLEMENTED_OCR_PROVIDERS=['none']",
+        "docs/PRODUCTION_READINESS.md#7"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09",
+      "remediation": "Allowlist and certify Http/Tesseract OCR; load-test; advertise only after gate green"
+    },
+    {
+      "id": "PROF-TL-01",
+      "product": "Professional",
+      "subsystem": "Timeline",
+      "feature": "Nyaya Timeline",
+      "requirement": "Reviewable timeline with provenance",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/case-intelligence.spec.ts"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-MEM-01",
+      "product": "Professional",
+      "subsystem": "Memory",
+      "feature": "Nyaya Memory",
+      "requirement": "Structured reviewable memory entries",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/professional.spec.ts",
+        "packages/intelligence/src/memory"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-GRAPH-01",
+      "product": "Professional",
+      "subsystem": "Graph",
+      "feature": "Nyaya Graph",
+      "requirement": "Entity/relationship graph with review",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/graph-relevance.spec.ts"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-RES-01",
+      "product": "Professional",
+      "subsystem": "Research",
+      "feature": "Nyaya Research corpus",
+      "requirement": "Real licensed jurisdiction-aware authority research",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "docs/PRODUCTION_READINESS.md corpus BLOCKER (partially STALE vs Queue2 snapshot)",
+        "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json HISTORICAL 3709 authorities / 2392 cases @ 2026-09-28",
+        "LIVE_CORPUS_UNVERIFIED DATABASE_URL unset this session"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09",
+      "remediation": "Re-inventory live DB; close coverage gaps vs 10k goal; attorney-facing honesty until licensed depth proven"
+    },
+    {
+      "id": "PROF-DRAFT-01",
+      "product": "Professional",
+      "subsystem": "Draft",
+      "feature": "Nyaya Draft",
+      "requirement": "Draft generation with human review",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/professional.spec.ts draft generate"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-BILL-01",
+      "product": "Professional",
+      "subsystem": "Billing",
+      "feature": "Time/invoice assistance",
+      "requirement": "Basic time entries and draft invoices (not trust accounting)",
+      "status": "PARTIAL",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/firm-workspace.spec.ts smoke"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-ROLE-01",
+      "product": "Professional",
+      "subsystem": "RBAC",
+      "feature": "Professional roles",
+      "requirement": "Owner/Admin/Partner/Lawyer/Paralegal/Staff/Client Guest",
+      "status": "PARTIAL",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/database/src/system-roles.ts owner/lawyer/staff/client_guest only"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-CONTACT-01",
+      "product": "Professional",
+      "subsystem": "Contacts",
+      "feature": "Standalone contacts",
+      "requirement": "Contacts entity distinct from clients",
+      "status": "MISSING",
+      "severity": "P3",
+      "releaseBlocker": false,
+      "evidence": [
+        "No contacts schema found"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-FOLDER-01",
+      "product": "Professional",
+      "subsystem": "Documents",
+      "feature": "Folders",
+      "requirement": "Document folder entity",
+      "status": "MISSING",
+      "severity": "P3",
+      "releaseBlocker": false,
+      "evidence": [],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-RBAC-01",
+      "product": "Prosecution",
+      "subsystem": "RBAC",
+      "feature": "Prosecution roles",
+      "requirement": "Six prosecution roles with capabilities",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/database/src/prosecution-roles.ts",
+        "PB-RBAC-01/02",
+        "39/39 CURRENT_VERIFIED"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-CASE-01",
+      "product": "Prosecution",
+      "subsystem": "Cases",
+      "feature": "Criminal case lifecycle",
+      "requirement": "Intake, assignment, defendants, charges, elements",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/prosecution.spec.ts",
+        "packages/intelligence/src/prosecution/postgres.ts"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-EV-01",
+      "product": "Prosecution",
+      "subsystem": "Evidence",
+      "feature": "Chain of custody",
+      "requirement": "Evidence inventory + CoC provenance",
+      "status": "PARTIAL",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "week4/chain-of-custody.ts",
+        "schema typing drift string[] vs objects"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-DIS-01",
+      "product": "Prosecution",
+      "subsystem": "Disclosure",
+      "feature": "Brady/Giglio candidates",
+      "requirement": "Human review only; no autonomous final Brady",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "disclosure-workflow.ts",
+        "PB-DIS-01/02",
+        "e2e Stage 4"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-SAFE-01",
+      "product": "Prosecution",
+      "subsystem": "Safety",
+      "feature": "No guilt/charging autonomy",
+      "requirement": "Null guilt/charging; forbidden language",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "prosecution bench critical taxonomy",
+        "e2e asserts"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-ISO-01",
+      "product": "Prosecution",
+      "subsystem": "Isolation",
+      "feature": "Tenant/case isolation",
+      "requirement": "No cross-tenant or cross-case bleed",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "PB-TEN-01",
+        "PB-EV-03",
+        "permissions integration tests"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-WF-01",
+      "product": "Prosecution",
+      "subsystem": "Legal workflow",
+      "feature": "Warrants/motions/hearings/pleas tracking",
+      "requirement": "Tracking only; no autonomous filing",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "legal-workflow.ts",
+        "e2e/prosecution-warrant.spec.ts"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-MEM-01",
+      "product": "Prosecution",
+      "subsystem": "Memory",
+      "feature": "Case Memory UX",
+      "requirement": "Reviewable Memory parity with Professional",
+      "status": "MISSING",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "memory.ts fixture-style only; no prosecution Memory UI"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-GRAPH-01",
+      "product": "Prosecution",
+      "subsystem": "Graph",
+      "feature": "Persisted prosecution graph",
+      "requirement": "Writable graph_nodes/edges for criminal cases",
+      "status": "PARTIAL",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "phase14 tables exist; graph-bridge projection-only"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-AUD-01",
+      "product": "Prosecution",
+      "subsystem": "Audit",
+      "feature": "Dedicated Audit nav",
+      "requirement": "Authorized audit browser for office",
+      "status": "PARTIAL",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "Events written; no dedicated audit route"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-BENCH-01",
+      "product": "Prosecution",
+      "subsystem": "Benchmarks",
+      "feature": "Internal 39-scenario bench",
+      "requirement": "39/39 deterministic PASS",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "npm run bench:prosecution CURRENT_VERIFIED 39/39 this session"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-EXT-01",
+      "product": "Prosecution",
+      "subsystem": "External validation",
+      "feature": "LegalBench/LegalCite live",
+      "requirement": "Independent external validation of pipeline",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "LB 37/37 91.89% ORIGINAL_LIVE preserved",
+        "Cite 9/80 ORIGINAL_LIVE preserved; offline rescore only (not a new live eval)",
+        "WP-01 scorer integrity remediated; 71 Cite examples remain unexecuted — do not resume without NEW paid auth"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09",
+      "remediation": "WP-01 scorer fix landed; remaining: fresh authorized Cite continuation/canary under NEW auth only (WP-08), not silent resume of closed session"
+    },
+    {
+      "id": "AI-ROUTE-01",
+      "product": "Shared",
+      "subsystem": "Model router",
+      "feature": "Router v2 high-stakes",
+      "requirement": "Claude→Grok→FAIL_CLOSED; no GPT/Gemini high-stakes",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "v2 policy PASS in tests; FEATURE_NYAYA_MODEL_ROUTER_V2 default false; product Ask lacks subsystem=prosecution/highStakesLegal"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09",
+      "remediation": "Enable flag with DB/env alignment; wire prosecution Ask to prosecution high-stakes; re-certify"
+    },
+    {
+      "id": "AI-GROUND-01",
+      "product": "Shared",
+      "subsystem": "Grounding",
+      "feature": "Citation validators",
+      "requirement": "Drop unsupported cites/quotes against retrieval",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "research synthesize/memo validators; search validateCitedAnswerAgainstPassages",
+        "WP-01 external Cite scorer false-positive fabrication cleared offline; production grounding path still separately unverified"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "AI-EXT-SCORER-01",
+      "product": "Shared",
+      "subsystem": "External bench scorers",
+      "feature": "LegalCite abstention/fabrication",
+      "requirement": "Accurate abstention + fabrication detection without false P0",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "citation-utils.ts + scoreCitationReliability task-aware rewrite",
+        "adversarial scorer tests (20+ controls) + offline replay 37 LB + 9 Cite",
+        "12576371 FP cleared: fabricatedAuthority false, abstention detected; gold still unmet",
+        "internal prosecution 39/39; external-bench 221 tests; pending remote CI SUCCESS for VERIFIED_COMPLETE"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09",
+      "remediation": "Complete remote CI verification on feat/production-model-routing; do not treat offline rescore as new live Cite accuracy"
+    },
+    {
+      "id": "CORPUS-01",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Live authority inventory",
+      "requirement": "Live case/authority counts vs 10k goal",
+      "status": "BLOCKED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "DATABASE_URL unset → LIVE_CORPUS_UNVERIFIED; snapshot 3709 auth / 2392 cases @ 2026-09-28 HISTORICAL"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "CORPUS-02",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Citation integrity",
+      "requirement": "Resolved citations; low TARGET_ABSENT; no orphans",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "snapshot orphans=0 dupes=0; many jurisdictions high citationTargetAbsent HISTORICAL"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "SEC-AUTH-01",
+      "product": "Shared",
+      "subsystem": "Security",
+      "feature": "Clerk MFA production",
+      "requirement": "Live Clerk+MFA verified for production",
+      "status": "BLOCKED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "docs/PRODUCTION_READINESS.md item 2 BLOCKER"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "SEC-ISO-01",
+      "product": "Shared",
+      "subsystem": "Security",
+      "feature": "Tenant isolation",
+      "requirement": "App-layer org/matter isolation",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "permissions integration tests",
+        "e2e/security.spec.ts",
+        "no RLS by design"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "SEC-MAL-01",
+      "product": "Shared",
+      "subsystem": "Security",
+      "feature": "ClamAV production",
+      "requirement": "Live malware scan for uploads",
+      "status": "BLOCKED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "PRODUCTION_READINESS item 5"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "SEC-LEGAL-01",
+      "product": "Shared",
+      "subsystem": "Legal",
+      "feature": "Terms/Privacy",
+      "requirement": "Attorney-reviewed Terms and Privacy",
+      "status": "BLOCKED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "apps/web terms/privacy placeholders"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "OPS-BACKUP-01",
+      "product": "Shared",
+      "subsystem": "Ops",
+      "feature": "Backup/restore/PITR",
+      "requirement": "Managed Postgres restore rehearsed",
+      "status": "BLOCKED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "PRODUCTION_READINESS backup BLOCKER; local docker rehearse only"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "OPS-MON-01",
+      "product": "Shared",
+      "subsystem": "Ops",
+      "feature": "Monitoring",
+      "requirement": "External monitoring/alerting/on-call",
+      "status": "BLOCKED",
+      "severity": "P1",
+      "releaseBlocker": true,
+      "evidence": [
+        "PRODUCTION_READINESS monitoring BLOCKER"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "OPS-DEP-01",
+      "product": "Shared",
+      "subsystem": "Ops",
+      "feature": "Production deploy",
+      "requirement": "Deployed production environment",
+      "status": "MISSING",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "DEPLOYED=NO; Dockerfile READY locally"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "RM-PG-01",
+      "product": "Shared",
+      "subsystem": "Scope",
+      "feature": "Professor/Guide removal",
+      "requirement": "No active Professor/Guide/student/public surfaces",
+      "status": "PARTIAL",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "No apps/web professor/guide routes; schema drop 0025; workspace_type enum still student/public; docs STALE"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "CJIS-01",
+      "product": "Prosecution",
+      "subsystem": "Compliance",
+      "feature": "CJIS certification",
+      "requirement": "Do not claim CJIS without program",
+      "status": "OUT_OF_SCOPE",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "staging-audit cjis.certified===false; product rule"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09",
+      "note": "Release blocker only if marketing claims CJIS"
+    },
+    {
+      "id": "TEST-E2E-01",
+      "product": "Shared",
+      "subsystem": "Testing",
+      "feature": "Playwright E2E",
+      "requirement": "Professional+Prosecution E2E green in CI",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "CI SUCCESS at HEAD; PRODUCTION_READINESS still lists professor/guide e2e STALE"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "TEST-UNIT-01",
+      "product": "Shared",
+      "subsystem": "Testing",
+      "feature": "Unit/integration",
+      "requirement": "Workspace unit tests in CI",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "CI 41648686595 SUCCESS; router v2 18/18; external live executor 18/18 this session"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    }
+  ],
+  "topReleaseBlockers": [
+    "AI-ROUTE-01 Router v2 off + prosecution Ask under-wired for high-stakes",
+    "PROF-RES-01 / CORPUS-01 Live corpus unverified; research go-live claims blocked",
+    "PROF-DOC-02 OCR production gate",
+    "SEC-AUTH-01 Clerk MFA production verification",
+    "SEC-MAL-01 ClamAV production verification",
+    "SEC-LEGAL-01 Attorney Terms/Privacy",
+    "OPS-BACKUP-01 Managed restore/PITR",
+    "OPS-MON-01 Monitoring/on-call",
+    "OPS-DEP-01 No production deployment",
+    "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — scorer WP-01 remediated pending CI)",
+    "AI-EXT-SCORER-01 pending remote CI SUCCESS before VERIFIED_COMPLETE"
+  ],
+  "dependencyOrderedPlan": [
+    {
+      "id": "WP-01",
+      "title": "Fix LegalCite evaluation integrity",
+      "closes": [
+        "AI-EXT-SCORER-01"
+      ],
+      "partiallyAddresses": [
+        "PROS-EXT-01"
+      ],
+      "deps": [],
+      "effort": "2-5 days",
+      "status": "IMPLEMENTED_PENDING_REMOTE_CI",
+      "acceptance": "Abstention lexicon matches Abstention/cannot recommend; fabrication heuristic excludes task-supplied cites; structured Cite scorers; zero-cost regression tests; remote CI SUCCESS",
+      "note": "Does not close PROS-EXT-01 fully — 71 Cite examples remain unexecuted; no paid resume in WP-01"
+    },
+    {
+      "id": "WP-02",
+      "title": "Activate production model-router v2 for prosecution/high-stakes",
+      "closes": [
+        "AI-ROUTE-01"
+      ],
+      "deps": [
+        "WP-01"
+      ],
+      "effort": "3-7 days",
+      "acceptance": "Flag ON with env/DB alignment; Ask prosecution paths set subsystem/highStakesLegal; GPT/Gemini high-stakes remain 0 in tests"
+    },
+    {
+      "id": "WP-03",
+      "title": "Live corpus inventory + research honesty gate",
+      "closes": [
+        "CORPUS-01",
+        "PROF-RES-01",
+        "CORPUS-02"
+      ],
+      "deps": [],
+      "effort": "1-3 weeks (ops+data)",
+      "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots"
+    },
+    {
+      "id": "WP-04",
+      "title": "Production security/config gate closure",
+      "closes": [
+        "SEC-AUTH-01",
+        "SEC-MAL-01",
+        "PROF-DOC-02",
+        "SEC-LEGAL-01"
+      ],
+      "deps": [],
+      "effort": "2-4 weeks",
+      "acceptance": "Clerk MFA verified; ClamAV prod verified; OCR policy decided; attorney Terms/Privacy"
+    },
+    {
+      "id": "WP-05",
+      "title": "Ops resilience",
+      "closes": [
+        "OPS-BACKUP-01",
+        "OPS-MON-01",
+        "OPS-DEP-01"
+      ],
+      "deps": [
+        "WP-04"
+      ],
+      "effort": "2-4 weeks",
+      "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill"
+    },
+    {
+      "id": "WP-06",
+      "title": "Prosecution product parity polish",
+      "closes": [
+        "PROS-MEM-01",
+        "PROS-GRAPH-01",
+        "PROS-AUD-01",
+        "PROS-EV-01"
+      ],
+      "deps": [
+        "WP-02"
+      ],
+      "effort": "1-2 weeks",
+      "acceptance": "Memory/Audit UX; graph writers or explicit OUT_OF_SCOPE; CoC schema aligned"
+    },
+    {
+      "id": "WP-07",
+      "title": "Professional RBAC + cleanup",
+      "closes": [
+        "PROF-ROLE-01",
+        "RM-PG-01",
+        "PROF-CONTACT-01"
+      ],
+      "deps": [],
+      "effort": "1 week",
+      "acceptance": "Spec roles or documented reduction; enum/docs cleanup; contacts decision"
+    },
+    {
+      "id": "WP-08",
+      "title": "Design-partner external acceptance",
+      "closes": [
+        "PROS-EXT-01",
+        "AI-GROUND-01"
+      ],
+      "deps": [
+        "WP-01",
+        "WP-02",
+        "WP-03",
+        "WP-05"
+      ],
+      "effort": "2-4 weeks",
+      "acceptance": "Fresh authorized external Cite+LB run; attorney/DA partner written acceptance; no CJIS claims"
+    }
+  ],
+  "november20Feasibility": {
+    "verdict": "NOT_FEASIBLE",
+    "reasons": [
+      "No production deployment exists (OPS-DEP-01)",
+      "Multiple P0 ops/security gates open (Clerk MFA, ClamAV, backup/PITR, monitoring, Terms)",
+      "Live corpus unverified this session; research go-live still blocked",
+      "Router v2 not production-default; prosecution Ask under-wired",
+      "External LegalCite validation incomplete (71 unexecuted); WP-01 scorer remediation pending remote CI",
+      "Calendar date 2026-11-20 is ~17 days from audit; WP-04+WP-05 alone exceed that window for production"
+    ]
+  }
+}
