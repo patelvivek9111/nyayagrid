@@ -2,10 +2,10 @@
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
   "generatedAt": "2026-11-03T14:50:00.000Z",
-  "head": "c2c3d09ab9850b0a27a78a6164d98f378e01dde7",
+  "head": "8075f4717745d245704f1914a1a3f08cc0caaee0",
   "branch": "feat/production-model-routing",
   "remoteCi": {
-    "run": "41648686595",
+    "run": "41665323949",
     "conclusion": "SUCCESS"
   },
   "productScope": {
@@ -48,7 +48,7 @@
     "legalCiteOtherFailures": "ORIGINAL_LIVE_SCORE Cite 0/9 exact. OFFLINE_RESCORE_ONLY (zero paid): 2/9 task-correct after task-aware scorers (error-detection format mismatch fixed); prior critical 12576371 → abstained=true, fabricatedAuthority=false, still incorrect vs gold completion list (ABSTAINED_INCORRECTLY). Remaining failures include abstention on completion/retrieval and case-matching misses; grounded mode still lacks retrieved sources.",
     "legalBenchFails": "3/3 incorrect were gpt-6.1-sol ROUTINE citation_prediction_* with abstention (EXACT_LABEL_MISMATCH); offline rescore 37/37 replayed with 34/34 correctness unchanged.",
     "wp01Remediation": {
-      "status": "IMPLEMENTED_PENDING_REMOTE_CI",
+      "status": "VERIFIED_COMPLETE",
       "reproduced": true,
       "inputCitationProvenPresent": "355 Or. 319, 431 P.3d 90",
       "offlineReplayArtifact": "benchmarks/external/cache/runs/prosecution-external-live/offline-rescore-wp01.json",
@@ -61,14 +61,20 @@
         "Gold fields excluded from input provenance extraction"
       ],
       "paidCalls": 0,
-      "courtlistenerCalls": 0
+      "courtlistenerCalls": 0,
+      "fixCommit": "ba6d9a537e271d5e03a313bfb4ebc2ee35d7c5c2",
+      "formatCommit": "8075f4717745d245704f1914a1a3f08cc0caaee0",
+      "remoteCi": {
+        "run": "41665323949",
+        "conclusion": "SUCCESS"
+      }
     }
   },
   "totals": {
     "requirementsInventoried": 41,
     "note": "41 fully-specified core release-path requirements in this register; broader UI/API surface inventory from audit agents is rolled into these statuses rather than duplicated as one-row-per-route.",
-    "verifiedComplete": 14,
-    "implementedUnverified": 6,
+    "verifiedComplete": 15,
+    "implementedUnverified": 5,
     "partial": 9,
     "missing": 4,
     "broken": 0,
@@ -461,18 +467,19 @@
       "subsystem": "External bench scorers",
       "feature": "LegalCite abstention/fabrication",
       "requirement": "Accurate abstention + fabrication detection without false P0",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "VERIFIED_COMPLETE",
       "severity": "P0",
-      "releaseBlocker": true,
+      "releaseBlocker": false,
       "evidence": [
         "citation-utils.ts + scoreCitationReliability task-aware rewrite",
         "adversarial scorer tests (20+ controls) + offline replay 37 LB + 9 Cite",
         "12576371 FP cleared: fabricatedAuthority false, abstention detected; gold still unmet",
-        "internal prosecution 39/39; external-bench 221 tests; pending remote CI SUCCESS for VERIFIED_COMPLETE"
+        "internal prosecution 39/39; external-bench 221 tests",
+        "remote CI 41665323949 SUCCESS at 8075f47"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09",
-      "remediation": "Complete remote CI verification on feat/production-model-routing; do not treat offline rescore as new live Cite accuracy"
+      "lastVerifiedSha": "8075f47",
+      "remediation": "Closed by WP-01; do not treat offline rescore as new live Cite accuracy; 71 Cite still unexecuted"
     },
     {
       "id": "CORPUS-01",
@@ -665,8 +672,7 @@
     "OPS-BACKUP-01 Managed restore/PITR",
     "OPS-MON-01 Monitoring/on-call",
     "OPS-DEP-01 No production deployment",
-    "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — scorer WP-01 remediated pending CI)",
-    "AI-EXT-SCORER-01 pending remote CI SUCCESS before VERIFIED_COMPLETE"
+    "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — WP-01 scorer certified)"
   ],
   "dependencyOrderedPlan": [
     {
@@ -676,7 +682,7 @@
       "partiallyAddresses": ["PROS-EXT-01"],
       "deps": [],
       "effort": "2-5 days",
-      "status": "IMPLEMENTED_PENDING_REMOTE_CI",
+      "status": "VERIFIED_COMPLETE",
       "acceptance": "Abstention lexicon matches Abstention/cannot recommend; fabrication heuristic excludes task-supplied cites; structured Cite scorers; zero-cost regression tests; remote CI SUCCESS",
       "note": "Does not close PROS-EXT-01 fully — 71 Cite examples remain unexecuted; no paid resume in WP-01"
     },
