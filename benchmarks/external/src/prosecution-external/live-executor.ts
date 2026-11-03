@@ -9,7 +9,10 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, appendFileSync } from "node:fs";
 import path from "node:path";
 import { getCacheDir } from "../paths.js";
-import { assertLivePaidExecutionAuthorized, isLivePaidExecutionAuthorized } from "../live/authorization.js";
+import {
+  assertLivePaidExecutionAuthorized,
+  isLivePaidExecutionAuthorized,
+} from "../live/authorization.js";
 import {
   assertNextCallWithinBudget,
   BudgetLimitError,
@@ -24,23 +27,14 @@ import { persistPaidCallImmediately } from "../live/persistence.js";
 import { buildCacheKey, contentHashFromText } from "../live/cache-key.js";
 import { loadExternalBenchLocalEnv } from "../live/load-local-env.js";
 import type { NormalizedTask } from "../schema/normalized-task.js";
-import {
-  DETERMINISTIC_SEED,
-  SUITE_ID,
-  SUITE_VERSION,
-  type TaskGroup,
-} from "./constants.js";
+import { DETERMINISTIC_SEED, SUITE_ID, SUITE_VERSION, type TaskGroup } from "./constants.js";
 import { GPT_61_SOL_LIVE_VERIFIED } from "./model-pin.js";
 import {
   buildProsecutionExternalSuitePlan,
   type LoadedSuiteSlice,
   type ProsecutionExternalSuitePlan,
 } from "./suite.js";
-import {
-  scoreExactLabel,
-  scoreCitationReliability,
-  type ScoreOutcome,
-} from "./scorers/index.js";
+import { scoreExactLabel, scoreCitationReliability, type ScoreOutcome } from "./scorers/index.js";
 import {
   buildProsecutionPipelineRequest,
   classifyProsecutionExternalRisk,
@@ -165,8 +159,7 @@ function isTaskEligible(task: NormalizedTask): { ok: boolean; reason?: string } 
   }
   const conv = task.conversation ?? [];
   const hasInput =
-    conv.some((t) => t.content?.trim()) ||
-    (task.input && Object.keys(task.input).length > 0);
+    conv.some((t) => t.content?.trim()) || (task.input && Object.keys(task.input).length > 0);
   if (!hasInput) return { ok: false, reason: "MISSING_TASK_INPUT" };
   return { ok: true };
 }
@@ -227,13 +220,11 @@ export async function runProsecutionExternalLive(
       : parseFlag(argv, "--dry-run") || !parseFlag(argv, "--allow-paid-model-calls");
 
   const hardCapUsd =
-    opts.hardCapUsd ??
-    parseMaxCostUsd(argv) ??
-    opts.maxCostUsdForTests ??
-    DEFAULT_HARD_CAP_USD;
+    opts.hardCapUsd ?? parseMaxCostUsd(argv) ?? opts.maxCostUsdForTests ?? DEFAULT_HARD_CAP_USD;
   const requestCap = opts.requestCap ?? parseIntFlag(argv, "--max-requests", DEFAULT_REQUEST_CAP);
   const batchSize = opts.batchSize ?? parseIntFlag(argv, "--batch-size", DEFAULT_BATCH_SIZE);
-  const maxExamples = opts.maxExamples ?? parseIntFlag(argv, "--max-examples", Number.MAX_SAFE_INTEGER);
+  const maxExamples =
+    opts.maxExamples ?? parseIntFlag(argv, "--max-examples", Number.MAX_SAFE_INTEGER);
   const runId = opts.resumeRunId ?? LIVE_RUN_ID;
   const commercialOnly = opts.commercialOnly ?? true;
 
@@ -254,8 +245,7 @@ export async function runProsecutionExternalLive(
       }
     }
     if (!authorizationBlocked) {
-      const authorized =
-        opts.bypassAuthForTests || isLivePaidExecutionAuthorized({ argv, env });
+      const authorized = opts.bypassAuthForTests || isLivePaidExecutionAuthorized({ argv, env });
       if (!authorized) {
         authorizationBlocked = true;
         exitHint = "AUTHORIZATION_REQUIRED";
@@ -308,7 +298,10 @@ export async function runProsecutionExternalLive(
   };
   const work: WorkItem[] = [];
   for (const slice of plan.slices) {
-    if (commercialOnly && (slice.benchmarkId === "casefacts" || slice.benchmarkId === "legal-rag-bench")) {
+    if (
+      commercialOnly &&
+      (slice.benchmarkId === "casefacts" || slice.benchmarkId === "legal-rag-bench")
+    ) {
       continue;
     }
     for (const task of slice.tasks) {
@@ -371,7 +364,10 @@ export async function runProsecutionExternalLive(
       requestCap,
       actualSpendUsd: budget.spentUsd,
     });
-    writeFileSync(path.join(outDir, "last-live-report.json"), `${JSON.stringify(report, null, 2)}\n`);
+    writeFileSync(
+      path.join(outDir, "last-live-report.json"),
+      `${JSON.stringify(report, null, 2)}\n`,
+    );
     return report;
   }
 
@@ -387,7 +383,11 @@ export async function runProsecutionExternalLive(
       }
 
       const eligibility = isTaskEligible(task);
-      const taskGroup = groupForTask(task.benchmarkId, task.metadata ?? null, slice.taskGroupDefault);
+      const taskGroup = groupForTask(
+        task.benchmarkId,
+        task.metadata ?? null,
+        slice.taskGroupDefault,
+      );
       if (!eligibility.ok) {
         ineligibleExamples += 1;
         const row: ProsecutionExternalLiveTaskResult = {
@@ -427,8 +427,7 @@ export async function runProsecutionExternalLive(
       // Budget / request gates before any paid call.
       const worstIn = 4000;
       const worstOut = 1200;
-      const gateModel =
-        riskClass === "HIGH_STAKES_LEGAL" ? "claude-opus-5-5" : "gpt-6.1-sol";
+      const gateModel = riskClass === "HIGH_STAKES_LEGAL" ? "claude-opus-5-5" : "gpt-6.1-sol";
       const worstCase = dryRun
         ? 0
         : worstCaseCostForBudgetGate({
@@ -518,7 +517,9 @@ export async function runProsecutionExternalLive(
 
       ensureGoldIsolated(
         task,
-        buildProsecutionPipelineRequest({ task, riskClass }).messages.map((m) => m.content).join("\n"),
+        buildProsecutionPipelineRequest({ task, riskClass })
+          .messages.map((m) => m.content)
+          .join("\n"),
       );
 
       if (invocation.fallback) fallbacks += 1;

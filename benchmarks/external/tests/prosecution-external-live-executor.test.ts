@@ -332,9 +332,7 @@ describe("cost estimate reconciliation", () => {
     expect(plan.estimateReconciliation.registryLinearUsd).toBeGreaterThan(
       plan.estimateReconciliation.harnessPointUsd,
     );
-    expect(plan.conservativeUpperBoundUsd).toBe(
-      plan.estimateReconciliation.chosenConservativeUsd,
-    );
+    expect(plan.conservativeUpperBoundUsd).toBe(plan.estimateReconciliation.chosenConservativeUsd);
     expect(plan.conservativeUpperBoundUsd).toBeLessThanOrEqual(25);
     expect(plan.withinHardCap).toBe(true);
     expect(plan.estimatedProviderRequests).toBeLessThanOrEqual(220);

@@ -137,8 +137,7 @@ export function planProsecutionExternalLiveCost(
     (claude.totalCost + gpt.totalCost + grokReserve.totalCost).toFixed(4),
   );
   const registryPerExample =
-    meta.future_live_plan.estimated_spend_usd /
-    Math.max(1, meta.future_live_plan.planned_examples);
+    meta.future_live_plan.estimated_spend_usd / Math.max(1, meta.future_live_plan.planned_examples);
   const registryLinearUsd = Number((registryPerExample * plannedExamples).toFixed(4));
   const harnessWithContingency = Number((harnessPointUsd * contingencyMultiplier).toFixed(4));
   const conservativeUpperBoundUsd = Number(

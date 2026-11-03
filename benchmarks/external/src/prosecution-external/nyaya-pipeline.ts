@@ -15,10 +15,7 @@ import {
 } from "@nyayagrid/ai";
 
 type FallbackReasonCode =
-  | "PRIMARY_TIMEOUT"
-  | "PRIMARY_RATE_LIMIT"
-  | "PRIMARY_PROVIDER_ERROR"
-  | "FAIL_CLOSED";
+  "PRIMARY_TIMEOUT" | "PRIMARY_RATE_LIMIT" | "PRIMARY_PROVIDER_ERROR" | "FAIL_CLOSED";
 
 function isIllegalHighStakesTarget(modelId: string): boolean {
   return (
@@ -98,10 +95,13 @@ function conversationToUserContent(task: NormalizedTask): string {
   }
   const input = task.input ?? {};
   // Never include expectedAnswer / gold fields.
-  const { expectedAnswer: _e, answer: _a, label: _l, ground_truth: _g, ...safe } = input as Record<
-    string,
-    unknown
-  > & {
+  const {
+    expectedAnswer: _e,
+    answer: _a,
+    label: _l,
+    ground_truth: _g,
+    ...safe
+  } = input as Record<string, unknown> & {
     expectedAnswer?: unknown;
     answer?: unknown;
     label?: unknown;
@@ -183,7 +183,12 @@ export function buildProsecutionPipelineRequest(input: {
 }
 
 function taskTypeLabel(task: NormalizedTask): string {
-  return String(task.metadata?.upstreamTask ?? task.metadata?.citationTaskType ?? task.taskType ?? task.benchmarkId);
+  return String(
+    task.metadata?.upstreamTask ??
+      task.metadata?.citationTaskType ??
+      task.taskType ??
+      task.benchmarkId,
+  );
 }
 
 export function planProsecutionPipelineRoute(input: {
@@ -226,7 +231,8 @@ async function callProvider(input: {
     .filter((m) => m.role !== "system")
     .map((m) => `${m.role}: ${m.content}`)
     .join("\n\n");
-  const system = input.messages.find((m) => m.role === "system")?.content ?? PROSECUTION_PIPELINE_SYSTEM;
+  const system =
+    input.messages.find((m) => m.role === "system")?.content ?? PROSECUTION_PIPELINE_SYSTEM;
 
   if (input.modelId === "claude-opus-5-5") {
     if (!input.anthropicApiKey) throw new Error("PROVIDER_FAILURE: missing ANTHROPIC_API_KEY");
@@ -234,9 +240,7 @@ async function callProvider(input: {
       { apiKey: input.anthropicApiKey, fetchImpl: input.fetchImpl },
       {
         model: "claude-opus-5-5",
-        messages: [
-          { role: "user", content: `${system}\n\n${userContent}` },
-        ],
+        messages: [{ role: "user", content: `${system}\n\n${userContent}` }],
         effort: "high",
         maxTokens: input.maxTokens,
       },
@@ -299,12 +303,8 @@ export async function invokeNyayaProsecutionPipeline(
   }
 
   const maxTokens = input.maxTokens ?? 1024;
-  const est =
-    input.estimateCostUsd ??
-    ((_m: string, _i: number, _o: number) => 0);
-  const act =
-    input.actualCostUsd ??
-    ((_m: string, _i: number, _o: number) => 0);
+  const est = input.estimateCostUsd ?? ((_m: string, _i: number, _o: number) => 0);
+  const act = input.actualCostUsd ?? ((_m: string, _i: number, _o: number) => 0);
 
   const promptText = request.messages.map((m) => m.content).join("\n");
   if (input.dryRun || input.mockComplete) {
@@ -438,9 +438,7 @@ export async function invokeNyayaProsecutionPipeline(
       result.exactModelId.startsWith("gpt-") ||
       result.exactModelId.startsWith("gemini-"))
   ) {
-    throw new Error(
-      `ROUTING_BLOCKED: high-stakes served forbidden model ${result.exactModelId}`,
-    );
+    throw new Error(`ROUTING_BLOCKED: high-stakes served forbidden model ${result.exactModelId}`);
   }
 
   const inTok = result.usage.inputTokens;
