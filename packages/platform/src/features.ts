@@ -20,6 +20,11 @@ export const FEATURE_FLAGS = [
   "live_ai",
   /** Benchmark-driven Tier 1–4 model router. Default ON — product Ask uses v2; set FEATURE_NYAYA_MODEL_ROUTER_V2=0 to force legacy. */
   "nyaya_model_router_v2",
+  /**
+   * Guarded Neon / CORPUS_DATABASE_URL research path (WP-03D).
+   * Default OFF everywhere — requires CORPUS_DATABASE_URL + SELECT-only role + staging review.
+   */
+  "neon_corpus_research",
 ] as const;
 
 export type FeatureFlag = (typeof FEATURE_FLAGS)[number];
@@ -32,6 +37,7 @@ const FLAG_ENV_VAR: Record<FeatureFlag, string> = {
   ocr: "FEATURE_OCR",
   live_ai: "FEATURE_LIVE_AI",
   nyaya_model_router_v2: "FEATURE_NYAYA_MODEL_ROUTER_V2",
+  neon_corpus_research: "FEATURE_NEON_CORPUS_RESEARCH",
 };
 
 /**
@@ -48,6 +54,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     ocr: false,
     live_ai: false,
     nyaya_model_router_v2: true,
+    neon_corpus_research: false,
   },
   test: {
     agents: true,
@@ -55,6 +62,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     ocr: false,
     live_ai: false,
     nyaya_model_router_v2: true,
+    neon_corpus_research: false,
   },
   staging: {
     agents: false,
@@ -62,6 +70,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     ocr: false,
     live_ai: false,
     nyaya_model_router_v2: true,
+    neon_corpus_research: false,
   },
   production: {
     agents: false,
@@ -69,6 +78,7 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     ocr: false,
     live_ai: false,
     nyaya_model_router_v2: true,
+    neon_corpus_research: false,
   },
 };
 

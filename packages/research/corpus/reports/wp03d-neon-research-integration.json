@@ -1,0 +1,50 @@
+{
+  "classification": "NYAYAGRID_WP03D_NEON_RESEARCH_INTEGRATION_AND_SOURCE_SAFETY",
+  "generatedAt": "2026-11-03T20:16:00.000Z",
+  "headAtImplementation": "3f629b1af101682227d776ae493cef381ef95293",
+  "mutations": 0,
+  "neonWrites": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "result": "WP03D_RESEARCH_INTEGRATION_PARTIAL",
+  "verificationClasses": {
+    "IMPLEMENTATION_COMPLETE": true,
+    "MOCK_E2E_COMPLETE": true,
+    "LIVE_READ_ONLY_VERIFIED": false,
+    "LIVE_NEON_READ_ONLY_CERTIFICATION_BLOCKED": true,
+    "PRODUCTION_CONFIG_UNVERIFIED": true,
+    "PRODUCTION_DEPLOYMENT_UNVERIFIED": true
+  },
+  "architecture": {
+    "productDatabase": "DATABASE_URL via getDb()",
+    "corpusDatabase": "CORPUS_DATABASE_URL via createReadOnlyDb / createCorpusDb",
+    "separateConnection": true,
+    "featureGate": "FEATURE_NEON_CORPUS_RESEARCH (default OFF all envs)",
+    "readOnlySessionDefaults": "default_transaction_read_only=on + statement_timeout",
+    "restrictedRoleVerified": false,
+    "blocker": "No separately authorized SELECT-only Neon credential in this environment; privileged neonctl owner role must not be used as least-privilege proof"
+  },
+  "integration": {
+    "askRoute": "authorityRetriever: getAuthorityRetriever()",
+    "agentsQaPath": "authorityRetriever + embeddings wired",
+    "searchAuthoritiesApi": "createGuardedAuthorityRetriever",
+    "agentCorpusTool": "createGuardedAuthorityRetriever",
+    "identityOnlyQuoteProtection": "classifyAuthorityEligibility + GuardedAuthorityRetriever filters non-groundable hits",
+    "conflictingMetadata": "conservative; text+provenance can still allow quotes when chunks exist",
+    "unavailableBehavior": "ResearchCorpusUnavailableError → HTTP 503 RESEARCH_CORPUS_UNAVAILABLE"
+  },
+  "tests": {
+    "authorityEligibility": "7 passed",
+    "corpusDbConfig": "5 passed",
+    "guardedRetriever": "3 passed",
+    "featureFlag": "2 passed",
+    "researchPackage": "175 passed / 6 skipped",
+    "wp01Scorers": "28/28",
+    "wp02Router": "35/35",
+    "prosecution39": "39/39"
+  },
+  "liveNeon": {
+    "attempted": false,
+    "reason": "LIVE_NEON_READ_ONLY_CERTIFICATION_BLOCKED — restricted SELECT-only CORPUS_DATABASE_URL not provisioned for app use"
+  }
+}

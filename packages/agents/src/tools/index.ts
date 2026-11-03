@@ -4,7 +4,7 @@ import type { Database } from "@nyayagrid/database";
 import { createEmbeddingProviderFromEnv } from "@nyayagrid/ai";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
 import { PostgresHybridRetriever } from "@nyayagrid/search";
-import { AuthorityHybridRetriever, runResearchQuery } from "@nyayagrid/research";
+import { createGuardedAuthorityRetriever, runResearchQuery } from "@nyayagrid/research";
 import { preferredSearchHints } from "@nyayagrid/jurisdiction";
 import {
   analyzeContract,
@@ -151,7 +151,10 @@ export const searchLegalAuthoritiesTool = defineTool({
     limit: z.number().int().positive().max(25).optional(),
   }),
   async execute(ctx, input) {
-    const retriever = new AuthorityHybridRetriever(ctx.db, resolveEmbeddings(ctx));
+    const retriever = createGuardedAuthorityRetriever({
+      productDb: ctx.db,
+      embeddings: resolveEmbeddings(ctx),
+    });
     const hints = preferredSearchHints(ctx.caseJurisdictionContext ?? null);
     const hits = await retriever.search(
       input.query,

@@ -44,6 +44,40 @@ export function createDb(connectionString = process.env.DATABASE_URL) {
   return db;
 }
 
+export type CreateReadOnlyDbOptions = {
+  max?: number;
+  /** Postgres statement_timeout in milliseconds. */
+  statementTimeoutMs?: number;
+  applicationName?: string;
+};
+
+/**
+ * Open a SELECT-oriented pool with session `default_transaction_read_only=on`.
+ * Intended for CORPUS_DATABASE_URL — never a substitute for a restricted DB role.
+ */
+export function createReadOnlyDb(connectionString: string, options: CreateReadOnlyDbOptions = {}) {
+  if (!connectionString) {
+    throw new Error("connectionString is required for createReadOnlyDb");
+  }
+  const max = options.max ?? 3;
+  const statementTimeoutMs = options.statementTimeoutMs ?? 30_000;
+  const applicationName = options.applicationName ?? "nyayagrid-readonly";
+  const isNeon = /neon\.tech/i.test(connectionString);
+  const client = postgres(connectionString, {
+    max,
+    prepare: isNeon ? false : undefined,
+    idle_timeout: 20,
+    connect_timeout: 15,
+    connection: {
+      application_name: applicationName,
+      options: `-c default_transaction_read_only=on -c statement_timeout=${statementTimeoutMs}`,
+    },
+  });
+  const db = drizzle(client, { schema });
+  Object.assign(db, { $client: client });
+  return db;
+}
+
 /** Close the postgres.js pool opened by `createDb`. Safe to call more than once. */
 export async function closeDb(db: Database): Promise<void> {
   const client = (db as { $client?: { end?: (options?: { timeout?: number }) => Promise<void> } })

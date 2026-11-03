@@ -1,7 +1,7 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-03T19:39:50.106Z",
+  "generatedAt": "2026-11-03T22:57:29.530Z",
   "head": "b428b8766f197f3ab64a13b8950a04c8d005a791",
   "branch": "feat/production-model-routing",
   "remoteCi": {
@@ -72,13 +72,13 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "WP-03C: Neon corpus forensics + research path trace; product not Neon-wired; FULL_RESEARCH_CERTIFIED=false",
+    "note": "WP-03D: guarded Neon corpus integration implemented; live RO credential blocked; production activation OFF",
     "verifiedComplete": 16,
     "implementedUnverified": 4,
-    "partial": 19,
+    "partial": 21,
     "missing": 4,
     "broken": 0,
-    "blocked": 10,
+    "blocked": 8,
     "outOfScope": 1,
     "p0": 30,
     "p1": 12,
@@ -195,7 +195,8 @@
         "Live corpus verification BLOCKED",
         "Historical corpus far below 10k useful-cases target (2392 cases HISTORICAL)",
         "WP-03A: local certification DB access recovered + live census complete; research go-live still blocked (843 cases, synthetic majority, thin citation graph)",
-        "WP-03C: Neon has 5621 text-backed cases but product research binds DATABASE_URL (local cert DB is not Neon); research go-live blocked"
+        "WP-03C: Neon has 5621 text-backed cases but product research binds DATABASE_URL (local cert DB is not Neon); research go-live blocked",
+        "WP-03D implementation complete (partial): guarded corpus adapter + quote safety; live Neon RO cert blocked on SELECT-only credential"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "b428b87",
@@ -782,8 +783,8 @@
       "confidence": "HIGH",
       "lastVerifiedSha": "b428b87",
       "evidence": [
-        "Neon identityOnly=true 29403; conflicting identityOnly+corpusComplete 210; retrieval must not quote identity-only as opinions",
-        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+        "classifyAuthorityEligibility + GuardedAuthorityRetriever; identity-only cannot quote; conflicting flags conservative",
+        "Unit tests 7 eligibility + 3 guarded retriever"
       ]
     },
     {
@@ -830,8 +831,7 @@
       "confidence": "HIGH",
       "lastVerifiedSha": "b428b87",
       "evidence": [
-        "Keyword FTS PASS on Neon; semantic/hybrid skipped zero-paid; product not pointed at Neon",
-        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+        "Guarded path filters non-groundable hits; live Neon keyword/semantic still blocked on credential"
       ]
     },
     {
@@ -856,15 +856,18 @@
       "subsystem": "Research",
       "feature": "Professional Neon corpus integration",
       "requirement": "Professional research/Ask corpus path uses authorized Neon (or replica) text-backed authorities",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "priority": "P0",
       "releaseBlocker": true,
       "confidence": "HIGH",
       "lastVerifiedSha": "b428b87",
       "evidence": [
-        "getDb(process.env.DATABASE_URL); AuthorityHybridRetriever on same DB; Neon not default",
-        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
-      ]
+        "WP-03D: CORPUS_DATABASE_URL + FEATURE_NEON_CORPUS_RESEARCH + GuardedAuthorityRetriever wired into Ask/agents/searchAuthorities",
+        "Product getDb() remains DATABASE_URL; Neon not substituted",
+        "LIVE_NEON_READ_ONLY_CERTIFICATION_BLOCKED: no SELECT-only corpus credential",
+        "packages/research/corpus/reports/wp03d-neon-research-integration.json"
+      ],
+      "remediation": "Provision SELECT-only Neon role + set CORPUS_DATABASE_URL; enable FEATURE_NEON_CORPUS_RESEARCH in staging only after live RO cert"
     },
     {
       "id": "CORPUS-14",
@@ -872,14 +875,14 @@
       "subsystem": "Research",
       "feature": "Prosecution Neon corpus integration",
       "requirement": "Prosecution Ask uses same guarded Neon corpus with case isolation and high-stakes routing",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "priority": "P0",
       "releaseBlocker": true,
       "confidence": "HIGH",
       "lastVerifiedSha": "b428b87",
       "evidence": [
-        "Same DATABASE_URL binding; Router v2 unit-certified; live Neon prosecution retrieval uncertified",
-        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+        "WP-03D: Prosecution Ask shares getAuthorityRetriever(); Router v2 preserved; live Neon prosecution retrieval still blocked on credential",
+        "packages/research/corpus/reports/wp03d-neon-research-integration.json"
       ]
     },
     {
@@ -948,10 +951,10 @@
       "deps": [],
       "effort": "1-3 weeks (ops+data)",
       "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots",
-      "status": "RESEARCH_CERTIFICATION_PARTIAL",
-      "result": "WP03C_RESEARCH_CERTIFICATION_PARTIAL",
-      "evidenceArtifact": "packages/research/corpus/reports/wp03c-neon-research-readiness.json",
-      "note": "Neon substantive corpus measured (5621 text / 5445 strict). Product research not Neon-connected. Citation identity != full text. Gap to 10k=4379. Do not start WP-04 as automatic next for corpus fill.",
+      "status": "RESEARCH_INTEGRATION_PARTIAL",
+      "result": "WP03D_RESEARCH_INTEGRATION_PARTIAL",
+      "evidenceArtifact": "packages/research/corpus/reports/wp03d-neon-research-integration.json",
+      "note": "Guarded CORPUS_DATABASE_URL path implemented and feature-gated OFF. Live Neon RO verification blocked until SELECT-only credential. Do not deploy/activate in production.",
       "verificationClasses": {
         "DATABASE_ACCESS_RECOVERED": true,
         "DATABASE_IDENTITY_VERIFIED": true,
@@ -1100,6 +1103,28 @@
       "neonApplied": false,
       "dockerApplied": true,
       "sharedCorpusSqlImpact": "NONE"
+    },
+    "regressions": {
+      "wp01": "28/28",
+      "wp02": "35/35",
+      "prosecution": "39/39"
+    }
+  },
+  "wp03dSession": {
+    "classification": "NYAYAGRID_WP03D_NEON_RESEARCH_INTEGRATION_AND_SOURCE_SAFETY",
+    "result": "WP03D_RESEARCH_INTEGRATION_PARTIAL",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "neonWrites": 0,
+    "mutations": 0,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03d-neon-research-integration.json",
+    "verificationClasses": {
+      "IMPLEMENTATION_COMPLETE": true,
+      "MOCK_E2E_COMPLETE": true,
+      "LIVE_READ_ONLY_VERIFIED": false,
+      "LIVE_NEON_READ_ONLY_CERTIFICATION_BLOCKED": true,
+      "PRODUCTION_CONFIG_UNVERIFIED": true,
+      "PRODUCTION_DEPLOYMENT_UNVERIFIED": true
     },
     "regressions": {
       "wp01": "28/28",

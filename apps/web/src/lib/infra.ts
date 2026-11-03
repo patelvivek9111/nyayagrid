@@ -3,6 +3,7 @@ import { createAIProviderFromEnv, createEmbeddingProviderFromEnv } from "@nyayag
 import { InMemoryJobDispatcher, domainHandlers } from "@nyayagrid/jobs";
 import { PostgresHybridRetriever } from "@nyayagrid/search";
 import type { AgentBudgets } from "@nyayagrid/agents";
+import { createGuardedAuthorityRetriever } from "@nyayagrid/research";
 import { getDb } from "./db";
 import { getStorage } from "./storage";
 import { registerRoutingUsagePersistence } from "./persist-routing-usage";
@@ -14,6 +15,7 @@ export { getStorage };
 const globalForInfra = globalThis as unknown as {
   __ngJobs?: InMemoryJobDispatcher;
   __ngRetriever?: PostgresHybridRetriever;
+  __ngAuthorityRetriever?: ReturnType<typeof createGuardedAuthorityRetriever>;
 };
 
 export function getMalwareScanner() {
@@ -37,6 +39,21 @@ export function getRetriever() {
     globalForInfra.__ngRetriever = new PostgresHybridRetriever(getDb(), getEmbeddings());
   }
   return globalForInfra.__ngRetriever;
+}
+
+/**
+ * Legal corpus retriever (WP-03D). Uses CORPUS_DATABASE_URL when
+ * FEATURE_NEON_CORPUS_RESEARCH=1; otherwise product DATABASE_URL.
+ * Never redirects getDb() / product auth to Neon.
+ */
+export function getAuthorityRetriever() {
+  if (!globalForInfra.__ngAuthorityRetriever) {
+    globalForInfra.__ngAuthorityRetriever = createGuardedAuthorityRetriever({
+      productDb: getDb(),
+      embeddings: getEmbeddings(),
+    });
+  }
+  return globalForInfra.__ngAuthorityRetriever;
 }
 
 function envInt(name: string): number | undefined {

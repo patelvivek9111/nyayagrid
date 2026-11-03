@@ -29,6 +29,24 @@ describe("FEATURE_NYAYA_MODEL_ROUTER_V2", () => {
   });
 });
 
+describe("FEATURE_NEON_CORPUS_RESEARCH", () => {
+  it("defaults OFF in every environment until staging certification", () => {
+    expect(getFeatureFlags({ APP_ENV: "development" }).neon_corpus_research).toBe(false);
+    expect(getFeatureFlags({ APP_ENV: "test" }).neon_corpus_research).toBe(false);
+    expect(getFeatureFlags({ APP_ENV: "staging" }).neon_corpus_research).toBe(false);
+    expect(getFeatureFlags({ APP_ENV: "production" }).neon_corpus_research).toBe(false);
+  });
+
+  it("can be enabled explicitly", () => {
+    expect(
+      isFeatureEnabled("neon_corpus_research", {
+        APP_ENV: "staging",
+        FEATURE_NEON_CORPUS_RESEARCH: "1",
+      }),
+    ).toBe(true);
+  });
+});
+
 describe("retired Professor/Guide flags", () => {
   it("are no longer feature flags", () => {
     const flags = getFeatureFlags({ APP_ENV: "test" });

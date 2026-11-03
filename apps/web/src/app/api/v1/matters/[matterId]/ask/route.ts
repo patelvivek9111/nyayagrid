@@ -15,7 +15,13 @@ import { requireUser } from "@/lib/auth";
 import { assertProfessionalCommandCenterAccess } from "@/lib/command-center-guest-policy";
 import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
-import { getAgentBudgetsFromEnv, getAI, getEmbeddings, getRetriever } from "@/lib/infra";
+import {
+  getAgentBudgetsFromEnv,
+  getAI,
+  getAuthorityRetriever,
+  getEmbeddings,
+  getRetriever,
+} from "@/lib/infra";
 import { beginRouteCorrelation } from "@/lib/request-correlation";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { askNyayaAboutMatter } from "@/server/nyaya";
@@ -80,6 +86,7 @@ async function answerDirectly(params: {
     const result = await askNyayaAboutMatter({
       db: params.db,
       retriever: getRetriever(),
+      authorityRetriever: getAuthorityRetriever(),
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,

@@ -14,3 +14,6 @@ export * from "./citation-graph";
 export * from "./citation-resolution";
 export * from "./dedup";
 export * from "./adapters";
+export * from "./authority-eligibility";
+export * from "./corpus-db";
+export * from "./guarded-retriever";

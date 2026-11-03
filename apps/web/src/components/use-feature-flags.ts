@@ -9,6 +9,7 @@ const STAGING_DEFAULTS: FeatureFlagState = {
   ocr: false,
   live_ai: false,
   nyaya_model_router_v2: true,
+  neon_corpus_research: false,
 };
 
 export function useFeatureFlags() {

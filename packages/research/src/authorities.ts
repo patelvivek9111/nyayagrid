@@ -8,9 +8,9 @@ import {
   legalAuthorityVersions,
 } from "@nyayagrid/database";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
-import { AuthorityHybridRetriever } from "./search";
 import type { AuthoritySearchFilters, AuthoritySearchHit } from "./provider";
 import { getTreatmentDisplay, type TreatmentDisplay } from "./treatment";
+import { createGuardedAuthorityRetriever } from "./corpus/guarded-retriever";
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -20,7 +20,7 @@ function isUuid(value: string): boolean {
 
 export type LegalAuthorityRow = typeof legalAuthorities.$inferSelect;
 
-/** Thin wrapper over AuthorityHybridRetriever used by the API layer. */
+/** Thin wrapper over GuardedAuthorityRetriever used by the API layer (WP-03D). */
 export async function searchAuthorities(params: {
   db: Database;
   embeddings: EmbeddingProvider;
@@ -28,7 +28,10 @@ export async function searchAuthorities(params: {
   filters?: AuthoritySearchFilters;
   limit?: number;
 }): Promise<AuthoritySearchHit[]> {
-  const retriever = new AuthorityHybridRetriever(params.db, params.embeddings);
+  const retriever = createGuardedAuthorityRetriever({
+    productDb: params.db,
+    embeddings: params.embeddings,
+  });
   return retriever.search(params.query.trim(), params.filters ?? {}, { limit: params.limit });
 }
 

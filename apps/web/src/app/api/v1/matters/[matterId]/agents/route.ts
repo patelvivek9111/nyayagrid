@@ -5,7 +5,13 @@ import { agentRuns, and, desc, eq } from "@nyayagrid/database";
 import { requireUser } from "@/lib/auth";
 import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
-import { getAgentBudgetsFromEnv, getAI, getEmbeddings, getRetriever } from "@/lib/infra";
+import {
+  getAgentBudgetsFromEnv,
+  getAI,
+  getAuthorityRetriever,
+  getEmbeddings,
+  getRetriever,
+} from "@/lib/infra";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { askNyayaAboutMatter } from "@/server/nyaya";
 
@@ -54,6 +60,8 @@ export async function POST(request: Request, { params }: Params) {
       const qa = await askNyayaAboutMatter({
         db,
         retriever: getRetriever(),
+        authorityRetriever: getAuthorityRetriever(),
+        embeddings: getEmbeddings(),
         organizationId: matter.organizationId,
         matterId,
         userId: user.id,
