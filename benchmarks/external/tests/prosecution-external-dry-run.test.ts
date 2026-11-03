@@ -45,10 +45,14 @@ describe("prosecution external dry-run harness", () => {
   });
 
   it("produces a future live cost plan without authorizing paid execution", () => {
-    const plan = planProsecutionExternalLiveCost();
+    const plan = planProsecutionExternalLiveCost({
+      legalbenchExamples: 37,
+      legalciteExamples: 80,
+    });
     expect(plan.paidExecutionAuthorized).toBe(false);
-    expect(plan.plannedExamples).toBeGreaterThan(0);
+    expect(plan.plannedExamples).toBe(117);
     expect(plan.recommendedHardCapUsd).toBeGreaterThan(plan.estimatedSpendUsd * 0.5);
+    expect(plan.conservativeUpperBoundUsd).toBeLessThanOrEqual(plan.hardCapUsd);
     expect(plan.gpt61SolLiveVerified).toBe(false);
   });
 });

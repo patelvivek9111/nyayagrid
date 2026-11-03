@@ -348,6 +348,24 @@ export {
 export { runProsecutionExternalDryRun } from "./prosecution-external/dry-run.js";
 export { planProsecutionExternalLiveCost } from "./prosecution-external/cost-plan.js";
 export {
+  runProsecutionExternalLive,
+  DEFAULT_HARD_CAP_USD,
+  DEFAULT_REQUEST_CAP,
+  LIVE_RUN_ID,
+} from "./prosecution-external/live-executor.js";
+export {
+  invokeNyayaProsecutionPipeline,
+  planProsecutionPipelineRoute,
+  classifyProsecutionExternalRisk,
+  buildProsecutionPipelineRequest,
+  PROSECUTION_PIPELINE_SYSTEM,
+} from "./prosecution-external/nyaya-pipeline.js";
+export {
+  classifyLiveExit,
+  parseProsecutionExternalLiveRunReport,
+  ProsecutionExternalLiveRunReportSchema,
+} from "./prosecution-external/live-result-schema.js";
+export {
   scoreExactLabel,
   scoreCaseFacts,
   scoreCitationReliability,
