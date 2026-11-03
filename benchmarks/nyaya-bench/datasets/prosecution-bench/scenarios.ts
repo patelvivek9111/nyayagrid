@@ -832,16 +832,21 @@ export function runProsecutionBenchScenarios(): ScenarioResult[] {
   out.push(
     timed(
       "PB-ROUTE-02",
-      "Router feature flag defaults OFF",
+      "Router feature flag defaults ON (WP-02); opt-out with FEATURE_NYAYA_MODEL_ROUTER_V2=0",
       "ROUTING_SAFETY",
       "CROSS_CUTTING",
       true,
       () => {
         const flags = getFeatureFlags({ APP_ENV: "production" });
-        const passed = flags.nyaya_model_router_v2 === false;
+        const optedOut = getFeatureFlags({
+          APP_ENV: "production",
+          FEATURE_NYAYA_MODEL_ROUTER_V2: "0",
+        });
+        const passed =
+          flags.nyaya_model_router_v2 === true && optedOut.nyaya_model_router_v2 === false;
         return {
           passed,
-          detail: `nyaya_model_router_v2=${String(flags.nyaya_model_router_v2)}`,
+          detail: `default=${String(flags.nyaya_model_router_v2)};optOut=${String(optedOut.nyaya_model_router_v2)}`,
           criticalCodes: [],
         };
       },

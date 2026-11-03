@@ -18,7 +18,7 @@ export const FEATURE_FLAGS = [
   "research",
   "ocr",
   "live_ai",
-  /** Benchmark-driven Tier 1–4 model router. Default OFF — preserves legacy NyayaRouter. */
+  /** Benchmark-driven Tier 1–4 model router. Default ON — product Ask uses v2; set FEATURE_NYAYA_MODEL_ROUTER_V2=0 to force legacy. */
   "nyaya_model_router_v2",
 ] as const;
 
@@ -47,28 +47,28 @@ const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
     research: true,
     ocr: false,
     live_ai: false,
-    nyaya_model_router_v2: false,
+    nyaya_model_router_v2: true,
   },
   test: {
     agents: true,
     research: true,
     ocr: false,
     live_ai: false,
-    nyaya_model_router_v2: false,
+    nyaya_model_router_v2: true,
   },
   staging: {
     agents: false,
     research: false,
     ocr: false,
     live_ai: false,
-    nyaya_model_router_v2: false,
+    nyaya_model_router_v2: true,
   },
   production: {
     agents: false,
     research: false,
     ocr: false,
     live_ai: false,
-    nyaya_model_router_v2: false,
+    nyaya_model_router_v2: true,
   },
 };
 

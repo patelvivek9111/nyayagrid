@@ -14,6 +14,8 @@ env:
   DEV_AUTH_EMAIL: ci-owner@example.nyayagrid.local
   DEV_AUTH_NAME: CI Dev Owner
   AI_PROVIDER: mock
+  # WP-02: Router v2 authoritative for product AI paths (createAIProviderFromEnv also defaults ON).
+  FEATURE_NYAYA_MODEL_ROUTER_V2: "1"
   EMBEDDING_PROVIDER: mock
   RESEARCH_PROVIDER: local
   MALWARE_SCANNER: development

@@ -128,10 +128,9 @@ describe("Ask Nyaya suppression context gating", () => {
     expect(src).toContain("mergeAskContextText");
     expect(src).toContain("isSuppressionAskQuestion");
     expect(src).toContain("askStructuredContextText");
-    // Professional remains the default compatibility scope; prosecution uses semantic identity when set.
-    expect(src).toMatch(
-      /workspaceType:\s*params\.workspaceType\s*===\s*"prosecution"\s*\?\s*"prosecution"\s*:\s*"professional"/,
-    );
+    // WP-02: server-derived earlyAskRouting.workspaceType drives structured + suppression context.
+    expect(src).toContain("earlyAskRouting.workspaceType");
+    expect(src).toContain("resolveAskModelRouting");
     expect(src).toMatch(/workspaceType:\s*"prosecution"/);
   });
 });

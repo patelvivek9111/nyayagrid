@@ -148,6 +148,7 @@ import {
   constrainUnsupportedStatusClaims,
   constrainUnverifiedContradiction,
   createAIProviderFromEnv,
+  isModelRouterV2Enabled,
   createEnvWebSearchClient,
   createHttpPageFetcher,
   ensureMissingInstrumentDisclosure,
@@ -188,6 +189,7 @@ import {
   instrumentMentionedInText,
   instrumentMentionIsDenial,
 } from "@nyayagrid/ai";
+import { resolveAskModelRouting, sanitizeAskClientModelId } from "./ask-routing";
 import {
   formatVerifiedIntelligenceForPrompt,
   loadVerifiedMatterIntelligence,
@@ -773,6 +775,35 @@ export async function askNyayaAboutMatter(params: {
   const mark = (name: string, started: number) => {
     timings[name] = Date.now() - started;
   };
+
+  // Server-verified criminal-case linkage (client cannot invent cross-matter case ids).
+  let linkedCriminalCaseId: string | null =
+    typeof params.criminalCaseId === "string" && params.criminalCaseId.trim()
+      ? params.criminalCaseId.trim()
+      : null;
+  {
+    const caseFilter = linkedCriminalCaseId
+      ? and(
+          eq(criminalCases.organizationId, params.organizationId),
+          eq(criminalCases.matterId, params.matterId),
+          eq(criminalCases.id, linkedCriminalCaseId),
+        )
+      : and(
+          eq(criminalCases.organizationId, params.organizationId),
+          eq(criminalCases.matterId, params.matterId),
+        );
+    const [caseRow] = await params.db
+      .select({ id: criminalCases.id })
+      .from(criminalCases)
+      .where(caseFilter)
+      .limit(1);
+    linkedCriminalCaseId = caseRow?.id ?? null;
+  }
+  const earlyAskRouting = resolveAskModelRouting({
+    workspaceType: params.workspaceType,
+    linkedCriminalCaseId,
+  });
+
   /** One usageActionId for the whole customer Ask action (all model calls). */
   const usageActionId = newUsageActionId();
   const emit = (event: AskStreamEvent) => {
@@ -1494,7 +1525,7 @@ export async function askNyayaAboutMatter(params: {
           organizationId: params.organizationId,
           // Semantic workspace identity: use caller workspace when provided.
           // Historical persisted usage rows may still decode as "professional".
-          workspaceType: params.workspaceType === "prosecution" ? "prosecution" : "professional",
+          workspaceType: earlyAskRouting.workspaceType,
           matterId: params.matterId,
           jurisdiction:
             jurisdictionContext?.governingLawState ?? jurisdictionContext?.primaryState ?? null,
@@ -1537,18 +1568,18 @@ export async function askNyayaAboutMatter(params: {
 
     let suppressionContextText: string | null = null;
     let prosecutionAskIntelligenceText: string | null = null;
-    if (params.workspaceType !== "professional") {
-      let workspaceType = params.workspaceType ?? null;
+    if (earlyAskRouting.workspaceType === "prosecution") {
+      let workspaceType: string = earlyAskRouting.workspaceType;
       let suppressionReview = params.suppressionReview ?? null;
       const loaded = await loadProsecutionAskBundleForMatter({
         db: params.db,
         userId: params.userId,
         organizationId: params.organizationId,
         matterId: params.matterId,
-        criminalCaseId: params.criminalCaseId,
+        criminalCaseId: linkedCriminalCaseId ?? params.criminalCaseId,
       });
       if (loaded) {
-        workspaceType = workspaceType === "prosecution" ? workspaceType : loaded.workspaceType;
+        workspaceType = loaded.workspaceType;
         suppressionReview = suppressionReview ?? loaded.suppressionReview;
         prosecutionAskIntelligenceText = loaded.askIntelligenceContext;
       }
@@ -3917,13 +3948,28 @@ export async function askNyayaAboutMatter(params: {
       ? `${userPromptBase}\n\n${factualityPromptText}`
       : userPromptBase;
 
+    const askRouting = resolveAskModelRouting({
+      workspaceType: earlyAskRouting.workspaceType,
+      linkedCriminalCaseId,
+      useResearchPrompt,
+      webEnabled: flags.webEnabled,
+    });
+    const routerV2Enabled = isModelRouterV2Enabled({
+      FEATURE_NYAYA_MODEL_ROUTER_V2: process.env.FEATURE_NYAYA_MODEL_ROUTER_V2?.trim() || "1",
+    });
+    const safeModelId = sanitizeAskClientModelId({
+      modelId: params.modelId,
+      highStakesLegal: askRouting.highStakesLegal,
+      routerV2Enabled,
+    });
     const generation = await ai.generate({
       temperature: 0,
       signal: params.signal,
       routing: {
-        subsystem: useResearchPrompt || flags.webEnabled ? "research" : "ask",
+        subsystem: askRouting.subsystem,
+        highStakesLegal: askRouting.highStakesLegal,
         strategy: params.executionStrategy ?? "auto",
-        modelId: params.modelId,
+        modelId: safeModelId,
         organizationId: params.organizationId,
         matterId: params.matterId,
         userId: params.userId,

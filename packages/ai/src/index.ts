@@ -15,6 +15,7 @@ import { GoogleProvider } from "./router/providers/google";
 import { XaiProvider } from "./router/providers/xai";
 import { NyayaRouter } from "./router/router";
 import { resolvePinnedModelId } from "./router/registry";
+import { PINNED_BENCHMARK_MODEL_IDS } from "./router/v2/types";
 import { wrapIsolatedCertProvider } from "./cert-transport/isolated-provider";
 import type {
   DeadlineProposal,
@@ -1152,12 +1153,37 @@ export function createDirectProvider(params: {
   return { provider: new GoogleProvider({ apiKey, model: modelId }), modelId };
 }
 
+/** Dev/CI stand-in: deterministic mock JSON with the planned provider/model identity. */
+function createMockProviderStandIn(provider: ProviderId, modelId: string): AIProvider {
+  const inner = new MockAIProvider();
+  return {
+    name: provider,
+    async generate(request) {
+      const result = await inner.generate(request);
+      return {
+        ...result,
+        provider,
+        model: modelId,
+      };
+    },
+  };
+}
+
 function createNyayaProvidersFromEnv(
   env: NodeJS.ProcessEnv = process.env,
 ): Partial<Record<ProviderId, AIProvider>> {
   const providers: Partial<Record<ProviderId, AIProvider>> = {
     mock: new MockAIProvider(),
   };
+  // When no paid keys are present (typical CI / local mock), fill Router v2 provider
+  // slots so high-stakes plans can execute against deterministic mocks without paid calls.
+  const envProvider = (env.AI_PROVIDER ?? "mock").trim().toLowerCase();
+  if (envProvider === "mock") {
+    providers.anthropic = createMockProviderStandIn("anthropic", PINNED_BENCHMARK_MODEL_IDS.claude);
+    providers.xai = createMockProviderStandIn("xai", PINNED_BENCHMARK_MODEL_IDS.grok);
+    providers.openai = createMockProviderStandIn("openai", PINNED_BENCHMARK_MODEL_IDS.gpt);
+    providers.google = createMockProviderStandIn("google", PINNED_BENCHMARK_MODEL_IDS.gemini);
+  }
   if (env.OPENAI_API_KEY) {
     providers.openai = new OpenAIProvider({
       apiKey: env.OPENAI_API_KEY,
@@ -1216,10 +1242,16 @@ export function createAIProviderFromEnv(): AIProvider {
       "AI_PROVIDER=google requires GOOGLE_GENERATIVE_AI_API_KEY (or GEMINI_API_KEY / GOOGLE_API_KEY)",
     );
   }
+  // Product default: Router v2 ON when unset (opt out with FEATURE_NYAYA_MODEL_ROUTER_V2=0).
+  // Unit tests that construct NyayaRouter with a partial env keep legacy unless they set the flag.
+  const routerEnv = {
+    ...env,
+    FEATURE_NYAYA_MODEL_ROUTER_V2: env.FEATURE_NYAYA_MODEL_ROUTER_V2?.trim() || "1",
+  };
   return new NyayaRouter({
     providers: createNyayaProvidersFromEnv(env),
     envProvider,
-    env,
+    env: routerEnv,
     timeoutMs: envTimeoutMs(),
   });
 }

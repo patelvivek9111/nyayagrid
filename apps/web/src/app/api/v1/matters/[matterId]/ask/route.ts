@@ -1,7 +1,7 @@
 import { askOrTaskSchema } from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { NyayaOrchestrator } from "@nyayagrid/agents";
-import type { Database } from "@nyayagrid/database";
+import { and, criminalCases, eq, type Database } from "@nyayagrid/database";
 import type { AskStreamListener, SourceScope } from "@nyayagrid/ai";
 import { isFeatureEnabled, recordUsage } from "@nyayagrid/platform";
 import {
@@ -22,6 +22,35 @@ import { askNyayaAboutMatter } from "@/server/nyaya";
 
 type Params = { params: Promise<{ matterId: string }> };
 
+async function resolveAskWorkspace(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  criminalCaseId?: string | null;
+}): Promise<{ workspaceType: "professional" | "prosecution"; criminalCaseId: string | null }> {
+  const hinted =
+    typeof params.criminalCaseId === "string" && params.criminalCaseId.trim()
+      ? params.criminalCaseId.trim()
+      : null;
+  const caseFilter = hinted
+    ? and(
+        eq(criminalCases.organizationId, params.organizationId),
+        eq(criminalCases.matterId, params.matterId),
+        eq(criminalCases.id, hinted),
+      )
+    : and(
+        eq(criminalCases.organizationId, params.organizationId),
+        eq(criminalCases.matterId, params.matterId),
+      );
+  const [row] = await params.db
+    .select({ id: criminalCases.id })
+    .from(criminalCases)
+    .where(caseFilter)
+    .limit(1);
+  if (!row) return { workspaceType: "professional", criminalCaseId: null };
+  return { workspaceType: "prosecution", criminalCaseId: row.id };
+}
+
 async function answerDirectly(params: {
   db: Database;
   organizationId: string;
@@ -36,6 +65,8 @@ async function answerDirectly(params: {
   onEvent?: AskStreamListener;
   continueToken?: string;
   correlationId?: string;
+  workspaceType?: "professional" | "prosecution";
+  criminalCaseId?: string | null;
 }) {
   const conversationKey = params.conversationId?.trim() || "pending";
   const runKey = askRunKey({
@@ -63,6 +94,8 @@ async function answerDirectly(params: {
       onEvent: params.onEvent,
       continueToken: params.continueToken,
       correlationId: params.correlationId,
+      workspaceType: params.workspaceType,
+      criminalCaseId: params.criminalCaseId,
     });
 
     // Do not await audit inside the SSE run — a slow/locked audit write would keep
@@ -78,7 +111,10 @@ async function answerDirectly(params: {
         evidenceState: result.answer.evidenceState,
         retrievedCount: result.retrieved.length,
         provider: result.artifact?.provider,
+        model: result.artifact?.model,
         sourceScope: result.sourceScope ?? params.sourceScope ?? "case",
+        workspaceType: params.workspaceType ?? null,
+        criminalCaseId: params.criminalCaseId ?? null,
       },
     }).catch(() => {
       /* audit is best-effort relative to stream completion */
@@ -128,6 +164,14 @@ export async function POST(request: Request, { params }: Params) {
     // Phase 5 — client_guest must not use professional Ask / Command Center (API-level).
     assertProfessionalCommandCenterAccess(membership.roleKey);
 
+    // Server-derived workspace — never trust client highStakesLegal / subsystem.
+    const askWorkspace = await resolveAskWorkspace({
+      db,
+      organizationId: matter.organizationId,
+      matterId,
+      criminalCaseId: body.criminalCaseId,
+    });
+
     if (mayCreateRun) {
       const agentLimited = await enforceRateLimit(request, {
         endpointClass: "agent_run",
@@ -142,25 +186,33 @@ export async function POST(request: Request, { params }: Params) {
       matterId,
       conversationId: body.conversationId ?? null,
       mode,
+      workspaceType: askWorkspace.workspaceType,
+      criminalCaseId: askWorkspace.criminalCaseId,
     };
+
+    const askDirectArgs = {
+      db,
+      organizationId: matter.organizationId,
+      matterId,
+      userId: user.id,
+      question: body.question,
+      conversationId: body.conversationId,
+      executionStrategy: body.executionStrategy,
+      modelId: body.modelId,
+      sourceScope,
+      signal: request.signal,
+      continueToken: body.continueToken,
+      correlationId: corr.correlationId,
+      workspaceType: askWorkspace.workspaceType,
+      criminalCaseId: askWorkspace.criminalCaseId,
+    } as const;
 
     if (mode === "ask" || !agentsOn) {
       if (wantsStream) {
         const stream = createAskSseResponse(async (emit) => {
           const qa = await answerDirectly({
-            db,
-            organizationId: matter.organizationId,
-            matterId,
-            userId: user.id,
-            question: body.question,
-            conversationId: body.conversationId,
-            executionStrategy: body.executionStrategy,
-            modelId: body.modelId,
-            sourceScope,
-            signal: request.signal,
+            ...askDirectArgs,
             onEvent: emit,
-            continueToken: body.continueToken,
-            correlationId: corr.correlationId,
           });
           corr.log.info("ask.completed", {
             ...askMeta,
@@ -173,20 +225,7 @@ export async function POST(request: Request, { params }: Params) {
         });
         return corr.attach(stream);
       }
-      const qa = await answerDirectly({
-        db,
-        organizationId: matter.organizationId,
-        matterId,
-        userId: user.id,
-        question: body.question,
-        conversationId: body.conversationId,
-        executionStrategy: body.executionStrategy,
-        modelId: body.modelId,
-        sourceScope,
-        signal: request.signal,
-        continueToken: body.continueToken,
-        correlationId: corr.correlationId,
-      });
+      const qa = await answerDirectly(askDirectArgs);
       corr.log.info("ask.completed", {
         ...askMeta,
         artifactId: qa.artifact?.id ?? null,
@@ -216,19 +255,8 @@ export async function POST(request: Request, { params }: Params) {
       if (wantsStream) {
         const stream = createAskSseResponse(async (emit) => {
           const qa = await answerDirectly({
-            db,
-            organizationId: matter.organizationId,
-            matterId,
-            userId: user.id,
-            question: body.question,
-            conversationId: body.conversationId,
-            executionStrategy: body.executionStrategy,
-            modelId: body.modelId,
-            sourceScope,
-            signal: request.signal,
+            ...askDirectArgs,
             onEvent: emit,
-            continueToken: body.continueToken,
-            correlationId: corr.correlationId,
           });
           corr.log.info("ask.completed", {
             ...askMeta,
@@ -241,20 +269,7 @@ export async function POST(request: Request, { params }: Params) {
         });
         return corr.attach(stream);
       }
-      const qa = await answerDirectly({
-        db,
-        organizationId: matter.organizationId,
-        matterId,
-        userId: user.id,
-        question: body.question,
-        conversationId: body.conversationId,
-        executionStrategy: body.executionStrategy,
-        modelId: body.modelId,
-        sourceScope,
-        signal: request.signal,
-        continueToken: body.continueToken,
-        correlationId: corr.correlationId,
-      });
+      const qa = await answerDirectly(askDirectArgs);
       corr.log.info("ask.completed", {
         ...askMeta,
         artifactId: qa.artifact?.id ?? null,

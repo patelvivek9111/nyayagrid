@@ -209,7 +209,10 @@ export class NyayaRouter implements AIProvider {
     let fallbackToModel: string | undefined;
 
     try {
-      if (isModelRouterV2Enabled(this.env) && !routing.modelId) {
+      // When v2 is enabled, always plan through the benchmark router — including
+      // client modelId (treated as a manual override that refuse illegal HS downgrades).
+      // Previously `&& !routing.modelId` let clients silently bypass v2.
+      if (isModelRouterV2Enabled(this.env)) {
         const planned = planBenchmarkRoute({ request });
         benchmarkDecision = planned.decision;
         const entry = findBenchmarkRouterEntry(planned.decision.selectedModelId);

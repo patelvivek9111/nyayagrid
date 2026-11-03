@@ -56,7 +56,7 @@ describe("benchmark model registry", () => {
 });
 
 describe("feature flag", () => {
-  it("defaults OFF", () => {
+  it("requires explicit FEATURE_NYAYA_MODEL_ROUTER_V2 on router env (product path injects default ON)", () => {
     expect(isModelRouterV2Enabled({})).toBe(false);
     expect(isModelRouterV2Enabled({ FEATURE_NYAYA_MODEL_ROUTER_V2: "0" })).toBe(false);
   });
@@ -406,6 +406,63 @@ describe("NyayaRouter integration (flag ON)", () => {
     ).rejects.toBeInstanceOf(RouterUnavailableError);
     expect(gptCalls).toEqual([]);
     expect(geminiCalls).toEqual([]);
+  });
+
+  it("refuses client GPT modelId on high-stakes (no silent v2 bypass)", async () => {
+    const gptCalls: string[] = [];
+    const router = new NyayaRouter({
+      providers: {
+        openai: {
+          name: "openai",
+          async generate() {
+            gptCalls.push("called");
+            return { text: "{}", provider: "openai", model: "gpt-6.1-sol" };
+          },
+        },
+        anthropic: jsonOk("anthropic", "claude-opus-5-5"),
+        xai: jsonOk("xai", "grok-4.7"),
+      },
+      envProvider: "openai",
+      env: {
+        AI_PROVIDER: "openai",
+        FEATURE_NYAYA_MODEL_ROUTER_V2: "1",
+        APP_ENV: "development",
+      },
+    });
+    await expect(
+      router.generate(
+        req({
+          routing: {
+            highStakesLegal: true,
+            subsystem: "prosecution",
+            modelId: "openai:gpt-6.1-sol",
+          },
+        }),
+      ),
+    ).rejects.toBeInstanceOf(RouterUnavailableError);
+    expect(gptCalls).toEqual([]);
+  });
+
+  it("prosecution Ask without client modelId selects Claude", async () => {
+    const audits: Array<{ model: string; highStakesLegal?: boolean }> = [];
+    const router = new NyayaRouter({
+      providers: {
+        anthropic: jsonOk("anthropic", "claude-opus-5-5"),
+        openai: jsonOk("openai", "gpt-6.1-sol"),
+      },
+      envProvider: "anthropic",
+      env: {
+        AI_PROVIDER: "anthropic",
+        FEATURE_NYAYA_MODEL_ROUTER_V2: "1",
+        APP_ENV: "development",
+      },
+      onAudit: (a) => audits.push(a),
+    });
+    const result = await router.generate(
+      req({ routing: { subsystem: "prosecution", highStakesLegal: true } }),
+    );
+    expect(result.model).toBe("claude-opus-5-5");
+    expect(audits[0]?.highStakesLegal).toBe(true);
   });
 
   it("selects GPT for Tier-3 extraction", async () => {

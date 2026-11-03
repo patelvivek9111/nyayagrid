@@ -12,20 +12,20 @@ describe("FEATURE_AGENTS", () => {
 });
 
 describe("FEATURE_NYAYA_MODEL_ROUTER_V2", () => {
-  it("defaults OFF in every environment", () => {
-    expect(getFeatureFlags({ APP_ENV: "development" }).nyaya_model_router_v2).toBe(false);
-    expect(getFeatureFlags({ APP_ENV: "test" }).nyaya_model_router_v2).toBe(false);
-    expect(getFeatureFlags({ APP_ENV: "staging" }).nyaya_model_router_v2).toBe(false);
-    expect(getFeatureFlags({ APP_ENV: "production" }).nyaya_model_router_v2).toBe(false);
+  it("defaults ON in every environment (WP-02 product default)", () => {
+    expect(getFeatureFlags({ APP_ENV: "development" }).nyaya_model_router_v2).toBe(true);
+    expect(getFeatureFlags({ APP_ENV: "test" }).nyaya_model_router_v2).toBe(true);
+    expect(getFeatureFlags({ APP_ENV: "staging" }).nyaya_model_router_v2).toBe(true);
+    expect(getFeatureFlags({ APP_ENV: "production" }).nyaya_model_router_v2).toBe(true);
   });
 
-  it("enables only when FEATURE_NYAYA_MODEL_ROUTER_V2 is explicitly set", () => {
+  it("can be explicitly disabled with FEATURE_NYAYA_MODEL_ROUTER_V2=0", () => {
     expect(
       isFeatureEnabled("nyaya_model_router_v2", {
         APP_ENV: "production",
-        FEATURE_NYAYA_MODEL_ROUTER_V2: "1",
+        FEATURE_NYAYA_MODEL_ROUTER_V2: "0",
       }),
-    ).toBe(true);
+    ).toBe(false);
   });
 });
 

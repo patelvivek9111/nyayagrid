@@ -187,6 +187,11 @@ export const askOrTaskSchema = z.object({
   stream: z.boolean().optional(),
   /** Resume generation after a safe interruption (validated server-side). */
   continueToken: z.string().trim().min(8).max(4_000).optional(),
+  /**
+   * Optional criminal-case hint for prosecution Ask deep-links.
+   * Server verifies org+matter linkage; never trusts client risk flags.
+   */
+  criminalCaseId: z.string().uuid().optional().nullable(),
 });
 
 /** Soft-cancel an in-flight streaming Ask without tearing down the SSE socket. */

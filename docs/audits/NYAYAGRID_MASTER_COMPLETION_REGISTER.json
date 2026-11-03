@@ -435,15 +435,20 @@
       "subsystem": "Model router",
       "feature": "Router v2 high-stakes",
       "requirement": "Claude→Grok→FAIL_CLOSED; no GPT/Gemini high-stakes",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "v2 policy PASS in tests; FEATURE_NYAYA_MODEL_ROUTER_V2 default false; product Ask lacks subsystem=prosecution/highStakesLegal"
+        "FEATURE_NYAYA_MODEL_ROUTER_V2 defaults ON (platform + createAIProviderFromEnv)",
+        "Ask route server-derives prosecution workspace from criminalCases linkage",
+        "askNyayaAboutMatter sets subsystem=prosecution + highStakesLegal; strips client HS modelId",
+        "Router v2 always plans when enabled (modelId no longer bypasses)",
+        "CI FEATURE_NYAYA_MODEL_ROUTER_V2=1; mock stand-ins for Claude/Grok/GPT/Gemini",
+        "PRODUCTION_RUNTIME_UNVERIFIED — no production deploy in WP-02"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09",
-      "remediation": "Enable flag with DB/env alignment; wire prosecution Ask to prosecution high-stakes; re-certify"
+      "lastVerifiedSha": "pending",
+      "remediation": "Confirm staging/production env has flag ON (default) and paid keys; keep live_ai gated separately"
     },
     {
       "id": "AI-GROUND-01",
@@ -663,7 +668,7 @@
     }
   ],
   "topReleaseBlockers": [
-    "AI-ROUTE-01 Router v2 off + prosecution Ask under-wired for high-stakes",
+    "AI-ROUTE-01 Router v2 integrated in app paths; PRODUCTION_RUNTIME_UNVERIFIED",
     "PROF-RES-01 / CORPUS-01 Live corpus unverified; research go-live claims blocked",
     "PROF-DOC-02 OCR production gate",
     "SEC-AUTH-01 Clerk MFA production verification",
@@ -692,7 +697,13 @@
       "closes": ["AI-ROUTE-01"],
       "deps": ["WP-01"],
       "effort": "3-7 days",
-      "acceptance": "Flag ON with env/DB alignment; Ask prosecution paths set subsystem/highStakesLegal; GPT/Gemini high-stakes remain 0 in tests"
+      "acceptance": "Flag ON with env/DB alignment; Ask prosecution paths set subsystem/highStakesLegal; GPT/Gemini high-stakes remain 0 in tests",
+      "status": "IMPLEMENTED_PENDING_REMOTE_CI",
+      "verificationClasses": {
+        "ROUTER_IMPLEMENTATION_VERIFIED": true,
+        "APPLICATION_E2E_VERIFIED": "PARTIAL_HANDLER_AND_UNIT",
+        "PRODUCTION_RUNTIME_UNVERIFIED": true
+      }
     },
     {
       "id": "WP-03",
@@ -753,5 +764,11 @@
       "External LegalCite validation incomplete (71 unexecuted); WP-01 scorer remediation pending remote CI",
       "Calendar date 2026-11-20 is ~17 days from audit; WP-04+WP-05 alone exceed that window for production"
     ]
+  },
+  "wp02Remediation": {
+    "status": "IMPLEMENTED_PENDING_REMOTE_CI",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "note": "Router v2 product integration; production runtime still unverified"
   }
 }

@@ -89,7 +89,11 @@ export function providerForPinnedModel(modelId: BenchmarkPinnedModelId): Provide
   return requireBenchmarkModel(modelId).provider;
 }
 
-/** Feature flag env name — default OFF everywhere. */
+/**
+ * Feature flag env name.
+ * Product path (`createAIProviderFromEnv`) defaults ON when unset.
+ * Direct NyayaRouter unit tests that omit the flag remain OFF (legacy path).
+ */
 export const MODEL_ROUTER_V2_ENV = "FEATURE_NYAYA_MODEL_ROUTER_V2";
 
 export function isModelRouterV2Enabled(
