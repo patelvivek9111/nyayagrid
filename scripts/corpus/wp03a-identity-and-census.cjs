@@ -25,7 +25,7 @@ function redactUrl(url) {
       protocol: u.protocol.replace(":", ""),
       host: u.hostname,
       port: u.port || "(default)",
-      database: (u.pathname.replace(/^\//, "").split("?")[0] || ""),
+      database: u.pathname.replace(/^\//, "").split("?")[0] || "",
       hasUser: Boolean(u.username),
       hasPassword: Boolean(u.password),
     };
@@ -39,9 +39,10 @@ function num(v) {
 }
 
 async function main() {
-  const databaseUrl = process.env.DATABASE_URL && process.env.DATABASE_URL.trim()
-    ? process.env.DATABASE_URL.trim()
-    : FALLBACK;
+  const databaseUrl =
+    process.env.DATABASE_URL && process.env.DATABASE_URL.trim()
+      ? process.env.DATABASE_URL.trim()
+      : FALLBACK;
   const usedFallback = !(process.env.DATABASE_URL && process.env.DATABASE_URL.trim());
 
   const sql = postgres(databaseUrl, {
@@ -408,7 +409,8 @@ async function main() {
         definitions: {
           cases: "legal_authorities WHERE authority_type = 'case'",
           authorities: "all rows in legal_authorities",
-          opinions: "legal_authority_chunks.opinion_part non-empty (no authority_type=opinion enum)",
+          opinions:
+            "legal_authority_chunks.opinion_part non-empty (no authority_type=opinion enum)",
           clusters: "unavailable — no cluster table in this schema",
           federal_cases: "case rows with null/empty/US/FEDERAL/FED authority_state",
           state_dc_cases: "case rows with non-federal authority_state",
