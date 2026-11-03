@@ -2,12 +2,11 @@
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
   "generatedAt": "2026-11-03T17:41:09.038Z",
-  "head": "703592b17ccd3eca5a9f2f8ac35ec37bb47035d7",
+  "head": "5cfd9e06c755ab50ec226e6c8f9928508d3addae",
   "branch": "feat/production-model-routing",
   "remoteCi": {
-    "run": "41681610054",
-    "conclusion": "SUCCESS",
-    "note": "pre-WP03A CI; new CI pending after WP03A push"
+    "run": "41689403691",
+    "conclusion": "SUCCESS"
   },
   "productScope": {
     "professional": "IN_SCOPE",
@@ -838,6 +837,10 @@
         "CITATION_INTEGRITY_VERIFIED": "PARTIAL_THIN_GRAPH",
         "RETRIEVAL_VERIFIED": "PARTIAL_KEYWORD_AND_INDEX_HEALTH",
         "FULL_RESEARCH_CERTIFIED": false
+      },
+      "remoteCi": {
+        "run": "41689403691",
+        "conclusion": "SUCCESS"
       }
     },
     {
@@ -943,6 +946,11 @@
       "wp02Router": "35/35 PASS",
       "internalProsecution": "39/39 PASS",
       "researchPackage": "160 passed / 6 skipped (live-certification skipped)"
-    }
+    },
+    "remoteCi": {
+      "run": "41689403691",
+      "conclusion": "SUCCESS"
+    },
+    "headAfter": "5cfd9e06c755ab50ec226e6c8f9928508d3addae"
   }
 }
