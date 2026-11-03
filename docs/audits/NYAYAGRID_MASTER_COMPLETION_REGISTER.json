@@ -2,7 +2,7 @@
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
   "generatedAt": "2026-11-03T14:50:00.000Z",
-  "head": "d08da37cbee9ea846b3393fb9cb6d1d7f99c0995",
+  "head": "e5678e06812749be1346e6afe1472a1a9e469ca3",
   "branch": "feat/production-model-routing",
   "remoteCi": {
     "run": "41675421499",
@@ -71,14 +71,14 @@
     }
   },
   "totals": {
-    "requirementsInventoried": 41,
-    "note": "41 fully-specified core release-path requirements in this register; broader UI/API surface inventory from audit agents is rolled into these statuses rather than duplicated as one-row-per-route.",
+    "requirementsInventoried": 46,
+    "note": "Includes WP-03 granular CORPUS-03..07; live corpus still ACCESS_BLOCKED",
     "verifiedComplete": 16,
-    "implementedUnverified": 4,
+    "implementedUnverified": 7,
     "partial": 9,
     "missing": 4,
     "broken": 0,
-    "blocked": 7,
+    "blocked": 9,
     "outOfScope": 1,
     "p0": 20,
     "p1": 9,
@@ -191,13 +191,14 @@
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "docs/PRODUCTION_READINESS.md corpus BLOCKER (partially STALE vs Queue2 snapshot)",
-        "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json HISTORICAL 3709 authorities / 2392 cases @ 2026-09-28",
-        "LIVE_CORPUS_UNVERIFIED DATABASE_URL unset this session"
+        "Research package hierarchy/treatment/currentness unit tests PASS",
+        "Live corpus verification BLOCKED",
+        "Historical corpus far below 10k useful-cases target (2392 cases HISTORICAL)"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09",
-      "remediation": "Re-inventory live DB; close coverage gaps vs 10k goal; attorney-facing honesty until licensed depth proven"
+      "lastVerifiedSha": "e5678e0",
+      "remediation": "Live census + coverage acquisition plan; keep UI honesty until live depth proven",
+      "priority": "P0"
     },
     {
       "id": "PROF-DRAFT-01",
@@ -496,10 +497,16 @@
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "DATABASE_URL unset → LIVE_CORPUS_UNVERIFIED; snapshot 3709 auth / 2392 cases @ 2026-09-28 HISTORICAL"
+        "WP-03 probe: DATABASE_URL UNSET in process + all dotenv files",
+        "Intended certification DB localhost:5433 NOT_LISTENING; Docker daemon unavailable",
+        "Unidentified postgres on :5432 not queried (no authorized URL)",
+        "Historical ONLY queue2-lane-a snapshot 3709 auth/2392 cases @ 2026-09-28",
+        "Historical REPORTED_ONLY suppression-holding-screen identity 4680 cases/6035 authorities"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "e5678e0",
+      "priority": "P0",
+      "remediation": "Restore Docker :5433 corpus volume or supply authorized read-only DATABASE_URL; re-run staging-queue2-lane-a-corpus-snapshot.cjs READ ONLY"
     },
     {
       "id": "CORPUS-02",
@@ -511,10 +518,14 @@
       "severity": "P1",
       "releaseBlocker": false,
       "evidence": [
-        "snapshot orphans=0 dupes=0; many jurisdictions high citationTargetAbsent HISTORICAL"
+        "Unit: citation-resolution + citations + contract tests PASS (47)",
+        "Historical snapshot orphans=0 duplicateSourceIds=0; TARGET_ABSENT sum across jurs=6972 HISTORICAL",
+        "Live citation graph census BLOCKED without DB"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "e5678e0",
+      "priority": "P1",
+      "remediation": "After live access, recompute TARGET_ABSENT/ambiguous/malformed denominators separately"
     },
     {
       "id": "SEC-AUTH-01",
@@ -665,6 +676,84 @@
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "CORPUS-03",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Jurisdiction/historical coverage",
+      "requirement": "State/DC ~7650 and federal ~2350 useful-case balance toward 10k",
+      "status": "BLOCKED",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "e5678e0",
+      "evidence": [
+        "Cannot measure live; historical intermediate depth thin (281 intermediate vs 2106 highCourt in snapshot)"
+      ],
+      "remediation": "Live per-jurisdiction census then prioritized acquisition (no random inflation)"
+    },
+    {
+      "id": "CORPUS-04",
+      "product": "Shared",
+      "subsystem": "Retrieval",
+      "feature": "Search/index/embeddings health",
+      "requirement": "Keyword/semantic/hybrid retrieval against live corpus with source fidelity",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "e5678e0",
+      "evidence": [
+        "Code paths exist in packages/research + search; live bounded retrieval not executed (no DB)"
+      ],
+      "remediation": "Authorized read-only retrieval validate against live index"
+    },
+    {
+      "id": "CORPUS-05",
+      "product": "Shared",
+      "subsystem": "Legal intelligence",
+      "feature": "Hierarchy/treatment/currentness",
+      "requirement": "Binding/persuasive labels; no unverified currentness claims",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "priority": "P1",
+      "releaseBlocker": false,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "e5678e0",
+      "evidence": [
+        "guardrails + authority-status-layer + currentness unit tests PASS; live DB unverified"
+      ],
+      "remediation": "Live sample audit of treatment/currentness fields after DB access"
+    },
+    {
+      "id": "CORPUS-06",
+      "product": "Shared",
+      "subsystem": "Ingestion",
+      "feature": "Refresh/ingestion operational readiness",
+      "requirement": "CourtListener/licensed ingest + refresh implemented, tested, operational, production-verified",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "e5678e0",
+      "evidence": [
+        "Queue#2 / CL scripts present; WP-03 forbade running acquisition; production verified=NO"
+      ],
+      "remediation": "Separate readiness gates after live DB restore; never claim operational without live job evidence"
+    },
+    {
+      "id": "CORPUS-07",
+      "product": "Prosecution",
+      "subsystem": "Research",
+      "feature": "Prosecution research with live corpus",
+      "requirement": "Prosecution Ask retrieval uses live authority corpus with isolation",
+      "status": "BLOCKED",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "e5678e0",
+      "evidence": ["WP-02 routing preserved in unit tests; live corpus retrieval blocked"],
+      "remediation": "Unblock CORPUS-01 then run zero-paid retrieval fixtures against live DB"
     }
   ],
   "topReleaseBlockers": [
@@ -715,7 +804,11 @@
       "closes": ["CORPUS-01", "PROF-RES-01", "CORPUS-02"],
       "deps": [],
       "effort": "1-3 weeks (ops+data)",
-      "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots"
+      "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots",
+      "status": "LIVE_CORPUS_ACCESS_BLOCKED",
+      "result": "WP03_LIVE_CORPUS_ACCESS_BLOCKED",
+      "evidenceArtifact": "packages/research/corpus/reports/wp03-live-corpus-access-blocked.json",
+      "note": "Live DB unavailable this session; historical snapshots preserved as HISTORICAL_ONLY / REPORTED_ONLY"
     },
     {
       "id": "WP-04",
@@ -779,5 +872,16 @@
     "paidCalls": 0,
     "courtlistenerCalls": 0,
     "productionRuntime": "UNVERIFIED"
+  },
+  "wp03Session": {
+    "classification": "NYAYAGRID_WP03_LIVE_CORPUS_AND_RESEARCH_CERTIFICATION",
+    "result": "LIVE_CORPUS_ACCESS_BLOCKED",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "mutations": 0,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03-live-corpus-access-blocked.json",
+    "presenceCheckScript": "scripts/corpus/wp03-env-presence-check.cjs",
+    "intendedDb": "localhost:5433/nyayagrid (Docker certification fallback)",
+    "blockReason": "DATABASE_URL unset; :5433 not listening; Docker daemon unavailable; unidentified :5432 postgres not queried"
   }
 }

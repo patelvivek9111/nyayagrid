@@ -1,0 +1,80 @@
+{
+  "artifact": "WP03_LIVE_CORPUS_ACCESS_PROBE",
+  "classification": "NYAYAGRID_WP03_LIVE_CORPUS_AND_RESEARCH_CERTIFICATION",
+  "generatedAt": "2026-11-03T17:10:00.000Z",
+  "headAtProbe": "e5678e06812749be1346e6afe1472a1a9e469ca3",
+  "branch": "feat/production-model-routing",
+  "mutations": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "result": "LIVE_CORPUS_ACCESS_BLOCKED",
+  "authoritativeTargetIntended": {
+    "label": "persistent-local-docker-nyayagrid",
+    "host": "localhost",
+    "port": "5433",
+    "database": "nyayagrid",
+    "source": "packages/research/src/corpus/db-identity.ts intendedCertificationTarget / CERTIFICATION_DATABASE_FALLBACK"
+  },
+  "connectionProbe": {
+    "processEnvDatabaseUrl": "UNSET",
+    "envFiles": {
+      ".env": "ABSENT",
+      ".env.local": "PRESENT_BUT_DATABASE_URL_KEY_ABSENT",
+      "benchmarks/nyaya-bench/.env": "ABSENT",
+      "packages/research/.env": "ABSENT",
+      "apps/web/.env": "ABSENT",
+      "apps/web/.env.local": "ABSENT"
+    },
+    "port5433": "NOT_LISTENING",
+    "port5432": "LISTEN_PROCESS=postgres_UNIDENTIFIED_NO_AUTHORIZED_URL",
+    "dockerDaemon": "UNAVAILABLE",
+    "queriedUnidentified5432": false,
+    "reason": "No authorized DATABASE_URL; intended certification DB on localhost:5433 is down; unidentified postgres on 5432 was not queried"
+  },
+  "historicalEvidencePreservedNotLive": {
+    "queue2LaneASnapshot": {
+      "path": "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json",
+      "generatedAt": "2026-09-28T15:44:25.826Z",
+      "authorities": 3709,
+      "cases": 2392,
+      "cl_cases": 2347,
+      "statutes": 904,
+      "regulations": 158,
+      "rules": 254,
+      "orphans": 0,
+      "duplicateSourceIds": 0,
+      "sumCitationTargetAbsentAcrossJurisdictions": 6972,
+      "sumHighCourt": 2106,
+      "sumIntermediate": 281,
+      "jurisdictionRows": 52,
+      "remainingTo10kCasesVsSnapshot": 7608,
+      "status": "HISTORICAL_ONLY"
+    },
+    "suppressionHoldingScreenIdentity": {
+      "path": "packages/intelligence/src/prosecution/suppression-holding-screen.json",
+      "cases": 4680,
+      "authorities": 6035,
+      "note": "Embedded identity claim from a later session artifact; not independently re-verified live this session",
+      "status": "HISTORICAL_REPORTED_ONLY"
+    }
+  },
+  "targetReconciliation": {
+    "targetCases": 10000,
+    "actualCasesLive": null,
+    "remainingGapLive": null,
+    "plannedStateDcApprox": 7650,
+    "plannedFederalApprox": 2350,
+    "note": "Cannot compute live gap without live census"
+  },
+  "blockersToUnblockLiveCensus": [
+    "Start local Docker Postgres mapped to localhost:5433 with nyayagrid corpus volume, OR",
+    "Provide authorized read-only DATABASE_URL for the corpus database in process env / approved dotenv, OR",
+    "Authorize an identified staging/corpus connection with read-only role"
+  ],
+  "explicitNonActions": [
+    "No CourtListener requests",
+    "No paid AI calls",
+    "No writes/migrations/ingestion/refresh",
+    "No connection attempt to unidentified :5432 postgres"
+  ]
+}
