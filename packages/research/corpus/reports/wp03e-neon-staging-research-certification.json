@@ -1,0 +1,122 @@
+{
+  "classification": "NYAYAGRID_WP03E_NEON_STAGING_RESEARCH_CERTIFICATION",
+  "generatedAt": "2026-11-04T01:10:00.000Z",
+  "headBefore": "bcb925e2a7fa740397880c4497817d987065b95d",
+  "branch": "feat/production-model-routing",
+  "lastVerifiedCi": {
+    "run": "41735320036",
+    "conclusion": "SUCCESS",
+    "headSha": "bcb925e2a7fa740397880c4497817d987065b95d"
+  },
+  "mutations": 0,
+  "neonWrites": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "deployed": false,
+  "merged": false,
+  "result": "WP03E_CREDENTIAL_PROVISIONING_REQUIRED",
+  "status": "BLOCKED",
+  "verificationClasses": {
+    "ROLE_DESIGNED": true,
+    "ROLE_PROVISIONED": false,
+    "SELECT_ONLY_VERIFIED": false,
+    "CORPUS_DB_IDENTITY_VERIFIED": false,
+    "STAGING_KEYWORD_PASS": false,
+    "STAGING_SEMANTIC_PASS": false,
+    "STAGING_HYBRID_PASS": false,
+    "PROFESSIONAL_LIVE_CORPUS_PASS": false,
+    "PROSECUTION_LIVE_CORPUS_PASS": false,
+    "PRODUCTION_NOT_CERTIFIED": true,
+    "LIVE_STAGING_ACCEPTANCE_BLOCKED": true
+  },
+  "neonReadOnly": {
+    "roleExists": false,
+    "roleProvisioned": false,
+    "selectOnlyProven": false,
+    "writePermissionsAbsent": false,
+    "schemaTableGrants": "designed_not_applied",
+    "credentialConfigured": false,
+    "connectionVerified": false,
+    "loginRolesObserved": ["cloud_admin", "neon_service", "neondb_owner"],
+    "proposedRole": "nyayagrid_corpus_readonly",
+    "provisioningArtifacts": [
+      "docs/security/NEON_CORPUS_READONLY_ROLE_PROVISIONING.md",
+      "scripts/corpus/neon-corpus-readonly-role.sql",
+      "scripts/corpus/wp03e-readonly-role-plan.test.cjs",
+      "scripts/corpus/wp03e-credential-discovery.cjs"
+    ]
+  },
+  "credentialDiscovery": {
+    "credential_present": false,
+    "credential_scope": "ABSENT",
+    "database_identity": "neondb (metadata probe only; owner not app credential)",
+    "role_name": null,
+    "SELECT_only_verified": false,
+    "write_privileges_absent": false,
+    "connection_available": false,
+    "evidence": "packages/research/corpus/reports/wp03e-credential-discovery.json"
+  },
+  "keywordSearchAnalysis": {
+    "search_vector_population": 0,
+    "retrieverUsesSearchVectorColumn": false,
+    "retrieverUsesComputedTsvector": true,
+    "matchingIndex": "legal_authority_chunks_fts_idx ON to_tsvector('english', content)",
+    "classification": "NOT_A_DEFECT_FOR_CURRENT_RETRIEVER",
+    "stagingKeywordPass": false,
+    "reasonBlocked": "No SELECT-only CORPUS_DATABASE_URL"
+  },
+  "semanticSearchAnalysis": {
+    "embeddedChunksReference": 129160,
+    "vectorIndexPresent": false,
+    "note": "No HNSW/IVFFlat on legal_authority_chunks.embedding; seq scan possible after credential",
+    "queryEmbeddingGeneration": "UNVERIFIED",
+    "reason": "Would require paid embedding provider for end-to-end query vectors; stored-vector path not run without restricted credential",
+    "stagingSemanticPass": false
+  },
+  "staging": {
+    "productDbIdentity": "NOT_RUN",
+    "corpusDbIdentity": "NOT_RUN",
+    "featureEnabledInStagingOnly": "N/A_BLOCKED",
+    "productionUnchanged": true
+  },
+  "retrieval": {
+    "fullText": "BLOCKED",
+    "identityOnly": "BLOCKED",
+    "citation": "BLOCKED",
+    "keyword": "BLOCKED",
+    "semantic": "BLOCKED",
+    "hybrid": "BLOCKED",
+    "provenance": "STATIC_IMPLEMENTED_PRIOR_WP03D",
+    "grounding": "STATIC_IMPLEMENTED_PRIOR_WP03D",
+    "latency": "NOT_MEASURED",
+    "failClosed": "UNIT_COVERED_PRIOR_WP03D"
+  },
+  "professional": {
+    "authenticatedE2E": "BLOCKED",
+    "authorization": "PRIOR_REGRESSION_ONLY",
+    "realNeonReads": false,
+    "mockedModel": "N/A_BLOCKED",
+    "status": "BLOCKED_CREDENTIAL"
+  },
+  "prosecution": {
+    "authenticatedE2E": "BLOCKED",
+    "caseIsolation": "PRIOR_REGRESSION_ONLY",
+    "routerV2": "PRIOR_WP02_VERIFIED",
+    "realNeonReads": false,
+    "mockedModel": "N/A_BLOCKED",
+    "status": "BLOCKED_CREDENTIAL"
+  },
+  "regressions": {
+    "wp01Scorers": "28/28",
+    "wp02Router": "35/35",
+    "prosecution39": "39/39",
+    "researchPackage": "175 passed / 6 skipped (live-certification)",
+    "readonlyRolePlanStatic": "PASS",
+    "failed": 0,
+    "skippedLiveStaging": true,
+    "skippedProductionBuild": true,
+    "skippedFullLintFormatAll": true,
+    "note": "Live Professional/Prosecution Neon staging E2E skipped — CREDENTIAL_PROVISIONING_REQUIRED"
+  },
+  "nextAction": "Human operator: approve and execute docs/security/NEON_CORPUS_READONLY_ROLE_PROVISIONING.md + scripts/corpus/neon-corpus-readonly-role.sql; set staging CORPUS_DATABASE_URL; re-run WP-03E live Phases 3–7. Do not start WP-04 automatically."
+}

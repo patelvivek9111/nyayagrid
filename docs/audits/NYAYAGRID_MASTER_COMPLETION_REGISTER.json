@@ -72,7 +72,7 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "WP-03D: guarded Neon corpus integration implemented; live RO credential blocked; production activation OFF",
+    "note": "WP-03E: SELECT-only role designed (not provisioned); CORPUS_DATABASE_URL absent; staging live cert blocked; production activation OFF",
     "verifiedComplete": 16,
     "implementedUnverified": 4,
     "partial": 21,
@@ -196,11 +196,12 @@
         "Historical corpus far below 10k useful-cases target (2392 cases HISTORICAL)",
         "WP-03A: local certification DB access recovered + live census complete; research go-live still blocked (843 cases, synthetic majority, thin citation graph)",
         "WP-03C: Neon has 5621 text-backed cases but product research binds DATABASE_URL (local cert DB is not Neon); research go-live blocked",
-        "WP-03D implementation complete (partial): guarded corpus adapter + quote safety; live Neon RO cert blocked on SELECT-only credential"
+        "WP-03D implementation complete (partial): guarded corpus adapter + quote safety; live Neon RO cert blocked on SELECT-only credential",
+        "WP-03E: ROLE_DESIGNED; CREDENTIAL_PROVISIONING_REQUIRED; live staging acceptance not run; 10k acquisition not closed"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "b428b87",
-      "remediation": "Access unblocked; depth/integrity/retrieval certification still required before research go-live",
+      "remediation": "Provision SELECT-only CORPUS_DATABASE_URL; complete WP-03E live staging cert; continue text-backed acquisition toward 10k",
       "priority": "P0"
     },
     {
@@ -864,10 +865,12 @@
       "evidence": [
         "WP-03D: CORPUS_DATABASE_URL + FEATURE_NEON_CORPUS_RESEARCH + GuardedAuthorityRetriever wired into Ask/agents/searchAuthorities",
         "Product getDb() remains DATABASE_URL; Neon not substituted",
-        "LIVE_NEON_READ_ONLY_CERTIFICATION_BLOCKED: no SELECT-only corpus credential",
-        "packages/research/corpus/reports/wp03d-neon-research-integration.json"
+        "WP-03E: ROLE_DESIGNED; ROLE_PROVISIONED=false; CORPUS_DATABASE_URL absent; neonctl owner not used as app credential",
+        "packages/research/corpus/reports/wp03d-neon-research-integration.json",
+        "packages/research/corpus/reports/wp03e-neon-staging-research-certification.json",
+        "docs/security/NEON_CORPUS_READONLY_ROLE_PROVISIONING.md"
       ],
-      "remediation": "Provision SELECT-only Neon role + set CORPUS_DATABASE_URL; enable FEATURE_NEON_CORPUS_RESEARCH in staging only after live RO cert"
+      "remediation": "Human-approve and execute SELECT-only Neon role SQL; set staging CORPUS_DATABASE_URL; re-run WP-03E live Phases 3–7; keep production FEATURE_NEON_CORPUS_RESEARCH OFF"
     },
     {
       "id": "CORPUS-14",
@@ -881,8 +884,9 @@
       "confidence": "HIGH",
       "lastVerifiedSha": "b428b87",
       "evidence": [
-        "WP-03D: Prosecution Ask shares getAuthorityRetriever(); Router v2 preserved; live Neon prosecution retrieval still blocked on credential",
-        "packages/research/corpus/reports/wp03d-neon-research-integration.json"
+        "WP-03D: Prosecution Ask shares getAuthorityRetriever(); Router v2 preserved",
+        "WP-03E: PROFESSIONAL_LIVE_CORPUS_PASS/PROSECUTION_LIVE_CORPUS_PASS blocked on missing SELECT-only credential",
+        "packages/research/corpus/reports/wp03e-neon-staging-research-certification.json"
       ]
     },
     {
@@ -951,20 +955,30 @@
       "deps": [],
       "effort": "1-3 weeks (ops+data)",
       "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots",
-      "status": "RESEARCH_INTEGRATION_PARTIAL",
-      "result": "WP03D_RESEARCH_INTEGRATION_PARTIAL",
-      "evidenceArtifact": "packages/research/corpus/reports/wp03d-neon-research-integration.json",
-      "note": "Guarded CORPUS_DATABASE_URL path implemented and feature-gated OFF. Live Neon RO verification blocked until SELECT-only credential. Do not deploy/activate in production.",
+      "status": "CREDENTIAL_PROVISIONING_REQUIRED",
+      "result": "WP03E_CREDENTIAL_PROVISIONING_REQUIRED",
+      "evidenceArtifact": "packages/research/corpus/reports/wp03e-neon-staging-research-certification.json",
+      "note": "WP-03E: least-privilege role designed; restricted credential absent; live staging Professional/Prosecution corpus acceptance not run. Do not deploy/activate in production. Do not auto-start WP-04.",
       "verificationClasses": {
         "DATABASE_ACCESS_RECOVERED": true,
         "DATABASE_IDENTITY_VERIFIED": true,
         "LIVE_CENSUS_COMPLETE": true,
         "CITATION_INTEGRITY_VERIFIED": "PARTIAL_THIN_GRAPH",
         "RETRIEVAL_VERIFIED": "PARTIAL_KEYWORD_AND_INDEX_HEALTH",
+        "ROLE_DESIGNED": true,
+        "ROLE_PROVISIONED": false,
+        "SELECT_ONLY_VERIFIED": false,
+        "CORPUS_DB_IDENTITY_VERIFIED": false,
+        "STAGING_KEYWORD_PASS": false,
+        "STAGING_SEMANTIC_PASS": false,
+        "STAGING_HYBRID_PASS": false,
+        "PROFESSIONAL_LIVE_CORPUS_PASS": false,
+        "PROSECUTION_LIVE_CORPUS_PASS": false,
+        "PRODUCTION_NOT_CERTIFIED": true,
         "FULL_RESEARCH_CERTIFIED": false
       },
       "remoteCi": {
-        "run": "41689403691",
+        "run": "41735320036",
         "conclusion": "SUCCESS"
       }
     },
@@ -1131,5 +1145,30 @@
       "wp02": "35/35",
       "prosecution": "39/39"
     }
+  },
+  "wp03eSession": {
+    "classification": "NYAYAGRID_WP03E_NEON_STAGING_RESEARCH_CERTIFICATION",
+    "result": "WP03E_CREDENTIAL_PROVISIONING_REQUIRED",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "neonWrites": 0,
+    "mutations": 0,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03e-neon-staging-research-certification.json",
+    "provisioningPlan": "docs/security/NEON_CORPUS_READONLY_ROLE_PROVISIONING.md",
+    "provisioningSql": "scripts/corpus/neon-corpus-readonly-role.sql",
+    "verificationClasses": {
+      "ROLE_DESIGNED": true,
+      "ROLE_PROVISIONED": false,
+      "SELECT_ONLY_VERIFIED": false,
+      "CORPUS_DB_IDENTITY_VERIFIED": false,
+      "STAGING_KEYWORD_PASS": false,
+      "STAGING_SEMANTIC_PASS": false,
+      "STAGING_HYBRID_PASS": false,
+      "PROFESSIONAL_LIVE_CORPUS_PASS": false,
+      "PROSECUTION_LIVE_CORPUS_PASS": false,
+      "PRODUCTION_NOT_CERTIFIED": true
+    },
+    "keywordSearchFinding": "Current retriever uses computed to_tsvector(content) + GIN legal_authority_chunks_fts_idx; empty search_vector is not a defect for this path",
+    "nextAction": "Provision nyayagrid_corpus_readonly; set staging CORPUS_DATABASE_URL; resume live Phases 3–7. Do not auto-start WP-04."
   }
 }
