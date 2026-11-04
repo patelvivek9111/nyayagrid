@@ -653,7 +653,7 @@
         "packages/research/corpus/reports/wp05-pitr-verification.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending-isolation-commit",
+      "lastVerifiedSha": "24c6584a28f5805ca2430879b02b27c1863a0c7a",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
