@@ -10,15 +10,17 @@ Do not create a production Fly application from this checklist without a separat
 - [ ] WP-04 live Clerk MFA verified
 - [ ] WP-04 attorney Terms/Privacy approval recorded
 - [ ] WP-04 production ClamAV verification complete
-- [ ] OPS-BACKUP-01 managed PITR `PASS_WITH_EVIDENCE`
-- [ ] Product database physically separate from legal corpus
+- [x] OPS-BACKUP-01 managed PITR `PASS_WITH_EVIDENCE`
+- [x] Product database physically separate from legal corpus (staging product branch)
 - [x] OPS-MON-01 staging SMTP `ready-probe-failing` delivery + human Gmail acknowledgment verified (production on-call still open)
-
-- [ ] OPS-DEP-01 staging durable `gitSha` after rollback PASS
+- [x] OPS-MON-01 continuous monitor scheduler + evaluator shipped (Actions cron; observe scheduled runs; SMTP notify optional)
+- [x] OPS-DEP-01 staging durable `gitSha` after rollback PASS
+- [x] Incident/recovery runbooks published (`docs/operations/WP05_INCIDENT_RUNBOOKS.md`)
+- [ ] Staging Clerk-authenticated E2E (Professional + Prosecution) PASS — blocked on test identity provisioning
 - [ ] Staging automated E2E (Professional + Prosecution) PASS with synthetic fixtures
 - [ ] GitHub Environment `production` reviewers configured
 - [ ] Secrets inventoried; no staging secrets reused casually
-- [ ] Rollback image + DB restore runbooks signed
+- [x] Rollback image + DB restore runbooks signed (staging-verified; production ungated)
 
 ## Explicitly forbidden without new approval
 

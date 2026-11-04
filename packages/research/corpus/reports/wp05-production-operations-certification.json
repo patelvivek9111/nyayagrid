@@ -1,0 +1,107 @@
+{
+  "classification": "NYAYAGRID_WP05_PRODUCTION_OPERATIONS_CERTIFICATION",
+  "at": "2026-11-04T22:55:00.000Z",
+  "productionDeployed": false,
+  "gates": {
+    "releasePipeline": {
+      "status": "STAGING_VERIFIED",
+      "evidence": ".github/workflows/deploy-staging.yml manual approval; ci.yml"
+    },
+    "preflight": {
+      "status": "ENGINEERING_COMPLETE",
+      "evidence": "scripts/maintenance/deploy-preflight.mjs; npm run ops:deploy-preflight"
+    },
+    "databaseIsolation": {
+      "status": "STAGING_VERIFIED",
+      "evidence": "wp05-product-branch-isolation.json"
+    },
+    "pitr": {
+      "status": "STAGING_VERIFIED",
+      "evidence": "wp05-pitr-verification.json PASS_WITH_EVIDENCE"
+    },
+    "backupRetention": {
+      "status": "DOCUMENTED",
+      "evidence": "Neon history retention ~6h noted; interim local 24h RPO"
+    },
+    "redis": {
+      "status": "STAGING_VERIFIED",
+      "evidence": "staging ready redis=ok"
+    },
+    "storage": {
+      "status": "STAGING_VERIFIED",
+      "evidence": "staging ready storage=ok"
+    },
+    "clamav": {
+      "status": "STAGING_VERIFIED",
+      "note": "Production ClamAV certification still BLOCKED (WP-04)"
+    },
+    "ocr": {
+      "status": "BLOCKED",
+      "note": "OCR_PROVIDER=none; managed OCR + load test outstanding (WP-04)"
+    },
+    "clerkMfa": {
+      "status": "BLOCKED",
+      "note": "Automated sign-in ≠ MFA enforcement certification"
+    },
+    "legalReview": {
+      "status": "BLOCKED",
+      "note": "Attorney Terms/Privacy approval outstanding (SEC-LEGAL-01)"
+    },
+    "oncall": {
+      "status": "STAGING_VERIFIED",
+      "note": "SMTP Gmail ack for ready-probe only; production paging NOT VERIFIED"
+    },
+    "runbooks": {
+      "status": "ENGINEERING_COMPLETE",
+      "evidence": "docs/operations/WP05_INCIDENT_RUNBOOKS.md"
+    },
+    "monitoringContinuous": {
+      "status": "PRODUCTION_READY_PENDING_APPROVAL",
+      "note": "GH Actions scheduler + evaluator shipped; live schedule executions must be observed post-push"
+    },
+    "clerkE2E": {
+      "status": "BLOCKED",
+      "note": "Specs added; authenticated Clerk staging run requires operator-provisioned test identities / storageState"
+    }
+  },
+  "categories": {
+    "ENGINEERING_COMPLETE": [
+      "alert policy catalog",
+      "continuous monitor evaluator",
+      "deploy preflight",
+      "incident runbooks",
+      "staging deploy approval workflow"
+    ],
+    "LOCAL_VERIFIED": [
+      "continuous-monitor unit tests",
+      "ops-health unit tests",
+      "alert-delivery unit tests"
+    ],
+    "STAGING_VERIFIED": [
+      "ready HEALTHY",
+      "PITR",
+      "product isolation",
+      "runtime credential rotation",
+      "SMTP ready-probe human ack",
+      "deploy identity rollback"
+    ],
+    "PRODUCTION_READY_PENDING_APPROVAL": [
+      "continuous monitor workflow (pending observed schedule runs after merge/push)",
+      "production release checklist items still open for WP-03E/WP-04"
+    ],
+    "PRODUCTION_VERIFIED": [],
+    "BLOCKED": [
+      "production Fly app",
+      "Clerk MFA live certification",
+      "managed OCR",
+      "ClamAV production certification",
+      "attorney legal review",
+      "production on-call escalation",
+      "Clerk authenticated E2E without test identities"
+    ]
+  },
+  "neonCorpusWrites": 0,
+  "courtListenerCalls": 0,
+  "paidAiCalls": 0,
+  "result": "WP05_STAGING_CERTIFIED_PRODUCTION_APPROVAL_PENDING"
+}

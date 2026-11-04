@@ -685,32 +685,34 @@
       "severity": "P1",
       "releaseBlocker": true,
       "evidence": [
-        "WP-05 DEFAULT_ALERT_POLICIES + ready status model",
-        "Local MemoryAlertTransport + HTTP receiver unit PASS",
-        "Staging SMTP synthetic ready-probe-failing firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z from staging@nyayagrid.com via smtp.resend.com",
-        "Operator independently confirmed both emails received and inspected in Gmail at patelvivek9111@gmail.com",
-        "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json",
-        "Scope PASS only: SMTP transport, inbox delivery, operator acknowledgment, recovery notification for ready-probe-failing staging synthetic"
+        "WP-05 DEFAULT_ALERT_POLICIES + continuous-monitor evaluator (firing/resolved/dedupe/cooldown)",
+        "GitHub Actions workflow staging-continuous-monitor.yml cron */5 (app-independent scheduler)",
+        "Live monitor cycle PROBE_HEALTHY against staging.nyayagrid.com (wp05-continuous-monitor-last-cycle.json)",
+        "Policy catalog wp05-alert-policy-catalog.json (unobservable signals explicitly NOT_FABRICATED)",
+        "Staging SMTP synthetic ready-probe-failing firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z; Gmail human ack verified",
+        "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "bb855f5476c68704217c9274ffa8f8c9c9bea521",
+      "lastVerifiedSha": "aa40f43d54a56abb0bf4f570c8ae121262c4f0f7",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
       "PRODUCTION_VERIFIED": false,
-      "EVIDENCE": "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json; packages/observability/src/alert-delivery.test.ts",
+      "EVIDENCE": "wp05-monitoring-human-ack-verified.json; wp05-continuous-monitor-last-cycle.json; wp05-alert-policy-catalog.json; .github/workflows/staging-continuous-monitor.yml",
       "BLOCKERS": [
         "Production on-call escalation not tested",
         "Automated acknowledgment integration not tested",
-        "Other alert policies not rehearsed live",
-        "Continuous probe-to-SMTP bridge not yet scheduled as a durable worker"
+        "Request-metric policies (5xx/AI/worker heartbeat/TLS) lack telemetry — not fabricated",
+        "Continuous SMTP notify defaults off in Actions (set MONITOR_NOTIFY=smtp + repo SMTP secrets for live email from scheduler)"
       ],
-      "HUMAN_APPROVAL": "Staging synthetic ready-probe-failing Gmail ack recorded; production on-call still gated",
-      "NEXT_ACTION": "Keep staging SMTP ack path; optionally wire durable probe alerter and production on-call before production release",
+      "HUMAN_APPROVAL": "Staging ready-probe Gmail ack recorded; production on-call still gated",
+      "NEXT_ACTION": "Observe scheduled Actions runs post-push; optionally enable MONITOR_NOTIFY=smtp with GH secrets; production paging separate",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "MONITORING_IMPLEMENTED": true,
         "LOCAL_ALERT_TRANSPORT_VERIFIED": true,
+        "CONTINUOUS_SCHEDULER_IMPLEMENTED": true,
+        "CONTINUOUS_PROBE_OBSERVED": true,
         "ALERT_DELIVERED": true,
         "ALERT_RECEIVED": true,
         "ONCALL_ACKNOWLEDGED": true,
@@ -722,7 +724,7 @@
         "OTHER_ALERT_POLICIES_TESTED": false,
         "PRODUCTION_VERIFIED": false
       },
-      "remediation": "Staging SMTP synthetic ready-probe path PASS with human ack; production on-call/PagerDuty remains optional until separately verified"
+      "remediation": "Continuous scheduler + evaluator shipped; keep production paging optional until separately verified"
     },
     {
       "id": "OPS-DEP-01",
@@ -745,13 +747,14 @@
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
       "PRODUCTION_VERIFIED": false,
-      "EVIDENCE": "wp05-staging-identity-rollback.json; staging ready HEALTHY with baked gitSha",
+      "EVIDENCE": "wp05-staging-identity-rollback.json; staging ready HEALTHY with baked gitSha; WP05_INCIDENT_RUNBOOKS.md; wp05-production-operations-certification.json",
       "BLOCKERS": [
-        "Automated Clerk E2E credentials unavailable",
-        "WP-03E/WP-04 legal-security gates still open before production"
+        "Clerk-authenticated Professional/Prosecution E2E blocked on staging test identities (security negatives PASS)",
+        "WP-03E/WP-04 legal-security gates still open before production",
+        "PRODUCTION_DEPLOYED=false — no production Fly app"
       ],
-      "HUMAN_APPROVAL": "Separate approval required for production Fly app; Clerk E2E secrets",
-      "NEXT_ACTION": "Keep staging on product branch; do not create production Fly app until WP-03E/WP-04 gates close",
+      "HUMAN_APPROVAL": "Separate approval required for production Fly app; Clerk E2E test users; attorney legal review",
+      "NEXT_ACTION": "Provision Clerk staging test identities; keep production Fly app uncreated until WP-03E/WP-04 gates close",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "IMAGE_BUILT": true,
