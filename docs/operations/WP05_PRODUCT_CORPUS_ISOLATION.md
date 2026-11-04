@@ -10,9 +10,9 @@ Staging product `DATABASE_URL` and the legal corpus currently resolve to the **s
 
 ## Ownership
 
-| Domain | Tables (representative) | Migrator | Runtime write |
-| ------ | ----------------------- | -------- | ------------- |
-| Product | `organizations`, `matters`, `documents`, `criminal_cases`, `audit_events`, … | `npm run db:migrate` with `ALLOW_DATABASE_MIGRATE` + expected host/name | App roles |
+| Domain       | Tables (representative)                                                                                | Migrator                                                                                 | Runtime write                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Product      | `organizations`, `matters`, `documents`, `criminal_cases`, `audit_events`, …                           | `npm run db:migrate` with `ALLOW_DATABASE_MIGRATE` + expected host/name                  | App roles                                         |
 | Legal corpus | `legal_authorities`, `legal_authority_chunks`, `legal_authority_versions`, `legal_authority_citations` | **Forbidden** via product migrator (`MIGRATE_TARGET_IS_CORPUS` / `MIGRATE_LEGAL_CORPUS`) | Import/workers only; research must be SELECT-only |
 
 ## Engineering already in place

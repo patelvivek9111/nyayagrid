@@ -4,15 +4,15 @@
 
 ## Already verified (do not re-invent)
 
-| Item | Evidence |
-| ---- | -------- |
-| Recovery branch name | `wp05-pitr-rehearsal-20261104` |
-| Recovery branch id | `br-odd-haze-au3z053l` |
-| Parent | `production` / `br-delicate-cloud-au0md4t9` |
-| Created | 2026-11-04T11:21:13 (operator report) |
-| Auto-delete | 2026-11-05T11:21:13 |
-| Prior count match | `legal_authorities` 35863 / `legal_authority_citations` 80842 on both branches |
-| Staging live inventory (production branch) | `packages/research/corpus/reports/wp05-staging-db-inventory.json` |
+| Item                                       | Evidence                                                                       |
+| ------------------------------------------ | ------------------------------------------------------------------------------ |
+| Recovery branch name                       | `wp05-pitr-rehearsal-20261104`                                                 |
+| Recovery branch id                         | `br-odd-haze-au3z053l`                                                         |
+| Parent                                     | `production` / `br-delicate-cloud-au0md4t9`                                    |
+| Created                                    | 2026-11-04T11:21:13 (operator report)                                          |
+| Auto-delete                                | 2026-11-05T11:21:13                                                            |
+| Prior count match                          | `legal_authorities` 35863 / `legal_authority_citations` 80842 on both branches |
+| Staging live inventory (production branch) | `packages/research/corpus/reports/wp05-staging-db-inventory.json`              |
 
 ## Missing evidence (blocks full PITR certification)
 

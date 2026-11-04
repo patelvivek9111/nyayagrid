@@ -75,7 +75,7 @@ async function main() {
     transport: transport.name,
     destination:
       transportName === "smtp"
-        ? process.env.OPS_ALERT_TO ?? "patelvivek9111@gmail.com"
+        ? (process.env.OPS_ALERT_TO ?? "patelvivek9111@gmail.com")
         : transport.name,
     firing: {
       delivered: firing.delivered,

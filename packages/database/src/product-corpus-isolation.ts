@@ -139,7 +139,9 @@ export function evaluateProductCorpusIsolation(env: IsolationEnv = process.env):
     }
   }
 
-  if (["1", "true", "yes", "on"].includes(read(env, "FEATURE_NEON_CORPUS_RESEARCH").toLowerCase())) {
+  if (
+    ["1", "true", "yes", "on"].includes(read(env, "FEATURE_NEON_CORPUS_RESEARCH").toLowerCase())
+  ) {
     if (sharedPhysicalDatabase) {
       findings.push({
         code: "CORPUS_RESEARCH_ON_SHARED_DB",

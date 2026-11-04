@@ -9,11 +9,11 @@
 
 **PARTIAL / EXTERNAL APPROVAL REQUIRED** — staging product health and rollback image switching are verified; durable release identity is engineered but not yet redeployed; managed PITR lacks independently verified historical checkpoint; product/corpus share `neondb` (production blocker); SMTP synthetic alerts accepted pending human ack; production not deployed.
 
-| Requirement | ENGINEERING | LOCAL | STAGING | PRODUCTION |
-| ----------- | ----------- | ----- | ------- | ---------- |
-| OPS-BACKUP-01 | YES | YES (docker) | PARTIAL inventory | NO |
-| OPS-MON-01 | YES | YES | SMTP accepted / ack pending | NO |
-| OPS-DEP-01 | YES | YES | Host live; identity bake pending redeploy | NO |
+| Requirement   | ENGINEERING | LOCAL        | STAGING                                   | PRODUCTION |
+| ------------- | ----------- | ------------ | ----------------------------------------- | ---------- |
+| OPS-BACKUP-01 | YES         | YES (docker) | PARTIAL inventory                         | NO         |
+| OPS-MON-01    | YES         | YES          | SMTP accepted / ack pending               | NO         |
+| OPS-DEP-01    | YES         | YES          | Host live; identity bake pending redeploy | NO         |
 
 ## Do not claim
 

@@ -50,8 +50,7 @@ export function resolveBuildIdentity(
   env: NodeJS.ProcessEnv | Record<string, string | undefined> = process.env,
   options: { identityFilePath?: string; readFile?: boolean } = {},
 ): ReleaseIdentity {
-  const appEnv =
-    nonEmpty(env.APP_ENV) ?? nonEmpty(env.NODE_ENV) ?? "development";
+  const appEnv = nonEmpty(env.APP_ENV) ?? nonEmpty(env.NODE_ENV) ?? "development";
 
   const envSha =
     nonEmpty(env.GIT_SHA) ??

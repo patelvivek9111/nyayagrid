@@ -224,9 +224,7 @@ async function main() {
     const counts = {};
     for (const table of tables) {
       if (!/^[a-z_]+$/.test(table)) throw new Error("bad table");
-      const exists = await client.query(
-        `SELECT to_regclass('public.${table}') AS reg`,
-      );
+      const exists = await client.query(`SELECT to_regclass('public.${table}') AS reg`);
       if (!exists[0] || exists[0].reg === null || exists[0].reg === "") {
         counts[table] = { present: false, count: null };
         continue;
@@ -251,6 +249,8 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(JSON.stringify({ result: "ERROR", error: String(err.message || err).slice(0, 400) }));
+  console.error(
+    JSON.stringify({ result: "ERROR", error: String(err.message || err).slice(0, 400) }),
+  );
   process.exit(1);
 });

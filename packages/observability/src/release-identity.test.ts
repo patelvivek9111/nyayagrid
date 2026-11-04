@@ -2,10 +2,7 @@ import { describe, expect, it } from "vitest";
 import { writeFileSync, mkdtempSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
-import {
-  releaseIdentityMissingInDeployedEnv,
-  resolveBuildIdentity,
-} from "./release-identity";
+import { releaseIdentityMissingInDeployedEnv, resolveBuildIdentity } from "./release-identity";
 
 describe("WP-05 release identity", () => {
   it("reads GIT_SHA from env without inventing values", () => {

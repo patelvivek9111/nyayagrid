@@ -67,10 +67,7 @@ async function withClient(url, fn) {
 async function tableCounts(client, tables) {
   const out = {};
   for (const table of tables) {
-    const exists = await client.query(
-      `SELECT to_regclass($1) AS reg`,
-      [`public.${table}`],
-    );
+    const exists = await client.query(`SELECT to_regclass($1) AS reg`, [`public.${table}`]);
     if (!exists.rows[0]?.reg) {
       out[table] = { present: false, count: null };
       continue;
@@ -82,9 +79,7 @@ async function tableCounts(client, tables) {
 }
 
 async function extensionList(client) {
-  const r = await client.query(
-    `SELECT extname FROM pg_extension ORDER BY extname`,
-  );
+  const r = await client.query(`SELECT extname FROM pg_extension ORDER BY extname`);
   return r.rows.map((row) => row.extname);
 }
 
@@ -152,7 +147,8 @@ const report = {
   neonCorpusWrites: 0,
   productionOverwrite: false,
   originalBranchHint: env("PITR_ORIGINAL_BRANCH") || "production / br-delicate-cloud-au0md4t9",
-  recoveryBranchHint: env("PITR_RECOVERY_BRANCH") || "wp05-pitr-rehearsal-20261104 / br-odd-haze-au3z053l",
+  recoveryBranchHint:
+    env("PITR_RECOVERY_BRANCH") || "wp05-pitr-rehearsal-20261104 / br-odd-haze-au3z053l",
   historicalRecoveryTimestamp: historicalTs,
   parentLsn,
   branchCreatedAt,
@@ -249,8 +245,7 @@ async function main() {
     targetManagedRpoMinutes: 5,
     neonHistoryRetentionHours: historyRetentionHours,
     satisfiesTargetWhenRetentionHours: historyRetentionHours >= 5 / 60,
-    note:
-      "Six-hour Neon history retention means restores older than ~6h are unavailable. Matches interim ops only if the incident is within the retention window; does not alone certify <=5m RPO without provider WAL evidence.",
+    note: "Six-hour Neon history retention means restores older than ~6h are unavailable. Matches interim ops only if the incident is within the retention window; does not alone certify <=5m RPO without provider WAL evidence.",
   };
 
   const countsOk =

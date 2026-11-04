@@ -94,7 +94,11 @@ function evaluateEnvironmentBoundaries(env) {
         "CORPUS_DATABASE_URL unset in staging/production. Treat product/corpus as shared-risk until a separate corpus URL is declared. Set PRODUCT_CORPUS_SHARED_DB_ACK=1 only to acknowledge the open isolation blocker.",
     });
   }
-  if ((appEnv === "production" || appEnv === "staging") && !read(env, "GIT_SHA") && !read(env, "GITHUB_SHA")) {
+  if (
+    (appEnv === "production" || appEnv === "staging") &&
+    !read(env, "GIT_SHA") &&
+    !read(env, "GITHUB_SHA")
+  ) {
     findings.push({
       code: "RELEASE_IDENTITY_MISSING",
       severity: isTruthy(read(env, "STRICT_RELEASE_IDENTITY")) ? "blocker" : "warning",

@@ -53,8 +53,7 @@ async function main() {
     target: { host, database: db },
     extensions: exts.rows.map((r) => r.extname),
     counts,
-    isolationNote:
-      "Corpus and product tables coexist on this database — physical isolation OPEN.",
+    isolationNote: "Corpus and product tables coexist on this database — physical isolation OPEN.",
   };
   mkdirSync(dirname(reportPath), { recursive: true });
   writeFileSync(reportPath, JSON.stringify(report, null, 2) + "\n");
@@ -62,6 +61,8 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error(JSON.stringify({ result: "ERROR", error: String(err.message || err).slice(0, 300) }));
+  console.error(
+    JSON.stringify({ result: "ERROR", error: String(err.message || err).slice(0, 300) }),
+  );
   process.exit(1);
 });

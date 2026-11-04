@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  MemoryAlertTransport,
-  buildAlertEvent,
-  deliverAlert,
-} from "./alert-delivery";
+import { MemoryAlertTransport, buildAlertEvent, deliverAlert } from "./alert-delivery";
 
 describe("WP-05 alert delivery", () => {
   it("delivers firing and recovery events without secrets", async () => {
