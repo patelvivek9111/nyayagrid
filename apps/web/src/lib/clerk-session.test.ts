@@ -61,7 +61,24 @@ describe("resolveClerkSessionFromState", () => {
       userId: "user_abc",
       email: "lawyer@example.nyayagrid.local",
       name: "Patel Owner",
+      twoFactorEnabled: null,
+      factorVerificationAge: null,
     });
+  });
+
+  it("maps Clerk factorVerificationAge tuple second factor to minutes", async () => {
+    const session = await resolveClerkSessionFromState(
+      {
+        status: "signed-in",
+        toAuth: () => ({
+          userId: "user_abc",
+          factorVerificationAge: [12, 3] as [number, number],
+        }),
+      },
+      async () => ({ ...user, twoFactorEnabled: true }),
+    );
+    expect(session.twoFactorEnabled).toBe(true);
+    expect(session.factorVerificationAge).toBe(3);
   });
 
   it("does not authenticate handshake, signed-out, or __client_uat-only states", async () => {
