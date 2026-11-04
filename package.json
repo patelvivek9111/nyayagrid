@@ -62,6 +62,7 @@
     "ops:staging-probe": "node scripts/certification/wp05b-staging-probe.mjs",
     "ops:pitr-verify": "node scripts/certification/wp05-pitr-verify.mjs",
     "ops:alert-rehearse": "tsx scripts/maintenance/alert-rehearse.mjs",
+    "ops:staging-monitor-cycle": "tsx scripts/ops/staging-monitor-cycle.ts",
     "ops:verify-clamav": "node scripts/maintenance/verify-clamav.mjs",
     "ops:6w": "tsx scripts/certification/phase-6w-ops.ts",
     "ops:6w-frozen": "tsx scripts/certification/frozen-regression-harness.ts",

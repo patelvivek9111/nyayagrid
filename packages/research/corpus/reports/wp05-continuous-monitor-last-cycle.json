@@ -1,0 +1,33 @@
+{
+  "classification": "NYAYAGRID_WP05_CONTINUOUS_MONITOR_CYCLE",
+  "at": "2026-11-04T22:51:16.972Z",
+  "readyUrlHost": "staging.nyayagrid.com",
+  "probe": {
+    "ok": true,
+    "httpStatus": 200,
+    "latencyMs": 800,
+    "error": null,
+    "checks": {
+      "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "buildId": "wp05-add3af3",
+      "appEnv": "staging",
+      "database": "ok",
+      "storage": "ok",
+      "redis": "ok",
+      "clamav": "ok",
+      "clamavMode": "ok",
+      "ocr": "ok",
+      "neonCorpusResearch": "ok",
+      "ingest": "configured",
+      "config": "ok",
+      "featureAgents": "0",
+      "status": "HEALTHY"
+    }
+  },
+  "transitions": [],
+  "deliveries": [],
+  "notifyMode": "off",
+  "lastSuccessfulProbeAt": "2026-11-04T22:51:16.969Z",
+  "lastWorkerHeartbeatAt": "2026-11-04T22:51:16.971Z",
+  "result": "PROBE_HEALTHY"
+}

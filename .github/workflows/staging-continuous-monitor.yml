@@ -1,0 +1,85 @@
+# WP-05 — continuous staging readiness monitor (independent of the app process).
+# Probes https://staging.nyayagrid.com/api/health/ready on a schedule.
+# SMTP notify is optional (MONITOR_NOTIFY=smtp) and requires repository secrets;
+# default notify is off to avoid noisy operator email. Transitions are logged.
+name: Staging continuous monitor
+
+on:
+  schedule:
+    # Every 5 minutes — actual cadence may be delayed by GitHub Actions queueing.
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      notify:
+        description: "Notify mode: off | memory | smtp"
+        required: false
+        default: "off"
+        type: string
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: staging-continuous-monitor
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    name: Probe staging ready
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Restore monitor state
+        uses: actions/cache@v4
+        with:
+          path: .monitor-state
+          key: staging-monitor-state-${{ github.run_id }}
+          restore-keys: |
+            staging-monitor-state-
+
+      - name: Run monitor cycle
+        id: cycle
+        env:
+          MONITOR_READY_URL: https://staging.nyayagrid.com/api/health/ready
+          MONITOR_STATE_PATH: .monitor-state/staging-monitor-state.json
+          MONITOR_PROBE_TIMEOUT_MS: "10000"
+          MONITOR_NOTIFY: ${{ github.event.inputs.notify || 'off' }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          OPS_ALERT_TO: ${{ secrets.OPS_ALERT_TO }}
+        run: |
+          mkdir -p .monitor-state packages/research/corpus/reports
+          npx tsx scripts/ops/staging-monitor-cycle.ts | tee packages/research/corpus/reports/wp05-continuous-monitor-last-cycle.json
+
+      - name: Persist monitor state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .monitor-state
+          key: staging-monitor-state-${{ github.run_id }}
+
+      - name: Upload cycle artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-monitor-cycle-${{ github.run_id }}
+          path: |
+            packages/research/corpus/reports/wp05-continuous-monitor-last-cycle.json
+            .monitor-state/staging-monitor-state.json
+          if-no-files-found: warn

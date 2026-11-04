@@ -39,6 +39,17 @@ Use `@nyayagrid/observability` `createLogger` / `redactLogText`.
 4. Rehearse one failure alert in staging (ClamAV stop or ready-fail inject) — record evidence.
 5. Only then mark `OPS-MON-01` staging/production verified.
 
+## Continuous scheduler (WP-05)
+
+- Mechanism: GitHub Actions `staging-continuous-monitor.yml` (`*/5 * * * *` + `workflow_dispatch`)
+- Independence: runs on GitHub-hosted runners (not the Fly app process)
+- Cycle script: `npm run ops:staging-monitor-cycle`
+- Evaluator: `@nyayagrid/observability` `continuous-monitor` (threshold, dedupe, cooldown, resolve)
+- State: `.monitor-state/` (gitignored; Actions cache)
+- Default notify: `off` (set `MONITOR_NOTIFY=smtp` + repo SMTP secrets for scheduler email)
+- Catalog: `packages/research/corpus/reports/wp05-alert-policy-catalog.json`
+- Last local/live cycle: `packages/research/corpus/reports/wp05-continuous-monitor-last-cycle.json`
+
 ## Staging SMTP rehearsal (2026-11-04) — human ack verified
 
 - Transport: Resend SMTP on `nyayagrid-staging` (`EMAIL_PROVIDER=smtp`)
@@ -50,4 +61,4 @@ Use `@nyayagrid/observability` `createLogger` / `redactLogText`.
 - Operator independently confirmed both emails received and inspected
 - **PASS (scoped):** SMTP transport, inbox delivery, operator acknowledgment, recovery notification
 - Evidence: `packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json`
-- **Not claimed:** production on-call escalation, automated ack integration, other alert policies, durable probe→SMTP worker
+- **Not claimed:** production on-call escalation, automated ack integration, fabricated metrics for unobservable signals
