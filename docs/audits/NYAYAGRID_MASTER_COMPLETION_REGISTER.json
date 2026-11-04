@@ -652,7 +652,7 @@
         "packages/research/corpus/reports/wp05b-operational-release-closure.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "4634dc75a93a891ffa06761da0a6c984345ce2ad",
+      "lastVerifiedSha": "c91cc75ecbe007d2ec87ba1fd800bfaabfde975b",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
@@ -682,7 +682,7 @@
         "docs/operations/WP05B_OPERATOR_ACTIONS.md Action 4"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "4634dc75a93a891ffa06761da0a6c984345ce2ad",
+      "lastVerifiedSha": "c91cc75ecbe007d2ec87ba1fd800bfaabfde975b",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "MONITORING_IMPLEMENTED": true,
@@ -712,7 +712,7 @@
         "docs/operations/WP05B_OPERATOR_ACTIONS.md Actions 1-3"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "4634dc75a93a891ffa06761da0a6c984345ce2ad",
+      "lastVerifiedSha": "c91cc75ecbe007d2ec87ba1fd800bfaabfde975b",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "IMAGE_BUILT": true,
