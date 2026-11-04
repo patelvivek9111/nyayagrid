@@ -25,10 +25,20 @@
 3. GitHub Actions → **Deploy staging (manual approval)** workflow (`workflow_dispatch`).
 4. Confirm input `NO_PRODUCTION`.
 5. Environment `staging` reviewers approve.
-6. **Human** runs container deploy on the authorized host (no auto push configured here).
-7. Verify `/api/health/ready` → `ok: true`.
+6. **Authorized** Fly deploy with **baked** release identity (required for rollback-safe `gitSha`):
 
-**Commands requiring approval:** any `db:migrate` against staging/prod; any Neon role change; production image promote.
+```bash
+fly deploy -c fly.staging.toml \
+  --build-arg GIT_SHA="$(git rev-parse HEAD)" \
+  --build-arg BUILD_ID="${GITHUB_RUN_ID:-local}" \
+  --skip-release-command
+```
+
+Do **not** rely solely on `fly deploy --env GIT_SHA=...` — that identity was lost after image rollback (v84→v85→v86). Identity is baked into image `ENV` + `/app/release-identity.json`.
+
+7. Verify `/api/health/ready` → `ok: true` and `checks.gitSha` equals the deployed commit (including after image rollback).
+
+**Commands requiring approval:** any `db:migrate` against staging/prod; any Neon role change; production image promote; Fly staging redeploy.
 
 ## Rollback
 
@@ -52,14 +62,19 @@ npm run ops:backup-rehearse
 npm run ops:backup-freshness
 ```
 
-Interim RPO **24h** / RTO **4h** (local dumps). Target managed PITR RPO ≤5m / RTO ≤1h — **not certified** until isolated provider rehearsal.
+Interim RPO **24h** / RTO **4h** (local dumps). Target managed PITR RPO ≤5m / RTO ≤1h — **not certified** until historical checkpoint + recovery-branch verify (`npm run ops:pitr-verify`).
+
+Neon history retention recently observed at **6 hours** — incidents older than retention cannot be PITR-restored. See `docs/operations/WP05_MANAGED_PITR_OPERATOR_ACTION.md`.
 
 Managed restore: see `docs/BACKUP_RESTORE.md`. Never restore over Neon production branch.
+
+Redis: staging uses Upstash `nyayagrid-staging-v2` after original `engaging-joey` deletion. Connectivity HEALTHY does **not** certify historical key integrity after inactivity expiry; document downtime in incident notes and re-warm caches as needed.
 
 ## Monitoring
 
 Alert policy catalog: `docs/operations/WP05_ALERTING.md`  
-On-call destination: **EXTERNAL — not wired** (engineering definitions only).
+Destination: `patelvivek9111@gmail.com` via staging SMTP (`smtp.resend.com`).  
+Synthetic SMTP firing+resolved rehearsal: **SMTP accepted** (`packages/research/corpus/reports/wp05-alert-rehearsal.json`). Human inbox acknowledgment still required for full OPS-MON-01.
 
 ## Incidents
 

@@ -118,4 +118,13 @@ export {
   type MigrateAuthorizationEnv,
   type MigrateAuthorizationResult,
 } from "./migrate-authorization";
+export {
+  LEGAL_CORPUS_TABLES,
+  PRODUCT_CORE_TABLES,
+  evaluateProductCorpusIsolation,
+  buildLocalIsolationPrivilegeSql,
+  type IsolationEnv,
+  type IsolationFinding,
+  type IsolationReport,
+} from "./product-corpus-isolation";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";

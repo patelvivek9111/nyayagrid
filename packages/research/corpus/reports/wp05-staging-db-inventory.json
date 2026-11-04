@@ -1,0 +1,24 @@
+{
+  "classification": "NYAYAGRID_WP05_STAGING_DB_INVENTORY",
+  "at": "2026-11-04T16:42:25.196Z",
+  "readOnly": true,
+  "neonCorpusWrites": 0,
+  "target": {
+    "host": "ep-jolly-brook-auhdpay3-pooler.c-10.us-east-1.aws.neon.tech",
+    "database": "neondb"
+  },
+  "extensions": ["pgcrypto", "plpgsql", "vector"],
+  "counts": {
+    "legal_authorities": { "present": true, "count": 35863 },
+    "legal_authority_chunks": { "present": true, "count": 129160 },
+    "legal_authority_versions": { "present": true, "count": 6993 },
+    "legal_authority_citations": { "present": true, "count": 80842 },
+    "organizations": { "present": true, "count": 9 },
+    "matters": { "present": true, "count": 26 },
+    "documents": { "present": true, "count": 231 },
+    "criminal_cases": { "present": false, "count": null },
+    "audit_events": { "present": true, "count": 890 }
+  },
+  "isolationNote": "Corpus and product tables coexist on this database — physical isolation OPEN.",
+  "method": "fly ssh + postgres.js tarball + read-only COUNT queries"
+}

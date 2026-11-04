@@ -1,42 +1,31 @@
-# WP-05 Final Closure — Ops & Production Readiness
+# WP-05 Final Operational Certification — Closure Note
 
-**Result class:** `WP05_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING`  
-**Branch:** `feat/production-model-routing`
+**Classification:** `NYAYAGRID_WP05_FINAL_OPERATIONAL_CERTIFICATION`  
+**Date:** 2026-11-04  
+**Branch work:** `wp05/final-ops-cert` → push target `feat/production-model-routing`  
+**Base HEAD before:** `da36d0b67c452f34fb3596a3bd10b8ba0086c45c`
 
-## Engineering completed this session
+## Verdict
 
-| Area                  | Evidence                                                       |
-| --------------------- | -------------------------------------------------------------- |
-| Env boundaries        | `packages/platform/src/env-boundaries.ts` + tests              |
-| Ops health / alerts   | `packages/observability/src/ops-health.ts` + tests             |
-| Live/ready probes     | build SHA; HEALTHY/DEGRADED/UNAVAILABLE; clamav/ocr/corpus/env |
-| Backup rehearsal      | enhanced integrity + sha256 + latest freshness pointer         |
-| Freshness check       | `npm run ops:backup-freshness`                                 |
-| Deploy preflight      | `npm run ops:deploy-preflight`                                 |
-| Staging approval gate | `.github/workflows/deploy-staging.yml` (manual, no prod)       |
-| Runbooks              | `docs/operations/WP05_OPS_RUNBOOK.md`, `WP05_ALERTING.md`      |
+**PARTIAL / EXTERNAL APPROVAL REQUIRED** — staging product health and rollback image switching are verified; durable release identity is engineered but not yet redeployed; managed PITR lacks independently verified historical checkpoint; product/corpus share `neondb` (production blocker); SMTP synthetic alerts accepted pending human ack; production not deployed.
 
-## Verification classes
+| Requirement | ENGINEERING | LOCAL | STAGING | PRODUCTION |
+| ----------- | ----------- | ----- | ------- | ---------- |
+| OPS-BACKUP-01 | YES | YES (docker) | PARTIAL inventory | NO |
+| OPS-MON-01 | YES | YES | SMTP accepted / ack pending | NO |
+| OPS-DEP-01 | YES | YES | Host live; identity bake pending redeploy | NO |
 
-| Gate          | Engineering                   | Local tested          | Staging          | Production |
-| ------------- | ----------------------------- | --------------------- | ---------------- | ---------- |
-| OPS-BACKUP-01 | YES                           | YES (docker rehearse) | NO managed PITR  | NO         |
-| OPS-MON-01    | YES (policies + probes)       | YES (unit)            | NO paging vendor | NO         |
-| OPS-DEP-01    | YES (preflight + manual gate) | YES                   | NO host deploy   | NO         |
+## Do not claim
 
-## Provisional RPO / RTO
+- Full managed PITR certification
+- Physical product/corpus isolation
+- Durable `gitSha` on live staging after rollback (still null until bake redeploy)
+- Production deployment
+- Full automated Clerk E2E
 
-- Interim (local dumps): RPO **24h**, RTO **4h**
-- Target (managed PITR): RPO **≤5m**, RTO **≤1h** — uncertified
+## Next operator actions (exact)
 
-## External dependencies (exact)
-
-1. Managed Postgres PITR isolated restore rehearsal (owner: infra)
-2. On-call vendor + alert routing rehearsal (owner: ops)
-3. Authorized staging host + secrets + container registry push (owner: infra)
-4. Separate production approval for any prod deploy (owner: release manager)
-5. WP-03E Neon RO credential (deferred) · WP-04 staging OCR/ClamAV/Clerk/attorney (deferred)
-
-## Constraints observed
-
-Neon writes 0 · CourtListener 0 · Paid AI 0 · Prod deploy NO · Merge NO
+1. Neon: export PITR timestamp/LSN + recovery-branch URL → `npm run ops:pitr-verify`
+2. Approve staging `fly deploy --build-arg GIT_SHA=... --skip-release-command`
+3. Confirm SMTP alert inbox ack
+4. Approve product DB separation plan (`WP05_PRODUCT_CORPUS_ISOLATION.md`) before production

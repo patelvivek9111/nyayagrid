@@ -46,8 +46,10 @@ describe("WP-05 ops health", () => {
   });
 
   it("resolves build identity without inventing SHA", () => {
-    expect(resolveBuildIdentity({}).gitSha).toBeNull();
-    expect(resolveBuildIdentity({ GIT_SHA: "abc123" }).gitSha).toBe("abc123");
+    expect(resolveBuildIdentity({}, { readFile: false }).gitSha).toBeNull();
+    expect(
+      resolveBuildIdentity({ GIT_SHA: "abc1234" }, { readFile: false }).gitSha,
+    ).toBe("abc1234");
   });
 
   it("evaluates backup freshness against interim 24h RPO", () => {

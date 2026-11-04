@@ -58,6 +58,50 @@ function evaluateEnvironmentBoundaries(env) {
         "DATABASE_URL and CORPUS_DATABASE_URL are identical. Product and corpus must remain separate.",
     });
   }
+  // Physical identity collision even when strings differ (user/password/pooler variants).
+  if (productUrl && corpusUrl && productUrl !== corpusUrl) {
+    try {
+      const p = new URL(productUrl);
+      const c = new URL(corpusUrl);
+      const pDb = (p.pathname.replace(/^\//, "").split("?")[0] || "").toLowerCase();
+      const cDb = (c.pathname.replace(/^\//, "").split("?")[0] || "").toLowerCase();
+      if (
+        p.hostname.toLowerCase() === c.hostname.toLowerCase() &&
+        (p.port || "5432") === (c.port || "5432") &&
+        pDb === cDb
+      ) {
+        findings.push({
+          code: "PRODUCT_CORPUS_SAME_PHYSICAL_DATABASE",
+          severity: "blocker",
+          message:
+            "DATABASE_URL and CORPUS_DATABASE_URL resolve to the same host/port/database (physical overlap).",
+        });
+      }
+    } catch {
+      /* URL parse errors handled elsewhere */
+    }
+  }
+  if (
+    (appEnv === "production" || appEnv === "staging") &&
+    productUrl &&
+    !corpusUrl &&
+    !isTruthy(read(env, "PRODUCT_CORPUS_SHARED_DB_ACK"))
+  ) {
+    findings.push({
+      code: "CORPUS_DATABASE_URL_UNDECLARED",
+      severity: "warning",
+      message:
+        "CORPUS_DATABASE_URL unset in staging/production. Treat product/corpus as shared-risk until a separate corpus URL is declared. Set PRODUCT_CORPUS_SHARED_DB_ACK=1 only to acknowledge the open isolation blocker.",
+    });
+  }
+  if ((appEnv === "production" || appEnv === "staging") && !read(env, "GIT_SHA") && !read(env, "GITHUB_SHA")) {
+    findings.push({
+      code: "RELEASE_IDENTITY_MISSING",
+      severity: isTruthy(read(env, "STRICT_RELEASE_IDENTITY")) ? "blocker" : "warning",
+      message:
+        "GIT_SHA/GITHUB_SHA unset. Bake GIT_SHA as a Docker build-arg into the image (and release-identity.json) so Fly image rollbacks retain identity. Ephemeral fly --env alone is not durable.",
+    });
+  }
   if (
     (appEnv === "production" || appEnv === "staging") &&
     productUrl &&

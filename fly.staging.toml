@@ -9,6 +9,9 @@ primary_region = "iad"
 
 [build]
   dockerfile = "Dockerfile"
+  # WP-05: always pass non-secret identity at deploy time so it is baked into the image:
+  #   fly deploy -c fly.staging.toml --build-arg GIT_SHA=$(git rev-parse HEAD) --skip-release-command
+  # Do not rely solely on `fly deploy --env GIT_SHA=...` (lost after image rollback).
 
 [env]
   APP_ENV = "staging"

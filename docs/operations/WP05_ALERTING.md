@@ -38,3 +38,11 @@ Use `@nyayagrid/observability` `createLogger` / `redactLogText`.
 3. Map page policies to PagerDuty/Opsgenie/email.
 4. Rehearse one failure alert in staging (ClamAV stop or ready-fail inject) — record evidence.
 5. Only then mark `OPS-MON-01` staging/production verified.
+
+## Staging SMTP rehearsal (2026-11-04)
+
+- Transport: Resend SMTP on `nyayagrid-staging` (`EMAIL_PROVIDER=smtp`)
+- Destination: `patelvivek9111@gmail.com`
+- Synthetic `ready-probe-failing` firing + resolved: SMTP **accepted** (not an application outage)
+- Evidence: `packages/research/corpus/reports/wp05-alert-rehearsal.json`
+- Remaining: operator confirms inbox receipt + acknowledgment; wire continuous probe→SMTP bridge if desired (log-shipper optional)

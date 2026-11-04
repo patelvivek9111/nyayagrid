@@ -1,0 +1,45 @@
+{
+  "classification": "NYAYAGRID_WP05_MANAGED_PITR_VERIFICATION",
+  "startedAt": "2026-11-04T16:36:28.215Z",
+  "completedAt": "2026-11-04T16:36:28.216Z",
+  "readOnly": true,
+  "neonCorpusWrites": 0,
+  "productionOverwrite": false,
+  "originalBranchHint": "production / br-delicate-cloud-au0md4t9",
+  "recoveryBranchHint": "wp05-pitr-rehearsal-20261104 / br-odd-haze-au3z053l",
+  "historicalRecoveryTimestamp": null,
+  "parentLsn": null,
+  "branchCreatedAt": null,
+  "historyRetentionHours": 6,
+  "targets": { "production": null, "pitr": null },
+  "checks": {
+    "recoveryPointBeforeCreation": null,
+    "rpoImplication": {
+      "targetManagedRpoMinutes": 5,
+      "neonHistoryRetentionHours": 6,
+      "note": "Six-hour Neon history retention means restores older than ~6h are unavailable."
+    },
+    "stagingProductionBranchInventory": {
+      "source": "packages/research/corpus/reports/wp05-staging-db-inventory.json",
+      "legal_authorities": 35863,
+      "legal_authority_chunks": 129160,
+      "legal_authority_versions": 6993,
+      "legal_authority_citations": 80842
+    }
+  },
+  "blockers": [
+    {
+      "code": "PRODUCTION_DATABASE_URL_MISSING",
+      "action": "Export a read-only PRODUCTION_DATABASE_URL for the original Neon production branch (or reuse Fly DATABASE_URL via approved operator tooling)."
+    },
+    {
+      "code": "PITR_DATABASE_URL_MISSING",
+      "action": "Export PITR_DATABASE_URL for wp05-pitr-rehearsal-20261104 before auto-delete; do not create billable compute without approval if expired."
+    },
+    {
+      "code": "HISTORICAL_CHECKPOINT_UNVERIFIED",
+      "action": "From Neon Console copy exact PITR timestamp or parent LSN into PITR_HISTORICAL_TIMESTAMP / PITR_PARENT_LSN. Do not invent values."
+    }
+  ],
+  "result": "BLOCKED"
+}

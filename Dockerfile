@@ -69,6 +69,14 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 ENV INNGEST_DEV=
 
+# WP-05: bake non-secret release identity into the image so Fly image rollbacks
+# retain gitSha (ephemeral `fly deploy --env GIT_SHA` alone is not durable).
+ARG GIT_SHA=
+ARG BUILD_ID=
+ENV GIT_SHA=$GIT_SHA
+ENV BUILD_ID=$BUILD_ID
+ENV RELEASE_IDENTITY_FILE=/app/release-identity.json
+
 RUN addgroup --system --gid 1001 nodejs \
   && adduser --system --uid 1001 --ingroup nodejs nyayagrid
 
@@ -82,6 +90,10 @@ COPY --from=builder --chown=nyayagrid:nodejs /tmp/migrate.cjs ./migrate.cjs
 COPY --from=builder --chown=nyayagrid:nodejs /app/packages/database/drizzle ./packages/database/drizzle
 ENV MIGRATIONS_FOLDER=/app/packages/database/drizzle
 
+# Persist identity as a file for fail-closed probes even if ENV is stripped on rollback tooling.
+USER root
+RUN node -e "const fs=require('fs'); const gitSha=process.env.GIT_SHA||null; const buildId=process.env.BUILD_ID||null; fs.writeFileSync('/app/release-identity.json', JSON.stringify({gitSha: gitSha && gitSha.length ? gitSha : null, buildId: buildId && buildId.length ? buildId : null, builtAt: new Date().toISOString()})+'\n');" \
+  && chown nyayagrid:nodejs /app/release-identity.json
 USER nyayagrid
 EXPOSE 3000
 

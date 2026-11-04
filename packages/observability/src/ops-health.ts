@@ -26,16 +26,7 @@ export type AlertPolicy = {
   signal: string;
 };
 
-/** Build / deploy identity for live probes (never invents a SHA). */
-export function resolveBuildIdentity(
-  env: NodeJS.ProcessEnv | Record<string, string | undefined> = process.env,
-): { gitSha: string | null; buildId: string | null; appEnv: string } {
-  const gitSha =
-    String(env.GIT_SHA ?? env.GITHUB_SHA ?? env.VERCEL_GIT_COMMIT_SHA ?? "").trim() || null;
-  const buildId = String(env.BUILD_ID ?? env.GITHUB_RUN_ID ?? "").trim() || null;
-  const appEnv = String(env.APP_ENV ?? env.NODE_ENV ?? "development").trim() || "development";
-  return { gitSha, buildId, appEnv };
-}
+export { resolveBuildIdentity, releaseIdentityMissingInDeployedEnv } from "./release-identity";
 
 export function classifyDependency(params: { ok: boolean; degraded?: boolean }): OpsHealthStatus {
   if (!params.ok) return "UNAVAILABLE";

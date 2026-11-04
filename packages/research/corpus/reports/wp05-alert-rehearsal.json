@@ -1,0 +1,23 @@
+{
+  "classification": "NYAYAGRID_WP05_ALERT_REHEARSAL",
+  "at": "2026-11-04T16:39:27.657Z",
+  "transport": "memory",
+  "destination": "memory",
+  "firing": {
+    "delivered": true,
+    "detail": "memory:1",
+    "at": "2026-11-04T16:39:27.656Z",
+    "status": "firing"
+  },
+  "resolved": {
+    "delivered": true,
+    "detail": "memory:2",
+    "at": "2026-11-04T16:39:27.657Z",
+    "status": "resolved"
+  },
+  "acknowledgment": {
+    "verified": false,
+    "note": "Operator must confirm inbox receipt and reply/ack; automation cannot certify human acknowledgment."
+  },
+  "result": "LOCAL_TRANSPORT_PASS"
+}
