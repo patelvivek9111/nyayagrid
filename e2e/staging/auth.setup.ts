@@ -15,7 +15,10 @@ import { chromium } from "playwright";
 
 const AUTH_DIR = path.join(process.cwd(), "playwright", ".auth");
 const AUTH_FILE = path.join(AUTH_DIR, "staging-user.json");
-const BASE = (process.env.STAGING_E2E_BASE_URL ?? "https://staging.nyayagrid.com").replace(/\/$/, "");
+const BASE = (process.env.STAGING_E2E_BASE_URL ?? "https://staging.nyayagrid.com").replace(
+  /\/$/,
+  "",
+);
 const WAIT_MS = Number(process.env.STAGING_AUTH_WAIT_MS ?? 10 * 60_000);
 
 async function sessionValid(storageStatePath: string): Promise<boolean> {
@@ -58,6 +61,16 @@ setup("authenticate against staging via Clerk", async ({ page }) => {
     } catch {
       // Fall through to interactive Clerk login.
     }
+  }
+
+  if (process.env.STAGING_AUTH_INTERACTIVE !== "1") {
+    // Non-interactive CI/automation: do not block for a headed human login.
+    // Professional/Prosecution projects skip when AUTH_FILE is absent.
+    setup.skip(
+      true,
+      "Set E2E_CLERK_USER_EMAIL+CLERK_SECRET_KEY (@clerk/testing) or STAGING_AUTH_INTERACTIVE=1 for headed Clerk login",
+    );
+    return;
   }
 
   await page.goto(`${BASE}/sign-in`, { waitUntil: "domcontentloaded" });

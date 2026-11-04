@@ -44,6 +44,31 @@ export default defineConfig({
       },
     },
     {
+      name: "security-negatives",
+      testMatch: /security\.clerk\.spec\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+    {
+      name: "professional-clerk",
+      testMatch: /professional\.clerk\.spec\.ts/,
+      dependencies: ["setup"],
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: AUTH_FILE,
+      },
+    },
+    {
+      name: "prosecution-clerk",
+      testMatch: /prosecution\.clerk\.spec\.ts/,
+      dependencies: ["setup"],
+      use: {
+        ...devices["Desktop Chrome"],
+        storageState: AUTH_FILE,
+      },
+    },
+    {
       name: "q9-acceptance",
       testMatch: /q9-recovery\.acceptance\.ts/,
       dependencies: ["setup"],

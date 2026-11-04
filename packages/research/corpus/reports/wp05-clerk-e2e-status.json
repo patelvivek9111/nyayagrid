@@ -1,0 +1,44 @@
+{
+  "classification": "NYAYAGRID_WP05_CLERK_E2E_STATUS",
+  "at": "2026-11-04T22:50:00.000Z",
+  "framework": "playwright.staging.config.ts",
+  "projects": [
+    "setup",
+    "security-negatives",
+    "professional-clerk",
+    "prosecution-clerk",
+    "q9-acceptance"
+  ],
+  "executed": {
+    "security-negatives": {
+      "result": "PASS",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "note": "Unauthenticated negatives against https://staging.nyayagrid.com"
+    },
+    "professional-clerk": {
+      "result": "SKIPPED_BLOCKED",
+      "reason": "No playwright/.auth/staging-user.json; requires E2E_CLERK_USER_EMAIL+CLERK_SECRET_KEY with @clerk/testing or STAGING_AUTH_INTERACTIVE=1"
+    },
+    "prosecution-clerk": {
+      "result": "SKIPPED_BLOCKED",
+      "reason": "Same Clerk staging identity dependency as Professional"
+    },
+    "setup": {
+      "result": "SKIPPED_NON_INTERACTIVE",
+      "reason": "auth.setup refuses interactive wait unless STAGING_AUTH_INTERACTIVE=1"
+    }
+  },
+  "mfa": {
+    "automatedEnforcementCertified": false,
+    "note": "Successful Clerk sign-in would not certify MFA enforcement; separate human MFA demonstration required"
+  },
+  "identityProvisioning": {
+    "status": "BLOCKED",
+    "requiredOperatorAction": "Create least-privilege staging Clerk test users (Professional attorney/staff, Prosecution prosecutor/staff, unauthorized, cross-org) and provide E2E_CLERK_USER_EMAIL + testing-compatible secret access OR run interactive auth.setup once"
+  },
+  "neonCorpusWrites": 0,
+  "paidAiCalls": 0,
+  "result": "PARTIAL"
+}
