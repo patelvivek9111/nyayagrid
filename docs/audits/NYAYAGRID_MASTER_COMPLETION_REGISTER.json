@@ -649,21 +649,19 @@
         "WP-05 local docker restore PASS; freshness BACKUP_FRESH",
         "Neon API parent_timestamp=2026-11-04T16:20:37Z parent_lsn=0/A866C288 created_at=2026-11-04T16:21:13Z (36s earlier) — wp05-pitr-branch-metadata.json",
         "ops:pitr-verify PASS_WITH_EVIDENCE: four legal_* tables match (35863/80842/129160/6993); sample digests match; orphans=0; measuredQueryMs=3840",
-        "Product+corpus still share neondb — physical isolation remains production gate (WP05_PRODUCT_CORPUS_ISOLATION.md)",
+        "Staging physical isolation COMPLETE: product branch wp05-product-staging; corpus remains on production branch (wp05-product-branch-isolation.json)",
         "packages/research/corpus/reports/wp05-pitr-verification.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "lastVerifiedSha": "pending-isolation-commit",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
       "PRODUCTION_VERIFIED": false,
-      "EVIDENCE": "wp05-pitr-verification.json; wp05-pitr-branch-metadata.json",
-      "BLOCKERS": [
-        "Product/corpus physical DB isolation unresolved (production gate, not PITR metadata failure)"
-      ],
-      "HUMAN_APPROVAL": "Required only for physical product DB cutover; managed PITR rehearsal complete on isolated branch",
-      "NEXT_ACTION": "Approve product/corpus physical separation before production; keep recovery branch until expires",
+      "EVIDENCE": "wp05-pitr-verification.json; wp05-product-branch-isolation.json",
+      "BLOCKERS": [],
+      "HUMAN_APPROVAL": "Production still separately gated; staging isolation accepted",
+      "NEXT_ACTION": "Keep production-branch corpus immutable; rotate nyaya_product_runtime password",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
@@ -743,11 +741,10 @@
       "EVIDENCE": "wp05-staging-identity-rollback.json; staging ready HEALTHY with baked gitSha",
       "BLOCKERS": [
         "Automated Clerk E2E credentials unavailable",
-        "WP-03E/WP-04 legal-security gates still open before production",
-        "Product/corpus DB isolation OPEN (production gate)"
+        "WP-03E/WP-04 legal-security gates still open before production"
       ],
-      "HUMAN_APPROVAL": "Separate approval required for production Fly app; Clerk E2E secrets; product DB cutover",
-      "NEXT_ACTION": "Keep staging; do not create production Fly app until isolation + WP-03E/WP-04 gates close",
+      "HUMAN_APPROVAL": "Separate approval required for production Fly app; Clerk E2E secrets",
+      "NEXT_ACTION": "Keep staging on product branch; do not create production Fly app until WP-03E/WP-04 gates close",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "IMAGE_BUILT": true,

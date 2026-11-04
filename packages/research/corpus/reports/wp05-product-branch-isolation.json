@@ -1,0 +1,61 @@
+{
+  "classification": "NYAYAGRID_WP05_PRODUCT_BRANCH_ISOLATION",
+  "startedAt": "2026-11-04T18:57:08.874Z",
+  "completedAt": "2026-11-04T18:57:13.613Z",
+  "neonCorpusWrites": 0,
+  "sourceBranchUntouched": true,
+  "targets": {
+    "source": "postgresql://ep-jolly-brook-auhdpay3.c-10.us-east-1.aws.neon.tech/neondb",
+    "product": "postgresql://ep-lively-lake-auyeia5m.c-10.us-east-1.aws.neon.tech/neondb"
+  },
+  "droppedCorpusTablesOnProductBranch": [
+    "legal_authorities",
+    "legal_authority_chunks",
+    "legal_authority_versions",
+    "legal_authority_citations",
+    "legal_authority_relationships",
+    "corpus_ingest_jobs",
+    "corpus_refresh_jobs",
+    "corpus_source_health"
+  ],
+  "sourceProductTables": 102,
+  "destProductTables": 102,
+  "corpusTablesInProductDb": [],
+  "remainingCrossFks": [],
+  "countsMatch": true,
+  "mismatches": [],
+  "sampleCounts": {
+    "organizations": {
+      "source": 9,
+      "dest": 9,
+      "match": true
+    },
+    "matters": {
+      "source": 26,
+      "dest": 26,
+      "match": true
+    },
+    "documents": {
+      "source": 231,
+      "dest": 231,
+      "match": true
+    },
+    "audit_events": {
+      "source": 890,
+      "dest": 890,
+      "match": true
+    },
+    "users": {
+      "source": 13,
+      "dest": 13,
+      "match": true
+    }
+  },
+  "sourceCorpusCounts": {
+    "legal_authorities": 35863,
+    "legal_authority_citations": 80842,
+    "legal_authority_chunks": 129160,
+    "legal_authority_versions": 6993
+  },
+  "result": "PASS"
+}
