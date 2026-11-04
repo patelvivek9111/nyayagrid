@@ -652,7 +652,7 @@
         "docs/BACKUP_RESTORE.md + docs/audits/WP05_FINAL_CLOSURE.md"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending_wp05",
+      "lastVerifiedSha": "a3ebd3c11b86699dcf1b49595cb0cf3e533b2660",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
@@ -679,7 +679,7 @@
         "Failure-alert rehearsal on staging paging vendor NOT done"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending_wp05",
+      "lastVerifiedSha": "a3ebd3c11b86699dcf1b49595cb0cf3e533b2660",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
@@ -704,7 +704,7 @@
         "PRODUCTION_DEPLOY=NO"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending_wp05",
+      "lastVerifiedSha": "a3ebd3c11b86699dcf1b49595cb0cf3e533b2660",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
