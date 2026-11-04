@@ -57,6 +57,8 @@
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f",
     "ops:backup-rehearse": "node scripts/maintenance/rehearse-backup-restore.mjs",
+    "ops:backup-freshness": "node scripts/maintenance/verify-backup-freshness.mjs",
+    "ops:deploy-preflight": "node scripts/maintenance/deploy-preflight.mjs",
     "ops:verify-clamav": "node scripts/maintenance/verify-clamav.mjs",
     "ops:6w": "tsx scripts/certification/phase-6w-ops.ts",
     "ops:6w-frozen": "tsx scripts/certification/frozen-regression-harness.ts",

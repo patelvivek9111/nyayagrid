@@ -1,0 +1,76 @@
+# WP-05 — staging deploy gate (manual only).
+# Does NOT deploy to production. Does NOT run migrations automatically.
+# Requires GitHub Environment "staging" with required reviewers configured in the repo settings.
+name: Deploy staging (manual approval)
+
+on:
+  workflow_dispatch:
+    inputs:
+      git_sha:
+        description: "Immutable commit SHA to deploy (must match branch HEAD you intend)"
+        required: true
+        type: string
+      confirm_no_prod:
+        description: "Type NO_PRODUCTION to confirm this is staging-only"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: Deploy preflight
+    runs-on: ubuntu-latest
+    steps:
+      - name: Confirm staging-only
+        run: |
+          if [ "${{ inputs.confirm_no_prod }}" != "NO_PRODUCTION" ]; then
+            echo "Refusing: confirm_no_prod must be NO_PRODUCTION"
+            exit 1
+          fi
+          if [ "${{ inputs.git_sha }}" != "${{ github.sha }}" ] && [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Note: workflow SHA is ${{ github.sha }}; requested deploy SHA is ${{ inputs.git_sha }}"
+            echo "Operator must ensure the selected ref matches the intended commit."
+          fi
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.git_sha }}
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Ops deploy preflight (development defaults — secrets not present)
+        env:
+          APP_ENV: development
+          DATABASE_URL: postgresql://nyayagrid:nyayagrid@localhost:5432/nyayagrid
+          FEATURE_NEON_CORPUS_RESEARCH: "0"
+          GIT_SHA: ${{ inputs.git_sha }}
+        run: npm run ops:deploy-preflight
+
+      - name: Artifact identity
+        run: |
+          echo "deploy_git_sha=${{ inputs.git_sha }}" >> "$GITHUB_OUTPUT"
+          echo "workflow_git_sha=${{ github.sha }}" >> "$GITHUB_OUTPUT"
+          git rev-parse HEAD
+
+  staging-gate:
+    name: Staging environment approval gate
+    needs: preflight
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Record approval (no automatic deploy)
+        run: |
+          echo "Staging environment reviewers approved preflight for ${{ inputs.git_sha }}."
+          echo "STAGING_DEPLOYMENT_BLOCKED_UNTIL_HOSTING: no automated container push is configured in this repository."
+          echo "Next human step: run authorized staging host deploy using docs/operations/WP05_OPS_RUNBOOK.md"
+          echo "PRODUCTION_DEPLOY=NO"

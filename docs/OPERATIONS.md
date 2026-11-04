@@ -53,10 +53,11 @@ horizontal scale.
 
 ## On-call and paging
 
-Not configured. There is no paging destination, rotation, or uptime vendor in this repository.
-Until an operator fills this in, treat monitoring as **BLOCKER**. Suggested contract once a vendor
-exists: page on `/api/health/ready` 503, elevated 5xx, malware scanner down, and AI provider error
-rate. Destination: _TBD_.
+Engineering alert policies are defined in `@nyayagrid/observability` (`DEFAULT_ALERT_POLICIES`) and
+documented in [`docs/operations/WP05_ALERTING.md`](./operations/WP05_ALERTING.md). There is still
+**no paging destination / rotation / uptime vendor wired in this repository** — until an operator
+connects those policies to a real on-call system and rehearses a failure alert, treat production
+monitoring certification as **OPEN** (OPS-MON-01).
 
 ## Running database migrations
 

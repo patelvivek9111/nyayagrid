@@ -1,0 +1,43 @@
+{
+  "classification": "NYAYAGRID_WP05_OPERATIONS_AND_PRODUCTION_READINESS",
+  "generatedAt": "2026-11-04T10:45:00.000Z",
+  "headBefore": "1f3ffba9d3c07c22be1cd38aef0b383fc58ca4ae",
+  "branch": "feat/production-model-routing",
+  "result": "WP05_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
+  "backup": {
+    "mechanism": "pg_dump custom + MinIO volume archive; restore to nyayagrid_restore_test",
+    "localRehearsal": true,
+    "dumpSha256": "79632436c9aab7cf299f1fc7330159c9158604ae91af7e369aa2b07551378502",
+    "integrity": {
+      "organizations": 1339,
+      "matters": 2524,
+      "documents": 82285,
+      "audit_events": 27010,
+      "criminal_cases": 71
+    },
+    "extensions": ["pgcrypto", "vector"],
+    "freshness": "BACKUP_FRESH",
+    "rpoInterimHours": 24,
+    "rtoInterimHours": 4,
+    "managedPitrCertified": false
+  },
+  "monitoring": {
+    "alertPoliciesDefined": true,
+    "onCallDestinationWired": false,
+    "healthStatusModel": ["HEALTHY", "DEGRADED", "UNAVAILABLE"],
+    "liveBuildIdentity": true
+  },
+  "deployment": {
+    "deployPreflight": true,
+    "stagingWorkflowManualApproval": true,
+    "stagingHostDeployed": false,
+    "productionDeployed": false
+  },
+  "wp03eDeferred": true,
+  "featureNeonCorpusResearch": "0",
+  "neonWrites": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "deployed": false,
+  "merged": false
+}

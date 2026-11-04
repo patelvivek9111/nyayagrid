@@ -108,6 +108,16 @@ jobs:
       - name: Unit + integration tests
         run: npm run test
 
+      # WP-05: env-boundary / alert-policy unit surface + deploy preflight (no secrets, no deploy).
+      - name: Ops preflight (WP-05)
+        env:
+          APP_ENV: development
+          FEATURE_NEON_CORPUS_RESEARCH: "0"
+        run: |
+          npm run test -w @nyayagrid/observability -- src/ops-health.test.ts
+          npm run test -w @nyayagrid/platform -- src/env-boundaries.test.ts
+          npm run ops:deploy-preflight
+
       - name: Build
         run: npm run build
 

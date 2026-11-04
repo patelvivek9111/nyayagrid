@@ -9,6 +9,7 @@
  * already been authenticated and authorized for the thing they asked for.
  */
 export * from "./config";
+export * from "./env-boundaries";
 export * from "./models";
 export * from "./features";
 export * from "./rate-limit";

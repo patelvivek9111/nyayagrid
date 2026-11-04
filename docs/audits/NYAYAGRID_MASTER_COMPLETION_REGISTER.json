@@ -642,12 +642,26 @@
       "subsystem": "Ops",
       "feature": "Backup/restore/PITR",
       "requirement": "Managed Postgres restore rehearsed",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["PRODUCTION_READINESS backup BLOCKER; local docker rehearse only"],
+      "evidence": [
+        "WP-05: npm run ops:backup-rehearse local docker restore to nyayagrid_restore_test (never over live)",
+        "Integrity counts + dump sha256 + ops:backup-freshness (interim RPO 24h)",
+        "Managed PITR / Neon production restore NOT rehearsed this session",
+        "docs/BACKUP_RESTORE.md + docs/audits/WP05_FINAL_CLOSURE.md"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "pending_wp05",
+      "acceptance": {
+        "ENGINEERING_IMPLEMENTED": true,
+        "LOCAL_TESTED": true,
+        "STAGING_TESTED": false,
+        "PRODUCTION_VERIFIED": false
+      },
+      "rpo": "24h interim local; target <=5m managed PITR uncertified",
+      "rto": "4h interim local; target <=1h managed uncertified",
+      "remediation": "Isolated managed Postgres PITR restore on authorized staging project; never overwrite Neon production branch"
     },
     {
       "id": "OPS-MON-01",
@@ -655,12 +669,24 @@
       "subsystem": "Ops",
       "feature": "Monitoring",
       "requirement": "External monitoring/alerting/on-call",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "severity": "P1",
       "releaseBlocker": true,
-      "evidence": ["PRODUCTION_READINESS monitoring BLOCKER"],
+      "evidence": [
+        "WP-05: DEFAULT_ALERT_POLICIES in @nyayagrid/observability; ready/live HEALTHY|DEGRADED|UNAVAILABLE",
+        "ClamAV/OCR/corpus/env boundary signals on /api/health/ready",
+        "docs/operations/WP05_ALERTING.md \u2014 on-call destination EXTERNAL NOT WIRED",
+        "Failure-alert rehearsal on staging paging vendor NOT done"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "pending_wp05",
+      "acceptance": {
+        "ENGINEERING_IMPLEMENTED": true,
+        "LOCAL_TESTED": true,
+        "STAGING_TESTED": false,
+        "PRODUCTION_VERIFIED": false
+      },
+      "remediation": "Wire page policies to on-call vendor; rehearse ready-fail and clamav-down alerts in staging"
     },
     {
       "id": "OPS-DEP-01",
@@ -668,12 +694,24 @@
       "subsystem": "Ops",
       "feature": "Production deploy",
       "requirement": "Deployed production environment",
-      "status": "MISSING",
+      "status": "PARTIAL",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["DEPLOYED=NO; Dockerfile READY locally"],
+      "evidence": [
+        "WP-05: ops:deploy-preflight; .github/workflows/deploy-staging.yml manual approval gate (NO automatic prod)",
+        "Dockerfile + docs/DEPLOYMENT.md + WP05_OPS_RUNBOOK.md",
+        "STAGING_DEPLOYMENT_BLOCKED \u2014 no authorized host/registry push executed",
+        "PRODUCTION_DEPLOY=NO"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "pending_wp05",
+      "acceptance": {
+        "ENGINEERING_IMPLEMENTED": true,
+        "LOCAL_TESTED": true,
+        "STAGING_TESTED": false,
+        "PRODUCTION_VERIFIED": false
+      },
+      "remediation": "Authorized staging host secrets + image push; separate production approval"
     },
     {
       "id": "RM-PG-01",
@@ -1066,7 +1104,21 @@
       "closes": ["OPS-BACKUP-01", "OPS-MON-01", "OPS-DEP-01"],
       "deps": ["WP-04"],
       "effort": "2-4 weeks",
-      "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill"
+      "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill",
+      "status": "PARTIAL",
+      "result": "WP05_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
+      "evidenceArtifact": "docs/audits/WP05_FINAL_CLOSURE.md",
+      "verificationClasses": {
+        "BACKUP_ENGINEERING_IMPLEMENTED": true,
+        "BACKUP_LOCAL_TESTED": true,
+        "BACKUP_MANAGED_PITR_VERIFIED": false,
+        "MONITORING_ENGINEERING_IMPLEMENTED": true,
+        "MONITORING_ALERT_ROUTING_WIRED": false,
+        "DEPLOY_PREFLIGHT_IMPLEMENTED": true,
+        "STAGING_DEPLOYED": false,
+        "PRODUCTION_DEPLOYED": false
+      },
+      "note": "Engineering complete for backup rehearsal, alert policies, health status, deploy preflight + manual staging gate. Managed PITR, on-call vendor, and staging/prod host deploy remain external. WP-03E deferred; WP-04 external gates unchanged."
     },
     {
       "id": "WP-06",
