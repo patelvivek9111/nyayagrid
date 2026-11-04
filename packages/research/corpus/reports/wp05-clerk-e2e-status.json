@@ -36,7 +36,8 @@
   },
   "identityProvisioning": {
     "status": "BLOCKED",
-    "requiredOperatorAction": "Create least-privilege staging Clerk test users (Professional attorney/staff, Prosecution prosecutor/staff, unauthorized, cross-org) and provide E2E_CLERK_USER_EMAIL + testing-compatible secret access OR run interactive auth.setup once"
+    "requiredOperatorAction": "Create least-privilege staging Clerk test users (Professional attorney/staff, Prosecution prosecutor/staff, unauthorized, cross-org) and provide E2E_CLERK_USER_EMAIL + testing-compatible secret access OR run interactive auth.setup once",
+    "note": "@clerk/testing not yet in package.json (npm install ECONNRESET this session); auth.setup already imports it optionally when present"
   },
   "neonCorpusWrites": 0,
   "paidAiCalls": 0,

@@ -703,10 +703,11 @@
         "Production on-call escalation not tested",
         "Automated acknowledgment integration not tested",
         "Request-metric policies (5xx/AI/worker heartbeat/TLS) lack telemetry — not fabricated",
-        "Continuous SMTP notify defaults off in Actions (set MONITOR_NOTIFY=smtp + repo SMTP secrets for live email from scheduler)"
+        "Continuous SMTP notify defaults off in Actions (set MONITOR_NOTIFY=smtp + repo SMTP secrets for live email from scheduler)",
+        "GitHub Actions schedule/dispatch for staging-continuous-monitor.yml only runs after the workflow exists on the repository default branch"
       ],
       "HUMAN_APPROVAL": "Staging ready-probe Gmail ack recorded; production on-call still gated",
-      "NEXT_ACTION": "Observe scheduled Actions runs post-push; optionally enable MONITOR_NOTIFY=smtp with GH secrets; production paging separate",
+      "NEXT_ACTION": "Merge/enable staging-continuous-monitor.yml on default branch; optionally MONITOR_NOTIFY=smtp; production paging separate",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "MONITORING_IMPLEMENTED": true,
@@ -1053,9 +1054,9 @@
     "SEC-AUTH-01 Clerk MFA production verification",
     "SEC-MAL-01 ClamAV production verification",
     "SEC-LEGAL-01 Attorney Terms/Privacy",
-    "OPS-BACKUP-01 Managed restore/PITR",
-    "OPS-MON-01 Monitoring/on-call (staging SMTP ready-probe ack PASS; production on-call still open)",
-    "OPS-DEP-01 No production deployment",
+    "OPS-BACKUP-01 staging PITR PASS_WITH_EVIDENCE; production restore NOT VERIFIED",
+    "OPS-MON-01 staging SMTP ack + continuous evaluator shipped; GH schedule needs default-branch enablement; production on-call open",
+    "OPS-DEP-01 No production deployment (staging identity/rollback verified)",
     "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required \u2014 WP-01 scorer certified)"
   ],
   "dependencyOrderedPlan": [
