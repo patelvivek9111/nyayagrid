@@ -12,7 +12,8 @@ Do not create a production Fly application from this checklist without a separat
 - [ ] WP-04 production ClamAV verification complete
 - [ ] OPS-BACKUP-01 managed PITR `PASS_WITH_EVIDENCE`
 - [ ] Product database physically separate from legal corpus
-- [ ] OPS-MON-01 alert delivery + human acknowledgment verified
+- [x] OPS-MON-01 staging SMTP `ready-probe-failing` delivery + human Gmail acknowledgment verified (production on-call still open)
+
 - [ ] OPS-DEP-01 staging durable `gitSha` after rollback PASS
 - [ ] Staging automated E2E (Professional + Prosecution) PASS with synthetic fixtures
 - [ ] GitHub Environment `production` reviewers configured

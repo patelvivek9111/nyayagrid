@@ -16,8 +16,9 @@
     "status": "resolved"
   },
   "acknowledgment": {
-    "verified": false,
-    "note": "Operator must confirm inbox receipt and reply/ack; automation cannot certify human acknowledgment."
+    "verified": true,
+    "note": "Staging SMTP path human ack recorded separately in wp05-monitoring-human-ack-verified.json (Gmail operator confirmation). This file remains the local MemoryAlertTransport unit rehearsal."
   },
   "result": "LOCAL_TRANSPORT_PASS"
 }
+

@@ -32,7 +32,15 @@
   },
   "monitoring": {
     "smtpAcceptedPrior": true,
-    "humanAck": false,
+    "humanAck": true,
+    "humanAckEvidence": "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json",
+    "policyId": "ready-probe-failing",
+    "firingAt": "2026-11-04T16:37:32.025Z",
+    "resolvedAt": "2026-11-04T16:37:32.597Z",
+    "from": "staging@nyayagrid.com",
+    "inbox": "patelvivek9111@gmail.com",
+    "productionOncallEscalationTested": false,
+    "otherAlertPoliciesTested": false,
     "noRepeatEmailsThisSession": true
   },
   "neonCorpusWrites": 0,

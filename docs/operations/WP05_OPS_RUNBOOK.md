@@ -74,7 +74,7 @@ Redis: staging uses Upstash `nyayagrid-staging-v2` after original `engaging-joey
 
 Alert policy catalog: `docs/operations/WP05_ALERTING.md`  
 Destination: `patelvivek9111@gmail.com` via staging SMTP (`smtp.resend.com`).  
-Synthetic SMTP firing+resolved rehearsal: **SMTP accepted** (`packages/research/corpus/reports/wp05-alert-rehearsal.json`). Human inbox acknowledgment still required for full OPS-MON-01.
+Synthetic SMTP `ready-probe-failing` firing+resolved: **SMTP accepted + operator Gmail ack verified** (`packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json`). Staging OPS-MON-01 scoped PASS; production on-call escalation not claimed.
 
 ## Incidents
 

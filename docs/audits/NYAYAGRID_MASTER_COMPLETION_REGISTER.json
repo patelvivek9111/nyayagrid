@@ -687,35 +687,42 @@
       "evidence": [
         "WP-05 DEFAULT_ALERT_POLICIES + ready status model",
         "Local MemoryAlertTransport + HTTP receiver unit PASS",
-        "Staging SMTP synthetic ready-probe-failing firing+resolved ACCEPTED by smtp.resend.com to patelvivek9111@gmail.com (2026-11-04T16:37:32Z)",
-        "packages/research/corpus/reports/wp05-alert-rehearsal.json",
-        "Human inbox acknowledgment NOT verified this session"
+        "Staging SMTP synthetic ready-probe-failing firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z from staging@nyayagrid.com via smtp.resend.com",
+        "Operator independently confirmed both emails received and inspected in Gmail at patelvivek9111@gmail.com",
+        "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json",
+        "Scope PASS only: SMTP transport, inbox delivery, operator acknowledgment, recovery notification for ready-probe-failing staging synthetic"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "f241d83bd7348db83d2f38ce502fe65b8ee7671b",
+      "lastVerifiedSha": "bb855f5476c68704217c9274ffa8f8c9c9bea521",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
-      "STAGING_VERIFIED": "smtp_accepted_ack_pending",
+      "STAGING_VERIFIED": true,
       "PRODUCTION_VERIFIED": false,
-      "EVIDENCE": "packages/research/corpus/reports/wp05-alert-rehearsal.json; packages/observability/src/alert-delivery.test.ts",
+      "EVIDENCE": "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json; packages/observability/src/alert-delivery.test.ts",
       "BLOCKERS": [
-        "Operator must confirm inbox receipt and acknowledge alert",
+        "Production on-call escalation not tested",
+        "Automated acknowledgment integration not tested",
+        "Other alert policies not rehearsed live",
         "Continuous probe-to-SMTP bridge not yet scheduled as a durable worker"
       ],
-      "HUMAN_APPROVAL": "Confirm receipt/ack of synthetic alerts at patelvivek9111@gmail.com",
-      "NEXT_ACTION": "Operator replies ACK; optionally enable durable ready-probe alerter via log-shipper/cron",
+      "HUMAN_APPROVAL": "Staging synthetic ready-probe-failing Gmail ack recorded; production on-call still gated",
+      "NEXT_ACTION": "Keep staging SMTP ack path; optionally wire durable probe alerter and production on-call before production release",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "MONITORING_IMPLEMENTED": true,
         "LOCAL_ALERT_TRANSPORT_VERIFIED": true,
         "ALERT_DELIVERED": true,
-        "ALERT_RECEIVED": false,
-        "ONCALL_ACKNOWLEDGED": false,
+        "ALERT_RECEIVED": true,
+        "ONCALL_ACKNOWLEDGED": true,
+        "ONCALL_ACK_SCOPE": "staging_synthetic_ready_probe_gmail_manual_only",
         "FAILURE_REHEARSAL_VERIFIED": true,
         "STAGING_TESTED": true,
+        "PRODUCTION_ONCALL_ESCALATION_TESTED": false,
+        "AUTOMATED_ACK_INTEGRATION_TESTED": false,
+        "OTHER_ALERT_POLICIES_TESTED": false,
         "PRODUCTION_VERIFIED": false
       },
-      "remediation": "Human ack of SMTP synthetic alerts; keep PagerDuty optional while SMTP ack path works for staging"
+      "remediation": "Staging SMTP synthetic ready-probe path PASS with human ack; production on-call/PagerDuty remains optional until separately verified"
     },
     {
       "id": "OPS-DEP-01",
@@ -1044,7 +1051,7 @@
     "SEC-MAL-01 ClamAV production verification",
     "SEC-LEGAL-01 Attorney Terms/Privacy",
     "OPS-BACKUP-01 Managed restore/PITR",
-    "OPS-MON-01 Monitoring/on-call",
+    "OPS-MON-01 Monitoring/on-call (staging SMTP ready-probe ack PASS; production on-call still open)",
     "OPS-DEP-01 No production deployment",
     "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required \u2014 WP-01 scorer certified)"
   ],

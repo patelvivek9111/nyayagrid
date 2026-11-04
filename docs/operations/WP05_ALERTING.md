@@ -39,10 +39,16 @@ Use `@nyayagrid/observability` `createLogger` / `redactLogText`.
 4. Rehearse one failure alert in staging (ClamAV stop or ready-fail inject) — record evidence.
 5. Only then mark `OPS-MON-01` staging/production verified.
 
-## Staging SMTP rehearsal (2026-11-04)
+## Staging SMTP rehearsal (2026-11-04) — human ack verified
 
 - Transport: Resend SMTP on `nyayagrid-staging` (`EMAIL_PROVIDER=smtp`)
-- Destination: `patelvivek9111@gmail.com`
-- Synthetic `ready-probe-failing` firing + resolved: SMTP **accepted** (not an application outage)
-- Evidence: `packages/research/corpus/reports/wp05-alert-rehearsal.json`
-- Remaining: operator confirms inbox receipt + acknowledgment; wire continuous probe→SMTP bridge if desired (log-shipper optional)
+- From: `staging@nyayagrid.com`
+- Destination inbox: Gmail `patelvivek9111@gmail.com`
+- Policy: `ready-probe-failing` only
+- Firing: `2026-11-04T16:37:32.025Z`
+- Resolved: `2026-11-04T16:37:32.597Z`
+- Operator independently confirmed both emails received and inspected
+- **PASS (scoped):** SMTP transport, inbox delivery, operator acknowledgment, recovery notification
+- Evidence: `packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json`
+- **Not claimed:** production on-call escalation, automated ack integration, other alert policies, durable probe→SMTP worker
+
