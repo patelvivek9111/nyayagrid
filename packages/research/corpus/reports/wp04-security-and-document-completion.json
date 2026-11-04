@@ -1,0 +1,49 @@
+{
+  "classification": "NYAYAGRID_WP04_SECURITY_AND_DOCUMENT_COMPLETION",
+  "generatedAt": "2026-11-04T02:53:00.000Z",
+  "headBefore": "d8e81112a3fb40ca6da982778e3c4ad01e5e59f0",
+  "branch": "feat/production-model-routing",
+  "wp03eDeferred": {
+    "role": "nyayagrid_corpus_readonly",
+    "roleExists": true,
+    "loginDisabled": true,
+    "credentialNotSet": true,
+    "neonRoleChangesThisSession": 0,
+    "note": "WP-03E deferred; no Neon password/grant/login changes"
+  },
+  "ocr": {
+    "implementation": "COMPLETE",
+    "providersAllowlisted": ["none", "http", "tesseract"],
+    "httpRequiresEndpoint": true,
+    "pdfIntegrityGate": true,
+    "realProcessing": "UNIT_AND_FIXTURE",
+    "productionStatus": "IMPLEMENTED_UNVERIFIED_LOAD_TEST",
+    "doc": "docs/security/OCR_PRODUCTION_GATE.md"
+  },
+  "clamav": {
+    "dockerHealthy": true,
+    "liveConnectivity": true,
+    "liveEicarBlocked": true,
+    "uploadGate": "scan_before_availability via pipeline + download blocklist",
+    "failClosed": true,
+    "tests": "malware.test.ts unit + CLAMAV_LIVE=1",
+    "productionDeploymentVerification": "NOT_DONE"
+  },
+  "clerk": {
+    "mfaImplementation": "REQUIRE_CLERK_MFA server policy + session fields",
+    "serverEnforcement": true,
+    "stagingVerification": "BLOCKED_NO_LIVE_CLERK_CREDENTIALS",
+    "productionVerification": "BLOCKED",
+    "dashboardChanges": "NONE"
+  },
+  "termsPrivacy": {
+    "pages": "substantive drafts with version ids",
+    "acceptanceTracking": "GET/POST /api/v1/legal/acceptances via audit events",
+    "attorneyReview": "PENDING"
+  },
+  "neonWrites": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "deployed": false,
+  "merged": false
+}

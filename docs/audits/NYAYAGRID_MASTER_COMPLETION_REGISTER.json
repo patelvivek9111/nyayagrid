@@ -72,7 +72,7 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "WP-03E recovery: password-safe two-step SELECT-only plan ready for human approval; ROLE_PROVISIONING_REQUIRED; production activation OFF",
+    "note": "WP-04: OCR allowlist+PDF integrity, ClamAV live probe, Clerk MFA server policy, Terms/Privacy drafts+acceptance API; WP-03E deferred; production deploy OFF",
     "verifiedComplete": 16,
     "implementedUnverified": 4,
     "partial": 21,
@@ -131,16 +131,18 @@
       "subsystem": "Documents",
       "feature": "OCR",
       "requirement": "Production OCR for image-only PDFs",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "packages/platform/src/config.ts IMPLEMENTED_OCR_PROVIDERS=['none']",
-        "docs/PRODUCTION_READINESS.md#7"
+        "WP-04: IMPLEMENTED_OCR_PROVIDERS includes none/http/tesseract; http requires OCR_ENDPOINT",
+        "assertPdfIntegrity on upload; ocr-resolve fail-closed without provider",
+        "docs/security/OCR_PRODUCTION_GATE.md",
+        "packages/research/corpus/reports/wp04-security-and-document-completion.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09",
-      "remediation": "Allowlist and certify Http/Tesseract OCR; load-test; advertise only after gate green"
+      "lastVerifiedSha": "d8e8111",
+      "remediation": "Certify managed OCR endpoint load-test before advertising OCR as production-ready"
     },
     {
       "id": "PROF-TL-01",
@@ -543,12 +545,17 @@
       "subsystem": "Security",
       "feature": "Clerk MFA production",
       "requirement": "Live Clerk+MFA verified for production",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["docs/PRODUCTION_READINESS.md item 2 BLOCKER"],
+      "evidence": [
+        "WP-04: REQUIRE_CLERK_MFA server enforcement in requireUser + MfaRequiredError mapping",
+        "packages/auth/src/mfa-policy.ts unit tests",
+        "Live Clerk Dashboard / staging MFA verification BLOCKED (no production auth changes)"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "d8e8111",
+      "remediation": "Verify MFA enrollment+challenge on staging Clerk instance with authorized credentials; then production ops sign-off"
     },
     {
       "id": "SEC-ISO-01",
@@ -569,12 +576,18 @@
       "subsystem": "Security",
       "feature": "ClamAV production",
       "requirement": "Live malware scan for uploads",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["PRODUCTION_READINESS item 5"],
+      "evidence": [
+        "WP-04: docker nyayagrid-clamav healthy; verify-clamav.mjs EICAR FOUND + clean OK",
+        "probeClamAvConnectivity + CLAMAV_LIVE malware.test.ts PASS",
+        "enforceProductionScanPolicy + assertDocumentAvailableAfterMalwareScan fail-closed",
+        "Production ClamAV deployment verification still open"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "d8e8111",
+      "remediation": "Point staging/production MALWARE_SCANNER=clamav at managed clamd; rehearse upload quarantine path in staging"
     },
     {
       "id": "SEC-LEGAL-01",
@@ -582,12 +595,17 @@
       "subsystem": "Legal",
       "feature": "Terms/Privacy",
       "requirement": "Attorney-reviewed Terms and Privacy",
-      "status": "BLOCKED",
+      "status": "PARTIAL",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["apps/web terms/privacy placeholders"],
+      "evidence": [
+        "WP-04: substantive Professional/Prosecution drafts with version ids",
+        "Acceptance API /api/v1/legal/acceptances (audit-backed)",
+        "Attorney review explicitly PENDING — not claimed complete"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "d8e8111",
+      "remediation": "Independent attorney review and sign-off of Terms/Privacy; then bump versions"
     },
     {
       "id": "OPS-BACKUP-01",
@@ -991,7 +1009,21 @@
       "closes": ["SEC-AUTH-01", "SEC-MAL-01", "PROF-DOC-02", "SEC-LEGAL-01"],
       "deps": [],
       "effort": "2-4 weeks",
-      "acceptance": "Clerk MFA verified; ClamAV prod verified; OCR policy decided; attorney Terms/Privacy"
+      "acceptance": "Clerk MFA verified; ClamAV prod verified; OCR policy decided; attorney Terms/Privacy",
+      "status": "PARTIAL",
+      "result": "WP04_PARTIAL",
+      "evidenceArtifact": "packages/research/corpus/reports/wp04-security-and-document-completion.json",
+      "note": "Engineering gates advanced (OCR allowlist, ClamAV live probe, MFA server policy, Terms drafts+acceptance). Live Clerk MFA production verification, managed OCR load-test, production ClamAV deploy, and attorney sign-off remain open. WP-03E deferred.",
+      "verificationClasses": {
+        "OCR_ADAPTERS_ALLOWLISTED": true,
+        "OCR_PRODUCTION_LOAD_TEST": false,
+        "CLAMAV_APP_CONNECTIVITY_LOCAL": true,
+        "CLAMAV_PRODUCTION_DEPLOY_VERIFIED": false,
+        "CLERK_MFA_SERVER_POLICY": true,
+        "CLERK_MFA_STAGING_LIVE_VERIFIED": false,
+        "TERMS_PRIVACY_DRAFT_COMPLETE": true,
+        "ATTORNEY_REVIEW_COMPLETE": false
+      }
     },
     {
       "id": "WP-05",

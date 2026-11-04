@@ -151,14 +151,16 @@ export function resolveMalwareScanner(env: EnvSource = process.env): string {
 
 /**
  * `none` means image-only PDFs stay in `requires_ocr` instead of being silently treated as empty.
- * Any other value names an adapter that does not exist; `UnsupportedOcrProvider` never reports
- * success, so a bogus value would otherwise look like working OCR that extracts nothing.
+ * `http` delegates to OCR_ENDPOINT (HttpOcrProvider). `tesseract` uses optional tesseract.js.
+ * Unknown values are rejected by production config validation so OCR cannot look "on" while
+ * UnsupportedOcrProvider silently extracts nothing.
  */
 export function resolveOcrProvider(env: EnvSource = process.env): string {
   return readLower(env, "OCR_PROVIDER") ?? "none";
 }
 
-export const IMPLEMENTED_OCR_PROVIDERS = ["none"] as const;
+/** Adapters implemented in `@nyayagrid/documents` (`createOcrProviderFromEnv`). */
+export const IMPLEMENTED_OCR_PROVIDERS = ["none", "http", "tesseract"] as const;
 
 export function resolveEmailProvider(env: EnvSource = process.env): string {
   return readLower(env, "EMAIL_PROVIDER") ?? "console";
@@ -335,7 +337,11 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
   const ocrProvider = resolveOcrProvider(env);
   if (!(IMPLEMENTED_OCR_PROVIDERS as readonly string[]).includes(ocrProvider)) {
     problems.push(
-      `OCR_PROVIDER=${ocrProvider} names an adapter that does not exist. UnsupportedOcrProvider never reports success, so this would look like OCR that silently extracts nothing. Use OCR_PROVIDER=none until an adapter ships.`,
+      `OCR_PROVIDER=${ocrProvider} names an adapter that does not exist. UnsupportedOcrProvider never reports success, so this would look like OCR that silently extracts nothing. Use OCR_PROVIDER=none|http|tesseract.`,
+    );
+  } else if (ocrProvider === "http" && !read(env, "OCR_ENDPOINT")) {
+    problems.push(
+      "OCR_PROVIDER=http requires OCR_ENDPOINT (HttpOcrProvider). Image-only PDFs would otherwise stay at requires_ocr while looking misconfigured.",
     );
   }
 

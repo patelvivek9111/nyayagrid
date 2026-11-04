@@ -39,6 +39,31 @@ export function assertUploadSizeAllowed(byteSize: number): void {
   }
 }
 
+const PDF_MAGIC = Buffer.from("%PDF");
+
+/**
+ * Rejects files that claim to be PDF (MIME or .pdf extension) but lack a PDF header.
+ * Prevents trivial MIME/extension spoofing from reaching extractors as "PDF".
+ */
+export function assertPdfIntegrity(params: {
+  contentType: string;
+  filename: string;
+  buffer: Buffer;
+}): void {
+  const normalizedType = (params.contentType.split(";")[0] ?? params.contentType)
+    .trim()
+    .toLowerCase();
+  const claimsPdf =
+    normalizedType === "application/pdf" || params.filename.toLowerCase().endsWith(".pdf");
+  if (!claimsPdf) return;
+  if (params.buffer.length < PDF_MAGIC.length || !params.buffer.subarray(0, 4).equals(PDF_MAGIC)) {
+    throw new UploadLimitError(
+      "PDF_INTEGRITY_FAILED",
+      "File claims to be a PDF but does not begin with a valid PDF header",
+    );
+  }
+}
+
 const ARCHIVE_MIME_TYPES = new Set([
   "application/zip",
   "application/x-zip-compressed",

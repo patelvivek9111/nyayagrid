@@ -3,6 +3,8 @@ import {
   ensureUserFromIdentity,
   ClerkHandshakeError,
   UnauthenticatedError,
+  isClerkMfaRequired,
+  assertClerkMfaSatisfied,
   type AuthProvider,
 } from "@nyayagrid/auth";
 import { getDb } from "./db";
@@ -32,6 +34,9 @@ export async function requireUser(headers: Headers) {
     }
     if (resolved.status !== "signed-in" || !resolved.session.userId) {
       throw new UnauthenticatedError();
+    }
+    if (isClerkMfaRequired()) {
+      assertClerkMfaSatisfied(resolved.session);
     }
     const email = resolved.session.email?.trim();
     if (!email) {

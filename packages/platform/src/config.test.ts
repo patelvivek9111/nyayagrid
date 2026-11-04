@@ -250,9 +250,31 @@ describe("collectProductionConfigProblems", () => {
   it("flags an OCR_PROVIDER that names an unimplemented adapter", () => {
     const problems = collectProductionConfigProblems({
       ...SAFE_PRODUCTION_ENV,
-      OCR_PROVIDER: "tesseract",
+      OCR_PROVIDER: "imaginary-ocr",
     });
-    expect(problems.some((p) => p.includes("OCR_PROVIDER=tesseract"))).toBe(true);
+    expect(problems.some((p) => p.includes("OCR_PROVIDER=imaginary-ocr"))).toBe(true);
+  });
+
+  it("allows OCR_PROVIDER=tesseract and http when OCR_ENDPOINT is set for http", () => {
+    expect(
+      collectProductionConfigProblems({
+        ...SAFE_PRODUCTION_ENV,
+        OCR_PROVIDER: "tesseract",
+      }).some((p) => p.includes("OCR_PROVIDER")),
+    ).toBe(false);
+    expect(
+      collectProductionConfigProblems({
+        ...SAFE_PRODUCTION_ENV,
+        OCR_PROVIDER: "http",
+        OCR_ENDPOINT: "https://ocr.example.internal/v1",
+      }).some((p) => p.includes("OCR_PROVIDER") || p.includes("OCR_ENDPOINT")),
+    ).toBe(false);
+    expect(
+      collectProductionConfigProblems({
+        ...SAFE_PRODUCTION_ENV,
+        OCR_PROVIDER: "http",
+      }).some((p) => p.includes("OCR_PROVIDER=http requires OCR_ENDPOINT")),
+    ).toBe(true);
   });
 
   it("flags EMAIL_PROVIDER=console and incomplete smtp configuration", () => {

@@ -63,6 +63,13 @@ export type ClerkSession = {
   userId: string | null;
   email?: string | null;
   name?: string | null;
+  /** From Clerk user record when available; null/undefined means unknown. */
+  twoFactorEnabled?: boolean | null;
+  /**
+   * Age in minutes of the second-factor verification for this session when Clerk exposes it.
+   * null means not verified / unknown.
+   */
+  factorVerificationAge?: number | null;
 };
 
 export type ClerkSessionResolver = (requestHeaders: Headers) => Promise<ClerkSession>;
@@ -179,3 +186,4 @@ export class ClerkHandshakeError extends Error {
 export * from "./invites";
 export * from "./clerk-webhook";
 export * from "./user-facing";
+export * from "./mfa-policy";

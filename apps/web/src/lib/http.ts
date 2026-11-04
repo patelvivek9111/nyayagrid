@@ -4,6 +4,7 @@ import {
   InviteError,
   UnauthenticatedError,
   ClerkHandshakeError,
+  MfaRequiredError,
   userFacingInviteMessage,
   USER_FACING_AUTH,
 } from "@nyayagrid/auth";
@@ -64,6 +65,9 @@ export function handleRouteError(error: unknown) {
   }
   if (error instanceof UnauthenticatedError) {
     return jsonError(error.code, USER_FACING_AUTH.unauthenticated, 401);
+  }
+  if (error instanceof MfaRequiredError) {
+    return jsonError(error.code, error.message, 403);
   }
   if (error instanceof GuestCommandCenterError) {
     return jsonError(error.code, error.message, 403);

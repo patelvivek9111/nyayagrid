@@ -7,12 +7,21 @@ type ClerkUserRecord = {
   firstName: string | null;
   lastName: string | null;
   emailAddresses: Array<{ id: string; emailAddress: string }>;
+  twoFactorEnabled?: boolean | null;
 };
 
 export type ClerkRequestAuthState = {
   status: string;
   headers?: Headers;
-  toAuth: () => { userId: string | null } | null;
+  toAuth: () => {
+    userId: string | null;
+    /**
+     * Clerk exposes factor ages as `[firstFactorAgeMinutes, secondFactorAgeMinutes] | null`.
+     * Older mocks may supply a single number for second-factor age.
+     */
+    factorVerificationAge?: [number, number] | number | null;
+    sessionClaims?: Record<string, unknown> | null;
+  } | null;
 };
 
 export type ClerkBrowserSessionRefresh = {
@@ -54,6 +63,30 @@ function clerkEmail(user: ClerkUserRecord): string | null {
   return primary?.emailAddress ?? user.emailAddresses[0]?.emailAddress ?? null;
 }
 
+function readFactorVerificationAge(
+  auth: NonNullable<ReturnType<ClerkRequestAuthState["toAuth"]>>,
+): number | null {
+  const fva = auth.factorVerificationAge;
+  if (typeof fva === "number" && Number.isFinite(fva)) {
+    return fva;
+  }
+  if (Array.isArray(fva) && typeof fva[1] === "number" && Number.isFinite(fva[1])) {
+    return fva[1];
+  }
+  const claims = auth.sessionClaims;
+  if (claims && typeof claims === "object") {
+    const claimFva = (claims as { fva?: unknown }).fva;
+    if (
+      Array.isArray(claimFva) &&
+      typeof claimFva[1] === "number" &&
+      Number.isFinite(claimFva[1])
+    ) {
+      return claimFva[1];
+    }
+  }
+  return null;
+}
+
 export async function resolveClerkSessionFromState(
   state: ClerkRequestAuthState,
   getUser: ClerkSessionDeps["getUser"],
@@ -61,13 +94,15 @@ export async function resolveClerkSessionFromState(
   if (state.status !== "signed-in") return { userId: null };
   const auth = state.toAuth();
   const userId = auth?.userId ?? null;
-  if (!userId) return { userId: null };
+  if (!userId || !auth) return { userId: null };
   try {
     const user = await getUser(userId);
     return {
       userId,
       email: clerkEmail(user),
       name: [user.firstName, user.lastName].filter(Boolean).join(" ") || null,
+      twoFactorEnabled: typeof user.twoFactorEnabled === "boolean" ? user.twoFactorEnabled : null,
+      factorVerificationAge: readFactorVerificationAge(auth),
     };
   } catch {
     return { userId: null };
