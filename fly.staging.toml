@@ -23,8 +23,18 @@ primary_region = "iad"
   BILLING_PROVIDER = "database"
   STORAGE_PROVIDER = "s3"
 
-[deploy]
-  release_command = "node /app/migrate.cjs"
+# Migrations are NOT run automatically on deploy (WP-05B).
+# Application image deploys are independent from schema changes.
+# Reviewed staging/production migrations:
+#   APP_ENV=staging \
+#   ALLOW_DATABASE_MIGRATE=1 \
+#   EXPECTED_MIGRATE_DB_HOST=<host> \
+#   EXPECTED_MIGRATE_DB_NAME=<db> \
+#   DATABASE_URL=<product-db> \
+#   npm run db:migrate
+# Never point DATABASE_URL at CORPUS_DATABASE_URL / the legal corpus.
+# migrate.cjs remains in the image for explicit operator use only — do not restore release_command
+# without a separate approved migration change.
 
 [http_service]
   internal_port = 3000

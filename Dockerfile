@@ -54,7 +54,10 @@ RUN find . -type f -name '.env*' ! -name '.env.example' -delete || true
 ENV INNGEST_DEV=
 RUN mkdir -p apps/web/public
 RUN npm run build -w @nyayagrid/web
-# Bundled migrator for Fly release_command. Never logs DATABASE_URL.
+# Bundled migrator for explicit operator runs only (WP-05B).
+# Do not wire this as Fly release_command — deploys must not auto-migrate.
+# Requires ALLOW_DATABASE_MIGRATE + EXPECTED_MIGRATE_DB_* in staging/production.
+# Never logs DATABASE_URL.
 RUN npx esbuild packages/database/src/migrate.ts --bundle --platform=node --format=cjs --outfile=/tmp/migrate.cjs
 
 # ---- runner: minimal runtime image, non-root user ----

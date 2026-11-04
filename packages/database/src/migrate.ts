@@ -3,6 +3,7 @@ import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { assertMigrateAuthorized, evaluateMigrateAuthorization } from "./migrate-authorization";
 
 function redact(value: string): string {
   return value.replace(/[a-z][a-z0-9+.-]*:\/\/[^\s'"]+/gi, "[redacted]");
@@ -26,6 +27,14 @@ async function main() {
   const connectionString = process.env.DATABASE_URL?.trim();
   if (!connectionString) {
     throw new Error("DATABASE_URL is required");
+  }
+
+  // Fail closed before opening a connection (staging/prod identity + corpus guard).
+  assertMigrateAuthorized(process.env);
+  const auth = evaluateMigrateAuthorization(process.env);
+  if (!auth.ok) {
+    // assertMigrateAuthorized already threw; this is for the typed narrow below.
+    throw new Error(auth.message);
   }
 
   const appEnv = (process.env.APP_ENV ?? "").trim().toLowerCase();
@@ -63,12 +72,34 @@ async function main() {
       }
     }
 
+    // Positive identity check against the live session (deployed envs only).
+    if (auth.mode === "authorized_deployed") {
+      const expectedHost = String(process.env.EXPECTED_MIGRATE_DB_HOST ?? "")
+        .trim()
+        .toLowerCase();
+      const expectedName = String(process.env.EXPECTED_MIGRATE_DB_NAME ?? "")
+        .trim()
+        .toLowerCase();
+      const identityRows = await client.unsafe(
+        "select current_database() as db, inet_server_addr()::text as addr",
+      );
+      const liveDb = String(identityRows[0]?.db ?? "").toLowerCase();
+      if (liveDb !== expectedName) {
+        throw new Error(
+          "Refusing to migrate: connected database name does not match EXPECTED_MIGRATE_DB_NAME",
+        );
+      }
+      // Host is validated from DATABASE_URL parse pre-connect; log expected host only.
+      void expectedHost;
+    }
+
     const db = drizzle(client);
     const migrationsFolder = migrationsFolderFromEnv();
     await migrate(db, { migrationsFolder });
     console.log(
       JSON.stringify({
         message: "Migrations applied",
+        mode: auth.mode,
         tlsClient: requireTls ? "require" : "off",
         pgStatSsl,
         pgvector: true,

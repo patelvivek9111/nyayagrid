@@ -56,17 +56,38 @@ for which of these are CONFIG REQUIRED vs. BLOCKER today):
 
 ## 3. Run database migrations
 
-Migrations are a separate, explicit step — never run implicitly by the container starting up, so a
-deploy can never accidentally apply a schema change against the wrong database.
+Migrations are a separate, explicit step — **never** attached to Fly `release_command` and never run
+implicitly on container start (WP-05B). Application image deploys are independent from schema
+changes.
+
+`fly.staging.toml` must not set `release_command = "node /app/migrate.cjs"`. The image may still
+contain `migrate.cjs` for operator use only.
+
+### Local development
 
 ```bash
-DATABASE_URL=<production connection string> npm run db:migrate
+APP_ENV=development DATABASE_URL=postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid npm run db:migrate
 ```
 
-Run this from a machine/CI job with network access to the production database, using
-`packages/database`'s Drizzle migrations (`npm run db:generate` was used at development time to
-produce them; `db:migrate` applies them). Run it once, before rolling out the new image version,
-whenever a release includes schema changes.
+### Staging / production (fail-closed)
+
+Require all of:
+
+- `ALLOW_DATABASE_MIGRATE=1` (explicit human authorization for this run)
+- `EXPECTED_MIGRATE_DB_HOST` matching the product `DATABASE_URL` hostname
+- `EXPECTED_MIGRATE_DB_NAME` matching the product database name
+- `DATABASE_URL` ≠ `CORPUS_DATABASE_URL` (legal corpus is never a migrate target)
+
+```bash
+APP_ENV=staging \
+ALLOW_DATABASE_MIGRATE=1 \
+EXPECTED_MIGRATE_DB_HOST=<product-db-host> \
+EXPECTED_MIGRATE_DB_NAME=<product-db-name> \
+DATABASE_URL=<product-connection-string> \
+npm run db:migrate
+```
+
+Do **not** set `MIGRATE_LEGAL_CORPUS`. Do **not** point `DATABASE_URL` at the Neon legal corpus.
 
 ## 4. Configure environment variables
 

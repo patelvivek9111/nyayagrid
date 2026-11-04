@@ -40,6 +40,8 @@ curl -sS https://staging.nyayagrid.com/api/health/ready
 
 ## Action 3 — Deploy WP-05B-capable image (blocks build SHA + new ready model)
 
+**Prerequisite:** migration safety fix merged — `fly.staging.toml` must **not** auto-run `migrate.cjs`.
+
 ```bash
 # From approved SHA on feat/production-model-routing after CI green:
 fly deploy --config fly.staging.toml --app nyayagrid-staging --ha=false
@@ -48,7 +50,21 @@ curl -sS https://staging.nyayagrid.com/api/health/live
 # Expect gitSha present matching deploy
 ```
 
-**Acceptance:** live JSON includes `gitSha`; ready returns `status: HEALTHY|DEGRADED` (WP-05 shape).
+**Acceptance:** live JSON includes `gitSha`; ready returns `status: HEALTHY|DEGRADED` (WP-05 shape).  
+**Non-acceptance:** deploy must not apply schema changes by itself.
+
+## Action 3b — Explicit product DB migration only (when schema change is approved)
+
+```bash
+APP_ENV=staging \
+ALLOW_DATABASE_MIGRATE=1 \
+EXPECTED_MIGRATE_DB_HOST=<product-host> \
+EXPECTED_MIGRATE_DB_NAME=<product-db> \
+DATABASE_URL=<product-url> \
+npm run db:migrate
+```
+
+**Forbidden:** `DATABASE_URL` = `CORPUS_DATABASE_URL`; migrating `neondb` corpus; restoring `release_command` migrate without a new approved change.
 
 ## Action 4 — On-call destination (blocks OPS-MON-01 live)
 
