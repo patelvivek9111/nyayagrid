@@ -1,45 +1,72 @@
 {
-  "classification": "NYAYAGRID_WP04_SECURITY_AND_DOCUMENT_COMPLETION",
-  "generatedAt": "2026-11-04T02:53:00.000Z",
-  "headBefore": "d8e81112a3fb40ca6da982778e3c4ad01e5e59f0",
+  "classification": "NYAYAGRID_WP04_FINAL_SECURITY_DOCUMENT_CERTIFICATION",
+  "generatedAt": "2026-11-04T09:50:00.000Z",
+  "headBefore": "cd63786d1a5c3414b5fd41276e25f578ba6962f3",
   "branch": "feat/production-model-routing",
+  "result": "WP04_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
   "wp03eDeferred": {
     "role": "nyayagrid_corpus_readonly",
-    "roleExists": true,
-    "loginDisabled": true,
-    "credentialNotSet": true,
     "neonRoleChangesThisSession": 0,
     "note": "WP-03E deferred; no Neon password/grant/login changes"
   },
   "ocr": {
-    "implementation": "COMPLETE",
-    "providersAllowlisted": ["none", "http", "tesseract"],
-    "httpRequiresEndpoint": true,
-    "pdfIntegrityGate": true,
-    "realProcessing": "UNIT_AND_FIXTURE",
-    "productionStatus": "IMPLEMENTED_UNVERIFIED_LOAD_TEST",
+    "engineeringComplete": true,
+    "localLiveVerified": true,
+    "stagingLiveVerified": false,
+    "productionVerified": false,
+    "realOcrExecuted": true,
+    "harness": "local HTTP OCR endpoint + HttpOcrProvider",
+    "fixtures": [
+      "native searchable (OCR skipped)",
+      "scanned requires_ocr + gold text",
+      "ocr failure not READY",
+      "bounded load 8 sequential"
+    ],
+    "localMetricsSample": {
+      "ocrHttpMs": 68,
+      "ocrLoadP50": 38,
+      "ocrLoadP95": 56,
+      "note": "LOCAL_PERFORMANCE_ONLY — HTTP harness timings, not managed OCR"
+    },
     "doc": "docs/security/OCR_PRODUCTION_GATE.md"
   },
   "clamav": {
+    "engineeringComplete": true,
+    "localLiveVerified": true,
+    "stagingLiveVerified": false,
+    "productionVerified": false,
     "dockerHealthy": true,
-    "liveConnectivity": true,
-    "liveEicarBlocked": true,
-    "uploadGate": "scan_before_availability via pipeline + download blocklist",
-    "failClosed": true,
-    "tests": "malware.test.ts unit + CLAMAV_LIVE=1",
-    "productionDeploymentVerification": "NOT_DONE"
+    "cleanPipelineReady": true,
+    "eicarPipelineBlocked": true,
+    "downloadQuarantine": true,
+    "failClosedScannerDown": true,
+    "concurrentScans": true,
+    "localMetricsSample": {
+      "cleanUploadMs": 62,
+      "eicarUploadMs": 20,
+      "concurrentScansMs": 68
+    }
   },
   "clerk": {
-    "mfaImplementation": "REQUIRE_CLERK_MFA server policy + session fields",
+    "engineeringComplete": true,
     "serverEnforcement": true,
-    "stagingVerification": "BLOCKED_NO_LIVE_CLERK_CREDENTIALS",
-    "productionVerification": "BLOCKED",
-    "dashboardChanges": "NONE"
+    "negativeMatrix": true,
+    "liveEnrollment": false,
+    "liveChallenge": false,
+    "stagingLiveVerified": false,
+    "productionVerified": false,
+    "dashboardChanges": "NONE",
+    "blocker": "CLERK_STAGING_LIVE_UNVERIFIED — approved staging credentials unavailable"
   },
   "termsPrivacy": {
-    "pages": "substantive drafts with version ids",
-    "acceptanceTracking": "GET/POST /api/v1/legal/acceptances via audit events",
-    "attorneyReview": "PENDING"
+    "engineeringComplete": true,
+    "draftsComplete": true,
+    "acceptanceApi": true,
+    "acceptancePersistence": true,
+    "audit": true,
+    "versionEnforcement": true,
+    "attorneyReviewPackage": "docs/security/WP04_ATTORNEY_REVIEW_PACKAGE.md",
+    "attorneyApproved": false
   },
   "neonWrites": 0,
   "courtListenerHttpCalls": 0,

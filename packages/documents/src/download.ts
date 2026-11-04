@@ -160,8 +160,22 @@ export type DocumentDownloadAuthContext = {
  */
 export type DocumentDownloadAuthCheck = (ctx: DocumentDownloadAuthContext) => Promise<void> | void;
 
-/** Processing states from which a document must never be downloadable. */
-const BLOCKED_DOWNLOAD_STATES = new Set(["scan_blocked", "quarantined", "malware_scan_failed"]);
+/**
+ * Processing states from which a document must never be downloadable.
+ * Includes pre-scan states so originals cannot be retrieved before malware clearance.
+ */
+const BLOCKED_DOWNLOAD_STATES = new Set([
+  "uploaded",
+  "awaiting_malware_scan",
+  "quarantined",
+  "scan_blocked",
+  "malware_scan_failed",
+]);
+
+/** True when download signing must refuse the document's processing state. */
+export function isDocumentDownloadBlockedByProcessingState(state: string): boolean {
+  return BLOCKED_DOWNLOAD_STATES.has(state);
+}
 
 export type AuthorizeAndSignDocumentDownloadParams = {
   db: Database;
@@ -213,7 +227,7 @@ export async function authorizeAndSignDocumentDownload(
   if (!doc) {
     throw new DocumentDownloadError("NOT_FOUND", "Document not found in scope");
   }
-  if (BLOCKED_DOWNLOAD_STATES.has(doc.processingState)) {
+  if (isDocumentDownloadBlockedByProcessingState(doc.processingState)) {
     throw new DocumentDownloadError(
       "DOWNLOAD_BLOCKED",
       `Document cannot be downloaded while in state "${doc.processingState}"`,
