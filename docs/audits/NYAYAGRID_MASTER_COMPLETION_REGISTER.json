@@ -161,7 +161,7 @@
         "docs/audits/WP04_FINAL_CLOSURE.md"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending_wp04_final_commit",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
       "remediation": "Configure managed OCR_ENDPOINT on staging; load-test; then production verification"
     },
     {
@@ -617,7 +617,7 @@
         "CLERK_STAGING_LIVE_UNVERIFIED \u2014 no approved staging Clerk credentials; no production Dashboard changes"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending_wp04_final_commit",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
       "remediation": "Staging Clerk enrollment+challenge with authorized credentials; then production ops sign-off",
       "acceptance": {
         "IMPLEMENTED": true,
@@ -660,7 +660,7 @@
         "docs/operations/WP04_DEPLOYMENT_READINESS_CHECKLIST.md"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending_wp04_final_commit",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
       "remediation": "Point staging/production MALWARE_SCANNER=clamav at managed clamd; rehearse upload quarantine in staging",
       "acceptance": {
         "IMPLEMENTED": true,
@@ -685,7 +685,7 @@
         "docs/security/WP04_ATTORNEY_REVIEW_PACKAGE.md \u2014 ATTORNEY_APPROVED: NO"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending_wp04_final_commit",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
       "remediation": "Independent attorney review and sign-off; then bump versions for production publication",
       "acceptance": {
         "IMPLEMENTED": true,
