@@ -1,6 +1,6 @@
 {
   "classification": "NYAYAGRID_WP05B_STAGING_PROBE",
-  "probedAt": "2026-11-04T13:33:29.629Z",
+  "probedAt": "2026-11-04T17:47:56.006Z",
   "stagingBaseUrl": "https://staging.nyayagrid.com",
   "hostingProvider": "fly.io (documented app nyayagrid-staging)",
   "results": [
@@ -8,23 +8,23 @@
       "path": "/api/health/live",
       "status": 200,
       "ok": true,
-      "ms": 133,
+      "ms": 170,
       "error": null,
-      "bodySnippet": "{\"ok\":true}"
+      "bodySnippet": "{\"ok\":true,\"status\":\"HEALTHY\",\"gitSha\":\"add3af38a4c00c6cec631b70981a1c855b660f38\",\"buildId\":\"wp05-add3af3\",\"appEnv\":\"staging\"}"
     },
     {
       "path": "/api/health/ready",
-      "status": 503,
-      "ok": false,
-      "ms": 230,
+      "status": 200,
+      "ok": true,
+      "ms": 409,
       "error": null,
-      "bodySnippet": "{\"ok\":false,\"checks\":{\"database\":\"ok\",\"storage\":\"ok\",\"redis\":\"error\",\"ingest\":\"configured\",\"config\":\"ok\",\"appEnv\":\"staging\",\"featureAgents\":\"0\",\"providers\":{\"appEnv\":\"staging\",\"appEnvSource\":\"APP_ENV\",\"authProvider\":\"clerk\",\"aiProvider\":\"openai\",\"embeddingProvider\":\"openai\",\"storageProvider\":\"s3\",\"malwareScanner\":\"clamav\",\"ocrProvider\":\"none\",\"emailProvider\":\"smtp\",\"billingProvider\":\"database\",\"rateLimitProvider\":\"redis\",\"databaseConfigured\":true,\"storageBucketConfigured\":true}}}"
+      "bodySnippet": "{\"ok\":true,\"status\":\"HEALTHY\",\"checks\":{\"gitSha\":\"add3af38a4c00c6cec631b70981a1c855b660f38\",\"buildId\":\"wp05-add3af3\",\"appEnv\":\"staging\",\"envBoundaries\":[],\"database\":\"ok\",\"storage\":\"ok\",\"redis\":\"ok\",\"clamav\":\"ok\",\"clamavMode\":\"live\",\"ocr\":\"disabled\",\"neonCorpusResearch\":\"off\",\"ingest\":\"configured\",\"config\":\"ok\",\"featureAgents\":\"0\",\"providers\":{\"appEnv\":\"staging\",\"appEnvSource\":\"APP_ENV\",\"authProvider\":\"clerk\",\"aiProvider\":\"openai\",\"embeddingProvider\":\"openai\",\"storageProvider\":\"s3\",\"malwareScanner\":\"clamav\",\"ocrProvider\":\"none\",\"emailProvider\":\"smtp\",\"billingProvider\":\"database\",\"rateLimitProv"
     },
     {
       "path": "/api/v1/health",
       "status": 200,
       "ok": true,
-      "ms": 23,
+      "ms": 43,
       "error": null,
       "bodySnippet": "{\"status\":\"ok\",\"product\":\"NyayaGrid\",\"authProvider\":\"clerk\",\"aiProvider\":\"openai\",\"storageProvider\":\"s3\",\"appEnv\":\"staging\",\"config\":{\"appEnv\":\"staging\",\"appEnvSource\":\"APP_ENV\",\"authProvider\":\"clerk\",\"aiProvider\":\"openai\",\"embeddingProvider\":\"openai\",\"storageProvider\":\"s3\",\"malwareScanner\":\"clamav\",\"ocrProvider\":\"none\",\"emailProvider\":\"smtp\",\"billingProvider\":\"database\",\"rateLimitProvider\":\"redis\",\"databaseConfigured\":true,\"storageBucketConfigured\":true},\"problems\":[],\"warnings\":[],\"phase\":9}"
     },
@@ -32,7 +32,7 @@
       "path": "/sign-in",
       "status": 200,
       "ok": true,
-      "ms": 39,
+      "ms": 168,
       "error": null,
       "bodySnippet": "(non-json len=800)"
     },
@@ -40,7 +40,7 @@
       "path": "/terms",
       "status": 200,
       "ok": true,
-      "ms": 17,
+      "ms": 70,
       "error": null,
       "bodySnippet": "(non-json len=800)"
     },
@@ -48,39 +48,27 @@
       "path": "/privacy",
       "status": 200,
       "ok": true,
-      "ms": 22,
+      "ms": 48,
       "error": null,
       "bodySnippet": "(non-json len=800)"
     }
   ],
   "summary": {
     "liveOk": true,
-    "readyOk": false,
-    "readyStatus": 503,
+    "readyOk": true,
+    "readyStatus": 200,
     "database": "ok",
     "storage": "ok",
-    "redis": "error",
+    "redis": "ok",
     "appEnv": "staging",
     "authProvider": "clerk",
     "malwareScanner": "clamav",
-    "gitSha": null,
-    "readyShape": "legacy_checks_only",
-    "stagingDeployedButNotReady": true,
-    "wp05HealthEndpointsDeployed": false
+    "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+    "readyShape": "wp05_status_model",
+    "stagingDeployedButNotReady": false,
+    "wp05HealthEndpointsDeployed": true
   },
   "blockers": [
-    {
-      "id": "STAGING_REDIS_UNAVAILABLE",
-      "operatorAction": "fly auth login && fly secrets / REDIS_URL for nyayagrid-staging — restore reachable Redis so /api/health/ready returns 200",
-      "prevents": "staging_certification",
-      "evidenceNeeded": "ready JSON with checks.redis=ok and HTTP 200"
-    },
-    {
-      "id": "STAGING_BUILD_SHA_NOT_VISIBLE",
-      "operatorAction": "After fly auth login, deploy commit with WP-05 live/ready identity (GIT_SHA) to nyayagrid-staging via approved gate",
-      "prevents": "staging_certification",
-      "evidenceNeeded": "live JSON includes gitSha matching deployed commit"
-    },
     {
       "id": "FLY_CLI_UNAUTHENTICATED",
       "operatorAction": "fly auth login (or set FLY_API_TOKEN) for the NyayaGrid org owning nyayagrid-staging",
@@ -88,5 +76,5 @@
       "evidenceNeeded": "fly apps list shows nyayagrid-staging"
     }
   ],
-  "verdict": "STAGING_HOST_DEGRADED_NOT_READY"
+  "verdict": "STAGING_HOST_HEALTHY"
 }

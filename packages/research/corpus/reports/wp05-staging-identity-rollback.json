@@ -1,0 +1,39 @@
+{
+  "classification": "NYAYAGRID_WP05_STAGING_IDENTITY_ROLLBACK",
+  "at": "2026-11-04T17:47:00.000Z",
+  "deployedCommit": "add3af38a4c00c6cec631b70981a1c855b660f38",
+  "buildId": "wp05-add3af3",
+  "images": {
+    "previous": "registry.fly.io/nyayagrid-staging:deployment-01M6KKPCHFH9N7DWZY8M9SSV15",
+    "baked": "registry.fly.io/nyayagrid-staging:deployment-01M6KTCX6H5ZXPHGRV8SVFD0BF"
+  },
+  "releases": {
+    "initialBake": "v87",
+    "rollbackToPrevious": "v88",
+    "restoreBaked": "v89"
+  },
+  "machine": "811d3e3f522648",
+  "skipReleaseCommand": true,
+  "migrationsRun": false,
+  "observations": {
+    "afterBake": {
+      "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "status": "HEALTHY",
+      "database": "ok",
+      "redis": "ok",
+      "storage": "ok",
+      "clamav": "ok"
+    },
+    "afterRollbackToPreviousImage": {
+      "gitSha": null,
+      "status": "HEALTHY",
+      "note": "Expected null: previous image lacked baked identity"
+    },
+    "afterRestoreBakedImage": {
+      "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "status": "HEALTHY",
+      "identityPreserved": true
+    }
+  },
+  "result": "PASS"
+}

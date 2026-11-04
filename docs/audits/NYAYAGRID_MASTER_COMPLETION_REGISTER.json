@@ -653,7 +653,7 @@
         "packages/research/corpus/reports/wp05-pitr-verification.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending-wp05-resolution-commit",
+      "lastVerifiedSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
@@ -729,27 +729,25 @@
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "Staging Fly app nyayagrid-staging HEALTHY (db/redis/storage/clamav live) at https://staging.nyayagrid.com",
-        "Deployed image deployment-01M6KKPCHFH9N7DWZY8M9SSV15 machine 811d3e3f522648 version 86",
-        "Rollback rehearsal PASS (v84→v85→v86) but gitSha null after recovery — durable bake implemented in Dockerfile/release-identity (pending authorized redeploy)",
-        "Migration auto release_command removed; ALLOW_DATABASE_MIGRATE guard 11/11",
+        "Staging deploy add3af38 with --build-arg GIT_SHA + --skip-release-command → image deployment-01M6KTCX6H5ZXPHGRV8SVFD0BF (v87)",
+        "ready/live gitSha=add3af38a4c00c6cec631b70981a1c855b660f38; db/redis/storage/clamav HEALTHY",
+        "Identity rollback test: v87→v88 previous image gitSha=null → v89 restore baked image gitSha restored (wp05-staging-identity-rollback.json)",
         "PRODUCTION Fly app NOT created; PRODUCTION_DEPLOYED=false"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "da36d0b67c452f34fb3596a3bd10b8ba0086c45c",
+      "lastVerifiedSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
-      "STAGING_VERIFIED": "partial_identity_gap",
+      "STAGING_VERIFIED": true,
       "PRODUCTION_VERIFIED": false,
-      "EVIDENCE": "staging ready HEALTHY; Dockerfile GIT_SHA bake; fly.staging.toml notes",
+      "EVIDENCE": "wp05-staging-identity-rollback.json; staging ready HEALTHY with baked gitSha",
       "BLOCKERS": [
-        "Authorized Fly redeploy required to bake GIT_SHA into image and re-verify after rollback",
-        "Automated Clerk E2E credentials not available this session",
+        "Automated Clerk E2E credentials unavailable",
         "WP-03E/WP-04 legal-security gates still open before production",
-        "Product/corpus DB isolation OPEN"
+        "Product/corpus DB isolation OPEN (production gate)"
       ],
-      "HUMAN_APPROVAL": "Required for staging redeploy with --build-arg GIT_SHA; separate approval for any production app",
-      "NEXT_ACTION": "Approve staging redeploy with baked GIT_SHA; do not create production Fly app",
+      "HUMAN_APPROVAL": "Separate approval required for production Fly app; Clerk E2E secrets; product DB cutover",
+      "NEXT_ACTION": "Keep staging; do not create production Fly app until isolation + WP-03E/WP-04 gates close",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "IMAGE_BUILT": true,
@@ -757,11 +755,11 @@
         "STAGING_DEPLOYED": true,
         "STAGING_E2E_PASSED": false,
         "ROLLBACK_VERIFIED": true,
-        "RELEASE_IDENTITY_DURABLE": false,
+        "RELEASE_IDENTITY_DURABLE": true,
         "PRODUCTION_DEPLOYED": false,
         "PRODUCTION_RELEASE_APPROVED": false
       },
-      "remediation": "Authorized fly deploy --build-arg GIT_SHA=... --skip-release-command; then rollback identity recheck; keep production gated"
+      "remediation": "Production remains gated; staging identity durable after image rollback/restore"
     },
     {
       "id": "RM-PG-01",
