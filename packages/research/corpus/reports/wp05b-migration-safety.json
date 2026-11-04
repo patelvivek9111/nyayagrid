@@ -1,0 +1,20 @@
+{
+  "classification": "NYAYAGRID_WP05B_MIGRATION_SAFETY",
+  "generatedAt": "2026-11-04T14:40:00.000Z",
+  "headBefore": "9e48bc6a505e8088647b5c8a5e8bd4a9b2d74c25",
+  "branch": "wp05b/migration-safety",
+  "changes": {
+    "flyStagingReleaseCommandRemoved": true,
+    "migrateAuthorizationGate": "packages/database/src/migrate-authorization.ts",
+    "positiveIdentityEnv": ["EXPECTED_MIGRATE_DB_HOST", "EXPECTED_MIGRATE_DB_NAME"],
+    "explicitAllowEnv": "ALLOW_DATABASE_MIGRATE",
+    "corpusTargetBlocked": true,
+    "autoMigrateOnDeploy": false
+  },
+  "tests": "packages/database/src/migrate-authorization.test.ts",
+  "stagingDeployed": false,
+  "databaseWrites": 0,
+  "neonCorpusWrites": 0,
+  "courtListener": 0,
+  "paidAi": 0
+}

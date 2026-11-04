@@ -61,14 +61,29 @@ monitoring certification as **OPEN** (OPS-MON-01).
 
 ## Running database migrations
 
+Always run migrations as an explicit, separate step before rolling out a version that depends on
+schema changes — never via Fly `release_command` and never automatically on container start
+(WP-05B; see [Deployment](./DEPLOYMENT.md)).
+
+Local:
+
 ```bash
-DATABASE_URL=<target> npm run db:migrate
+APP_ENV=development DATABASE_URL=<local> npm run db:migrate
 ```
 
-Always run this as an explicit, separate step before rolling out a version that depends on schema
-changes — never automatically on container start (see [Deployment](./DEPLOYMENT.md)). Use
-`npm run db:studio` (Drizzle Studio) to inspect the schema/data interactively against a given
-`DATABASE_URL` (use a read replica or staging database for this in production, not the primary).
+Staging/production (fail-closed):
+
+```bash
+APP_ENV=staging \
+ALLOW_DATABASE_MIGRATE=1 \
+EXPECTED_MIGRATE_DB_HOST=<host> \
+EXPECTED_MIGRATE_DB_NAME=<db> \
+DATABASE_URL=<product-db> \
+npm run db:migrate
+```
+
+Never migrate `CORPUS_DATABASE_URL` / the legal corpus. Use `npm run db:studio` against a
+non-primary target when inspecting schema interactively.
 
 ## Legal authority corpus (Nyaya Research)
 

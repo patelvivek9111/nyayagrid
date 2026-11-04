@@ -112,4 +112,10 @@ export {
   isLocalCertificationDatabaseUrl,
   type LocalCertificationDbOptions,
 } from "./local-cert-db";
+export {
+  assertMigrateAuthorized,
+  evaluateMigrateAuthorization,
+  type MigrateAuthorizationEnv,
+  type MigrateAuthorizationResult,
+} from "./migrate-authorization";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";
