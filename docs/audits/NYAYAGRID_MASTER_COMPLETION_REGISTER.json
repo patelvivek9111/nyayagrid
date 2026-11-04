@@ -647,38 +647,35 @@
       "releaseBlocker": true,
       "evidence": [
         "WP-05 local docker restore PASS; freshness BACKUP_FRESH",
-        "Isolated Neon branch wp05-pitr-rehearsal-20261104 (br-odd-haze-au3z053l) created 2026-11-04; prior count match legal_authorities=35863 citations=80842",
-        "Staging production-branch RO inventory 2026-11-04: authorities=35863 chunks=129160 versions=6993 citations=80842 (wp05-staging-db-inventory.json)",
-        "Historical recovery timestamp / parent LSN NOT independently retrieved (NEON_API_KEY unset; neonctl not authenticated)",
-        "Product+corpus share neondb — physical isolation OPEN (WP05_PRODUCT_CORPUS_ISOLATION.md)",
-        "docs/operations/WP05_MANAGED_PITR_OPERATOR_ACTION.md"
+        "Neon API parent_timestamp=2026-11-04T16:20:37Z parent_lsn=0/A866C288 created_at=2026-11-04T16:21:13Z (36s earlier) — wp05-pitr-branch-metadata.json",
+        "ops:pitr-verify PASS_WITH_EVIDENCE: four legal_* tables match (35863/80842/129160/6993); sample digests match; orphans=0; measuredQueryMs=3840",
+        "Product+corpus still share neondb — physical isolation remains production gate (WP05_PRODUCT_CORPUS_ISOLATION.md)",
+        "packages/research/corpus/reports/wp05-pitr-verification.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "f241d83bd7348db83d2f38ce502fe65b8ee7671b",
+      "lastVerifiedSha": "pending-wp05-resolution-commit",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
-      "STAGING_VERIFIED": false,
+      "STAGING_VERIFIED": true,
       "PRODUCTION_VERIFIED": false,
-      "EVIDENCE": "packages/research/corpus/reports/wp05-staging-db-inventory.json; wp05-pitr-verification.json (BLOCKED)",
+      "EVIDENCE": "wp05-pitr-verification.json; wp05-pitr-branch-metadata.json",
       "BLOCKERS": [
-        "PITR_HISTORICAL_TIMESTAMP / PITR_PARENT_LSN not independently verified",
-        "PITR_DATABASE_URL for recovery branch not available this session",
-        "Product/corpus physical DB isolation unresolved"
+        "Product/corpus physical DB isolation unresolved (production gate, not PITR metadata failure)"
       ],
-      "HUMAN_APPROVAL": "Required for Neon metadata export and any new billable PITR branch if rehearsal expired",
-      "NEXT_ACTION": "Operator completes WP05_MANAGED_PITR_OPERATOR_ACTION.md then npm run ops:pitr-verify",
+      "HUMAN_APPROVAL": "Required only for physical product DB cutover; managed PITR rehearsal complete on isolated branch",
+      "NEXT_ACTION": "Approve product/corpus physical separation before production; keep recovery branch until expires",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
         "LOCAL_RESTORE_VERIFIED": true,
-        "MANAGED_PITR_VERIFIED": false,
-        "RESTORE_INTEGRITY_VERIFIED": false,
-        "STAGING_TESTED": "partial_inventory_only",
+        "MANAGED_PITR_VERIFIED": true,
+        "RESTORE_INTEGRITY_VERIFIED": true,
+        "STAGING_TESTED": true,
         "PRODUCTION_VERIFIED": false
       },
-      "rpo": "24h interim local; Neon history retention ~6h observed; target <=5m managed PITR uncertified without checkpoint evidence",
-      "rto": "4h interim local; target <=1h managed uncertified",
-      "remediation": "Export PITR timestamp/LSN + recovery-branch RO URL; keep production branch immutable; separate product DB before production"
+      "rpo": "Historical checkpoint at parent_timestamp; Neon history retention ~6h; interim local 24h still documented",
+      "rto": "Branch readiness + RO verify measuredQueryMs~3840ms; full app failover RTO still ops-runbook 4h interim / target <=1h",
+      "remediation": "Complete product DB isolation cutover under separate approval; do not overwrite production branch"
     },
     {
       "id": "OPS-MON-01",

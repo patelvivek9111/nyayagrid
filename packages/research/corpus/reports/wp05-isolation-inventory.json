@@ -1,0 +1,697 @@
+{
+  "classification": "NYAYAGRID_WP05_ISOLATION_INVENTORY",
+  "at": "2026-11-04T17:39:45.893Z",
+  "readOnly": true,
+  "neonCorpusWrites": 0,
+  "target": {
+    "host": "ep-jolly-brook-auhdpay3-pooler.c-10.us-east-1.aws.neon.tech",
+    "database": "neondb",
+    "branch": "br-delicate-cloud-au0md4t9"
+  },
+  "sharedPhysicalDatabase": true,
+  "tables": [
+    {
+      "table_name": "audit_events",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "documents",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "legal_authorities",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "matters",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "memberships",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "organizations",
+      "owner": "neondb_owner",
+      "schema": "public"
+    },
+    {
+      "table_name": "users",
+      "owner": "neondb_owner",
+      "schema": "public"
+    }
+  ],
+  "grantsSample": [
+    {
+      "table_name": "audit_events",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "audit_events",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "audit_events",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "audit_events",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "audit_events",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "audit_events",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "audit_events",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "table_name": "documents",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "documents",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "documents",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "documents",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "documents",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "documents",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "documents",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "table_name": "legal_authorities",
+      "grantee": "nyayagrid_corpus_readonly",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "grantee": "nyayagrid_corpus_readonly",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "grantee": "nyayagrid_corpus_readonly",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "grantee": "nyayagrid_corpus_readonly",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "matters",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "matters",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "matters",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "matters",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "matters",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "matters",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "matters",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "table_name": "organizations",
+      "grantee": "neondb_owner",
+      "privilege_type": "DELETE"
+    },
+    {
+      "table_name": "organizations",
+      "grantee": "neondb_owner",
+      "privilege_type": "INSERT"
+    },
+    {
+      "table_name": "organizations",
+      "grantee": "neondb_owner",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "table_name": "organizations",
+      "grantee": "neondb_owner",
+      "privilege_type": "SELECT"
+    },
+    {
+      "table_name": "organizations",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "table_name": "organizations",
+      "grantee": "neondb_owner",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "table_name": "organizations",
+      "grantee": "neondb_owner",
+      "privilege_type": "UPDATE"
+    }
+  ],
+  "foreignKeysSample": [
+    {
+      "table_name": "audit_events",
+      "column_name": "actor_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "audit_events",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "documents",
+      "column_name": "created_by_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "documents",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "documents",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "column_name": "authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "legal_authority_chunks",
+      "column_name": "authority_version_id",
+      "foreign_table": "legal_authority_versions"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "column_name": "from_authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "legal_authority_citations",
+      "column_name": "to_authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "legal_authority_relationships",
+      "column_name": "from_authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "legal_authority_relationships",
+      "column_name": "to_authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "legal_authority_versions",
+      "column_name": "authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "legal_holds",
+      "column_name": "document_id",
+      "foreign_table": "documents"
+    },
+    {
+      "table_name": "legal_holds",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_holds",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_holds",
+      "column_name": "placed_by_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_holds",
+      "column_name": "released_by_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_actions",
+      "column_name": "actor_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_actions",
+      "column_name": "after_version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_actions",
+      "column_name": "before_version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_actions",
+      "column_name": "checkpoint_id",
+      "foreign_table": "legal_work_checkpoints"
+    },
+    {
+      "table_name": "legal_work_actions",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_actions",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_work_actions",
+      "column_name": "session_id",
+      "foreign_table": "legal_work_sessions"
+    },
+    {
+      "table_name": "legal_work_checkpoint_items",
+      "column_name": "checkpoint_id",
+      "foreign_table": "legal_work_checkpoints"
+    },
+    {
+      "table_name": "legal_work_checkpoint_items",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_checkpoint_items",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_work_checkpoint_items",
+      "column_name": "version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_checkpoints",
+      "column_name": "actor_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_checkpoints",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_checkpoints",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_work_checkpoints",
+      "column_name": "session_id",
+      "foreign_table": "legal_work_sessions"
+    },
+    {
+      "table_name": "legal_work_heads",
+      "column_name": "current_version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_heads",
+      "column_name": "locked_by_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_heads",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_heads",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "action_id",
+      "foreign_table": "legal_work_actions"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "actor_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "checkpoint_id",
+      "foreign_table": "legal_work_checkpoints"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "previous_current_version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "restored_version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "session_id",
+      "foreign_table": "legal_work_sessions"
+    },
+    {
+      "table_name": "legal_work_restorations",
+      "column_name": "target_version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_sessions",
+      "column_name": "actor_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_sessions",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_sessions",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_work_stale_markers",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_stale_markers",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "legal_work_stale_markers",
+      "column_name": "resolved_by_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_stale_markers",
+      "column_name": "source_version_id",
+      "foreign_table": "legal_work_versions"
+    },
+    {
+      "table_name": "legal_work_versions",
+      "column_name": "actor_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "legal_work_versions",
+      "column_name": "matter_id",
+      "foreign_table": "matters"
+    },
+    {
+      "table_name": "legal_work_versions",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "matter_authorities",
+      "column_name": "authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "matters",
+      "column_name": "client_id",
+      "foreign_table": "clients"
+    },
+    {
+      "table_name": "matters",
+      "column_name": "created_by_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "matters",
+      "column_name": "organization_id",
+      "foreign_table": "organizations"
+    },
+    {
+      "table_name": "organizations",
+      "column_name": "created_by_user_id",
+      "foreign_table": "users"
+    },
+    {
+      "table_name": "research_notes",
+      "column_name": "authority_chunk_id",
+      "foreign_table": "legal_authority_chunks"
+    },
+    {
+      "table_name": "research_notes",
+      "column_name": "authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "research_results",
+      "column_name": "authority_id",
+      "foreign_table": "legal_authorities"
+    },
+    {
+      "table_name": "research_results",
+      "column_name": "authority_version_id",
+      "foreign_table": "legal_authority_versions"
+    },
+    {
+      "table_name": "research_results",
+      "column_name": "chunk_id",
+      "foreign_table": "legal_authority_chunks"
+    }
+  ],
+  "owners": [
+    "neondb_owner"
+  ],
+  "conclusion": "Product and corpus tables coexist in public schema on shared neondb — physical isolation OPEN pending operator-approved cutover"
+}

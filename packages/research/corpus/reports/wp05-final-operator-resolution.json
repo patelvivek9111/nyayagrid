@@ -1,0 +1,41 @@
+{
+  "classification": "NYAYAGRID_WP05_FINAL_OPERATOR_BLOCKER_RESOLUTION",
+  "at": "2026-11-04T17:40:00.000Z",
+  "baseCommitBefore": "1aa7200f5abdc59f63fa8cadacf1d2a89c33b46b",
+  "pitr": {
+    "result": "PASS_WITH_EVIDENCE",
+    "historicalRecoveryTimestamp": "2026-11-04T16:20:37Z",
+    "parentLsn": "0/A866C288",
+    "branchCreatedAt": "2026-11-04T16:21:13Z",
+    "checkpointPredatesCreation": true,
+    "deltaSeconds": 36,
+    "counts": {
+      "legal_authorities": 35863,
+      "legal_authority_citations": 80842,
+      "legal_authority_chunks": 129160,
+      "legal_authority_versions": 6993
+    },
+    "sampleDigestMatch": {
+      "legal_authorities": true,
+      "legal_authority_citations": true
+    },
+    "orphanCitations": 0,
+    "measuredQueryMs": 3840,
+    "evidence": "packages/research/corpus/reports/wp05-pitr-verification.json"
+  },
+  "isolation": {
+    "sharedPhysicalDatabase": true,
+    "owners": ["neondb_owner"],
+    "safeguardsLocal": "15/15 migrate-authorization + product-corpus-isolation",
+    "cutoverRequiresApproval": true,
+    "evidence": "packages/research/corpus/reports/wp05-isolation-inventory.json"
+  },
+  "monitoring": {
+    "smtpAcceptedPrior": true,
+    "humanAck": false,
+    "noRepeatEmailsThisSession": true
+  },
+  "neonCorpusWrites": 0,
+  "courtListenerCalls": 0,
+  "paidAiCalls": 0
+}

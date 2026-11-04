@@ -1,45 +1,200 @@
 {
   "classification": "NYAYAGRID_WP05_MANAGED_PITR_VERIFICATION",
-  "startedAt": "2026-11-04T16:36:28.215Z",
-  "completedAt": "2026-11-04T16:36:28.216Z",
+  "startedAt": "2026-11-04T17:38:45.273Z",
+  "completedAt": "2026-11-04T17:38:49.114Z",
   "readOnly": true,
   "neonCorpusWrites": 0,
   "productionOverwrite": false,
   "originalBranchHint": "production / br-delicate-cloud-au0md4t9",
   "recoveryBranchHint": "wp05-pitr-rehearsal-20261104 / br-odd-haze-au3z053l",
-  "historicalRecoveryTimestamp": null,
-  "parentLsn": null,
-  "branchCreatedAt": null,
+  "historicalRecoveryTimestamp": "2026-11-04T16:20:37Z",
+  "parentLsn": "0/A866C288",
+  "branchCreatedAt": "2026-11-04T16:21:13Z",
   "historyRetentionHours": 6,
-  "targets": { "production": null, "pitr": null },
+  "targets": {
+    "production": "postgresql://ep-jolly-brook-auhdpay3-pooler.c-10.us-east-1.aws.neon.tech/neondb",
+    "pitr": "postgresql://ep-bitter-mouse-auxqzxr4-pooler.c-10.us-east-1.aws.neon.tech/neondb"
+  },
   "checks": {
-    "recoveryPointBeforeCreation": null,
+    "recoveryPointBeforeCreation": true,
+    "production": {
+      "extensions": [
+        "pgcrypto",
+        "plpgsql",
+        "vector"
+      ],
+      "corpusCounts": {
+        "legal_authorities": {
+          "present": true,
+          "count": 35863
+        },
+        "legal_authority_chunks": {
+          "present": true,
+          "count": 129160
+        },
+        "legal_authority_versions": {
+          "present": true,
+          "count": 6993
+        },
+        "legal_authority_citations": {
+          "present": true,
+          "count": 80842
+        }
+      },
+      "productCounts": {
+        "organizations": {
+          "present": true,
+          "count": 9
+        },
+        "matters": {
+          "present": true,
+          "count": 26
+        },
+        "documents": {
+          "present": true,
+          "count": 231
+        },
+        "criminal_cases": {
+          "present": false,
+          "count": null
+        },
+        "audit_events": {
+          "present": true,
+          "count": 890
+        }
+      },
+      "orphanCitations": {
+        "skipped": false,
+        "orphans": 0,
+        "fkCol": "from_authority_id"
+      },
+      "authoritySample": {
+        "sampleSize": 5000,
+        "idDigest": "ad94cc8beac329a0bc5da9fd8b81cd4d"
+      },
+      "citationSample": {
+        "sampleSize": 5000,
+        "idDigest": "39a80790b24778f435f710e26391c0ad"
+      }
+    },
+    "pitr": {
+      "extensions": [
+        "pgcrypto",
+        "plpgsql",
+        "vector"
+      ],
+      "corpusCounts": {
+        "legal_authorities": {
+          "present": true,
+          "count": 35863
+        },
+        "legal_authority_chunks": {
+          "present": true,
+          "count": 129160
+        },
+        "legal_authority_versions": {
+          "present": true,
+          "count": 6993
+        },
+        "legal_authority_citations": {
+          "present": true,
+          "count": 80842
+        }
+      },
+      "productCounts": {
+        "organizations": {
+          "present": true,
+          "count": 9
+        },
+        "matters": {
+          "present": true,
+          "count": 26
+        },
+        "documents": {
+          "present": true,
+          "count": 231
+        },
+        "criminal_cases": {
+          "present": false,
+          "count": null
+        },
+        "audit_events": {
+          "present": true,
+          "count": 890
+        }
+      },
+      "orphanCitations": {
+        "skipped": false,
+        "orphans": 0,
+        "fkCol": "from_authority_id"
+      },
+      "authoritySample": {
+        "sampleSize": 5000,
+        "idDigest": "ad94cc8beac329a0bc5da9fd8b81cd4d"
+      },
+      "citationSample": {
+        "sampleSize": 5000,
+        "idDigest": "39a80790b24778f435f710e26391c0ad"
+      }
+    },
+    "measuredQueryMs": 3840,
+    "corpusCountCompare": {
+      "legal_authorities": {
+        "production": {
+          "present": true,
+          "count": 35863
+        },
+        "pitr": {
+          "present": true,
+          "count": 35863
+        },
+        "match": true
+      },
+      "legal_authority_chunks": {
+        "production": {
+          "present": true,
+          "count": 129160
+        },
+        "pitr": {
+          "present": true,
+          "count": 129160
+        },
+        "match": true
+      },
+      "legal_authority_versions": {
+        "production": {
+          "present": true,
+          "count": 6993
+        },
+        "pitr": {
+          "present": true,
+          "count": 6993
+        },
+        "match": true
+      },
+      "legal_authority_citations": {
+        "production": {
+          "present": true,
+          "count": 80842
+        },
+        "pitr": {
+          "present": true,
+          "count": 80842
+        },
+        "match": true
+      }
+    },
+    "sampleDigestMatch": {
+      "legal_authorities": true,
+      "legal_authority_citations": true
+    },
     "rpoImplication": {
       "targetManagedRpoMinutes": 5,
       "neonHistoryRetentionHours": 6,
-      "note": "Six-hour Neon history retention means restores older than ~6h are unavailable."
-    },
-    "stagingProductionBranchInventory": {
-      "source": "packages/research/corpus/reports/wp05-staging-db-inventory.json",
-      "legal_authorities": 35863,
-      "legal_authority_chunks": 129160,
-      "legal_authority_versions": 6993,
-      "legal_authority_citations": 80842
+      "satisfiesTargetWhenRetentionHours": true,
+      "note": "Six-hour Neon history retention means restores older than ~6h are unavailable. Matches interim ops only if the incident is within the retention window; does not alone certify <=5m RPO without provider WAL evidence."
     }
   },
-  "blockers": [
-    {
-      "code": "PRODUCTION_DATABASE_URL_MISSING",
-      "action": "Export a read-only PRODUCTION_DATABASE_URL for the original Neon production branch (or reuse Fly DATABASE_URL via approved operator tooling)."
-    },
-    {
-      "code": "PITR_DATABASE_URL_MISSING",
-      "action": "Export PITR_DATABASE_URL for wp05-pitr-rehearsal-20261104 before auto-delete; do not create billable compute without approval if expired."
-    },
-    {
-      "code": "HISTORICAL_CHECKPOINT_UNVERIFIED",
-      "action": "From Neon Console copy exact PITR timestamp or parent LSN into PITR_HISTORICAL_TIMESTAMP / PITR_PARENT_LSN. Do not invent values."
-    }
-  ],
-  "result": "BLOCKED"
+  "blockers": [],
+  "result": "PASS_WITH_EVIDENCE"
 }

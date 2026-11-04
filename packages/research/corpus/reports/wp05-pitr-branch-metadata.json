@@ -1,0 +1,26 @@
+{
+  "classification": "NYAYAGRID_WP05_PITR_BRANCH_METADATA",
+  "retrievedAt": "2026-11-04T17:36:00.000Z",
+  "method": "GET https://console.neon.tech/api/v2/projects/odd-moon-90379900/branches/br-odd-haze-au3z053l",
+  "readOnly": true,
+  "neonCorpusWrites": 0,
+  "branch": {
+    "id": "br-odd-haze-au3z053l",
+    "parent_id": "br-delicate-cloud-au0md4t9",
+    "parent_lsn": "0/A866C288",
+    "parent_timestamp": "2026-11-04T16:20:37Z",
+    "created_at": "2026-11-04T16:21:13Z",
+    "current_state": "ready",
+    "name": "wp05-pitr-rehearsal-20261104",
+    "init_source": "parent-data"
+  },
+  "verification": {
+    "parent_id_matches_expected": true,
+    "expected_parent_id": "br-delicate-cloud-au0md4t9",
+    "checkpoint_predates_creation": true,
+    "delta_seconds": 36,
+    "basis": "Neon API parent_timestamp compared to created_at (authoritative metadata; not assumed from LSN alone)"
+  },
+  "pitr_metadata_certification": "PASS",
+  "full_ops_backup_01": "PARTIAL — metadata checkpoint verified; row-level PITR compare still requires PITR_DATABASE_URL + ops:pitr-verify"
+}

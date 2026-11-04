@@ -47,27 +47,34 @@ function redactUrl(url) {
 }
 
 async function withClient(url, fn) {
-  const pg = await import("pg");
-  const client = new pg.default.Client({
-    connectionString: url,
-    ssl: { rejectUnauthorized: false },
-    statement_timeout: 60_000,
-    query_timeout: 60_000,
+  const postgres = (await import("postgres")).default;
+  const sql = postgres(url, {
+    max: 1,
+    ssl: "require",
+    prepare: false,
+    connect_timeout: 30,
+    idle_timeout: 20,
   });
-  await client.connect();
+  const client = {
+    async query(text, params = []) {
+      const rows = await sql.unsafe(text, params);
+      return { rows: Array.from(rows) };
+    },
+  };
   try {
     await client.query("SET default_transaction_read_only = on");
-    await client.query("SET statement_timeout = '60s'");
+    await client.query("SET statement_timeout = '120s'");
     return await fn(client);
   } finally {
-    await client.end().catch(() => {});
+    await sql.end({ timeout: 5 }).catch(() => {});
   }
 }
 
 async function tableCounts(client, tables) {
   const out = {};
   for (const table of tables) {
-    const exists = await client.query(`SELECT to_regclass($1) AS reg`, [`public.${table}`]);
+    if (!/^[a-z_]+$/.test(table)) throw new Error(`invalid table ${table}`);
+    const exists = await client.query("SELECT to_regclass($1) AS reg", [`public.${table}`]);
     if (!exists.rows[0]?.reg) {
       out[table] = { present: false, count: null };
       continue;
@@ -91,7 +98,6 @@ async function orphanCitationCheck(client) {
   if (!exists.rows[0]?.c || !exists.rows[0]?.a) {
     return { skipped: true, reason: "tables_missing" };
   }
-  // Best-effort: citations referencing missing authorities (column names vary by migration).
   const cols = await client.query(
     `SELECT column_name FROM information_schema.columns
      WHERE table_schema='public' AND table_name='legal_authority_citations'`,
@@ -113,7 +119,8 @@ async function orphanCitationCheck(client) {
 }
 
 async function checksumSample(client, table) {
-  const exists = await client.query(`SELECT to_regclass($1) AS reg`, [`public.${table}`]);
+  if (!/^[a-z_]+$/.test(table)) throw new Error(`invalid table ${table}`);
+  const exists = await client.query("SELECT to_regclass($1) AS reg", [`public.${table}`]);
   if (!exists.rows[0]?.reg) return null;
   const idCol = await client.query(
     `SELECT column_name FROM information_schema.columns
