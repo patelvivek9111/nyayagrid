@@ -1,0 +1,61 @@
+{
+  "classification": "NYAYAGRID_WP05B_OPERATIONAL_RELEASE_CLOSURE",
+  "generatedAt": "2026-11-04T13:34:00.000Z",
+  "headBefore": "4634dc75a93a891ffa06761da0a6c984345ce2ad",
+  "branch": "feat/production-model-routing",
+  "result": "WP05_EXTERNAL_INFRASTRUCTURE_BLOCKED",
+  "hosting": {
+    "provider": "fly.io",
+    "stagingHost": "https://staging.nyayagrid.com",
+    "stagingApp": "nyayagrid-staging",
+    "registry": "registry.fly.io",
+    "deploymentMethod": "fly deploy --config fly.staging.toml",
+    "credentialsAvailable": {
+      "flyCli": false,
+      "flyApiToken": false,
+      "clerkStaging": false,
+      "neonApi": false,
+      "pagerDuty": false
+    },
+    "deploymentAuthorization": "BLOCKED \u2014 fly auth required",
+    "actualDeploymentThisSession": false
+  },
+  "stagingProbe": {
+    "artifact": "packages/research/corpus/reports/wp05b-staging-probe.json",
+    "live": 200,
+    "ready": 503,
+    "database": "ok",
+    "storage": "ok",
+    "redis": "error",
+    "gitSha": null,
+    "readyShape": "legacy_checks_only",
+    "verdict": "STAGING_HOST_DEGRADED_NOT_READY"
+  },
+  "backup": {
+    "localRestoreVerified": true,
+    "localFreshness": "BACKUP_FRESH",
+    "managedPitrVerified": false,
+    "restoreIntegrityVerifiedLocal": true
+  },
+  "monitoring": {
+    "monitoringImplemented": true,
+    "localAlertTransportVerified": true,
+    "alertDeliveredToOncall": false,
+    "oncallAcknowledged": false,
+    "failureRehearsalVerified": false
+  },
+  "deploymentGates": {
+    "imageBuilt": true,
+    "stagingDeployedThisSession": false,
+    "stagingE2ePassed": false,
+    "rollbackVerified": false,
+    "productionDeployed": false,
+    "productionReleaseApproved": false,
+    "imageTag": "nyayagrid-web:wp05b-4634dc7",
+    "imageId": "018fadd53ac1"
+  },
+  "neonWrites": 0,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "merged": false
+}

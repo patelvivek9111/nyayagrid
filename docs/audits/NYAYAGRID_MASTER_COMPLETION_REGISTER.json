@@ -646,22 +646,25 @@
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "WP-05: npm run ops:backup-rehearse local docker restore to nyayagrid_restore_test (never over live)",
-        "Integrity counts + dump sha256 + ops:backup-freshness (interim RPO 24h)",
-        "Managed PITR / Neon production restore NOT rehearsed this session",
-        "docs/BACKUP_RESTORE.md + docs/audits/WP05_FINAL_CLOSURE.md"
+        "WP-05 local docker restore PASS; freshness BACKUP_FRESH",
+        "WP-05B: managed PITR NOT executed \u2014 no Fly/Neon operator auth in session",
+        "docs/operations/WP05B_OPERATOR_ACTIONS.md Action 5",
+        "packages/research/corpus/reports/wp05b-operational-release-closure.json"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "a3ebd3c11b86699dcf1b49595cb0cf3e533b2660",
+      "lastVerifiedSha": "4634dc75a93a891ffa06761da0a6c984345ce2ad",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
+        "LOCAL_RESTORE_VERIFIED": true,
+        "MANAGED_PITR_VERIFIED": false,
+        "RESTORE_INTEGRITY_VERIFIED": true,
         "STAGING_TESTED": false,
         "PRODUCTION_VERIFIED": false
       },
       "rpo": "24h interim local; target <=5m managed PITR uncertified",
       "rto": "4h interim local; target <=1h managed uncertified",
-      "remediation": "Isolated managed Postgres PITR restore on authorized staging project; never overwrite Neon production branch"
+      "remediation": "Authorized Neon isolated restore branch rehearsal; never overwrite production corpus branch"
     },
     {
       "id": "OPS-MON-01",
@@ -673,16 +676,20 @@
       "severity": "P1",
       "releaseBlocker": true,
       "evidence": [
-        "WP-05: DEFAULT_ALERT_POLICIES in @nyayagrid/observability; ready/live HEALTHY|DEGRADED|UNAVAILABLE",
-        "ClamAV/OCR/corpus/env boundary signals on /api/health/ready",
-        "docs/operations/WP05_ALERTING.md \u2014 on-call destination EXTERNAL NOT WIRED",
-        "Failure-alert rehearsal on staging paging vendor NOT done"
+        "WP-05 DEFAULT_ALERT_POLICIES + ready status model",
+        "WP-05B packages/observability/src/alert-transport.test.ts local receiver PASS",
+        "No PagerDuty/Opsgenie credentials \u2014 live paging BLOCKED",
+        "docs/operations/WP05B_OPERATOR_ACTIONS.md Action 4"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "a3ebd3c11b86699dcf1b49595cb0cf3e533b2660",
+      "lastVerifiedSha": "4634dc75a93a891ffa06761da0a6c984345ce2ad",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
-        "LOCAL_TESTED": true,
+        "MONITORING_IMPLEMENTED": true,
+        "LOCAL_ALERT_TRANSPORT_VERIFIED": true,
+        "ALERT_DELIVERED": false,
+        "ONCALL_ACKNOWLEDGED": false,
+        "FAILURE_REHEARSAL_VERIFIED": false,
         "STAGING_TESTED": false,
         "PRODUCTION_VERIFIED": false
       },
@@ -698,18 +705,23 @@
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "WP-05: ops:deploy-preflight; .github/workflows/deploy-staging.yml manual approval gate (NO automatic prod)",
-        "Dockerfile + docs/DEPLOYMENT.md + WP05_OPS_RUNBOOK.md",
-        "STAGING_DEPLOYMENT_BLOCKED \u2014 no authorized host/registry push executed",
-        "PRODUCTION_DEPLOY=NO"
+        "WP-05B local immutable image nyayagrid-web:wp05b-4634dc7 (docker build from HEAD; not pushed to registry.fly.io)",
+        "WP-05B probe: https://staging.nyayagrid.com live=200 ready=503 redis=error",
+        "Fly CLI unauthenticated \u2014 cannot deploy/rollback this session",
+        "packages/research/corpus/reports/wp05b-staging-probe.json",
+        "docs/operations/WP05B_OPERATOR_ACTIONS.md Actions 1-3"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "a3ebd3c11b86699dcf1b49595cb0cf3e533b2660",
+      "lastVerifiedSha": "4634dc75a93a891ffa06761da0a6c984345ce2ad",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
-        "LOCAL_TESTED": true,
-        "STAGING_TESTED": false,
-        "PRODUCTION_VERIFIED": false
+        "IMAGE_BUILT": true,
+        "STAGING_HOST_REACHABLE": true,
+        "STAGING_DEPLOYED": false,
+        "STAGING_E2E_PASSED": false,
+        "ROLLBACK_VERIFIED": false,
+        "PRODUCTION_DEPLOYED": false,
+        "PRODUCTION_RELEASE_APPROVED": false
       },
       "remediation": "Authorized staging host secrets + image push; separate production approval"
     },
@@ -1106,19 +1118,19 @@
       "effort": "2-4 weeks",
       "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill",
       "status": "PARTIAL",
-      "result": "WP05_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
-      "evidenceArtifact": "docs/audits/WP05_FINAL_CLOSURE.md",
+      "result": "WP05_EXTERNAL_INFRASTRUCTURE_BLOCKED",
+      "evidenceArtifact": "packages/research/corpus/reports/wp05b-operational-release-closure.json",
       "verificationClasses": {
-        "BACKUP_ENGINEERING_IMPLEMENTED": true,
-        "BACKUP_LOCAL_TESTED": true,
+        "BACKUP_LOCAL_RESTORE_VERIFIED": true,
         "BACKUP_MANAGED_PITR_VERIFIED": false,
-        "MONITORING_ENGINEERING_IMPLEMENTED": true,
-        "MONITORING_ALERT_ROUTING_WIRED": false,
-        "DEPLOY_PREFLIGHT_IMPLEMENTED": true,
-        "STAGING_DEPLOYED": false,
+        "MONITORING_IMPLEMENTED": true,
+        "ALERT_DELIVERED_ONCALL": false,
+        "STAGING_HOST_REACHABLE": true,
+        "STAGING_READY_PASS": false,
+        "STAGING_DEPLOYED_THIS_SESSION": false,
         "PRODUCTION_DEPLOYED": false
       },
-      "note": "Engineering complete for backup rehearsal, alert policies, health status, deploy preflight + manual staging gate. Managed PITR, on-call vendor, and staging/prod host deploy remain external. WP-03E deferred; WP-04 external gates unchanged."
+      "note": "WP-05B: staging host exists but ready=503 (redis) and Fly auth missing; managed PITR and on-call delivery blocked. Keep WP-05 open. Do not start WP-06."
     },
     {
       "id": "WP-06",
