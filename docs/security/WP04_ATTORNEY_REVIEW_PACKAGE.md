@@ -14,13 +14,13 @@
 
 ## Change summary
 
-| Area | Content |
-| --- | --- |
-| Workspaces | Professional + Nyaya Prosecution; removed student/public surfaces |
-| AI limits | Draft work product; human review required; research not Westlaw/Lexis equivalent |
-| Prosecution | No guilt scores; no autonomous charging/Brady/filing |
-| Uploads | Size/MIME/archive/PDF integrity + malware fail-closed |
-| Privacy | Holds, export/deletion, subprocessors, no invented certifications |
+| Area        | Content                                                                          |
+| ----------- | -------------------------------------------------------------------------------- |
+| Workspaces  | Professional + Nyaya Prosecution; removed student/public surfaces                |
+| AI limits   | Draft work product; human review required; research not Westlaw/Lexis equivalent |
+| Prosecution | No guilt scores; no autonomous charging/Brady/filing                             |
+| Uploads     | Size/MIME/archive/PDF integrity + malware fail-closed                            |
+| Privacy     | Holds, export/deletion, subprocessors, no invented certifications                |
 
 ## Known legal questions for counsel
 

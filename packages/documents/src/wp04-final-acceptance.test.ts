@@ -448,10 +448,7 @@ describe.runIf(runDbTests && clamavLive)("WP-04 final acceptance (ClamAV + OCR h
       .select()
       .from(documentChunks)
       .where(
-        and(
-          eq(documentChunks.organizationId, ids.org!),
-          eq(documentChunks.documentId, documentId),
-        ),
+        and(eq(documentChunks.organizationId, ids.org!), eq(documentChunks.documentId, documentId)),
       )
       .limit(1);
     expect(chunk?.content ?? "").toContain("SYNTH OCR GOLD");

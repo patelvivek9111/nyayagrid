@@ -50,7 +50,9 @@ describe("WP-04 MFA acceptance matrix", () => {
 
   it("13 — client parameters cannot disable MFA policy", () => {
     expect(isClerkMfaRequired({ REQUIRE_CLERK_MFA: "1", clientDisableMfa: "1" })).toBe(true);
-    expect(isClerkMfaRequired({ REQUIRE_CLERK_MFA: "1", REQUIRE_CLERK_MFA_CLIENT: "0" })).toBe(true);
+    expect(isClerkMfaRequired({ REQUIRE_CLERK_MFA: "1", REQUIRE_CLERK_MFA_CLIENT: "0" })).toBe(
+      true,
+    );
   });
 
   it("14 — missing Clerk env: policy off by default (fail-safe for local/dev)", () => {

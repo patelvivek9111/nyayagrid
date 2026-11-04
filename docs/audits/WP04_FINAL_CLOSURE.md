@@ -6,12 +6,12 @@
 
 ## Engineering complete (local)
 
-| Gate | Engineering | Local live | Staging | Production | Attorney |
-| --- | --- | --- | --- | --- | --- |
-| PROF-DOC-02 OCR | YES | YES (HTTP harness + pipeline) | NO | NO | n/a |
-| SEC-MAL-01 ClamAV | YES | YES (docker clamd + pipeline EICAR) | NO | NO | n/a |
-| SEC-AUTH-01 Clerk MFA | YES (server policy) | Unit/integration matrix | NO | NO | n/a |
-| SEC-LEGAL-01 Terms/Privacy | YES (drafts + API + audit) | Persistence tests | NO | NO | **NO** |
+| Gate                       | Engineering                | Local live                          | Staging | Production | Attorney |
+| -------------------------- | -------------------------- | ----------------------------------- | ------- | ---------- | -------- |
+| PROF-DOC-02 OCR            | YES                        | YES (HTTP harness + pipeline)       | NO      | NO         | n/a      |
+| SEC-MAL-01 ClamAV          | YES                        | YES (docker clamd + pipeline EICAR) | NO      | NO         | n/a      |
+| SEC-AUTH-01 Clerk MFA      | YES (server policy)        | Unit/integration matrix             | NO      | NO         | n/a      |
+| SEC-LEGAL-01 Terms/Privacy | YES (drafts + API + audit) | Persistence tests                   | NO      | NO         | **NO**   |
 
 ## Evidence artifacts
 
