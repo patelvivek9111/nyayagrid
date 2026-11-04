@@ -654,7 +654,7 @@
         "docs/operations/WP05_MANAGED_PITR_OPERATOR_ACTION.md"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending-wp05-final-commit",
+      "lastVerifiedSha": "f241d83bd7348db83d2f38ce502fe65b8ee7671b",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": false,
@@ -697,7 +697,7 @@
         "Human inbox acknowledgment NOT verified this session"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending-wp05-final-commit",
+      "lastVerifiedSha": "f241d83bd7348db83d2f38ce502fe65b8ee7671b",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": "smtp_accepted_ack_pending",
