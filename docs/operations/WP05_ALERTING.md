@@ -51,4 +51,3 @@ Use `@nyayagrid/observability` `createLogger` / `redactLogText`.
 - **PASS (scoped):** SMTP transport, inbox delivery, operator acknowledgment, recovery notification
 - Evidence: `packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json`
 - **Not claimed:** production on-call escalation, automated ack integration, other alert policies, durable probe→SMTP worker
-
