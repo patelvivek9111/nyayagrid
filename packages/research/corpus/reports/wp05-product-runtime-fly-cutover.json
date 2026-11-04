@@ -1,0 +1,31 @@
+{
+  "classification": "NYAYAGRID_WP05_PRODUCT_RUNTIME_SECRET_ROTATION",
+  "step": "fly_cutover",
+  "startedAt": "2026-11-04T19:37:51.688Z",
+  "completedAt": "2026-11-04T19:37:56.098Z",
+  "app": "nyayagrid-staging",
+  "image": "registry.fly.io/nyayagrid-staging:deployment-01M6KTCX6H5ZXPHGRV8SVFD0BF",
+  "stagedSecret": true,
+  "deployOk": true,
+  "deployTail": [
+    "> Updated machine config for 811d3e3f522648",
+    "✔ Machine 811d3e3f522648 is now in a good state",
+    "> Clearing lease for 811d3e3f522648",
+    "✔ Cleared lease for 811d3e3f522648",
+    "Visit your newly deployed app at https://nyayagrid-staging.fly.dev/",
+    "==> Verifying app config",
+    "--> Verified app config",
+    "==> Building image",
+    "Searching for image 'registry.fly.io/nyayagrid-staging:deployment-01M6KTCX6H5ZXPHGRV8SVFD0BF' remotely...",
+    "image found: img_nk3yvlrw60xovome",
+    "Checking DNS configuration for nyayagrid-staging.fly.dev",
+    "✓ DNS configuration verified"
+  ],
+  "databaseUrlMeta": {
+    "user": "nyaya_product_runtime_v3",
+    "host": "ep-lively-lake-auyeia5m-pooler.c-10.us-east-1.aws.neon.tech",
+    "digestPrefix": "463890e4843b13ba"
+  },
+  "neonCorpusWrites": 0,
+  "result": "FLY_CUTOVER_APPLIED"
+}

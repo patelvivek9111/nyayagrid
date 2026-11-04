@@ -1,0 +1,36 @@
+{
+  "classification": "NYAYAGRID_WP05_PRODUCT_RUNTIME_SECRET_ROTATION",
+  "step": "post_cutover_verify",
+  "completedAt": "2026-11-04T19:39:30.000Z",
+  "localRuntime": {
+    "user": "nyaya_product_runtime_v3",
+    "host": "ep-lively-lake-auyeia5m-pooler.c-10.us-east-1.aws.neon.tech",
+    "digestPrefix": "463890e4843b13ba",
+    "currentUser": "nyaya_product_runtime_v3",
+    "database": "neondb",
+    "orgCount": 9,
+    "corpusRegclass": null,
+    "corpusWriteBlocked": true
+  },
+  "flyIdentity": {
+    "user": "nyaya_product_runtime_v3",
+    "host": "ep-lively-lake-auyeia5m-pooler.c-10.us-east-1.aws.neon.tech",
+    "digestPrefix": "463890e4843b13ba"
+  },
+  "readiness": {
+    "httpStatus": 200,
+    "ok": true,
+    "status": "HEALTHY",
+    "database": "ok",
+    "redis": "ok",
+    "storage": "ok",
+    "clamav": "ok",
+    "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38"
+  },
+  "corpusBranch": {
+    "id": "br-delicate-cloud-au0md4t9",
+    "authoritiesIntact": 35863
+  },
+  "neonCorpusWrites": 0,
+  "result": "PASS"
+}

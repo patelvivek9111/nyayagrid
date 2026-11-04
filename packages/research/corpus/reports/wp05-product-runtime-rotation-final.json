@@ -1,0 +1,57 @@
+{
+  "classification": "NYAYAGRID_WP05_PRODUCT_RUNTIME_SECRET_ROTATION",
+  "completedAt": "2026-11-04T19:41:30.000Z",
+  "scope": "staging_only",
+  "productionChanges": false,
+  "migrations": false,
+  "neonCorpusWrites": 0,
+  "newPaidInfrastructure": false,
+  "rotation": {
+    "strategy": "fresh_least_privilege_replacement_role",
+    "activeRole": "nyaya_product_runtime_v3",
+    "productBranch": "br-fancy-king-auaii21k",
+    "productEndpoint": "ep-lively-lake-auyeia5m",
+    "corpusBranchPreserved": "br-delicate-cloud-au0md4t9",
+    "flyApp": "nyayagrid-staging",
+    "flyImageUnchanged": "deployment-01M6KTCX6H5ZXPHGRV8SVFD0BF",
+    "databaseUrlDigestPrefix": "463890e4843b13ba",
+    "cutoverMethod": "fly secrets import --stage + same-image deploy"
+  },
+  "exposedCredentialHandling": {
+    "originalExposedRole": "nyaya_product_runtime",
+    "intermediateEchoedRole": "nyaya_product_runtime_v2",
+    "bothDeleted": true,
+    "authInvalidated": true,
+    "logRedaction": {
+      "segment_006": "passwords replaced in-place with [REDACTED_STAGING_DB_PASSWORD]; audit narrative retained",
+      "tempSecretFiles": "overwritten_and_deleted"
+    }
+  },
+  "verification": {
+    "flyReadiness": "HEALTHY",
+    "database": "ok",
+    "redis": "ok",
+    "storage": "ok",
+    "clamav": "ok",
+    "productOrgs": 9,
+    "corpusTablesVisibleToRuntime": false,
+    "corpusAuthoritiesIntact": 35863
+  },
+  "STATUS": "PASS",
+  "ROTATION_RESULT": "REPLACED_WITH_V3_AND_CUTOVER",
+  "EXPOSED_CREDENTIAL_INVALIDATED": true,
+  "FLY_READINESS": "HEALTHY",
+  "CORPUS_ACCESS": "RUNTIME_CANNOT_SEE_OR_MODIFY_CORPUS_TABLES",
+  "CI": {
+    "priorKnownHeadSha": "c296014046d3740a39d70d052d409d17b01c9a52",
+    "priorKnown": "SUCCESS_run_41892959875",
+    "rotationEvidenceCommitted": true,
+    "note": "Sanitized rotation evidence committed on feat/production-model-routing; CI re-checked at pushed SHA"
+  },
+  "REMAINING_BLOCKERS": [
+    "Restrict access to any unretracted operator session logs that may retain an intermediate v2 URL echo (role deleted; passwords redacted in segment_006)"
+  ],
+  "evidenceSanitized": true,
+  "secretsPresentInEvidence": false
+}
+

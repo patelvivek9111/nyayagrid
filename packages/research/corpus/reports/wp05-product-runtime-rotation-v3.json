@@ -1,0 +1,27 @@
+{
+  "classification": "NYAYAGRID_WP05_PRODUCT_RUNTIME_SECRET_ROTATION",
+  "step": "recreate_v3_after_probe_echo",
+  "startedAt": "2026-11-04T19:36:56.228Z",
+  "completedAt": "2026-11-04T19:37:36.894Z",
+  "newRole": "nyaya_product_runtime_v3",
+  "rolesToRevokeAfterCutover": [
+    "nyaya_product_runtime",
+    "nyaya_product_runtime_v2"
+  ],
+  "productBranch": "br-fancy-king-auaii21k",
+  "corpusBranch": "br-delicate-cloud-au0md4t9",
+  "verification": {
+    "currentUser": "nyaya_product_runtime_v3",
+    "orgCount": 9,
+    "corpusTablesOnProductBranch": [],
+    "newRoleCanSeeCorpusTables": false,
+    "corpusAuthoritiesIntact": 35863
+  },
+  "targetsRedacted": {
+    "productRuntime": "postgresql://ep-lively-lake-auyeia5m-pooler.c-10.us-east-1.aws.neon.tech/neondb",
+    "digestPrefix": "463890e4843b13ba"
+  },
+  "neonCorpusWrites": 0,
+  "result": "READY_FOR_FLY_CUTOVER",
+  "secretMaterial": "ephemeral_temp_file_wiped"
+}

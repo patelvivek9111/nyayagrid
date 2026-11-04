@@ -1,0 +1,21 @@
+{
+  "classification": "NYAYAGRID_WP05_PRODUCT_RUNTIME_SECRET_ROTATION",
+  "step": "revoke_exposed_roles",
+  "completedAt": "2026-11-04T19:40:45.000Z",
+  "method": "neonctl roles delete (after SQL REASSIGN blocked by permissions)",
+  "deletedRoles": [
+    "nyaya_product_runtime",
+    "nyaya_product_runtime_v2"
+  ],
+  "remainingProductRuntimeRoles": [
+    "nyaya_product_runtime_v3"
+  ],
+  "authProbe": {
+    "nyaya_product_runtime": "FAIL_ROLE_ABSENT",
+    "nyaya_product_runtime_v2": "FAIL_ROLE_ABSENT",
+    "nyaya_product_runtime_v3": "OK"
+  },
+  "corpusAuthoritiesIntact": 35863,
+  "neonCorpusWrites": 0,
+  "result": "EXPOSED_CREDENTIALS_INVALIDATED"
+}
