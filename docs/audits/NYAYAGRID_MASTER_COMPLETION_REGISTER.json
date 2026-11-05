@@ -1,9 +1,9 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-03T22:57:29.530Z",
-  "head": "b428b8766f197f3ab64a13b8950a04c8d005a791",
-  "branch": "feat/production-model-routing",
+  "generatedAt": "2026-11-05T04:15:00.000Z",
+  "head": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
+  "branch": "wp05/prod-ops-preflight",
   "remoteCi": {
     "run": "41689403691",
     "conclusion": "SUCCESS"
@@ -706,33 +706,37 @@
       "releaseBlocker": true,
       "evidence": [
         "WP-05 local docker restore PASS; freshness BACKUP_FRESH",
+        "Neon recovery policy + product/corpus isolation docs/scripts complete (WP05_NEON_RECOVERY_POLICY.md; product-corpus-isolation.ts; wp05-product-branch-isolation.json)",
         "Neon API parent_timestamp=2026-11-04T16:20:37Z parent_lsn=0/A866C288 created_at=2026-11-04T16:21:13Z (36s earlier) — wp05-pitr-branch-metadata.json",
-        "ops:pitr-verify PASS_WITH_EVIDENCE: four legal_* tables match (35863/80842/129160/6993); sample digests match; orphans=0; measuredQueryMs=3840",
-        "Staging physical isolation COMPLETE: product branch wp05-product-staging; corpus remains on production branch (wp05-product-branch-isolation.json)",
+        "Staging managed PITR HISTORICAL PASS (do not re-run unless regression): ops:pitr-verify PASS_WITH_EVIDENCE four legal_* tables match (35863/80842/129160/6993); sample digests match; orphans=0; measuredQueryMs=3840",
+        "Staging physical isolation COMPLETE: product branch wp05-product-staging; corpus remains on production branch",
         "packages/research/corpus/reports/wp05-pitr-verification.json",
-        "docs/operations/WP05_NEON_RECOVERY_POLICY.md (retention ~6h Free; do not re-run PITR without regression)",
-        "docs/operations/WP05_STORAGE_REDIS_RECOVERY.md (storage/Redis DR documented; prod NOT VERIFIED)"
+        "docs/operations/WP05_NEON_RECOVERY_POLICY.md (retention ~6h Free)",
+        "docs/operations/WP05_STORAGE_REDIS_RECOVERY.md (storage/Redis DR documented; production restore NOT VERIFIED)"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "24c6584a28f5805ca2430879b02b27c1863a0c7a",
+      "lastVerifiedSha": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
+      "STAGING_PITR_SCOPE": "HISTORICAL_VERIFIED_DO_NOT_RE_RUN",
       "PRODUCTION_VERIFIED": false,
+      "PRODUCTION_RESTORE_VERIFIED": false,
       "EVIDENCE": "wp05-pitr-verification.json; wp05-product-branch-isolation.json; WP05_NEON_RECOVERY_POLICY.md",
       "BLOCKERS": [
-        "Production managed restore NOT VERIFIED (no production Fly/Neon app)"
+        "Production managed Postgres restore NOT VERIFIED (no approved production Fly/Neon app)"
       ],
-      "HUMAN_APPROVAL": "Production still separately gated; staging isolation accepted; staging PITR treated HISTORICAL_VERIFIED unless regression",
-      "NEXT_ACTION": "Keep corpus branch immutable; upgrade Neon retention before relying on >6h PITR; production restore only after approved prod env",
+      "HUMAN_APPROVAL": "Staging PITR + isolation accepted as HISTORICAL evidence only; production restore remains separately gated",
+      "NEXT_ACTION": "Do not re-run staging PITR; keep corpus branch immutable; production restore only after approved prod env and explicit ops rehearsal",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "LOCAL_TESTED": true,
         "LOCAL_RESTORE_VERIFIED": true,
-        "MANAGED_PITR_VERIFIED": true,
-        "RESTORE_INTEGRITY_VERIFIED": true,
-        "STAGING_TESTED": true,
+        "MANAGED_PITR_VERIFIED": "HISTORICAL_STAGING_ONLY",
+        "RESTORE_INTEGRITY_VERIFIED": "HISTORICAL_STAGING_ONLY",
+        "STAGING_TESTED": "HISTORICAL_PITR_PASS",
         "PRODUCTION_VERIFIED": false,
+        "PRODUCTION_RESTORE_VERIFIED": false,
         "RECOVERY_POLICY_DOCUMENTED": true
       },
       "rpo": "Historical checkpoint at parent_timestamp; Neon history retention ~6h; interim local 24h still documented",
@@ -750,30 +754,34 @@
       "releaseBlocker": true,
       "evidence": [
         "WP-05 DEFAULT_ALERT_POLICIES + continuous-monitor evaluator (firing/resolved/dedupe/cooldown)",
-        "GitHub Actions workflow staging-continuous-monitor.yml cron */5 (app-independent scheduler)",
+        "packages/observability WP-05 monitoring unit tests 18/18 PASS (continuous-monitor, ops-health, alert-delivery, release-identity, alert-transport)",
+        "GitHub Actions workflow staging-continuous-monitor.yml (cron */5) on branch wp05/activate-staging-monitor @ 82b64206556e3b1c978db079b8ee6b29bf719d1e targeting main — NOT on main (404); scheduled runs NOT YET",
         "Live monitor cycle PROBE_HEALTHY against staging.nyayagrid.com (wp05-continuous-monitor-last-cycle.json)",
         "Policy catalog wp05-alert-policy-catalog.json (unobservable signals explicitly NOT_FABRICATED)",
-        "Staging SMTP synthetic ready-probe-failing firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z; Gmail human ack verified",
+        "Staging SMTP synthetic ready-probe-failing HISTORICAL: firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z; Gmail human ack verified",
         "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json",
         "docs/operations/WP05_ALERTING.md + WP05_INCIDENT_RUNBOOKS.md escalation matrix"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "aa40f43d54a56abb0bf4f570c8ae121262c4f0f7",
+      "lastVerifiedSha": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
+      "STAGING_SMTP_ACK_SCOPE": "HISTORICAL_SYNTHETIC_READY_PROBE",
       "PRODUCTION_VERIFIED": false,
-      "EVIDENCE": "wp05-monitoring-human-ack-verified.json; wp05-continuous-monitor-last-cycle.json; wp05-alert-policy-catalog.json; .github/workflows/staging-continuous-monitor.yml",
+      "MONITORING_UNIT_TESTS": "18/18_PASS",
+      "EVIDENCE": "wp05-monitoring-human-ack-verified.json; wp05-continuous-monitor-last-cycle.json; wp05-alert-policy-catalog.json; staging-continuous-monitor.yml on wp05/activate-staging-monitor",
       "BLOCKERS": [
-        "Production on-call escalation not tested",
+        "Production on-call escalation NOT VERIFIED",
         "Automated acknowledgment integration not tested",
         "Request-metric policies (5xx/AI/worker heartbeat/TLS) lack telemetry — not fabricated",
-        "GitHub Actions schedule for staging-continuous-monitor.yml only runs after the workflow exists on the repository default branch (PR #1 open; merge approval required)",
-        "Post-merge: observe >=2 scheduled runs + real SMTP firing/dedupe/recovery before claiming continuous notification coverage"
+        "staging-continuous-monitor.yml not on default branch main — merge wp05/activate-staging-monitor + operator approval required before cron runs",
+        "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false — post-merge observe >=2 scheduled runs + SMTP firing/dedupe/recovery"
       ],
-      "HUMAN_APPROVAL": "Staging ready-probe Gmail ack recorded; production on-call still gated; PR #1 merge approval required for default-branch scheduler",
-      "NEXT_ACTION": "Approve/merge reviewed PR #1 SHA onto main; confirm Actions secrets SMTP_* EMAIL_FROM OPS_ALERT_TO remain set; observe scheduled runs + SMTP delivery; do not claim prod from staging SMTP ack",
+      "HUMAN_APPROVAL": "Staging ready-probe Gmail ack HISTORICAL only; production on-call gated; merge monitor PR to main before claiming continuous scheduler",
+      "NEXT_ACTION": "Merge wp05/activate-staging-monitor (82b6420) to main with operator approval; verify repo secrets SMTP_HOST SMTP_PORT SMTP_USERNAME SMTP_PASSWORD EMAIL_FROM OPS_ALERT_TO (configured 2026-11-05T03:21Z); observe scheduled runs; do not claim production from staging SMTP ack",
       "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED": true,
+      "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED_AT": "2026-11-05T03:21:00Z",
       "GITHUB_ACTIONS_SMTP_SECRET_NAMES": [
         "SMTP_HOST",
         "SMTP_PORT",
@@ -782,6 +790,9 @@
         "EMAIL_FROM",
         "OPS_ALERT_TO"
       ],
+      "MONITOR_WORKFLOW_BRANCH": "wp05/activate-staging-monitor",
+      "MONITOR_WORKFLOW_HEAD": "82b64206556e3b1c978db079b8ee6b29bf719d1e",
+      "MONITOR_WORKFLOW_ON_MAIN": false,
       "DEFAULT_BRANCH_SCHEDULER_ACTIVE": false,
       "REAL_SCHEDULED_EXECUTIONS_OBSERVED": false,
       "acceptance": {
@@ -815,29 +826,38 @@
       "evidence": [
         "Staging deploy add3af38 with --build-arg GIT_SHA + --skip-release-command → image deployment-01M6KTCX6H5ZXPHGRV8SVFD0BF (v87)",
         "ready/live gitSha=add3af38a4c00c6cec631b70981a1c855b660f38; db/redis/storage/clamav HEALTHY",
-        "Identity rollback test: v87→v88 previous image gitSha=null → v89 restore baked image gitSha restored (wp05-staging-identity-rollback.json)",
-        "PRODUCTION Fly app NOT created; PRODUCTION_DEPLOYED=false",
+        "Staging identity rollback HISTORICAL PASS: v87→v88 previous image gitSha=null → v89 restore baked image gitSha restored (wp05-staging-identity-rollback.json)",
+        "PRODUCTION Fly app NOT created; PRODUCTION_DEPLOYED=NO",
         "GitHub release protection workflows: deploy-staging.yml + deploy-production-gate.yml (approval-only; never deploys)",
-        "docs/operations/WP05_GITHUB_RELEASE_PROTECTION.md; WP05_AUDIT_SECRETS_PROVENANCE.md; WP05_CARRY_FORWARD_GATES.md",
-        "ops:prod-ops-preflight → WP05_FIXABLE_NOW_ENGINEERING_COMPLETE_PRODUCTION_NOT_VERIFIED",
+        "docs/operations/WP05_GITHUB_RELEASE_PROTECTION.md; WP05_AUDIT_SECRETS_PROVENANCE.md; WP05_CARRY_FORWARD_GATES.md; WP05_OPS_RUNBOOK.md",
+        "ops:prod-ops-preflight scripts + gate workflows + runbooks → WP05_FIXABLE_NOW_ENGINEERING_COMPLETE",
         "env-boundaries + deploy-preflight block APP_ENV=production without PRODUCTION_DEPLOY_APPROVED",
-        "wp05/prod-ops-preflight commit 0abfa92c5290765270dedc6ee9d84d82a915a0d5 FIXABLE_NOW engineering"
+        "wp05/prod-ops-preflight @ b1e9c4db17a547d4fe6a79761a1e0e89aea30b37 FIXABLE_NOW prod-ops engineering complete"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "lastVerifiedSha": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
       "PRODUCTION_VERIFIED": false,
       "EVIDENCE": "wp05-staging-identity-rollback.json; staging ready HEALTHY with baked gitSha; WP05_INCIDENT_RUNBOOKS.md; wp05-production-operations-certification.json; wp05-prod-ops-preflight.json",
       "BLOCKERS": [
+        "PRODUCTION_DEPLOYED=NO — no production Fly app",
+        "Carry-forward: WP-03E corpus credential/live cert; WP-04 OCR/ClamAV/Clerk MFA staging+prod; attorney Terms/Privacy; critical security findings; production deploy authorization",
         "Clerk-authenticated Professional/Prosecution E2E blocked on staging test identities (security negatives PASS)",
-        "WP-03E/WP-04 legal-security gates still open before production (carry-forward)",
-        "PRODUCTION_DEPLOYED=false — no production Fly app",
         "GitHub Environment required reviewers must be configured in GitHub UI (human)"
       ],
-      "HUMAN_APPROVAL": "Separate approval required for production Fly app; Clerk E2E test users; attorney legal review; GitHub Environment reviewers",
-      "NEXT_ACTION": "Configure GitHub Environment reviewers; provision Clerk staging test identities; keep production Fly app uncreated until WP-03E/WP-04 gates close",
+      "HUMAN_APPROVAL": "Separate approval required for production Fly app; Clerk E2E test users; attorney legal review; GitHub Environment reviewers; WP-03E/WP-04 gates",
+      "NEXT_ACTION": "Keep production Fly app uncreated; configure GitHub Environment reviewers; close carry-forward gates before production deploy auth",
+      "carryForward": [
+        "WP-03E",
+        "WP-04 OCR",
+        "WP-04 ClamAV",
+        "WP-04 Clerk MFA",
+        "Attorney Terms/Privacy",
+        "Critical security findings",
+        "Production deploy auth"
+      ],
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "IMAGE_BUILT": true,
@@ -852,8 +872,8 @@
         "GITHUB_ENVIRONMENT_REVIEWERS_CONFIGURED": false,
         "PROD_OPS_PREFLIGHT_ENGINEERING": true
       },
-      "remediation": "Production remains gated; staging identity durable after image rollback/restore; FIXABLE_NOW ops engineering complete",
-      "lastVerifiedShaEngineering": "0abfa92c5290765270dedc6ee9d84d82a915a0d5"
+      "remediation": "Production remains gated; staging identity rollback HISTORICAL PASS; FIXABLE_NOW prod-ops preflight/gate/runbook engineering complete",
+      "lastVerifiedShaEngineering": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37"
     },
     {
       "id": "RM-PG-01",
@@ -1142,9 +1162,9 @@
     "SEC-AUTH-01 Clerk MFA production verification",
     "SEC-MAL-01 ClamAV production verification",
     "SEC-LEGAL-01 Attorney Terms/Privacy",
-    "OPS-BACKUP-01 staging PITR HISTORICAL PASS_WITH_EVIDENCE; production restore NOT VERIFIED",
-    "OPS-MON-01 staging SMTP ack + continuous evaluator shipped; GH schedule needs default-branch enablement; production on-call open",
-    "OPS-DEP-01 No production deployment (staging identity/rollback verified; FIXABLE_NOW prod-ops engineering complete)",
+    "OPS-BACKUP-01 engineering complete; staging PITR HISTORICAL PASS (do not re-run); production restore NOT VERIFIED",
+    "OPS-MON-01 18/18 monitoring tests + SMTP repo secrets configured 2026-11-05T03:21Z; workflow on wp05/activate-staging-monitor not main; scheduled runs pending; production on-call NOT VERIFIED",
+    "OPS-DEP-01 PRODUCTION_DEPLOYED=NO; staging identity rollback HISTORICAL PASS; FIXABLE_NOW prod-ops engineering complete; WP-03E/WP-04/attorney/security carry-forward",
     "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — WP-01 scorer certified)"
   ],
   "dependencyOrderedPlan": [
@@ -1276,22 +1296,27 @@
       "result": "WP05_FIXABLE_NOW_ENGINEERING_COMPLETE_PRODUCTION_NOT_VERIFIED",
       "evidenceArtifact": "packages/research/corpus/reports/wp05-prod-ops-preflight.json",
       "verificationClasses": {
+        "BACKUP_ENGINEERING_COMPLETE": true,
         "BACKUP_LOCAL_RESTORE_VERIFIED": true,
-        "BACKUP_MANAGED_PITR_VERIFIED": true,
+        "BACKUP_MANAGED_PITR_VERIFIED": "HISTORICAL_STAGING_ONLY",
         "BACKUP_PRODUCTION_VERIFIED": false,
         "MONITORING_IMPLEMENTED": true,
+        "MONITORING_UNIT_TESTS_18_18": true,
+        "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED": true,
+        "MONITOR_WORKFLOW_ON_MAIN": false,
+        "REAL_SCHEDULED_MONITOR_RUNS": false,
         "ALERT_DELIVERED_ONCALL": true,
-        "ALERT_ONCALL_SCOPE": "staging_synthetic_ready_probe_gmail_manual_only",
+        "ALERT_ONCALL_SCOPE": "staging_synthetic_ready_probe_gmail_historical_only",
         "PRODUCTION_ONCALL_ESCALATION_TESTED": false,
         "STAGING_HOST_REACHABLE": true,
         "STAGING_READY_PASS": true,
         "STAGING_DEPLOYED": true,
-        "STAGING_IDENTITY_ROLLBACK_VERIFIED": true,
+        "STAGING_IDENTITY_ROLLBACK_VERIFIED": "HISTORICAL_PASS",
         "GITHUB_RELEASE_PROTECTION_ENGINEERING": true,
         "PROD_OPS_PREFLIGHT_ENGINEERING": true,
         "PRODUCTION_DEPLOYED": false
       },
-      "note": "FIXABLE_NOW production-ops engineering complete on wp05/prod-ops-preflight. Staging PITR/isolation/SMTP ack/identity rollback historically verified. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production.",
+      "note": "WP-05 NOT fully closed — external gates pending. FIXABLE_NOW prod-ops engineering complete on wp05/prod-ops-preflight @ b1e9c4db. Staging PITR, isolation, SMTP human ack, and identity rollback are HISTORICAL evidence (do not re-run PITR). Repo GitHub Actions SMTP secret names configured 2026-11-05T03:21Z; continuous monitor workflow lives on wp05/activate-staging-monitor (82b6420) until merged to main — scheduled runs not yet. PRODUCTION_DEPLOYED=NO. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production.",
       "carryForward": [
         "WP-03E legal research gates",
         "WP-04 OCR/load",
@@ -1301,7 +1326,7 @@
         "Critical security findings",
         "Production deploy auth"
       ],
-      "fixCommit": "0abfa92c5290765270dedc6ee9d84d82a915a0d5"
+      "fixCommit": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37"
     },
     {
       "id": "WP-06",
