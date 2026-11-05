@@ -1,8 +1,12 @@
 -- Prosecution case-scoped graph (PROS-GRAPH-01).
--- Separate from matter graph_nodes/edges to preserve criminal-case isolation.
--- Reverse with 0026_prosecution_case_graph.down.sql.
+-- Upgrades stub tables created in 0018 (node_type/ref_id, from_ref/to_ref)
+-- to reviewable node/edge schema. Stub rows are discarded (never productized).
+-- Reverse with 0026_prosecution_case_graph.down.sql (restores 0018 stub shape).
 
-CREATE TABLE IF NOT EXISTS "prosecution_graph_nodes" (
+DROP TABLE IF EXISTS "prosecution_graph_edges";
+DROP TABLE IF EXISTS "prosecution_graph_nodes";
+
+CREATE TABLE "prosecution_graph_nodes" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   "organization_id" uuid NOT NULL,
   "criminal_case_id" uuid NOT NULL,
@@ -31,16 +35,16 @@ CREATE TABLE IF NOT EXISTS "prosecution_graph_nodes" (
   CONSTRAINT "prosecution_graph_nodes_status_chk" CHECK ("status" IN ('proposed','approved','rejected'))
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS "prosecution_graph_nodes_canonical_uidx"
+CREATE UNIQUE INDEX "prosecution_graph_nodes_canonical_uidx"
   ON "prosecution_graph_nodes" ("criminal_case_id", "canonical_entity_type", "canonical_entity_id");
-CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_case_idx"
+CREATE INDEX "prosecution_graph_nodes_case_idx"
   ON "prosecution_graph_nodes" ("criminal_case_id");
-CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_org_idx"
+CREATE INDEX "prosecution_graph_nodes_org_idx"
   ON "prosecution_graph_nodes" ("organization_id");
-CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_kind_idx"
+CREATE INDEX "prosecution_graph_nodes_kind_idx"
   ON "prosecution_graph_nodes" ("criminal_case_id", "node_kind");
 
-CREATE TABLE IF NOT EXISTS "prosecution_graph_edges" (
+CREATE TABLE "prosecution_graph_edges" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   "organization_id" uuid NOT NULL,
   "criminal_case_id" uuid NOT NULL,
@@ -76,13 +80,13 @@ CREATE TABLE IF NOT EXISTS "prosecution_graph_edges" (
   )
 );
 
-CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_case_idx"
+CREATE INDEX "prosecution_graph_edges_case_idx"
   ON "prosecution_graph_edges" ("criminal_case_id");
-CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_org_idx"
+CREATE INDEX "prosecution_graph_edges_org_idx"
   ON "prosecution_graph_edges" ("organization_id");
-CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_from_idx"
+CREATE INDEX "prosecution_graph_edges_from_idx"
   ON "prosecution_graph_edges" ("from_node_id");
-CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_to_idx"
+CREATE INDEX "prosecution_graph_edges_to_idx"
   ON "prosecution_graph_edges" ("to_node_id");
-CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_status_idx"
+CREATE INDEX "prosecution_graph_edges_status_idx"
   ON "prosecution_graph_edges" ("criminal_case_id", "status");
