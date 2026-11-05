@@ -585,6 +585,8 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
         matterId,
         question:
           "Given our delivery schedule dispute, what standard governs a preliminary injunction under Synthetic Jurisdiction Code § 100?",
+        // Keep this suite's fixtures even when a seeded local corpus is present.
+        filters: { sourceProvider: SYNTHETIC_SOURCE_PROVIDER },
         ai: new MockAIProvider(),
         embeddings: new MockEmbeddingProvider(),
         searchOptions: syntheticSearchOptions,
