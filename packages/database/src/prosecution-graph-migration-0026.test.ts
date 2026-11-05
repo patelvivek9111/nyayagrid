@@ -19,13 +19,17 @@ describe("0026 prosecution graph migration contract", () => {
   it("archives 0018 tables before replacing stub schema", () => {
     expect(forward).toContain("prosecution_graph_nodes_0018_archive");
     expect(forward).toContain("prosecution_graph_edges_0018_archive");
-    expect(forward).toMatch(/CREATE TABLE .*prosecution_graph_nodes_0018_archive/s);
+    expect(forward.includes('CREATE TABLE "prosecution_graph_nodes_0018_archive"')).toBe(true);
   });
 
   it("backfills migrated stubs as proposed projections only", () => {
     expect(forward).toContain("'projection'");
     expect(forward).toContain("'proposed'");
-    expect(forward).not.toMatch(/INSERT INTO "prosecution_graph_nodes"[\s\S]*'approved'/);
+    const insertIdx = forward.indexOf('INSERT INTO "prosecution_graph_nodes"');
+    expect(insertIdx).toBeGreaterThan(0);
+    const insertBlock = forward.slice(insertIdx, insertIdx + 900);
+    expect(insertBlock).toContain("'proposed'");
+    expect(insertBlock).not.toContain("'approved'");
   });
 
   it("documents rollback limitation for post-upgrade rows", () => {
