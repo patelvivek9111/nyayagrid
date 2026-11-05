@@ -9,3 +9,4 @@ export * from "./suppression-catalog";
 export * from "./suppression-fixtures";
 export * from "./suppression-source-backed";
 export * from "./audit-browser";
+export * from "./role-provisioning";

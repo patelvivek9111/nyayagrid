@@ -72,9 +72,10 @@ export {
   PROSECUTION_ROLE_DEFINITIONS,
 } from "./system-roles";
 export { createOrganizationWithDefaults } from "./organizations";
-export { ensureProsecutionRoles } from "./prosecution-roles";
+export { ensureProsecutionRoles, provisionProsecutionRoles } from "./prosecution-roles";
 export {
   ensureProfessionalSystemRoles,
   reconcileProfessionalSystemRolePermissions,
+  type ProfessionalReconcileMode,
 } from "./professional-roles";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";

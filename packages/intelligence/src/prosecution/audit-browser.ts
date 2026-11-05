@@ -1,9 +1,22 @@
 import { and, desc, eq, sql, type SQL } from "drizzle-orm";
-import { auditEvents, ensureProsecutionRoles, type Database } from "@nyayagrid/database";
+import { auditEvents, type Database } from "@nyayagrid/database";
 import { requireCapability } from "@nyayagrid/permissions";
 import { ProsecutionError } from "./domain";
 
 export const PROSECUTION_AUDIT_ACTION_PREFIX = "prosecution.";
+
+/** Metadata keys that must never leave the audit browser (secrets / tokens). */
+const REDACTED_METADATA_KEYS = new Set([
+  "token",
+  "password",
+  "secret",
+  "authorization",
+  "accessToken",
+  "refreshToken",
+  "apiKey",
+  "rawPrompt",
+  "documentText",
+]);
 
 export type ProsecutionAuditEventRow = {
   id: string;
@@ -76,6 +89,24 @@ export function buildProsecutionAuditSafetyBanner() {
   };
 }
 
+export function sanitizeProsecutionAuditMetadata(
+  metadata: Record<string, unknown> | null | undefined,
+): Record<string, unknown> {
+  if (!metadata) return {};
+  const out: Record<string, unknown> = {};
+  for (const [key, value] of Object.entries(metadata)) {
+    if (REDACTED_METADATA_KEYS.has(key)) continue;
+    if (/token|secret|password|authorization/i.test(key)) continue;
+    out[key] = value;
+  }
+  return out;
+}
+
+/**
+ * Tenant-scoped prosecution audit listing.
+ * Strictly read-only: does not provision roles, reconcile permissions, or write audit rows.
+ * Caller must already hold `audit.view` for the organization.
+ */
 export async function listProsecutionOfficeAuditEvents(
   db: Database,
   params: {
@@ -88,7 +119,7 @@ export async function listProsecutionOfficeAuditEvents(
     targetId?: string | null;
   },
 ): Promise<ProsecutionAuditBrowserResult> {
-  await ensureProsecutionRoles(db, params.organizationId);
+  // Authorize before any audit_events read. No role provisioning on this path.
   await requireCapability(db, {
     userId: params.userId,
     organizationId: params.organizationId,
@@ -148,7 +179,7 @@ export async function listProsecutionOfficeAuditEvents(
       actorUserId: row.actorUserId ?? null,
       matterId: row.matterId ?? null,
       createdAt: row.createdAt.toISOString(),
-      metadata: (row.metadata ?? {}) as Record<string, unknown>,
+      metadata: sanitizeProsecutionAuditMetadata((row.metadata ?? {}) as Record<string, unknown>),
     })),
     page,
     pageSize,

@@ -4,14 +4,39 @@ import { permissions, roles } from "./schema/index";
 import { SYSTEM_ROLE_DEFINITIONS } from "./system-roles";
 
 /**
+ * Professional system-role policy:
+ * - Keys in SYSTEM_ROLE_DEFINITIONS are managed system roles (`isSystem: true`).
+ * - Managed baseline capabilities must remain present (additive ensure/reconcile).
+ * - Organization-specific *extra* capabilities on those roles are preserved by default
+ *   (`mode: "additive"`). They are never silently deleted.
+ * - `mode: "strict"` resets a system role to the exact definition set. That is an explicit
+ *   administrative enforcement of immutable system-role definitions — call only from an
+ *   authorized organization.manage path, never from invites or read requests.
+ * - Professional system roles must not receive prosecution.* capabilities via these helpers.
+ */
+
+const PROSECUTION_CAPABILITY_PREFIX = "prosecution.";
+
+function assertNoProsecutionCapabilities(capabilities: readonly string[]): void {
+  const bad = capabilities.filter((c) => c.startsWith(PROSECUTION_CAPABILITY_PREFIX));
+  if (bad.length > 0) {
+    throw new Error(
+      `Professional system roles must not grant prosecution capabilities: ${bad.join(", ")}`,
+    );
+  }
+}
+
+/**
  * Idempotently ensure Professional system roles (admin/partner/paralegal/…) exist
- * for an organization created before those keys were added.
+ * for an organization created before those keys were added. Creates missing roles only;
+ * does not alter permissions on roles that already exist.
  */
 export async function ensureProfessionalSystemRoles(
   db: Database,
   organizationId: string,
 ): Promise<void> {
   for (const def of SYSTEM_ROLE_DEFINITIONS) {
+    assertNoProsecutionCapabilities(def.capabilities);
     const [existing] = await db
       .select({ id: roles.id })
       .from(roles)
@@ -40,16 +65,29 @@ export async function ensureProfessionalSystemRoles(
   }
 }
 
+export type ProfessionalReconcileMode = "additive" | "strict";
+
 /**
- * Reconcile permissions for system Professional roles to match definitions.
- * Used to close capability drift (e.g. after adding admin/partner/paralegal).
+ * Reconcile permissions for system Professional roles.
+ * Default `additive`: insert missing managed capabilities; preserve org custom extras.
+ * `strict`: enforce exact definition sets (immutable system-role policy) — admin only.
  */
 export async function reconcileProfessionalSystemRolePermissions(
   db: Database,
   organizationId: string,
-): Promise<void> {
+  options?: { mode?: ProfessionalReconcileMode },
+): Promise<{
+  mode: ProfessionalReconcileMode;
+  capabilitiesAdded: number;
+  capabilitiesRemoved: number;
+}> {
+  const mode = options?.mode ?? "additive";
   await ensureProfessionalSystemRoles(db, organizationId);
+  let capabilitiesAdded = 0;
+  let capabilitiesRemoved = 0;
+
   for (const def of SYSTEM_ROLE_DEFINITIONS) {
+    assertNoProsecutionCapabilities(def.capabilities);
     const [role] = await db
       .select({ id: roles.id })
       .from(roles)
@@ -67,12 +105,18 @@ export async function reconcileProfessionalSystemRolePermissions(
       await db
         .insert(permissions)
         .values(missing.map((capability) => ({ roleId: role.id, capability })));
+      capabilitiesAdded += missing.length;
     }
-    const extras = [...have].filter((capability) => !want.has(capability));
-    if (extras.length > 0) {
-      await db
-        .delete(permissions)
-        .where(and(eq(permissions.roleId, role.id), inArray(permissions.capability, extras)));
+    if (mode === "strict") {
+      const extras = [...have].filter((capability) => !want.has(capability));
+      if (extras.length > 0) {
+        await db
+          .delete(permissions)
+          .where(and(eq(permissions.roleId, role.id), inArray(permissions.capability, extras)));
+        capabilitiesRemoved += extras.length;
+      }
     }
   }
+
+  return { mode, capabilitiesAdded, capabilitiesRemoved };
 }

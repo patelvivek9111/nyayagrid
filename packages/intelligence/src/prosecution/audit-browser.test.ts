@@ -5,6 +5,7 @@ import {
   clampAuditPageSize,
   normalizeProsecutionAuditActionFilter,
   PROSECUTION_AUDIT_ACTION_PREFIX,
+  sanitizeProsecutionAuditMetadata,
 } from "./audit-browser";
 import { ProsecutionError } from "./domain";
 
@@ -36,5 +37,16 @@ describe("prosecution audit browser helpers", () => {
     expect(safety.prosecutorPerformanceScore).toBeNull();
     expect(safety.guiltOutcomeKpi).toBeNull();
     expect(safety.inventedDeadlines).toBe(false);
+  });
+
+  it("redacts secret-bearing audit metadata keys", () => {
+    expect(
+      sanitizeProsecutionAuditMetadata({
+        caseNumber: "SYN-1",
+        token: "secret-token",
+        accessToken: "x",
+        note: "ok",
+      }),
+    ).toEqual({ caseNumber: "SYN-1", note: "ok" });
   });
 });

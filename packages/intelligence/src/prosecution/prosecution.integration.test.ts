@@ -7,8 +7,10 @@ import {
   createOrganizationWithDefaults,
   criminalCases,
   memberships,
+  permissions,
   prosecutionChargeElements,
   prosecutionWitnessStatements,
+  roles,
   users,
   eq,
   and,
@@ -700,5 +702,83 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
       pageSize: 100,
     });
     expect(orgBView.events.some((e) => e.targetId === created.id)).toBe(false);
+  });
+
+  it("keeps audit listing read-only even when prosecution roles are absent", async () => {
+    const orgC = await createOrganizationWithDefaults(db, {
+      name: `Week3 C ${suffix}`,
+      slug: `week3-c-${suffix}`,
+      type: "firm",
+      ownerUserId: ids.ownerA!,
+    });
+    const prosecutionKeys = [
+      "prosecution_office_admin",
+      "supervising_prosecutor",
+      "prosecutor",
+      "investigator",
+      "legal_support",
+      "prosecution_read_only",
+    ];
+
+    const countRoles = async () => {
+      const rows = await db.execute(sql`
+        select count(*)::int as n from roles
+        where organization_id = ${orgC.organization.id}
+      `);
+      return Number((rows[0] as { n: number }).n);
+    };
+    const countPerms = async () => {
+      const rows = await db.execute(sql`
+        select count(*)::int as n from permissions p
+        join roles r on r.id = p.role_id
+        where r.organization_id = ${orgC.organization.id}
+      `);
+      return Number((rows[0] as { n: number }).n);
+    };
+
+    const beforeRoles = await countRoles();
+    const beforePerms = await countPerms();
+
+    // Unauthorized outsider must not mutate anything when denied.
+    await expect(
+      listProsecutionOfficeAuditEvents(db, {
+        userId: ids.ownerB!,
+        organizationId: orgC.organization.id,
+      }),
+    ).rejects.toBeInstanceOf(AuthorizationError);
+    expect(await countRoles()).toBe(beforeRoles);
+    expect(await countPerms()).toBe(beforePerms);
+
+    // Strip prosecution system roles to simulate an unprovisioned office.
+    for (const key of prosecutionKeys) {
+      const roleId = orgC.roleIdByKey.get(key);
+      if (!roleId) continue;
+      await db.delete(permissions).where(eq(permissions.roleId, roleId));
+      await db.delete(roles).where(eq(roles.id, roleId));
+    }
+
+    const midRoles = await countRoles();
+    const midPerms = await countPerms();
+    expect(midRoles).toBeLessThan(beforeRoles);
+
+    await expect(
+      listProsecutionOfficeAuditEvents(db, {
+        userId: ids.ownerB!,
+        organizationId: orgC.organization.id,
+      }),
+    ).rejects.toBeInstanceOf(AuthorizationError);
+
+    // Denied audit reads must not recreate roles/permissions.
+    expect(await countRoles()).toBe(midRoles);
+    expect(await countPerms()).toBe(midPerms);
+
+    // Owner still has audit.view via Professional owner role and can read without provisioning.
+    const ownerAudit = await listProsecutionOfficeAuditEvents(db, {
+      userId: ids.ownerA!,
+      organizationId: orgC.organization.id,
+    });
+    expect(ownerAudit.canAudit).toBe(true);
+    expect(await countRoles()).toBe(midRoles);
+    expect(await countPerms()).toBe(midPerms);
   });
 });
