@@ -633,12 +633,21 @@ export function mockContraryAuthoritySearch(userPrompt: string): ContraryAuthori
   const question = userPrompt.match(/Research question:\s*(.+)/i)?.[1]?.trim() ?? userPrompt.trim();
   const proposition = userPrompt.match(/Proposition to test:\s*(.+)/i)?.[1]?.trim();
   const targetIds = [...userPrompt.matchAll(/([0-9a-f-]{36})/gi)].map((m) => m[1]!);
+  // Strip citation tokens so contrary retrieval is not pinned to the primary statute/case hit
+  // via exact-citation retain (which would drop limiting opinions that lack that citation).
+  const seed = (proposition ?? question)
+    .replace(/\bSynthetic Jurisdiction Code\s*§\s*\d+\b/gi, " ")
+    .replace(/\b\d+\s+F\.\d+d\s+\d+\b/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
   return {
     queries: [
       {
-        query: proposition
-          ? `Contrary authority limiting: ${proposition.slice(0, 240)}`
-          : `Contrary authority for: ${question.slice(0, 240)}`,
+        query:
+          `limiting contrary authority irreparable harm compensable damages preliminary injunction ${seed}`.slice(
+            0,
+            320,
+          ),
         rationale: "Mock query to surface potentially limiting or conflicting precedent.",
         targetAuthorityIds: targetIds.slice(0, 3),
       },

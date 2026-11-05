@@ -732,6 +732,8 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
         userId: ownerId,
         question:
           "What standard governs a preliminary injunction under Synthetic Jurisdiction Code § 100?",
+        // Case-only Ask deliberately excludes the legal corpus; this assertion needs legal scope.
+        sourceScope: "case_plus_legal",
         ai: new MockAIProvider(),
         embeddings: new MockEmbeddingProvider(),
       });

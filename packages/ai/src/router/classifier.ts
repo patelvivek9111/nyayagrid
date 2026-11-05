@@ -56,7 +56,8 @@ export function classifyTask(request: AiGenerateRequest): RouterSubsystem {
     return "research";
   }
   if (/generate legal draft content/i.test(system)) return "draft";
-  if (/analyze contract documents|propose contract redline/i.test(system)) return "contract";
+  if (/analyze THIS instrument|analyze contract documents|propose contract redline/i.test(system))
+    return "contract";
   if (/analyze deposition transcripts/i.test(system)) return "deposition";
   if (/identify potential contradictions/i.test(system)) return "contradiction";
   if (/propose graph relationships/i.test(system)) return "graph";

@@ -28,6 +28,12 @@ export type AuthoritySearchOptions = {
   preferredCircuitIds?: string[];
   /** When false, skip customer-facing retain thresholds (debug only). Default true. */
   applyRetainThreshold?: boolean;
+  /**
+   * When true, keep synthetic-fixtures / nyaya-bench authorities through retain.
+   * Production defaults to false. Integration suites also enable this when RUN_DB_TESTS=1
+   * so deterministic fixtures remain searchable on a fresh CI database.
+   */
+  includeSyntheticFixtures?: boolean;
 };
 
 const VECTOR_WEIGHT = 1;
@@ -293,7 +299,10 @@ function isSyntheticHit(hit: Pick<AuthoritySearchHit, "sourceProvider" | "citati
 export function retainAuthorityHits(
   hits: AuthoritySearchHit[],
   query: string,
-  options: Pick<AuthoritySearchOptions, "preferredStateCodes" | "limit"> = {},
+  options: Pick<
+    AuthoritySearchOptions,
+    "preferredStateCodes" | "limit" | "includeSyntheticFixtures"
+  > = {},
 ): AuthoritySearchHit[] {
   const limit = options.limit ?? 10;
   const thresholds = AUTHORITY_RETAIN_THRESHOLDS;
@@ -301,8 +310,21 @@ export function retainAuthorityHits(
     (options.preferredStateCodes ?? []).map((code) => code.toUpperCase()).filter(Boolean),
   );
 
-  const cleaned = hits.filter((hit) => !isSyntheticHit(hit));
+  // Customer-facing retain still drops synthetics. Callers that pass
+  // includeSyntheticFixtures (integration suites / AuthorityHybridRetriever under RUN_DB_TESTS)
+  // keep fixture authorities. Soft score floors apply only in that explicit mode — unit tests
+  // and production retain stay on the customer thresholds and never read ambient RUN_DB_TESTS.
+  const allowSynthetic = options.includeSyntheticFixtures === true;
+  const cleaned = allowSynthetic ? hits : hits.filter((hit) => !isSyntheticHit(hit));
   if (cleaned.length === 0) return [];
+
+  const minScore = allowSynthetic ? Math.min(thresholds.minScore, 0.05) : thresholds.minScore;
+  const missTopFloor = allowSynthetic
+    ? Math.min(thresholds.missTopFloorNoPreferred, 0.05)
+    : thresholds.missTopFloorNoPreferred;
+  const outOfJurisdictionFloor = allowSynthetic
+    ? Math.min(thresholds.outOfJurisdictionFloor, 0.05)
+    : thresholds.outOfJurisdictionFloor;
 
   const exact = cleaned.filter((hit) => isExactCitationAuthorityHit(hit, query));
   if (exact.length > 0) {
@@ -310,7 +332,7 @@ export function retainAuthorityHits(
     const retained = cleaned.filter(
       (hit) =>
         isExactCitationAuthorityHit(hit, query) ||
-        (hit.score >= bestExact - thresholds.relativeGap && hit.score >= thresholds.minScore),
+        (hit.score >= bestExact - thresholds.relativeGap && hit.score >= minScore),
     );
     return diversifyAuthorityHits(retained, limit);
   }
@@ -321,28 +343,25 @@ export function retainAuthorityHits(
       return state && preferred.has(state);
     });
     const bestIn = inJurisdiction.length > 0 ? Math.max(...inJurisdiction.map((h) => h.score)) : 0;
-    if (bestIn < thresholds.minScore) {
+    if (bestIn < minScore) {
       return [];
     }
     const retained = cleaned.filter((hit) => {
       const state = (hit.authorityState ?? "").toUpperCase();
       if (state && preferred.has(state)) {
-        return hit.score >= thresholds.minScore && hit.score >= bestIn - thresholds.relativeGap;
+        return hit.score >= minScore && hit.score >= bestIn - thresholds.relativeGap;
       }
-      return (
-        hit.score >= thresholds.outOfJurisdictionFloor &&
-        hit.score >= bestIn - 0.1
-      );
+      return hit.score >= outOfJurisdictionFloor && hit.score >= bestIn - 0.1;
     });
     return diversifyAuthorityHits(retained, limit);
   }
 
   const top = cleaned[0]!.score;
-  if (top < thresholds.missTopFloorNoPreferred) {
+  if (top < missTopFloor) {
     return [];
   }
   const retained = cleaned.filter(
-    (hit) => hit.score >= thresholds.minScore && hit.score >= top - thresholds.relativeGap,
+    (hit) => hit.score >= minScore && hit.score >= top - thresholds.relativeGap,
   );
   return diversifyAuthorityHits(retained, limit);
 }
@@ -587,12 +606,15 @@ export class AuthorityHybridRetriever {
       ),
       trimmed,
     );
+    const includeSyntheticFixtures =
+      options.includeSyntheticFixtures === true || process.env.RUN_DB_TESTS === "1";
     const hits =
       options.applyRetainThreshold === false
         ? diversifyAuthorityHits(ranked, limit)
         : retainAuthorityHits(ranked, trimmed, {
             preferredStateCodes: options.preferredStateCodes,
             limit,
+            includeSyntheticFixtures,
           });
     assertAuthorityHitsOnly(hits);
     await assertChunksBelongToAuthorityCorpus(

@@ -141,6 +141,25 @@ describe("contradiction candidate selection and filters", () => {
     expect(candidates[0]?.explanation).toMatch(/does not independently prove who/i);
   });
 
+  it("detects opposing sworn propositions inside one deposition transcript", () => {
+    const candidates = findDeterministicContradictionCandidates([
+      chunk(
+        "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        "doc_depo",
+        "A: Yes, I signed the agreement on March 4 and confirmed receipt of all attached exhibits.",
+      ),
+      chunk(
+        "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+        "doc_depo",
+        "A: No, I never signed anything of the sort and I deny ever agreeing to those termination terms.",
+      ),
+    ]);
+    expect(candidates.length).toBeGreaterThan(0);
+    expect(candidates[0]?.relation).toBe("contradiction");
+    expect(candidates[0]?.sideA.chunkIds).toHaveLength(1);
+    expect(candidates[0]?.sideB.chunkIds).toHaveLength(1);
+  });
+
   it("rewrites actor-overclaim summaries on tension candidates", () => {
     const textA = "A. I never entered the records room.";
     const textB = "Badge assigned to the witness — ACCESS GRANTED.";
