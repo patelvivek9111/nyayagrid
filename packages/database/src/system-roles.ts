@@ -93,8 +93,8 @@ export const PROSECUTION_ROLE_DEFINITIONS = [
   {
     key: "supervising_prosecutor",
     name: "Supervising prosecutor",
-    description: "Review prosecutors' work, including disclosure review",
-    capabilities: [...PROSECUTION_WORK, "prosecution.review"] as Capability[],
+    description: "Review prosecutors' work, including disclosure review and office audit",
+    capabilities: [...PROSECUTION_WORK, "prosecution.review", "audit.view"] as Capability[],
   },
   {
     key: "prosecutor",

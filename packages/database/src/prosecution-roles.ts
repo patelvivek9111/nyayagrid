@@ -17,7 +17,26 @@ export async function ensureProsecutionRoles(db: Database, organizationId: strin
       .from(roles)
       .where(and(eq(roles.organizationId, organizationId), eq(roles.key, def.key)))
       .limit(1);
-    if (existing) continue;
+    if (existing) {
+      // Sync newly required capabilities onto existing system prosecution roles (e.g. audit.view).
+      if (def.capabilities.length > 0) {
+        const existingCaps = await db
+          .select({ capability: permissions.capability })
+          .from(permissions)
+          .where(eq(permissions.roleId, existing.id));
+        const have = new Set(existingCaps.map((row) => row.capability));
+        const missing = def.capabilities.filter((capability) => !have.has(capability));
+        if (missing.length > 0) {
+          await db.insert(permissions).values(
+            missing.map((capability) => ({
+              roleId: existing.id,
+              capability,
+            })),
+          );
+        }
+      }
+      continue;
+    }
     const [created] = await db
       .insert(roles)
       .values({

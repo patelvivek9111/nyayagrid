@@ -20,6 +20,7 @@ import {
   createCriminalCase,
   getProsecutionOverview,
   listCriminalCases,
+  listProsecutionOfficeAuditEvents,
   ProsecutionError,
 } from "@nyayagrid/intelligence";
 
@@ -27,7 +28,9 @@ const runDbTests = process.env.RUN_DB_TESTS === "1";
 const provenance = { extractionOrigin: "human" as const, humanEntered: true };
 
 describe.runIf(runDbTests)("week 3 live prosecution database", () => {
-  const db = createDb(process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid");
+  const db = createDb(
+    process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid",
+  );
   const suffix = Date.now().toString(36);
   const ids: Record<string, string> = {};
 
@@ -115,12 +118,22 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
     });
     ids.caseA = created.id;
     const listed = await listCriminalCases(db, { userId: ids.ownerB!, organizationId: ids.orgB! });
-    expect(listed.some((row) => row.id === created.id || row.caseNumber === created.caseNumber)).toBe(false);
+    expect(
+      listed.some((row) => row.id === created.id || row.caseNumber === created.caseNumber),
+    ).toBe(false);
     await expect(
-      getProsecutionOverview(db, { userId: ids.ownerB!, organizationId: ids.orgB!, caseId: created.id }),
+      getProsecutionOverview(db, {
+        userId: ids.ownerB!,
+        organizationId: ids.orgB!,
+        caseId: created.id,
+      }),
     ).rejects.toBeInstanceOf(ProsecutionError);
     await expect(
-      getProsecutionOverview(db, { userId: ids.ownerB!, organizationId: ids.orgA!, caseId: created.id }),
+      getProsecutionOverview(db, {
+        userId: ids.ownerB!,
+        organizationId: ids.orgA!,
+        caseId: created.id,
+      }),
     ).rejects.toBeInstanceOf(AuthorizationError);
     await expect(
       addProsecutionRecord(db, {
@@ -192,7 +205,11 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
         organizationId: ids.orgA!,
         caseId: ids.caseA!,
         resource: "warrants",
-        body: { warrantType: "search", seizedEvidenceIds: [(evidenceB as { id: string }).id], provenance },
+        body: {
+          warrantType: "search",
+          seizedEvidenceIds: [(evidenceB as { id: string }).id],
+          provenance,
+        },
       }),
     ).rejects.toMatchObject({ code: "CROSS_CASE" });
     const witnessB = await addProsecutionRecord(db, {
@@ -221,10 +238,20 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
         organizationId: ids.orgA!,
         caseId: ids.caseA!,
         resource: "charges",
-        body: { defendantId: ids.defendantA, countNumber: "9", offenseName: "No", jurisdiction: "PA", provenance },
+        body: {
+          defendantId: ids.defendantA,
+          countNumber: "9",
+          offenseName: "No",
+          jurisdiction: "PA",
+          provenance,
+        },
       }),
     ).rejects.toBeInstanceOf(AuthorizationError);
-    const overview = await getProsecutionOverview(db, { userId: ids.reader!, organizationId: ids.orgA!, caseId: ids.caseA! });
+    const overview = await getProsecutionOverview(db, {
+      userId: ids.reader!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+    });
     expect(overview.guiltConclusion).toBeNull();
     await expect(
       addProsecutionRecord(db, {
@@ -266,7 +293,13 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
         organizationId: ids.orgA!,
         caseId: ids.caseA!,
         resource: "charges",
-        body: { defendantId: ids.defendantA, countNumber: "8", offenseName: "No", jurisdiction: "PA", provenance },
+        body: {
+          defendantId: ids.defendantA,
+          countNumber: "8",
+          offenseName: "No",
+          jurisdiction: "PA",
+          provenance,
+        },
       }),
     ).rejects.toBeInstanceOf(AuthorizationError);
     await expect(
@@ -301,15 +334,24 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
           provenance,
         },
         elements: [
-          { elementOrder: 1, elementText: "Act", elementType: "element", status: "UNKNOWN", provenance },
-          { elementOrder: 2, elementText: "Intent", elementType: "element", status: "GUILTY", provenance },
+          {
+            elementOrder: 1,
+            elementText: "Act",
+            elementType: "element",
+            status: "UNKNOWN",
+            provenance,
+          },
+          {
+            elementOrder: 2,
+            elementText: "Intent",
+            elementType: "element",
+            status: "GUILTY",
+            provenance,
+          },
         ],
       }),
     ).rejects.toMatchObject({ code: "GUILT_STATUS_FORBIDDEN" });
-    const leftover = await db
-      .select()
-      .from(criminalCases)
-      .where(eq(criminalCases.id, ids.caseA!));
+    const leftover = await db.select().from(criminalCases).where(eq(criminalCases.id, ids.caseA!));
     expect(leftover).toHaveLength(1);
     const charges = await db.execute(sql`
       select id from prosecution_charges
@@ -335,7 +377,12 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
     const audits = await db
       .select()
       .from(auditEvents)
-      .where(and(eq(auditEvents.organizationId, ids.orgA!), eq(auditEvents.action, "prosecution.charge_modified")));
+      .where(
+        and(
+          eq(auditEvents.organizationId, ids.orgA!),
+          eq(auditEvents.action, "prosecution.charge_modified"),
+        ),
+      );
     expect(audits.length).toBeGreaterThan(0);
     await addProsecutionRecord(db, {
       userId: ids.prosecutor!,
@@ -347,7 +394,12 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
     const discoveryAudits = await db
       .select()
       .from(auditEvents)
-      .where(and(eq(auditEvents.organizationId, ids.orgA!), eq(auditEvents.action, "prosecution.discovery_review_changed")));
+      .where(
+        and(
+          eq(auditEvents.organizationId, ids.orgA!),
+          eq(auditEvents.action, "prosecution.discovery_review_changed"),
+        ),
+      );
     expect(discoveryAudits.length).toBeGreaterThan(0);
     const plea = await addProsecutionRecord(db, {
       userId: ids.prosecutor!,
@@ -369,7 +421,9 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
         provenance,
       },
     });
-    expect((sentence as { sentenceTerms: string }).sentenceTerms).toMatch(/Not a sentence recommendation/);
+    expect((sentence as { sentenceTerms: string }).sentenceTerms).toMatch(
+      /Not a sentence recommendation/,
+    );
     await expect(
       db.insert(prosecutionChargeElements).values({
         organizationId: ids.orgA!,
@@ -479,11 +533,21 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
       organizationId: ids.orgA!,
       caseId: ids.caseA!,
     });
-    expect(overview.agencies.some((row: { id: string }) => row.id === (agency as { id: string }).id)).toBe(true);
-    expect(overview.officers.some((row: { id: string }) => row.id === (officer as { id: string }).id)).toBe(true);
-    expect(overview.motions.some((row: { id: string }) => row.id === (motion as { id: string }).id)).toBe(true);
-    expect(overview.hearings.some((row: { id: string }) => row.id === (hearing as { id: string }).id)).toBe(true);
-    expect(overview.subpoenas.some((row: { id: string }) => row.id === (subpoena as { id: string }).id)).toBe(true);
+    expect(
+      overview.agencies.some((row: { id: string }) => row.id === (agency as { id: string }).id),
+    ).toBe(true);
+    expect(
+      overview.officers.some((row: { id: string }) => row.id === (officer as { id: string }).id),
+    ).toBe(true);
+    expect(
+      overview.motions.some((row: { id: string }) => row.id === (motion as { id: string }).id),
+    ).toBe(true);
+    expect(
+      overview.hearings.some((row: { id: string }) => row.id === (hearing as { id: string }).id),
+    ).toBe(true);
+    expect(
+      overview.subpoenas.some((row: { id: string }) => row.id === (subpoena as { id: string }).id),
+    ).toBe(true);
     expect(overview.discoveryDashboard).toBeTruthy();
     expect(overview.guiltConclusion).toBeNull();
 
@@ -580,12 +644,61 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
     expect(reloaded.guiltConclusion).toBeNull();
     expect(reloaded.evidenceScope.jointEvidenceIds).toEqual([joint.id]);
     expect(reloaded.evidenceScope.unassignedEvidenceIds).toEqual([]);
-    const adaScope = reloaded.evidenceScope.byDefendant.find((row: { defendantId: string }) => row.defendantId === ada.id);
-    const benScope = reloaded.evidenceScope.byDefendant.find((row: { defendantId: string }) => row.defendantId === ben.id);
+    const adaScope = reloaded.evidenceScope.byDefendant.find(
+      (row: { defendantId: string }) => row.defendantId === ada.id,
+    );
+    const benScope = reloaded.evidenceScope.byDefendant.find(
+      (row: { defendantId: string }) => row.defendantId === ben.id,
+    );
     expect(adaScope?.specificEvidenceIds).toEqual([adaOnly.id]);
     expect(benScope?.specificEvidenceIds).toEqual([benOnly.id]);
     expect(adaScope?.jointEvidenceIds).toEqual([joint.id]);
     expect(benScope?.jointEvidenceIds).toEqual([joint.id]);
-    expect(reloaded.issueSeparation.filter((row: { kind: string }) => row.kind === "charge")).toHaveLength(0);
+    expect(
+      reloaded.issueSeparation.filter((row: { kind: string }) => row.kind === "charge"),
+    ).toHaveLength(0);
+  });
+
+  it("lists office audit events for audit.view roles and blocks cross-tenant bleed", async () => {
+    const created = await createCriminalCase(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseNumber: `AUD-${suffix}`,
+      jurisdiction: "PA",
+      court: "st-pa-trial",
+    });
+
+    const forSupervisor = await listProsecutionOfficeAuditEvents(db, {
+      userId: ids.supervisor!,
+      organizationId: ids.orgA!,
+      page: 1,
+      pageSize: 25,
+      action: "prosecution.case_created",
+    });
+    expect(forSupervisor.canAudit).toBe(true);
+    expect(forSupervisor.safety.convictionRate).toBeNull();
+    expect(forSupervisor.safety.guiltOutcomeKpi).toBeNull();
+    expect(forSupervisor.events.some((e) => e.targetId === created.id)).toBe(true);
+
+    await expect(
+      listProsecutionOfficeAuditEvents(db, {
+        userId: ids.prosecutor!,
+        organizationId: ids.orgA!,
+      }),
+    ).rejects.toBeInstanceOf(AuthorizationError);
+
+    await expect(
+      listProsecutionOfficeAuditEvents(db, {
+        userId: ids.ownerB!,
+        organizationId: ids.orgA!,
+      }),
+    ).rejects.toBeInstanceOf(AuthorizationError);
+
+    const orgBView = await listProsecutionOfficeAuditEvents(db, {
+      userId: ids.ownerB!,
+      organizationId: ids.orgB!,
+      pageSize: 100,
+    });
+    expect(orgBView.events.some((e) => e.targetId === created.id)).toBe(false);
   });
 });

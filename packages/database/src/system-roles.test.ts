@@ -58,8 +58,19 @@ describe("system roles", () => {
     const prosecutor = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "prosecutor");
     expect(prosecutor?.capabilities).toContain("prosecution.edit");
     expect(prosecutor?.capabilities).not.toContain("prosecution.review");
+    expect(prosecutor?.capabilities).not.toContain("audit.view");
+    const supervisor = PROSECUTION_ROLE_DEFINITIONS.find(
+      (role) => role.key === "supervising_prosecutor",
+    );
+    expect(supervisor?.capabilities).toContain("prosecution.review");
+    expect(supervisor?.capabilities).toContain("audit.view");
+    const officeAdmin = PROSECUTION_ROLE_DEFINITIONS.find(
+      (role) => role.key === "prosecution_office_admin",
+    );
+    expect(officeAdmin?.capabilities).toContain("audit.view");
     const legalSupport = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "legal_support");
     expect(legalSupport?.capabilities).not.toContain("prosecution.edit");
     expect(legalSupport?.capabilities).not.toContain("prosecution.review");
+    expect(legalSupport?.capabilities).not.toContain("audit.view");
   });
 });
