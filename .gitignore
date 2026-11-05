@@ -40,3 +40,7 @@ scripts/*.json.tmp
 packages/research/corpus/reports/queue2-worker.lock.json
 packages/research/corpus/reports/queue2-worker.lock.archived.*.json
 
+
+# WP-05 continuous monitor state
+.monitor-state/
+
