@@ -363,6 +363,8 @@ export const documents = pgTable(
       .notNull()
       .references(() => organizations.id, { onDelete: "cascade" }),
     matterId: uuid("matter_id").references(() => matters.id, { onDelete: "cascade" }),
+    /** Optional matter folder; FK to document_folders added in migration 0027. */
+    folderId: uuid("folder_id"),
     createdByUserId: uuid("created_by_user_id").references(() => users.id),
     title: text("title").notNull(),
     processingState: documentProcessingStateEnum("processing_state").notNull().default("uploaded"),
@@ -376,6 +378,7 @@ export const documents = pgTable(
   (table) => [
     index("documents_organization_idx").on(table.organizationId),
     index("documents_matter_idx").on(table.matterId),
+    index("documents_folder_idx").on(table.folderId),
   ],
 );
 

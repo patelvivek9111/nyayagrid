@@ -3,7 +3,7 @@
   "classification": "NYAYAGRID_PRODUCT_COMPLETION_SECURITY_AND_FEATURE_EXECUTION",
   "generatedAt": "2026-11-03T22:57:29.530Z",
   "head": "7420710b13198813434c3c8b1a23126fa985f708",
-  "branch": "feat/prosecution-memory-graph-coc",
+  "branch": "feat/professional-contacts-folders",
   "remoteCi": {
     "run": "41689403691",
     "conclusion": "SUCCESS"
@@ -41,7 +41,10 @@
   "criticalFailureRootCause": {
     "exampleId": "legalcitebench::CITATION_COMPLETION::12576371",
     "primaryClass": "SCORER_DEFECT",
-    "secondaryClasses": ["EVALUATOR_DEFECT", "TASK_ROUTING"],
+    "secondaryClasses": [
+      "EVALUATOR_DEFECT",
+      "TASK_ROUTING"
+    ],
     "summary": "Model titled response 'Abstention' and refused to invent cites; discussed the INPUT citation '355 Or. 319, 431 P.3d 90' as potentially inconsistent. detectAbstention() previously missed 'Abstention'/'cannot recommend'. CLOSED_BOOK fabricatedAuthority heuristic then flagged the discussed reporter pattern as FABRICATED_OR_MISLEADING_AUTHORITY. Confirmed false-positive critical grounding flag (not model invention of a new authority).",
     "modelBehavior": "Policy-aligned abstention + warning about provided cite",
     "nyayaPipelineIssue": "Closed-book LegalCite completion previously scored as exact-label + citation-regex without source-aware provenance or abstention-aware classification",
@@ -95,7 +98,10 @@
       "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["apps/web/src/app/app/clients/page.tsx", "e2e/professional.spec.ts"],
+      "evidence": [
+        "apps/web/src/app/app/clients/page.tsx",
+        "e2e/professional.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -108,7 +114,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/professional.spec.ts", "e2e/case-workspace.spec.ts"],
+      "evidence": [
+        "e2e/professional.spec.ts",
+        "e2e/case-workspace.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -121,7 +130,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["e2e/document-ingest.spec.ts", "packages/documents"],
+      "evidence": [
+        "e2e/document-ingest.spec.ts",
+        "packages/documents"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -161,7 +173,9 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/case-intelligence.spec.ts"],
+      "evidence": [
+        "e2e/case-intelligence.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -174,7 +188,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/professional.spec.ts", "packages/intelligence/src/memory"],
+      "evidence": [
+        "e2e/professional.spec.ts",
+        "packages/intelligence/src/memory"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -187,7 +204,9 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/graph-relevance.spec.ts"],
+      "evidence": [
+        "e2e/graph-relevance.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -223,7 +242,9 @@
       "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["e2e/professional.spec.ts draft generate"],
+      "evidence": [
+        "e2e/professional.spec.ts draft generate"
+      ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -236,7 +257,9 @@
       "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/firm-workspace.spec.ts smoke"],
+      "evidence": [
+        "e2e/firm-workspace.spec.ts smoke"
+      ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -335,7 +358,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["e2e/prosecution.spec.ts", "packages/intelligence/src/prosecution/postgres.ts"],
+      "evidence": [
+        "e2e/prosecution.spec.ts",
+        "packages/intelligence/src/prosecution/postgres.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -367,7 +393,11 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["disclosure-workflow.ts", "PB-DIS-01/02", "e2e Stage 4"],
+      "evidence": [
+        "disclosure-workflow.ts",
+        "PB-DIS-01/02",
+        "e2e Stage 4"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -380,7 +410,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["prosecution bench critical taxonomy", "e2e asserts"],
+      "evidence": [
+        "prosecution bench critical taxonomy",
+        "e2e asserts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -393,7 +426,11 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["PB-TEN-01", "PB-EV-03", "permissions integration tests"],
+      "evidence": [
+        "PB-TEN-01",
+        "PB-EV-03",
+        "permissions integration tests"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -406,7 +443,10 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["legal-workflow.ts", "e2e/prosecution-warrant.spec.ts"],
+      "evidence": [
+        "legal-workflow.ts",
+        "e2e/prosecution-warrant.spec.ts"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -488,7 +528,9 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["npm run bench:prosecution CURRENT_VERIFIED 39/39 this session"],
+      "evidence": [
+        "npm run bench:prosecution CURRENT_VERIFIED 39/39 this session"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -647,7 +689,11 @@
       "status": "VERIFIED_COMPLETE",
       "severity": "P0",
       "releaseBlocker": false,
-      "evidence": ["permissions integration tests", "e2e/security.spec.ts", "no RLS by design"],
+      "evidence": [
+        "permissions integration tests",
+        "e2e/security.spec.ts",
+        "no RLS by design"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09"
     },
@@ -816,7 +862,9 @@
       "status": "OUT_OF_SCOPE",
       "severity": "P0",
       "releaseBlocker": true,
-      "evidence": ["staging-audit cjis.certified===false; product rule"],
+      "evidence": [
+        "staging-audit cjis.certified===false; product rule"
+      ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09",
       "note": "Release blocker only if marketing claims CJIS"
@@ -1085,8 +1133,12 @@
     {
       "id": "WP-01",
       "title": "Fix LegalCite evaluation integrity",
-      "closes": ["AI-EXT-SCORER-01"],
-      "partiallyAddresses": ["PROS-EXT-01"],
+      "closes": [
+        "AI-EXT-SCORER-01"
+      ],
+      "partiallyAddresses": [
+        "PROS-EXT-01"
+      ],
       "deps": [],
       "effort": "2-5 days",
       "status": "VERIFIED_COMPLETE",
@@ -1096,8 +1148,12 @@
     {
       "id": "WP-02",
       "title": "Activate production model-router v2 for prosecution/high-stakes",
-      "closes": ["AI-ROUTE-01"],
-      "deps": ["WP-01"],
+      "closes": [
+        "AI-ROUTE-01"
+      ],
+      "deps": [
+        "WP-01"
+      ],
       "effort": "3-7 days",
       "acceptance": "Flag ON with env/DB alignment; Ask prosecution paths set subsystem/highStakesLegal; GPT/Gemini high-stakes remain 0 in tests",
       "status": "VERIFIED_COMPLETE",
@@ -1115,7 +1171,11 @@
     {
       "id": "WP-03",
       "title": "Live corpus inventory + research honesty gate",
-      "closes": ["CORPUS-01", "PROF-RES-01", "CORPUS-02"],
+      "closes": [
+        "CORPUS-01",
+        "PROF-RES-01",
+        "CORPUS-02"
+      ],
       "deps": [],
       "effort": "1-3 weeks (ops+data)",
       "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots",
@@ -1151,7 +1211,12 @@
     {
       "id": "WP-04",
       "title": "Production security/config gate closure",
-      "closes": ["SEC-AUTH-01", "SEC-MAL-01", "PROF-DOC-02", "SEC-LEGAL-01"],
+      "closes": [
+        "SEC-AUTH-01",
+        "SEC-MAL-01",
+        "PROF-DOC-02",
+        "SEC-LEGAL-01"
+      ],
       "deps": [],
       "effort": "2-4 weeks",
       "acceptance": "Clerk MFA verified; ClamAV prod verified; OCR policy decided; attorney Terms/Privacy",
@@ -1179,8 +1244,14 @@
     {
       "id": "WP-05",
       "title": "Ops resilience",
-      "closes": ["OPS-BACKUP-01", "OPS-MON-01", "OPS-DEP-01"],
-      "deps": ["WP-04"],
+      "closes": [
+        "OPS-BACKUP-01",
+        "OPS-MON-01",
+        "OPS-DEP-01"
+      ],
+      "deps": [
+        "WP-04"
+      ],
       "effort": "2-4 weeks",
       "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill",
       "status": "PARTIAL",
@@ -1201,15 +1272,26 @@
     {
       "id": "WP-06",
       "title": "Prosecution product parity polish",
-      "closes": ["PROS-MEM-01", "PROS-GRAPH-01", "PROS-AUD-01", "PROS-EV-01"],
-      "deps": ["WP-02"],
+      "closes": [
+        "PROS-MEM-01",
+        "PROS-GRAPH-01",
+        "PROS-AUD-01",
+        "PROS-EV-01"
+      ],
+      "deps": [
+        "WP-02"
+      ],
       "effort": "1-2 weeks",
       "acceptance": "Memory/Audit UX; graph writers or explicit OUT_OF_SCOPE; CoC schema aligned"
     },
     {
       "id": "WP-07",
       "title": "Professional RBAC + cleanup",
-      "closes": ["PROF-ROLE-01", "RM-PG-01", "PROF-CONTACT-01"],
+      "closes": [
+        "PROF-ROLE-01",
+        "RM-PG-01",
+        "PROF-CONTACT-01"
+      ],
       "deps": [],
       "effort": "1 week",
       "acceptance": "Spec roles or documented reduction; enum/docs cleanup; contacts decision"
@@ -1217,8 +1299,16 @@
     {
       "id": "WP-08",
       "title": "Design-partner external acceptance",
-      "closes": ["PROS-EXT-01", "AI-GROUND-01"],
-      "deps": ["WP-01", "WP-02", "WP-03", "WP-05"],
+      "closes": [
+        "PROS-EXT-01",
+        "AI-GROUND-01"
+      ],
+      "deps": [
+        "WP-01",
+        "WP-02",
+        "WP-03",
+        "WP-05"
+      ],
       "effort": "2-4 weeks",
       "acceptance": "Fresh authorized external Cite+LB run; attorney/DA partner written acceptance; no CJIS claims"
     }
@@ -1410,7 +1500,7 @@
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
-  "updatedAt": "2026-11-05T19:49:35.505Z",
+  "updatedAt": "2026-11-05T19:54:10.784Z",
   "productContinuation": {
     "pr6": {
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",
