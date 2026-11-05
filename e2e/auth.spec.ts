@@ -29,7 +29,7 @@ test.describe("Auth contract", () => {
   test("sign-up is invitation-first and has no developer copy", async ({ page }) => {
     await page.goto("/sign-up");
     await expect(page.getByRole("heading", { name: "Invitation only" })).toBeVisible();
-    await expect(page.getByText(/invitation-only/i)).toBeVisible();
+    await expect(page.getByText(/invitation your firm sent|invitation-only/i)).toBeVisible();
     await expect(page.getByText(/AUTH_PROVIDER|NEXT_PUBLIC_CLERK/i)).toHaveCount(0);
   });
 
@@ -53,7 +53,9 @@ test.describe("Auth contract", () => {
 
   test("session-ended notice is user-facing, not a stack trace", async ({ page }) => {
     await page.goto("/sign-in?reason=session");
-    await expect(page.getByText("Your session has ended. Please sign in to continue.")).toBeVisible();
+    await expect(
+      page.getByText("Your session has ended. Please sign in to continue."),
+    ).toBeVisible();
     await expect(page.getByText(/TypeError|CLERK_SECRET|stack/i)).toHaveCount(0);
   });
 
@@ -81,7 +83,10 @@ test.describe("Auth contract", () => {
     test.skip(orgs.length === 0, "no organization for the default identity");
     const mattersRes = await request.get(`/api/v1/matters?organizationId=${orgs[0]!.id}`);
     expect(mattersRes.ok()).toBeTruthy();
-    const matters = ((await mattersRes.json()).matters ?? []) as Array<{ id: string; title?: string }>;
+    const matters = ((await mattersRes.json()).matters ?? []) as Array<{
+      id: string;
+      title?: string;
+    }>;
     test.skip(matters.length === 0, "no case for cross-org proof");
     const matter = matters[0]!;
     const outsider = { "x-nyayagrid-dev-user": "e2e-auth-outsider" };

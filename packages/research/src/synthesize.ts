@@ -30,10 +30,7 @@ import {
   type RoutingMode,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
-import {
-  loadMatterJurisdictionForResearch,
-  labelResearchHits,
-} from "./jurisdiction-layer";
+import { loadMatterJurisdictionForResearch, labelResearchHits } from "./jurisdiction-layer";
 import {
   formatActiveMemoryForPrompt,
   formatVerifiedIntelligenceForPrompt,
@@ -206,14 +203,19 @@ function collectPublishedAuthorityIds(synthesis: ResearchSynthesis): Set<string>
 }
 
 function stripDisallowedUuids(text: string, allowed: Set<string>): string {
-  return text.replace(UUID_GLOBAL_RE, (id) => (allowed.has(id) ? id : "")).replace(/\s{2,}/g, " ").trim();
+  return text
+    .replace(UUID_GLOBAL_RE, (id) => (allowed.has(id) ? id : ""))
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }
 
 function coerceResearchSynthesisRaw(raw: unknown): unknown {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
   const rec = { ...(raw as Record<string, unknown>) };
   const cleanIds = (value: unknown): string[] =>
-    Array.isArray(value) ? value.filter((id): id is string => typeof id === "string" && UUID_RE.test(id)) : [];
+    Array.isArray(value)
+      ? value.filter((id): id is string => typeof id === "string" && UUID_RE.test(id))
+      : [];
   if (Array.isArray(rec.legalPropositions)) {
     rec.legalPropositions = rec.legalPropositions
       .map((row) => {
@@ -771,6 +773,8 @@ export type RunResearchQueryParams = {
   retriever?: AuthorityRetrieverLike;
   /** Alternative to retriever: any LegalAuthorityProvider (e.g. LocalImportedAuthorityProvider). */
   provider?: LegalAuthorityProvider;
+  /** Merged into hybrid search options (e.g. includeSyntheticFixtures for integration fixtures). */
+  searchOptions?: AuthoritySearchOptions;
   executionStrategy?: RoutingMode;
   modelId?: string;
 };
@@ -989,12 +993,17 @@ export async function runResearchQuery(
     provider: params.provider,
   });
 
+  const searchOptions: AuthoritySearchOptions = {
+    ...jurisdictionLayer.searchOptions,
+    ...params.searchOptions,
+  };
+
   const secondaryLimit = Math.max(4, Math.floor(limit / 2));
   const primaryHits = await retrieveResearchAuthorities({
     search,
     filters,
     limit,
-    searchOptions: jurisdictionLayer.searchOptions,
+    searchOptions,
     queries: [
       { text: question, origin: "primary" },
       ...concepts.map((concept) => ({
@@ -1023,7 +1032,7 @@ export async function runResearchQuery(
         search,
         filters,
         limit,
-        searchOptions: jurisdictionLayer.searchOptions,
+        searchOptions,
         queries: contraryQueries.slice(0, MAX_CONTRARY_QUERIES).map((text) => ({
           text,
           origin: "contrary" as const,
@@ -1041,10 +1050,7 @@ export async function runResearchQuery(
     if (existing && existing.score >= hit.score) continue;
     combined.set(hit.chunkId, existing ? { ...hit, queryOrigin: existing.queryOrigin } : hit);
   }
-  const hits = labelResearchHits(
-    jurisdictionLayer.context,
-    [...combined.values()],
-  ).slice(0, limit);
+  const hits = labelResearchHits(jurisdictionLayer.context, [...combined.values()]).slice(0, limit);
 
   const chunkTexts = await loadAuthorizedAuthorityChunks({
     db: params.db,
@@ -1074,8 +1080,7 @@ export async function runResearchQuery(
         role: "user",
         content: buildResearchSynthesisUserPrompt({
           question,
-          jurisdiction:
-            jurisdictionLayer.context?.summary ?? filters.jurisdiction ?? null,
+          jurisdiction: jurisdictionLayer.context?.summary ?? filters.jurisdiction ?? null,
           jurisdictionContext: jurisdictionLayer.context?.promptBlock ?? null,
           authorityChunks: toResearchAuthorityChunks(hits, chunkTexts),
           matterContextSummary: matterContextText,
@@ -1108,8 +1113,7 @@ export async function runResearchQuery(
     jurisdictionFilter: filters.jurisdiction ?? null,
     jurisdictionFilters: session.jurisdictionFilters ?? [],
     jurisdictionKnown: Boolean(
-      jurisdictionLayer.context &&
-        jurisdictionLayer.context.jurisdictionMode !== "unknown",
+      jurisdictionLayer.context && jurisdictionLayer.context.jurisdictionMode !== "unknown",
     ),
     extra: [...validated.synthesis.coverageWarnings, ...extraWarnings],
   });
