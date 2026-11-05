@@ -192,13 +192,7 @@ export function assertProsecutionMemoryTransition(params: {
       }
       return "approved";
     case "supersede":
-      if (currentStatus === "superseded") {
-        throw new ProsecutionError(
-          "INVALID_MEMORY_TRANSITION",
-          "Memory is already superseded.",
-          400,
-        );
-      }
+      // superseded already rejected above; remaining statuses may be replaced.
       return "superseded";
     default: {
       const _exhaustive: never = action;
