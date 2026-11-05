@@ -13,7 +13,18 @@ const BASE = (process.env.STAGING_E2E_BASE_URL ?? "https://staging.nyayagrid.com
   "",
 );
 
-test.describe("Staging Clerk Prosecution", () => {
+test.describe("Staging Clerk Prosecution (no session)", () => {
+  test("unauthenticated prosecution case access is rejected", async ({ playwright }) => {
+    const ctx = await playwright.request.newContext({ storageState: undefined });
+    const res = await ctx.get(
+      `${BASE}/api/v1/prosecution/cases/00000000-0000-0000-0000-000000000000`,
+    );
+    expect([401, 403]).toContain(res.status());
+    await ctx.dispose();
+  });
+});
+
+test.describe("Staging Clerk Prosecution (authenticated)", () => {
   test.skip(
     !hasAuth,
     "Missing playwright/.auth/staging-user.json — run auth.setup with Clerk staging identity",
@@ -30,15 +41,6 @@ test.describe("Staging Clerk Prosecution", () => {
     expect([401, 403, 404]).toContain(res.status());
     const body = (await res.json()) as { criminalCase?: unknown };
     expect(body.criminalCase).toBeUndefined();
-  });
-
-  test("unauthenticated prosecution case access is rejected", async ({ playwright }) => {
-    const ctx = await playwright.request.newContext({ storageState: undefined });
-    const res = await ctx.get(
-      `${BASE}/api/v1/prosecution/cases/00000000-0000-0000-0000-000000000000`,
-    );
-    expect([401, 403]).toContain(res.status());
-    await ctx.dispose();
   });
 
   test("session remains clerk while on prosecution surface", async ({ request }) => {

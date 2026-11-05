@@ -1,22 +1,23 @@
 {
   "classification": "NYAYAGRID_WP05_CLERK_E2E_STATUS",
-  "at": "2026-11-05T03:20:00.000Z",
+  "at": "2026-11-05T04:22:00.000Z",
   "worktree": "c:/Users/patel/Documents/nyayagrid-wp05-clerk-e2e",
   "branch": "wp05/clerk-e2e-auth",
   "framework": "playwright.staging.config.ts",
   "projects": [
     "setup",
     "security-negatives",
+    "audit-clerk",
     "tenant-isolation",
     "professional-clerk",
     "prosecution-clerk",
     "q9-acceptance"
   ],
   "dependencyStatus": {
-    "@clerk/backend": "2.33.6 (apps/web)",
-    "@clerk/testing": "1.14.9 (root devDependency; lockfile updated)",
+    "@clerk/backend": "2.33.6 (apps/web lockfile)",
+    "@clerk/testing": "1.14.9 (root devDependency; lockfile + node_modules verified)",
     "@playwright/test": "1.62.1",
-    "installNote": "Pinned @clerk/testing@1.14.9 to match @clerk/backend v2. Avoid @clerk/testing@2.x (backend v3). Prior ECONNRESET mitigated via retries + install into existing node_modules tree."
+    "installNote": "Pinned @clerk/testing@1.14.9 to match @clerk/backend v2. node_modules junction to wp05-monitor-main tree; npm ls clean."
   },
   "executed": {
     "security-negatives": {
@@ -25,6 +26,13 @@
       "failed": 0,
       "skipped": 0,
       "note": "Unauthenticated negatives against https://staging.nyayagrid.com"
+    },
+    "audit-clerk": {
+      "result": "PARTIAL",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 1,
+      "note": "Matter audit export unauthenticated negative PASS; authenticated forged-id probe blocked on storageState"
     },
     "setup": {
       "result": "SKIPPED_NON_INTERACTIVE",
@@ -38,11 +46,11 @@
       "reason": "No playwright/.auth/staging-user.json — operator Clerk identity required"
     },
     "prosecution-clerk": {
-      "result": "SKIPPED_BLOCKED",
-      "passed": 0,
+      "result": "PARTIAL",
+      "passed": 1,
       "failed": 0,
-      "skipped": 4,
-      "reason": "Same Clerk staging identity dependency as Professional"
+      "skipped": 3,
+      "note": "Unauthenticated prosecution case negative PASS; authenticated smokes blocked on storageState"
     },
     "tenant-isolation": {
       "result": "PARTIAL",
@@ -53,10 +61,13 @@
     },
     "q9-acceptance": {
       "result": "SKIPPED_BLOCKED",
+      "passed": 0,
+      "failed": 0,
+      "skipped": 1,
       "reason": "Requires staging-user.json"
     },
     "fullSuiteWithoutCredentials": {
-      "passed": 5,
+      "passed": 7,
       "failed": 0,
       "skipped": 15,
       "exitCode": 0

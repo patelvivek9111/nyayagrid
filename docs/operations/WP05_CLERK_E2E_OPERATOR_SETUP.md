@@ -86,8 +86,11 @@ npm run staging:auth:setup
 ## Run suites
 
 ```bash
-# Auth negatives only (no credentials required) — expect 4 passed
+# Auth negatives only (no credentials required) — expect 4 passed (security project)
 npx playwright test -c playwright.staging.config.ts --project=security-negatives
+
+# Audit export negatives + authenticated probe — expect 1 passed, 1 skipped without storageState
+npx playwright test -c playwright.staging.config.ts --project=audit-clerk
 
 # Full staging suite (setup + authenticated projects)
 npx playwright test -c playwright.staging.config.ts

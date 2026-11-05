@@ -55,6 +55,15 @@ export default defineConfig({
       },
     },
     {
+      name: "audit-clerk",
+      testMatch: /audit\.clerk\.spec\.ts/,
+      dependencies: ["setup"],
+      use: {
+        ...devices["Desktop Chrome"],
+        ...authStorage,
+      },
+    },
+    {
       name: "tenant-isolation",
       testMatch: /tenant-isolation\.clerk\.spec\.ts/,
       dependencies: ["setup"],
