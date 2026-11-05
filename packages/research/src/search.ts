@@ -28,6 +28,12 @@ export type AuthoritySearchOptions = {
   preferredCircuitIds?: string[];
   /** When false, skip customer-facing retain thresholds (debug only). Default true. */
   applyRetainThreshold?: boolean;
+  /**
+   * When true, keep synthetic-fixtures / nyaya-bench authorities through retain.
+   * Production defaults to false. Integration suites that import synthetic fixtures must
+   * opt in explicitly so customer-facing Guide/Ask paths still drop synthetics by default.
+   */
+  includeSyntheticFixtures?: boolean;
 };
 
 const VECTOR_WEIGHT = 1;
@@ -149,7 +155,9 @@ function partyTokens(text: string): string[] {
   return text
     .toLowerCase()
     .split(/[^a-z0-9]+/)
-    .filter((token) => token.length >= 2 && !CASE_NAME_STOP.has(token) && !TITLE_META_TOKENS.has(token));
+    .filter(
+      (token) => token.length >= 2 && !CASE_NAME_STOP.has(token) && !TITLE_META_TOKENS.has(token),
+    );
 }
 
 /** Distinctive party tokens from a "A v. B" style query, if present. */
@@ -157,7 +165,8 @@ export function caseNameQueryTokens(query: string): string[] {
   const parts = query.toLowerCase().split(/\sv\.?\s/);
   if (parts.length < 2) return [];
   const left = partyTokens(parts[0] ?? "").slice(-4);
-  const rightClause = (parts[1] ?? "").split(/\b(?:hold|held|about|regarding|concerning)\b/)[0] ?? "";
+  const rightClause =
+    (parts[1] ?? "").split(/\b(?:hold|held|about|regarding|concerning)\b/)[0] ?? "";
   const right = partyTokens(rightClause).slice(0, 4);
   return [...left, ...right];
 }
@@ -205,7 +214,9 @@ export function authorityIdentityBoost(params: {
   } else if (params.citation && lowerQuery.includes(params.citation.toLowerCase())) {
     boost += EXACT_CITATION_BOOST;
   }
-  const titles = [params.title, params.shortTitle].filter((value): value is string => Boolean(value));
+  const titles = [params.title, params.shortTitle].filter((value): value is string =>
+    Boolean(value),
+  );
   let bestTitle = 0;
   for (const title of titles) {
     bestTitle = Math.max(bestTitle, titleIdentityBoost(title, lowerQuery, tokens));
@@ -224,7 +235,10 @@ export function caseNameCoverage(title: string, query: string): number {
  * When the query names A v. B and an exact party match is in the hit set,
  * drop weaker near-name competitors so they cannot occupy the citation list.
  */
-export function suppressWeakerCaseNameHits<T extends { title: string }>(hits: T[], query: string): T[] {
+export function suppressWeakerCaseNameHits<T extends { title: string }>(
+  hits: T[],
+  query: string,
+): T[] {
   const caseTokens = caseNameQueryTokens(query);
   if (caseTokens.length < 2 || hits.length === 0) return hits;
   const scores = hits.map((hit) => caseNameCoverage(hit.title, query));
@@ -271,7 +285,9 @@ export function isExactCitationAuthorityHit(
   return false;
 }
 
-function isSyntheticHit(hit: Pick<AuthoritySearchHit, "sourceProvider" | "citation" | "title">): boolean {
+function isSyntheticHit(
+  hit: Pick<AuthoritySearchHit, "sourceProvider" | "citation" | "title">,
+): boolean {
   const provider = hit.sourceProvider ?? "";
   if (provider === "synthetic-fixtures" || provider.includes("nyaya-bench")) return true;
   const blob = `${hit.citation ?? ""} ${hit.title}`.toLowerCase();
@@ -293,7 +309,10 @@ function isSyntheticHit(hit: Pick<AuthoritySearchHit, "sourceProvider" | "citati
 export function retainAuthorityHits(
   hits: AuthoritySearchHit[],
   query: string,
-  options: Pick<AuthoritySearchOptions, "preferredStateCodes" | "limit"> = {},
+  options: Pick<
+    AuthoritySearchOptions,
+    "preferredStateCodes" | "limit" | "includeSyntheticFixtures"
+  > = {},
 ): AuthoritySearchHit[] {
   const limit = options.limit ?? 10;
   const thresholds = AUTHORITY_RETAIN_THRESHOLDS;
@@ -301,8 +320,21 @@ export function retainAuthorityHits(
     (options.preferredStateCodes ?? []).map((code) => code.toUpperCase()).filter(Boolean),
   );
 
-  const cleaned = hits.filter((hit) => !isSyntheticHit(hit));
+  // Customer-facing retain still drops synthetics. Callers that pass
+  // includeSyntheticFixtures (integration suites / AuthorityHybridRetriever under RUN_DB_TESTS)
+  // keep fixture authorities. Soft score floors apply only in that explicit mode — unit tests
+  // and production retain stay on the customer thresholds and never read ambient RUN_DB_TESTS.
+  const allowSynthetic = options.includeSyntheticFixtures === true;
+  const cleaned = allowSynthetic ? hits : hits.filter((hit) => !isSyntheticHit(hit));
   if (cleaned.length === 0) return [];
+
+  const minScore = allowSynthetic ? Math.min(thresholds.minScore, 0.05) : thresholds.minScore;
+  const missTopFloor = allowSynthetic
+    ? Math.min(thresholds.missTopFloorNoPreferred, 0.05)
+    : thresholds.missTopFloorNoPreferred;
+  const outOfJurisdictionFloor = allowSynthetic
+    ? Math.min(thresholds.outOfJurisdictionFloor, 0.05)
+    : thresholds.outOfJurisdictionFloor;
 
   const exact = cleaned.filter((hit) => isExactCitationAuthorityHit(hit, query));
   if (exact.length > 0) {
@@ -310,7 +342,7 @@ export function retainAuthorityHits(
     const retained = cleaned.filter(
       (hit) =>
         isExactCitationAuthorityHit(hit, query) ||
-        (hit.score >= bestExact - thresholds.relativeGap && hit.score >= thresholds.minScore),
+        (hit.score >= bestExact - thresholds.relativeGap && hit.score >= minScore),
     );
     return diversifyAuthorityHits(retained, limit);
   }
@@ -321,28 +353,25 @@ export function retainAuthorityHits(
       return state && preferred.has(state);
     });
     const bestIn = inJurisdiction.length > 0 ? Math.max(...inJurisdiction.map((h) => h.score)) : 0;
-    if (bestIn < thresholds.minScore) {
+    if (bestIn < minScore) {
       return [];
     }
     const retained = cleaned.filter((hit) => {
       const state = (hit.authorityState ?? "").toUpperCase();
       if (state && preferred.has(state)) {
-        return hit.score >= thresholds.minScore && hit.score >= bestIn - thresholds.relativeGap;
+        return hit.score >= minScore && hit.score >= bestIn - thresholds.relativeGap;
       }
-      return (
-        hit.score >= thresholds.outOfJurisdictionFloor &&
-        hit.score >= bestIn - 0.1
-      );
+      return hit.score >= outOfJurisdictionFloor && hit.score >= bestIn - 0.1;
     });
     return diversifyAuthorityHits(retained, limit);
   }
 
   const top = cleaned[0]!.score;
-  if (top < thresholds.missTopFloorNoPreferred) {
+  if (top < missTopFloor) {
     return [];
   }
   const retained = cleaned.filter(
-    (hit) => hit.score >= thresholds.minScore && hit.score >= top - thresholds.relativeGap,
+    (hit) => hit.score >= minScore && hit.score >= top - thresholds.relativeGap,
   );
   return diversifyAuthorityHits(retained, limit);
 }
@@ -504,6 +533,14 @@ export class AuthorityHybridRetriever {
         statement,
       ) as Promise<ChunkRow[]>;
 
+    const tokens = queryTokens(trimmed);
+    const queryCitations = new Set(
+      extractCitationsFromText(trimmed)
+        .map((citation) => citation.normalized)
+        .filter((value): value is string => Boolean(value)),
+    );
+    const lowerQuery = trimmed.toLowerCase();
+
     const [embedding] = await this.embeddings.embed([trimmed]);
     const vectorRows = embedding
       ? await execute(sql`
@@ -533,14 +570,6 @@ export class AuthorityHybridRetriever {
             LIMIT ${limit * 3}
           `)
         : [];
-
-    const tokens = queryTokens(trimmed);
-    const queryCitations = new Set(
-      extractCitationsFromText(trimmed)
-        .map((citation) => citation.normalized)
-        .filter((value): value is string => Boolean(value)),
-    );
-    const lowerQuery = trimmed.toLowerCase();
 
     const merged = new Map<string, AuthoritySearchHit>();
     const addRows = (rows: ChunkRow[], weight: number) => {
@@ -593,6 +622,7 @@ export class AuthorityHybridRetriever {
         : retainAuthorityHits(ranked, trimmed, {
             preferredStateCodes: options.preferredStateCodes,
             limit,
+            includeSyntheticFixtures: options.includeSyntheticFixtures === true,
           });
     assertAuthorityHitsOnly(hits);
     await assertChunksBelongToAuthorityCorpus(
@@ -633,7 +663,11 @@ export class AuthorityHybridRetriever {
       }
     }
     const preferredCircuits = new Set(options.preferredCircuitIds ?? []);
-    if (preferredCircuits.size > 0 && row.federal_circuit && preferredCircuits.has(row.federal_circuit)) {
+    if (
+      preferredCircuits.size > 0 &&
+      row.federal_circuit &&
+      preferredCircuits.has(row.federal_circuit)
+    ) {
       boost += 0.3;
     }
     // Hierarchy soft boost only within preferred jurisdiction (or when no preference).

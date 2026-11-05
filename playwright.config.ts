@@ -52,7 +52,8 @@ export default defineConfig({
   testDir: "./e2e",
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
-  retries: process.env.CI ? 1 : 0,
+  // Residual CI flake budget for Ask/SSE races; keep non-CI at 0 for signal.
+  retries: process.env.CI ? 2 : 0,
   workers: 1,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
   timeout: 30_000,
@@ -71,10 +72,12 @@ export default defineConfig({
   ],
   webServer: [
     {
-      command: "npm run dev -w @nyayagrid/web",
+      // CI already runs `npm run build` before Playwright. Prefer `next start` there so
+      // cold compile storms cannot abort navigations mid-suite.
+      command: process.env.CI ? "npm run start -w @nyayagrid/web" : "npm run dev -w @nyayagrid/web",
       url: APP_HEALTH_URL,
-      reuseExistingServer: false,
-      timeout: 120_000,
+      reuseExistingServer: !process.env.CI,
+      timeout: 240_000,
       stdout: "pipe",
       stderr: "pipe",
       env: e2eEnv,
@@ -82,8 +85,8 @@ export default defineConfig({
     {
       command: "node scripts/e2e-inngest-dev.mjs",
       url: "http://127.0.0.1:8288",
-      reuseExistingServer: false,
-      timeout: 120_000,
+      reuseExistingServer: !process.env.CI,
+      timeout: 240_000,
       stdout: "pipe",
       stderr: "pipe",
       env: e2eEnv,

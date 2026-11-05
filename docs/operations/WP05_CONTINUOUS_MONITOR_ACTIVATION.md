@@ -23,6 +23,14 @@ They fail clearly if secrets are missing — never claim healthy notification co
 Configure via GitHub → Settings → Secrets and variables → Actions.
 Do not commit values. Fly staging secrets are separate and are **not** automatically available to Actions.
 
+### Operator status (2026-11-05)
+
+Repository Actions secrets for the six names above are **configured** on
+`patelvivek9111/nyayagrid` (names verified via `gh secret list`; values never logged).
+Scheduled execution still requires this workflow to exist on the **default branch**
+after an approved merge of PR #1. Do not claim live schedule or email coverage until
+post-merge scheduled runs and SMTP delivery are observed.
+
 ## State persistence
 
 - Path: `.monitor-state/staging-monitor-state.json` (gitignored)
