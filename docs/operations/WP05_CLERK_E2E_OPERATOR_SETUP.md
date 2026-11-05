@@ -104,7 +104,15 @@ Authenticated Professional / Prosecution / tenant-isolation / q9 projects **skip
 
 ## MFA certification note
 
-Successful automated or interactive sign-in does **not** by itself certify MFA enforcement. MFA policy unit acceptance lives under `packages/auth` (`mfa-acceptance.test.ts`). Live MFA demo remains an operator demonstration: enroll MFA, attempt access without second factor, confirm deny; then complete MFA and confirm allow. Keep `REQUIRE_CLERK_MFA` enabled on staging when certifying.
+Successful automated or interactive sign-in does **not** by itself certify MFA enforcement.
+
+NyayaGrid currently resolves Clerk identity via verified session cookies (`ClerkAuthProvider`); there is **no** in-repo `REQUIRE_CLERK_MFA` gate or `mfa-acceptance.test.ts` yet. MFA enforcement for WP-05 is therefore:
+
+1. **Clerk Dashboard (staging instance):** require MFA / second factor for synthetic E2E users (or org-wide MFA policy). Do **not** disable MFA to unblock `@clerk/testing`.
+2. **Live operator demo (required evidence):** enroll MFA on a synthetic user → attempt access without second factor → confirm Clerk denies → complete MFA → confirm `/api/v1/session` returns `{ ok: true, provider: "clerk" }`.
+3. **Interactive E2E path:** `STAGING_AUTH_INTERACTIVE=1` headed login so MFA is completed by a human once; reuse `playwright/.auth/staging-user.json`.
+
+Do not claim automated MFA enforcement PASS from unit tests that do not exist.
 
 ## Forbidden claims
 

@@ -9,6 +9,8 @@ import path from "node:path";
 
 const AUTH_FILE = path.join(process.cwd(), "playwright", ".auth", "staging-user.json");
 const hasAuth = fs.existsSync(AUTH_FILE);
+const FORGED = "00000000-0000-0000-0000-000000000000";
+const FORGED_ORG = "00000000-0000-0000-0000-000000000001";
 
 test.describe("Staging Clerk Professional", () => {
   test.skip(
@@ -47,10 +49,28 @@ test.describe("Staging Clerk Professional", () => {
   });
 
   test("forged matter id is rejected server-side", async ({ request }) => {
-    const res = await request.get("/api/v1/matters/00000000-0000-0000-0000-000000000000");
+    const res = await request.get(`/api/v1/matters/${FORGED}`);
     expect([401, 403, 404]).toContain(res.status());
     const body = (await res.json()) as { matter?: unknown };
     expect(body.matter).toBeUndefined();
+  });
+
+  test("forged matter documents are rejected server-side", async ({ request }) => {
+    const res = await request.get(`/api/v1/matters/${FORGED}/documents`);
+    expect([401, 403, 404]).toContain(res.status());
+    const body = (await res.json().catch(() => ({}))) as {
+      documents?: unknown;
+      items?: unknown;
+    };
+    expect(body.documents).toBeUndefined();
+    expect(body.items).toBeUndefined();
+  });
+
+  test("forged org member list is rejected (RBAC)", async ({ request }) => {
+    const res = await request.get(`/api/v1/organizations/${FORGED_ORG}/members`);
+    expect([401, 403, 404]).toContain(res.status());
+    const body = (await res.json().catch(() => ({}))) as { members?: unknown };
+    expect(body.members).toBeUndefined();
   });
 
   test("clients list is authorized when route exists", async ({ request }) => {

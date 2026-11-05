@@ -15,6 +15,7 @@ const AUTH_FILE_B = path.join(process.cwd(), "playwright", ".auth", "staging-use
 const hasAuth = fs.existsSync(AUTH_FILE);
 const hasAuthB = fs.existsSync(AUTH_FILE_B);
 const FORGED = "00000000-0000-0000-0000-000000000000";
+const FORGED_ORG = "00000000-0000-0000-0000-000000000001";
 const BASE = (process.env.STAGING_E2E_BASE_URL ?? "https://staging.nyayagrid.com").replace(
   /\/$/,
   "",
@@ -47,14 +48,46 @@ test.describe("Staging Clerk tenant isolation", () => {
       !hasAuth,
       "Missing playwright/.auth/staging-user.json — run auth.setup with Clerk staging identity",
     );
-    const res = await request.get(`/api/v1/prosecution/cases/${FORGED}`);
+    const res = await request.get(
+      `/api/v1/prosecution/cases/${FORGED}?organizationId=${FORGED_ORG}`,
+    );
     expect([401, 403, 404]).toContain(res.status());
     const body = (await res.json().catch(() => ({}))) as {
       criminalCase?: unknown;
       case?: unknown;
+      overview?: unknown;
     };
     expect(body.criminalCase).toBeUndefined();
     expect(body.case).toBeUndefined();
+    expect(body.overview).toBeUndefined();
+  });
+
+  test("authenticated user never receives forged matter documents payload", async ({
+    request,
+  }) => {
+    test.skip(
+      !hasAuth,
+      "Missing playwright/.auth/staging-user.json — run auth.setup with Clerk staging identity",
+    );
+    const res = await request.get(`/api/v1/matters/${FORGED}/documents`);
+    expect([401, 403, 404]).toContain(res.status());
+    const body = (await res.json().catch(() => ({}))) as {
+      documents?: unknown;
+      items?: unknown;
+    };
+    expect(body.documents).toBeUndefined();
+    expect(body.items).toBeUndefined();
+  });
+
+  test("authenticated user cannot manage members of forged org", async ({ request }) => {
+    test.skip(
+      !hasAuth,
+      "Missing playwright/.auth/staging-user.json — run auth.setup with Clerk staging identity",
+    );
+    const res = await request.get(`/api/v1/organizations/${FORGED_ORG}/members`);
+    expect([401, 403, 404]).toContain(res.status());
+    const body = (await res.json().catch(() => ({}))) as { members?: unknown };
+    expect(body.members).toBeUndefined();
   });
 
   test("second identity cannot list first identity org as owner without membership", async ({

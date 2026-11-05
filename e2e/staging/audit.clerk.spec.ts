@@ -39,4 +39,11 @@ test.describe("Staging Clerk audit export (authenticated)", () => {
     expect(body.events).toBeUndefined();
     expect(body.audit).toBeUndefined();
   });
+
+  test("authenticated session cannot leak audit events for forged matter", async ({ request }) => {
+    const res = await request.get(`/api/v1/matters/${FORGED}/audit/export`);
+    expect([401, 403, 404]).toContain(res.status());
+    const text = await res.text();
+    expect(text.toLowerCase()).not.toMatch(/privileged|attorney.?client|confidential client/);
+  });
 });
