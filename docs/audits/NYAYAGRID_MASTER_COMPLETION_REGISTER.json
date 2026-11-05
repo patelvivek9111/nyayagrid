@@ -755,7 +755,8 @@
       "evidence": [
         "WP-05 DEFAULT_ALERT_POLICIES + continuous-monitor evaluator (firing/resolved/dedupe/cooldown)",
         "packages/observability WP-05 monitoring unit tests 18/18 PASS (continuous-monitor, ops-health, alert-delivery, release-identity, alert-transport)",
-        "GitHub Actions workflow staging-continuous-monitor.yml (cron */5) on branch wp05/activate-staging-monitor @ 82b64206556e3b1c978db079b8ee6b29bf719d1e targeting main — NOT on main (404); scheduled runs NOT YET",
+        "GitHub Actions workflow staging-continuous-monitor.yml (cron */5) on branch wp05/activate-staging-monitor @ d8868dfbf5a214f013e923b6d4804cd24ed7e96e targeting main — NOT on main (404); scheduled runs NOT YET",
+        "PR #1 required CI SUCCESS on head d8868df (run https://github.com/patelvivek9111/nyayagrid/actions/runs/41969975451) — format/lint/typecheck/unit/build/AI-eval/E2E all green; awaiting operator merge approval",
         "Live monitor cycle PROBE_HEALTHY against staging.nyayagrid.com (wp05-continuous-monitor-last-cycle.json)",
         "Policy catalog wp05-alert-policy-catalog.json (unobservable signals explicitly NOT_FABRICATED)",
         "Staging SMTP synthetic ready-probe-failing HISTORICAL: firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z; Gmail human ack verified",
@@ -779,7 +780,7 @@
         "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false — post-merge observe >=2 scheduled runs + SMTP firing/dedupe/recovery"
       ],
       "HUMAN_APPROVAL": "Staging ready-probe Gmail ack HISTORICAL only; production on-call gated; merge monitor PR to main before claiming continuous scheduler",
-      "NEXT_ACTION": "Merge wp05/activate-staging-monitor (82b6420) to main with operator approval; verify repo secrets SMTP_HOST SMTP_PORT SMTP_USERNAME SMTP_PASSWORD EMAIL_FROM OPS_ALERT_TO (configured 2026-11-05T03:21Z); observe scheduled runs; do not claim production from staging SMTP ack",
+      "NEXT_ACTION": "Operator-approve and merge PR #1 exact SHA d8868dfbf5a214f013e923b6d4804cd24ed7e96e to main; confirm SMTP_* EMAIL_FROM OPS_ALERT_TO remain set; observe >=2 scheduled monitor runs + SMTP firing/dedupe/recovery; do not claim production from staging SMTP ack",
       "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED": true,
       "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED_AT": "2026-11-05T03:21:00Z",
       "GITHUB_ACTIONS_SMTP_SECRET_NAMES": [
@@ -791,7 +792,9 @@
         "OPS_ALERT_TO"
       ],
       "MONITOR_WORKFLOW_BRANCH": "wp05/activate-staging-monitor",
-      "MONITOR_WORKFLOW_HEAD": "82b64206556e3b1c978db079b8ee6b29bf719d1e",
+      "MONITOR_WORKFLOW_HEAD": "d8868dfbf5a214f013e923b6d4804cd24ed7e96e",
+      "MONITOR_PR_CI_RUN": "https://github.com/patelvivek9111/nyayagrid/actions/runs/41969975451",
+      "MONITOR_PR_CI_RESULT": "SUCCESS",
       "MONITOR_WORKFLOW_ON_MAIN": false,
       "DEFAULT_BRANCH_SCHEDULER_ACTIVE": false,
       "REAL_SCHEDULED_EXECUTIONS_OBSERVED": false,
@@ -1163,7 +1166,7 @@
     "SEC-MAL-01 ClamAV production verification",
     "SEC-LEGAL-01 Attorney Terms/Privacy",
     "OPS-BACKUP-01 engineering complete; staging PITR HISTORICAL PASS (do not re-run); production restore NOT VERIFIED",
-    "OPS-MON-01 18/18 monitoring tests + SMTP repo secrets configured 2026-11-05T03:21Z; workflow on wp05/activate-staging-monitor not main; scheduled runs pending; production on-call NOT VERIFIED",
+    "OPS-MON-01 monitoring tests PASS + SMTP secrets configured; PR #1 CI green @ d8868df (run 41969975451); workflow not on main until merge; scheduled runs pending; production on-call NOT VERIFIED",
     "OPS-DEP-01 PRODUCTION_DEPLOYED=NO; staging identity rollback HISTORICAL PASS; FIXABLE_NOW prod-ops engineering complete; WP-03E/WP-04/attorney/security carry-forward",
     "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — WP-01 scorer certified)"
   ],
@@ -1316,7 +1319,7 @@
         "PROD_OPS_PREFLIGHT_ENGINEERING": true,
         "PRODUCTION_DEPLOYED": false
       },
-      "note": "WP-05 NOT fully closed — external gates pending. FIXABLE_NOW prod-ops engineering complete on wp05/prod-ops-preflight @ b1e9c4db. Staging PITR, isolation, SMTP human ack, and identity rollback are HISTORICAL evidence (do not re-run PITR). Repo GitHub Actions SMTP secret names configured 2026-11-05T03:21Z; continuous monitor workflow lives on wp05/activate-staging-monitor (82b6420) until merged to main — scheduled runs not yet. PRODUCTION_DEPLOYED=NO. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production.",
+      "note": "WP-05 NOT fully closed — external gates pending. FIXABLE_NOW engineering complete: PR #1 CI SUCCESS @ d8868df (run 41969975451), SMTP Actions secrets configured, Clerk E2E harness on wp05/clerk-e2e-auth @ a36c7e9, prod-ops preflight on wp05/prod-ops-preflight @ 8ecd781. Staging PITR/isolation/SMTP human ack/identity rollback HISTORICAL. Continuous monitor awaits operator merge of PR #1 SHA d8868df to main before scheduled runs. Clerk authenticated Professional/Prosecution blocked on synthetic staging identities + interactive MFA. PRODUCTION_DEPLOYED=NO. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production.",
       "carryForward": [
         "WP-03E legal research gates",
         "WP-04 OCR/load",
