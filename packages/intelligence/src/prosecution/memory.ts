@@ -1,4 +1,7 @@
-import { partitionEvidenceByDefendant, separateProsecutionCaseIssues } from "../deepening/evidence-scope";
+import {
+  partitionEvidenceByDefendant,
+  separateProsecutionCaseIssues,
+} from "../deepening/evidence-scope";
 import { assertProvenance } from "../legal/standards";
 import type { SourceProvenance } from "../legal/types";
 import { suppressionPayload } from "./suppression-review";
@@ -109,7 +112,7 @@ export type EvidenceRecord = {
   collector: string | null;
   collectionDate: string | null;
   storageReference: string | null;
-  chainOfCustody: string[];
+  chainOfCustody: Array<string | Record<string, unknown>>;
   relatedDefendantIds: string[];
   relatedChargeIds: string[];
   relatedElementIds: string[];
@@ -444,7 +447,9 @@ export class ProsecutionWorkspace {
     snapshot.audits.push(event);
   }
 
-  createCase(input: Omit<CriminalCaseRecord, "createdAt" | "updatedAt" | "id"> & { id?: string }): CriminalCaseRecord {
+  createCase(
+    input: Omit<CriminalCaseRecord, "createdAt" | "updatedAt" | "id"> & { id?: string },
+  ): CriminalCaseRecord {
     const snapshot = this.bucket(input.organizationId);
     const record: CriminalCaseRecord = {
       ...input,
@@ -491,7 +496,12 @@ export class ProsecutionWorkspace {
     return record;
   }
 
-  addElement(input: Omit<ChargeElementRecord, "id" | "status"> & { id?: string; status?: ChargeElementStatus }): ChargeElementRecord {
+  addElement(
+    input: Omit<ChargeElementRecord, "id" | "status"> & {
+      id?: string;
+      status?: ChargeElementStatus;
+    },
+  ): ChargeElementRecord {
     const snapshot = this.bucket(input.organizationId);
     const charge = snapshot.charges.find((item) => item.id === input.chargeId);
     if (!charge) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge not found.");
@@ -527,7 +537,10 @@ export class ProsecutionWorkspace {
     assertTenant(input.organizationId, evidence.organizationId);
     assertSameCase(input.criminalCaseId, evidence.criminalCaseId);
     if (!(EVIDENCE_RELATIONSHIPS as readonly string[]).includes(input.relationship)) {
-      throw new ProsecutionError("INVALID_EVIDENCE_RELATIONSHIP", "Unsupported evidence relationship.");
+      throw new ProsecutionError(
+        "INVALID_EVIDENCE_RELATIONSHIP",
+        "Unsupported evidence relationship.",
+      );
     }
     assertProvenance(input.provenance);
     const record = { ...input, id: input.id ?? id("link") };
@@ -550,7 +563,9 @@ export class ProsecutionWorkspace {
     return record;
   }
 
-  addStatement(input: Omit<WitnessStatementRecord, "id"> & { id?: string }): WitnessStatementRecord {
+  addStatement(
+    input: Omit<WitnessStatementRecord, "id"> & { id?: string },
+  ): WitnessStatementRecord {
     const snapshot = this.bucket(input.organizationId);
     const witness = snapshot.witnesses.find((item) => item.id === input.witnessId);
     if (!witness) throw new ProsecutionError("ORPHAN_REFERENCE", "Witness not found.");
@@ -579,10 +594,19 @@ export class ProsecutionWorkspace {
     return record;
   }
 
-  addDisclosure(input: Omit<DisclosureCandidateRecord, "id" | "status"> & { id?: string; status?: DisclosureStatus; humanActor?: boolean }): DisclosureCandidateRecord {
+  addDisclosure(
+    input: Omit<DisclosureCandidateRecord, "id" | "status"> & {
+      id?: string;
+      status?: DisclosureStatus;
+      humanActor?: boolean;
+    },
+  ): DisclosureCandidateRecord {
     this.requireCase(input.organizationId, input.criminalCaseId);
     assertProvenance(input.provenance);
-    const status = transitionDisclosure({ next: input.status ?? "UNREVIEWED", humanActor: input.humanActor ?? false });
+    const status = transitionDisclosure({
+      next: input.status ?? "UNREVIEWED",
+      humanActor: input.humanActor ?? false,
+    });
     const record: DisclosureCandidateRecord = {
       id: input.id ?? id("disc-rev"),
       organizationId: input.organizationId,
@@ -605,7 +629,9 @@ export class ProsecutionWorkspace {
     return record;
   }
 
-  addProcedureIssue(input: Omit<ProcedureIssueRecord, "id"> & { id?: string }): ProcedureIssueRecord {
+  addProcedureIssue(
+    input: Omit<ProcedureIssueRecord, "id"> & { id?: string },
+  ): ProcedureIssueRecord {
     this.requireCase(input.organizationId, input.criminalCaseId);
     assertProvenance(input.provenance);
     const record = { ...input, id: input.id ?? id("proc") };
@@ -647,7 +673,10 @@ export class ProsecutionWorkspace {
 
   addPlea(input: Omit<PleaOfferRecord, "id"> & { id?: string }): PleaOfferRecord {
     if (!input.humanOwnerId) {
-      throw new ProsecutionError("PLEA_HUMAN_REQUIRED", "Plea records require a human owner. Nyaya does not recommend a plea.");
+      throw new ProsecutionError(
+        "PLEA_HUMAN_REQUIRED",
+        "Plea records require a human owner. Nyaya does not recommend a plea.",
+      );
     }
     this.requireCase(input.organizationId, input.criminalCaseId);
     assertProvenance(input.provenance);
@@ -707,7 +736,11 @@ export class ProsecutionWorkspace {
     const criminalCase = this.requireCase(input.organizationId, input.criminalCaseId);
     assertTimelineEventType(input.eventType);
     assertProvenance(input.provenance);
-    const record = { ...input, matterId: input.matterId ?? criminalCase.matterId, id: input.id ?? id("tl") };
+    const record = {
+      ...input,
+      matterId: input.matterId ?? criminalCase.matterId,
+      id: input.id ?? id("tl"),
+    };
     this.bucket(input.organizationId).timeline.push(record);
     return record;
   }
@@ -737,14 +770,19 @@ export class ProsecutionWorkspace {
     const issueFlags = snapshot.procedureIssues.filter((item) => item.criminalCaseId === caseId);
     const evidence = snapshot.evidence.filter((item) => item.criminalCaseId === caseId);
     const elementGaps = matrix.filter(
-      (row) => row.status === "NO_EVIDENCE_FOUND" || row.status === "CONFLICTED" || row.status === "UNKNOWN",
+      (row) =>
+        row.status === "NO_EVIDENCE_FOUND" ||
+        row.status === "CONFLICTED" ||
+        row.status === "UNKNOWN",
     );
     return {
       case: criminalCase,
       defendants,
       charges,
       hearings: snapshot.hearings.filter((item) => item.criminalCaseId === caseId),
-      openTasks: snapshot.tasks.filter((item) => item.criminalCaseId === caseId && item.status === "open"),
+      openTasks: snapshot.tasks.filter(
+        (item) => item.criminalCaseId === caseId && item.status === "open",
+      ),
       evidenceCount: evidence.length,
       discoveryCount: snapshot.discovery.filter((item) => item.criminalCaseId === caseId).length,
       witnessCount: snapshot.witnesses.filter((item) => item.criminalCaseId === caseId).length,
@@ -770,8 +808,14 @@ export class ProsecutionWorkspace {
         })),
       }),
       evidenceScope: partitionEvidenceByDefendant({
-        defendants: defendants.map((defendant) => ({ id: defendant.id, displayName: defendant.displayName })),
-        evidence: evidence.map((item) => ({ id: item.id, relatedDefendantIds: item.relatedDefendantIds })),
+        defendants: defendants.map((defendant) => ({
+          id: defendant.id,
+          displayName: defendant.displayName,
+        })),
+        evidence: evidence.map((item) => ({
+          id: item.id,
+          relatedDefendantIds: item.relatedDefendantIds,
+        })),
       }),
       ...suppressionPayload({
         jurisdiction: criminalCase.jurisdiction,
@@ -791,8 +835,17 @@ export class ProsecutionWorkspace {
   graph(organizationId: string, caseId: string) {
     const snapshot = this.bucket(organizationId);
     this.requireCase(organizationId, caseId);
-    const nodes: Array<{ nodeType: (typeof PROSECUTION_GRAPH_NODE_TYPES)[number]; id: string; provenance: SourceProvenance | null }> = [];
-    const edges: Array<{ fromId: string; toId: string; relationship: string; provenance: SourceProvenance }> = [];
+    const nodes: Array<{
+      nodeType: (typeof PROSECUTION_GRAPH_NODE_TYPES)[number];
+      id: string;
+      provenance: SourceProvenance | null;
+    }> = [];
+    const edges: Array<{
+      fromId: string;
+      toId: string;
+      relationship: string;
+      provenance: SourceProvenance;
+    }> = [];
     const criminalCase = snapshot.cases.find((item) => item.id === caseId)!;
     nodes.push({
       nodeType: "CriminalCase",
@@ -801,21 +854,41 @@ export class ProsecutionWorkspace {
     });
     for (const defendant of snapshot.defendants.filter((item) => item.criminalCaseId === caseId)) {
       nodes.push({ nodeType: "Defendant", id: defendant.id, provenance: defendant.provenance });
-      edges.push({ fromId: criminalCase.id, toId: defendant.id, relationship: "HAS_DEFENDANT", provenance: defendant.provenance });
+      edges.push({
+        fromId: criminalCase.id,
+        toId: defendant.id,
+        relationship: "HAS_DEFENDANT",
+        provenance: defendant.provenance,
+      });
     }
     for (const charge of snapshot.charges.filter((item) => item.criminalCaseId === caseId)) {
       nodes.push({ nodeType: "Charge", id: charge.id, provenance: charge.provenance });
-      edges.push({ fromId: charge.defendantId, toId: charge.id, relationship: "CHARGED_WITH", provenance: charge.provenance });
+      edges.push({
+        fromId: charge.defendantId,
+        toId: charge.id,
+        relationship: "CHARGED_WITH",
+        provenance: charge.provenance,
+      });
     }
     for (const element of snapshot.elements.filter((item) => item.criminalCaseId === caseId)) {
       nodes.push({ nodeType: "ChargeElement", id: element.id, provenance: element.provenance });
-      edges.push({ fromId: element.chargeId, toId: element.id, relationship: "HAS_ELEMENT", provenance: element.provenance });
+      edges.push({
+        fromId: element.chargeId,
+        toId: element.id,
+        relationship: "HAS_ELEMENT",
+        provenance: element.provenance,
+      });
     }
     for (const evidence of snapshot.evidence.filter((item) => item.criminalCaseId === caseId)) {
       nodes.push({ nodeType: "EvidenceItem", id: evidence.id, provenance: evidence.provenance });
     }
     for (const link of snapshot.evidenceLinks.filter((item) => item.criminalCaseId === caseId)) {
-      edges.push({ fromId: link.evidenceId, toId: link.targetId, relationship: link.relationship, provenance: link.provenance });
+      edges.push({
+        fromId: link.evidenceId,
+        toId: link.targetId,
+        relationship: link.relationship,
+        provenance: link.provenance,
+      });
     }
     for (const witness of snapshot.witnesses.filter((item) => item.criminalCaseId === caseId)) {
       nodes.push({ nodeType: "Witness", id: witness.id, provenance: witness.provenance });
@@ -839,10 +912,20 @@ export class ProsecutionWorkspace {
       nodes.push({ nodeType: "LegalIssue", id: issue.id, provenance: issue.provenance });
     }
     for (const officer of snapshot.officers.filter((item) => item.criminalCaseId === caseId)) {
-      nodes.push({ nodeType: "Officer", id: officer.id, provenance: { extractionOrigin: "human", humanEntered: true } });
+      nodes.push({
+        nodeType: "Officer",
+        id: officer.id,
+        provenance: { extractionOrigin: "human", humanEntered: true },
+      });
     }
-    for (const agency of snapshot.agencies.filter((item) => item.organizationId === organizationId)) {
-      nodes.push({ nodeType: "Agency", id: agency.id, provenance: { extractionOrigin: "human", humanEntered: true } });
+    for (const agency of snapshot.agencies.filter(
+      (item) => item.organizationId === organizationId,
+    )) {
+      nodes.push({
+        nodeType: "Agency",
+        id: agency.id,
+        provenance: { extractionOrigin: "human", humanEntered: true },
+      });
     }
     return { nodes, edges };
   }

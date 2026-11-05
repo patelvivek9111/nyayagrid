@@ -323,12 +323,18 @@
       "subsystem": "Evidence",
       "feature": "Chain of custody",
       "requirement": "Evidence inventory + CoC provenance",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["week4/chain-of-custody.ts", "schema typing drift string[] vs objects"],
+      "evidence": [
+        "ProsecutionCustodyTransfer typed jsonb (was string[])",
+        "normalizeCustody on evidence create",
+        "appendProsecutionEvidenceCustody append-only API",
+        "chain-of-custody.test.ts"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "pending",
+      "nextAction": "CI verify on feat/prosecution-memory-graph-coc; human UX for CoC still thin"
     },
     {
       "id": "PROS-DIS-01",

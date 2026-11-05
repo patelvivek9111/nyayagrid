@@ -27,6 +27,7 @@ import {
   prosecutionWitnesses,
   prosecutionWitnessStatements,
   type Database,
+  type ProsecutionCustodyTransfer,
   type RecordProvenance,
 } from "@nyayagrid/database";
 import { requireAnyCapability, requireCapability, writeAuditEvent } from "@nyayagrid/permissions";
@@ -36,6 +37,7 @@ import {
   separateProsecutionCaseIssues,
 } from "../deepening/evidence-scope";
 import { notifyProsecutionEvent } from "../week4/notifications";
+import { normalizeCustody, validateChainOfCustody } from "../week4/chain-of-custody";
 import { suppressionPayload } from "./suppression-review";
 import {
   EVIDENCE_RELATIONSHIPS,
@@ -51,6 +53,26 @@ import {
   type ChargeElementStatus,
 } from "./domain";
 import { buildDiscoveryDashboard } from "../week4/discovery-ops";
+
+function toStoredCustody(raw: unknown): ProsecutionCustodyTransfer[] {
+  return normalizeCustody(raw).map((transfer) => ({
+    actor: transfer.actor,
+    timestamp: transfer.timestamp,
+    from: transfer.from,
+    to: transfer.to,
+    location: transfer.location ?? null,
+    source: {
+      documentId: transfer.source.documentId ?? null,
+      authorityId: transfer.source.authorityId ?? null,
+      sourceSpan: transfer.source.sourceSpan ?? null,
+      sourcePage: transfer.source.sourcePage ?? null,
+      section: transfer.source.section ?? null,
+      extractionOrigin: transfer.source.extractionOrigin ?? null,
+      humanEntered: transfer.source.humanEntered ?? false,
+    },
+    notes: transfer.notes ?? null,
+  }));
+}
 
 async function authorize(
   db: Database,
@@ -713,7 +735,7 @@ export async function addProsecutionRecord(
         sourceAgency: (params.body.sourceAgency as string) ?? null,
         collector: (params.body.collector as string) ?? null,
         storageReference: (params.body.storageReference as string) ?? null,
-        chainOfCustody: (params.body.chainOfCustody as string[]) ?? [],
+        chainOfCustody: toStoredCustody(params.body.chainOfCustody),
         relatedDefendantIds,
         sensitivity: (params.body.sensitivity as string) ?? "standard",
         reviewStatus: (params.body.reviewStatus as string) ?? "received",
@@ -1392,4 +1414,104 @@ export async function createChargeWithElements(
       });
       return created;
     });
+}
+
+/**
+ * Append a custody transfer without rewriting prior history.
+ * Prior chain entries are preserved verbatim; only a new entry may be added.
+ */
+export async function appendProsecutionEvidenceCustody(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    caseId: string;
+    evidenceId: string;
+    transfer: unknown;
+  },
+) {
+  await authorize(db, {
+    userId: params.userId,
+    organizationId: params.organizationId,
+    action: "evidence",
+  });
+  const criminalCase = await requireCase(db, params.organizationId, params.caseId);
+  const [evidence] = await db
+    .select()
+    .from(prosecutionEvidenceItems)
+    .where(
+      and(
+        eq(prosecutionEvidenceItems.id, params.evidenceId),
+        eq(prosecutionEvidenceItems.organizationId, params.organizationId),
+        eq(prosecutionEvidenceItems.criminalCaseId, params.caseId),
+      ),
+    )
+    .limit(1);
+  if (!evidence) throw new ProsecutionError("NOT_FOUND", "Evidence item not found.", 404);
+
+  const incoming = toStoredCustody([params.transfer]);
+  if (incoming.length !== 1) {
+    throw new ProsecutionError(
+      "VALIDATION_ERROR",
+      "Exactly one custody transfer is required.",
+      400,
+    );
+  }
+  const nextTransfer = incoming[0]!;
+  const prior = Array.isArray(evidence.chainOfCustody)
+    ? (evidence.chainOfCustody as ProsecutionCustodyTransfer[])
+    : toStoredCustody(evidence.chainOfCustody);
+  // Freeze prior history — never mutate earlier entries.
+  const nextChain = [...prior.map((entry) => ({ ...entry })), nextTransfer];
+  const findings = validateChainOfCustody(
+    nextChain.map((entry) => ({
+      actor: entry.actor,
+      timestamp: entry.timestamp,
+      from: entry.from,
+      to: entry.to,
+      location: entry.location,
+      source: {
+        documentId: entry.source.documentId ?? undefined,
+        authorityId: entry.source.authorityId ?? undefined,
+        sourceSpan: entry.source.sourceSpan ?? undefined,
+        sourcePage: entry.source.sourcePage ?? undefined,
+        section: entry.source.section ?? undefined,
+        extractionOrigin: entry.source.extractionOrigin ?? undefined,
+        humanEntered: entry.source.humanEntered,
+      },
+      notes: entry.notes,
+    })),
+  );
+
+  const [updated] = await db
+    .update(prosecutionEvidenceItems)
+    .set({
+      chainOfCustody: nextChain,
+      updatedAt: new Date(),
+    })
+    .where(
+      and(
+        eq(prosecutionEvidenceItems.id, evidence.id),
+        eq(prosecutionEvidenceItems.organizationId, params.organizationId),
+      ),
+    )
+    .returning();
+  if (!updated) throw new ProsecutionError("UPDATE_FAILED", "Custody transfer was not saved.", 500);
+
+  await writeAuditEvent(db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    matterId: criminalCase.matterId,
+    action: "prosecution.evidence_custody_appended",
+    targetType: "evidence",
+    targetId: evidence.id,
+    metadata: {
+      criminalCaseId: params.caseId,
+      transferTo: nextTransfer.to,
+      priorLength: prior.length,
+      findings: findings.map((f) => f.code),
+    },
+  });
+
+  return { evidence: updated, findings, priorLength: prior.length };
 }
