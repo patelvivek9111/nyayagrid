@@ -1,12 +1,80 @@
 -- Prosecution case-scoped graph (PROS-GRAPH-01).
--- Upgrades stub tables created in 0018 (node_type/ref_id, from_ref/to_ref)
--- to reviewable node/edge schema. Stub rows are discarded (never productized).
--- Reverse with 0026_prosecution_case_graph.down.sql (restores 0018 stub shape).
+-- Upgrades stub tables from 0018 (node_type/ref_id, from_ref/to_ref)
+-- to reviewable node/edge schema WITHOUT discarding legacy rows.
+--
+-- Strategy:
+-- 1. Snapshot 0018 rows into *_0018_archive tables (full copy).
+-- 2. Drop stub tables (application never wrote productized data into them;
+--    archives retain every prior row for audit/rollback).
+-- 3. Create reviewable schema.
+-- 4. Best-effort backfill: UUID ref_id rows become proposed projection nodes;
+--    edges whose endpoints resolve become proposed edges (never auto-approved).
+-- 5. Non-UUID / unresolvable rows remain only in archives.
+--
+-- Retry: safe if already upgraded (node_kind present). Partial failure before
+-- DROP leaves originals intact; after archive+DROP, re-run recreates new tables
+-- and re-backfills from archives.
+-- Reverse: 0026_prosecution_case_graph.down.sql
 
-DROP TABLE IF EXISTS "prosecution_graph_edges";
-DROP TABLE IF EXISTS "prosecution_graph_nodes";
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1
+    FROM information_schema.columns
+    WHERE table_schema = 'public'
+      AND table_name = 'prosecution_graph_nodes'
+      AND column_name = 'node_kind'
+  ) THEN
+    RAISE NOTICE '0026: prosecution_graph_nodes already upgraded (node_kind present); skipping';
+    RETURN;
+  END IF;
 
-CREATE TABLE "prosecution_graph_nodes" (
+  -- Snapshot legacy rows (overwrite archive only when upgrading from stub).
+  DROP TABLE IF EXISTS "prosecution_graph_edges_0018_archive";
+  DROP TABLE IF EXISTS "prosecution_graph_nodes_0018_archive";
+
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'prosecution_graph_nodes'
+  ) THEN
+    EXECUTE 'CREATE TABLE "prosecution_graph_nodes_0018_archive" AS
+      SELECT * FROM "prosecution_graph_nodes"';
+  ELSE
+    CREATE TABLE "prosecution_graph_nodes_0018_archive" (
+      "id" uuid NOT NULL,
+      "organization_id" uuid NOT NULL,
+      "criminal_case_id" uuid NOT NULL,
+      "node_type" text NOT NULL,
+      "ref_id" text NOT NULL,
+      "provenance" jsonb NOT NULL,
+      "created_at" timestamp with time zone NOT NULL
+    );
+  END IF;
+
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'prosecution_graph_edges'
+  ) THEN
+    EXECUTE 'CREATE TABLE "prosecution_graph_edges_0018_archive" AS
+      SELECT * FROM "prosecution_graph_edges"';
+  ELSE
+    CREATE TABLE "prosecution_graph_edges_0018_archive" (
+      "id" uuid NOT NULL,
+      "organization_id" uuid NOT NULL,
+      "criminal_case_id" uuid NOT NULL,
+      "from_ref" text NOT NULL,
+      "to_ref" text NOT NULL,
+      "relationship" text NOT NULL,
+      "provenance" jsonb NOT NULL,
+      "created_at" timestamp with time zone NOT NULL
+    );
+  END IF;
+
+  DROP TABLE IF EXISTS "prosecution_graph_edges";
+  DROP TABLE IF EXISTS "prosecution_graph_nodes";
+END $$;
+
+CREATE TABLE IF NOT EXISTS "prosecution_graph_nodes" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   "organization_id" uuid NOT NULL,
   "criminal_case_id" uuid NOT NULL,
@@ -35,16 +103,16 @@ CREATE TABLE "prosecution_graph_nodes" (
   CONSTRAINT "prosecution_graph_nodes_status_chk" CHECK ("status" IN ('proposed','approved','rejected'))
 );
 
-CREATE UNIQUE INDEX "prosecution_graph_nodes_canonical_uidx"
+CREATE UNIQUE INDEX IF NOT EXISTS "prosecution_graph_nodes_canonical_uidx"
   ON "prosecution_graph_nodes" ("criminal_case_id", "canonical_entity_type", "canonical_entity_id");
-CREATE INDEX "prosecution_graph_nodes_case_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_case_idx"
   ON "prosecution_graph_nodes" ("criminal_case_id");
-CREATE INDEX "prosecution_graph_nodes_org_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_org_idx"
   ON "prosecution_graph_nodes" ("organization_id");
-CREATE INDEX "prosecution_graph_nodes_kind_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_kind_idx"
   ON "prosecution_graph_nodes" ("criminal_case_id", "node_kind");
 
-CREATE TABLE "prosecution_graph_edges" (
+CREATE TABLE IF NOT EXISTS "prosecution_graph_edges" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   "organization_id" uuid NOT NULL,
   "criminal_case_id" uuid NOT NULL,
@@ -80,13 +148,87 @@ CREATE TABLE "prosecution_graph_edges" (
   )
 );
 
-CREATE INDEX "prosecution_graph_edges_case_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_case_idx"
   ON "prosecution_graph_edges" ("criminal_case_id");
-CREATE INDEX "prosecution_graph_edges_org_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_org_idx"
   ON "prosecution_graph_edges" ("organization_id");
-CREATE INDEX "prosecution_graph_edges_from_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_from_idx"
   ON "prosecution_graph_edges" ("from_node_id");
-CREATE INDEX "prosecution_graph_edges_to_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_to_idx"
   ON "prosecution_graph_edges" ("to_node_id");
-CREATE INDEX "prosecution_graph_edges_status_idx"
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_status_idx"
   ON "prosecution_graph_edges" ("criminal_case_id", "status");
+
+-- Best-effort backfill from archives. Migrated stubs are proposed projections —
+-- never treated as verified relationships until human review.
+INSERT INTO "prosecution_graph_nodes" (
+  "id", "organization_id", "criminal_case_id", "node_kind", "canonical_entity_type",
+  "canonical_entity_id", "display_name", "provenance", "origin", "status", "metadata",
+  "created_at", "updated_at"
+)
+SELECT
+  a."id",
+  a."organization_id",
+  a."criminal_case_id",
+  CASE lower(a."node_type")
+    WHEN 'criminal_case' THEN 'criminal_case'
+    WHEN 'defendant' THEN 'defendant'
+    WHEN 'charge' THEN 'charge'
+    WHEN 'charge_element' THEN 'charge_element'
+    WHEN 'evidence' THEN 'evidence'
+    WHEN 'witness' THEN 'witness'
+    WHEN 'warrant' THEN 'warrant'
+    WHEN 'motion' THEN 'motion'
+    WHEN 'hearing' THEN 'hearing'
+    WHEN 'legal_issue' THEN 'legal_issue'
+    ELSE 'other'
+  END,
+  lower(a."node_type"),
+  a."ref_id"::uuid,
+  lower(a."node_type") || ':' || a."ref_id",
+  a."provenance",
+  'projection',
+  'proposed',
+  jsonb_build_object(
+    'legacyNodeType', a."node_type",
+    'legacyRefId', a."ref_id",
+    'migratedFrom', '0018'
+  ),
+  a."created_at",
+  a."created_at"
+FROM "prosecution_graph_nodes_0018_archive" a
+WHERE a."ref_id" ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+  AND NOT EXISTS (
+    SELECT 1 FROM "prosecution_graph_nodes" n WHERE n."id" = a."id"
+  )
+ON CONFLICT DO NOTHING;
+
+INSERT INTO "prosecution_graph_edges" (
+  "id", "organization_id", "criminal_case_id", "from_node_id", "to_node_id",
+  "relationship_type", "provenance", "origin", "status", "created_at", "updated_at"
+)
+SELECT
+  e."id",
+  e."organization_id",
+  e."criminal_case_id",
+  fn."id",
+  tn."id",
+  e."relationship",
+  e."provenance",
+  'projection',
+  'proposed',
+  e."created_at",
+  e."created_at"
+FROM "prosecution_graph_edges_0018_archive" e
+JOIN "prosecution_graph_nodes_0018_archive" fa
+  ON fa."criminal_case_id" = e."criminal_case_id"
+ AND (fa."ref_id" = e."from_ref" OR fa."id"::text = e."from_ref")
+JOIN "prosecution_graph_nodes" fn ON fn."id" = fa."id"
+JOIN "prosecution_graph_nodes_0018_archive" ta
+  ON ta."criminal_case_id" = e."criminal_case_id"
+ AND (ta."ref_id" = e."to_ref" OR ta."id"::text = e."to_ref")
+JOIN "prosecution_graph_nodes" tn ON tn."id" = ta."id"
+WHERE NOT EXISTS (
+  SELECT 1 FROM "prosecution_graph_edges" x WHERE x."id" = e."id"
+)
+ON CONFLICT DO NOTHING;

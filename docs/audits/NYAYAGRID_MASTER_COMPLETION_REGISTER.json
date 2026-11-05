@@ -1,6 +1,6 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_MASTER_PRODUCT_COMPLETION_EXECUTION",
+  "classification": "NYAYAGRID_PR07_POST_PR06_INTEGRATION",
   "generatedAt": "2026-11-03T22:57:29.530Z",
   "head": "7420710b13198813434c3c8b1a23126fa985f708",
   "branch": "feat/professional-contacts-folders",
@@ -432,7 +432,8 @@
         "unit: case-memory-db.test.ts status transitions + proposed!=verified",
         "integration: case-memory.integration.test.ts (RUN_DB_TESTS) isolation + audits",
         "audit actions prosecution.memory_*; no guilt/charging fields",
-        "local vitest suite load broken on Windows junctions — CI authoritative; helpers verified via tsx"
+        "local vitest suite load broken on Windows junctions — CI authoritative; helpers verified via tsx",
+        "0025 forward/rollback disposable smoke re-verified post-PR#6 main merge"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "464e358"
@@ -451,11 +452,15 @@
         "case-graph-db.ts + graph API/UI + case-section nav",
         "Disposable DB stub→upgrade and rollback smoke",
         "CI migrate SUCCESS on f09034b (awaiting full CI incl E2E)",
-        "CI SUCCESS run 42098640222 @ f09034b"
+        "CI SUCCESS run 42098640222 @ f09034b",
+        "0026 archives 0018 stub rows then backfills UUID refs as proposed projections",
+        "Disposable smoke: 3 archive / 2 proposed nodes / 1 proposed edge; non-UUID archive-only",
+        "Rollback restores stub rows from archives; post-0026 reviewable rows discarded (documented)",
+        "Merged origin/main 1549eb5 (PR #6) into PR #7 without conflict"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "f09034b5db3852140f68f0b5b626172233f16442",
-      "nextAction": "Operator merge after PR #6; PR #8 rebased onto graph tip"
+      "nextAction": "Confirm CI after data-preserving 0026; operator merge PR #7; then PR #8"
     },
     {
       "id": "PROS-AUD-01",
@@ -1412,7 +1417,7 @@
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
-  "updatedAt": "2026-11-05T20:38:54.250Z",
+  "updatedAt": "2026-11-05T21:12:00.000Z",
   "productContinuation": {
     "pr6": {
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",
