@@ -35,7 +35,10 @@ export const INVITEABLE_ROLE_KEYS = [
 ] as const;
 export type InviteableRoleKey = (typeof INVITEABLE_ROLE_KEYS)[number];
 
-export const OWNER_ASSIGNED_ROLE_KEYS = ["prosecution_office_admin", "supervising_prosecutor"] as const;
+export const OWNER_ASSIGNED_ROLE_KEYS = [
+  "prosecution_office_admin",
+  "supervising_prosecutor",
+] as const;
 
 export function isInviteableRoleKey(roleKey: string): roleKey is InviteableRoleKey {
   return (INVITEABLE_ROLE_KEYS as readonly string[]).includes(roleKey);

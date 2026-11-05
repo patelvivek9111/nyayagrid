@@ -104,12 +104,7 @@ export const updateClientSchema = createClientSchema
     status: z.enum(["active", "archived"]).optional(),
   });
 
-export const jurisdictionModeSchema = z.enum([
-  "state",
-  "federal",
-  "multi_jurisdiction",
-  "unknown",
-]);
+export const jurisdictionModeSchema = z.enum(["state", "federal", "multi_jurisdiction", "unknown"]);
 export const forumTypeSchema = z.enum(["state", "federal", "administrative", "other"]);
 export const choiceOfLawStatusSchema = z.enum([
   "none_known",
@@ -162,12 +157,7 @@ export const executionStrategySchema = z.enum(["auto", "fast", "deep"]);
 
 /** Ask-or-task entry point: `mode` controls whether the request is routed as Q&A, a forced agent
  * run, or auto-classified. Defaults to "auto" so existing ask-only callers keep working. */
-export const sourceScopeSchema = z.enum([
-  "case",
-  "legal_research",
-  "web",
-  "case_plus_legal",
-]);
+export const sourceScopeSchema = z.enum(["case", "legal_research", "web", "case_plus_legal"]);
 
 export type SourceScopeInput = z.infer<typeof sourceScopeSchema>;
 
@@ -203,7 +193,6 @@ export const runAgentTaskSchema = z.object({
   execute: z.boolean().optional(),
   conversationId: z.string().uuid().optional().nullable(),
 });
-
 
 export const reviewAgentApprovalSchema = z.object({
   action: z.enum(["approve", "edit_and_approve", "reject"]),
@@ -912,7 +901,11 @@ export const createTimeEntrySchema = z.object({
   organizationId: z.string().uuid(),
   matterId: z.string().uuid(),
   description: z.string().trim().min(1).max(2000),
-  minutes: z.number().int().min(1).max(24 * 60),
+  minutes: z
+    .number()
+    .int()
+    .min(1)
+    .max(24 * 60),
   source: z.enum(["manual", "chat", "draft"]).optional(),
   conversationId: z.string().uuid().optional().nullable(),
   draftId: z.string().uuid().optional().nullable(),
@@ -922,7 +915,12 @@ export const suggestTimeFromChatSchema = z.object({
   organizationId: z.string().uuid(),
   matterId: z.string().uuid(),
   conversationId: z.string().uuid(),
-  minutes: z.number().int().min(1).max(24 * 60).optional(),
+  minutes: z
+    .number()
+    .int()
+    .min(1)
+    .max(24 * 60)
+    .optional(),
 });
 
 export const reviewTimeEntrySchema = z.object({

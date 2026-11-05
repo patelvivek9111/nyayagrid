@@ -3,7 +3,11 @@ import type { Database } from "./index";
 import { permissions, roles } from "./schema/index";
 import { PROSECUTION_ROLE_DEFINITIONS } from "./system-roles";
 
-const OWNER_PROSECUTION_CAPABILITIES = ["prosecution.view", "prosecution.edit", "prosecution.review"];
+const OWNER_PROSECUTION_CAPABILITIES = [
+  "prosecution.view",
+  "prosecution.edit",
+  "prosecution.review",
+];
 
 /** Idempotently add prosecution roles and owner capabilities to an existing organization. */
 export async function ensureProsecutionRoles(db: Database, organizationId: string): Promise<void> {
@@ -50,7 +54,9 @@ export async function ensureProsecutionRoles(db: Database, organizationId: strin
   if (missing.length === 0) {
     // fall through to legal_support hardening
   } else {
-    await db.insert(permissions).values(missing.map((capability) => ({ roleId: owner.id, capability })));
+    await db
+      .insert(permissions)
+      .values(missing.map((capability) => ({ roleId: owner.id, capability })));
   }
 
   // Hardening: Legal Support must not retain prosecution.edit (consequential case edits).

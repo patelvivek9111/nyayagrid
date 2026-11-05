@@ -50,7 +50,9 @@ describe("system roles", () => {
       "legal_support",
       "prosecution_read_only",
     ]);
-    const reader = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "prosecution_read_only");
+    const reader = PROSECUTION_ROLE_DEFINITIONS.find(
+      (role) => role.key === "prosecution_read_only",
+    );
     expect(reader?.capabilities).not.toContain("prosecution.edit");
     expect(reader?.capabilities).not.toContain("prosecution.review");
     const prosecutor = PROSECUTION_ROLE_DEFINITIONS.find((role) => role.key === "prosecutor");

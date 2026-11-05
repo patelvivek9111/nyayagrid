@@ -65,7 +65,10 @@ export const PARTNER_CAPABILITIES: Capability[] = [
   "audit.view",
 ];
 
-const PROSECUTION_VIEW = ["prosecution.view", "documents.view"] as const satisfies readonly Capability[];
+const PROSECUTION_VIEW = [
+  "prosecution.view",
+  "documents.view",
+] as const satisfies readonly Capability[];
 const PROSECUTION_WORK = [
   "prosecution.view",
   "prosecution.edit",

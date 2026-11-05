@@ -64,9 +64,9 @@ export async function reconcileProfessionalSystemRolePermissions(
     const want = new Set<string>(def.capabilities);
     const missing = def.capabilities.filter((capability) => !have.has(capability));
     if (missing.length > 0) {
-      await db.insert(permissions).values(
-        missing.map((capability) => ({ roleId: role.id, capability })),
-      );
+      await db
+        .insert(permissions)
+        .values(missing.map((capability) => ({ roleId: role.id, capability })));
     }
     const extras = [...have].filter((capability) => !want.has(capability));
     if (extras.length > 0) {
