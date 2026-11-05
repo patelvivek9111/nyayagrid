@@ -59,6 +59,7 @@
     "ops:backup-rehearse": "node scripts/maintenance/rehearse-backup-restore.mjs",
     "ops:backup-freshness": "node scripts/maintenance/verify-backup-freshness.mjs",
     "ops:deploy-preflight": "node scripts/maintenance/deploy-preflight.mjs",
+    "ops:prod-ops-preflight": "node scripts/certification/wp05-prod-ops-preflight.mjs",
     "ops:staging-probe": "node scripts/certification/wp05b-staging-probe.mjs",
     "ops:pitr-verify": "node scripts/certification/wp05-pitr-verify.mjs",
     "ops:alert-rehearse": "tsx scripts/maintenance/alert-rehearse.mjs",

@@ -18,9 +18,15 @@ Do not create a production Fly application from this checklist without a separat
 - [x] Incident/recovery runbooks published (`docs/operations/WP05_INCIDENT_RUNBOOKS.md`)
 - [ ] Staging Clerk-authenticated E2E (Professional + Prosecution) PASS — blocked on test identity provisioning
 - [ ] Staging automated E2E (Professional + Prosecution) PASS with synthetic fixtures
-- [ ] GitHub Environment `production` reviewers configured
+- [x] GitHub Environment protection workflows shipped (`deploy-staging.yml`, `deploy-production-gate.yml`) — see `WP05_GITHUB_RELEASE_PROTECTION.md`
+- [ ] GitHub Environment `staging` + `production` required reviewers configured in GitHub UI (human)
+- [x] Neon recovery / retention policy documented (`WP05_NEON_RECOVERY_POLICY.md`; do not re-run PITR without regression)
+- [x] Storage/Redis recovery docs (`WP05_STORAGE_REDIS_RECOVERY.md`)
+- [x] Audit retention / secrets rotation / version provenance (`WP05_AUDIT_SECRETS_PROVENANCE.md`)
+- [x] Carry-forward gates explicit (`WP05_CARRY_FORWARD_GATES.md`: WP-03E, OCR, MFA, ClamAV, attorney, prod auth)
 - [ ] Secrets inventoried; no staging secrets reused casually
 - [x] Rollback image + DB restore runbooks signed (staging-verified; production ungated)
+- [x] `npm run ops:prod-ops-preflight` engineering inventory PASS
 
 ## Explicitly forbidden without new approval
 

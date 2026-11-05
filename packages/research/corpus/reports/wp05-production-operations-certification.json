@@ -1,50 +1,53 @@
 {
   "classification": "NYAYAGRID_WP05_PRODUCTION_OPERATIONS_CERTIFICATION",
-  "at": "2026-11-04T22:55:00.000Z",
+  "at": "2026-11-05T03:15:00.000Z",
+  "branch": "wp05/prod-ops-preflight",
   "productionDeployed": false,
   "gates": {
     "releasePipeline": {
-      "status": "STAGING_VERIFIED",
-      "evidence": ".github/workflows/deploy-staging.yml manual approval; ci.yml"
+      "status": "ENGINEERING_COMPLETE",
+      "evidence": ".github/workflows/deploy-staging.yml; .github/workflows/deploy-production-gate.yml; docs/operations/WP05_GITHUB_RELEASE_PROTECTION.md",
+      "humanRemaining": "Configure GitHub Environment required reviewers in UI"
     },
     "preflight": {
       "status": "ENGINEERING_COMPLETE",
-      "evidence": "scripts/maintenance/deploy-preflight.mjs; npm run ops:deploy-preflight"
+      "evidence": "scripts/maintenance/deploy-preflight.mjs; scripts/certification/wp05-prod-ops-preflight.mjs; npm run ops:deploy-preflight; npm run ops:prod-ops-preflight"
     },
     "databaseIsolation": {
       "status": "STAGING_VERIFIED",
-      "evidence": "wp05-product-branch-isolation.json"
+      "evidence": "wp05-product-branch-isolation.json; docs/operations/WP05_PRODUCT_CORPUS_ISOLATION.md"
     },
     "pitr": {
-      "status": "STAGING_VERIFIED",
-      "evidence": "wp05-pitr-verification.json PASS_WITH_EVIDENCE"
+      "status": "STAGING_VERIFIED_HISTORICAL",
+      "evidence": "wp05-pitr-verification.json PASS_WITH_EVIDENCE; docs/operations/WP05_NEON_RECOVERY_POLICY.md",
+      "note": "Do not re-run staging PITR unless regression"
     },
     "backupRetention": {
       "status": "DOCUMENTED",
-      "evidence": "Neon history retention ~6h noted; interim local 24h RPO"
+      "evidence": "Neon history retention ~6h noted; interim local 24h RPO; WP05_NEON_RECOVERY_POLICY.md"
     },
     "redis": {
-      "status": "STAGING_VERIFIED",
-      "evidence": "staging ready redis=ok"
+      "status": "STAGING_VERIFIED_DOCUMENTED",
+      "evidence": "staging ready redis=ok historically; docs/operations/WP05_STORAGE_REDIS_RECOVERY.md"
     },
     "storage": {
-      "status": "STAGING_VERIFIED",
-      "evidence": "staging ready storage=ok"
+      "status": "STAGING_VERIFIED_DOCUMENTED",
+      "evidence": "staging ready storage=ok historically; docs/operations/WP05_STORAGE_REDIS_RECOVERY.md"
     },
     "clamav": {
-      "status": "STAGING_VERIFIED",
+      "status": "CARRY_FORWARD",
       "note": "Production ClamAV certification still BLOCKED (WP-04)"
     },
     "ocr": {
-      "status": "BLOCKED",
-      "note": "OCR_PROVIDER=none; managed OCR + load test outstanding (WP-04)"
+      "status": "CARRY_FORWARD",
+      "note": "OCR managed provider + load outstanding (WP-04); OCR_PROVIDER=fixture blocked in deploy preflight"
     },
     "clerkMfa": {
-      "status": "BLOCKED",
-      "note": "Automated sign-in ≠ MFA enforcement certification"
+      "status": "CARRY_FORWARD",
+      "note": "Automated sign-in ≠ MFA enforcement certification (WP-04)"
     },
     "legalReview": {
-      "status": "BLOCKED",
+      "status": "CARRY_FORWARD",
       "note": "Attorney Terms/Privacy approval outstanding (SEC-LEGAL-01)"
     },
     "oncall": {
@@ -53,55 +56,66 @@
     },
     "runbooks": {
       "status": "ENGINEERING_COMPLETE",
-      "evidence": "docs/operations/WP05_INCIDENT_RUNBOOKS.md"
+      "evidence": "docs/operations/WP05_INCIDENT_RUNBOOKS.md; WP05_AUDIT_SECRETS_PROVENANCE.md"
     },
     "monitoringContinuous": {
-      "status": "PRODUCTION_READY_PENDING_APPROVAL",
-      "note": "GH Actions scheduler + evaluator shipped; live schedule executions must be observed post-push"
+      "status": "ENGINEERING_COMPLETE_PENDING_DEFAULT_BRANCH",
+      "note": "GH Actions scheduler + evaluator shipped; schedule requires workflow on default branch"
     },
     "clerkE2E": {
-      "status": "BLOCKED",
-      "note": "Specs added; authenticated Clerk staging run requires operator-provisioned test identities / storageState"
+      "status": "CARRY_FORWARD",
+      "note": "Authenticated Clerk staging run requires operator-provisioned test identities"
+    },
+    "wp03e": {
+      "status": "CARRY_FORWARD",
+      "note": "Legal research gates deferred"
+    },
+    "criticalSecurityFindings": {
+      "status": "CARRY_FORWARD",
+      "note": "Prior audit critical findings remain open"
+    },
+    "productionDeployAuth": {
+      "status": "CARRY_FORWARD",
+      "note": "PRODUCTION_DEPLOYED=false; PRODUCTION_DEPLOY_APPROVED required for APP_ENV=production"
     }
   },
   "categories": {
     "ENGINEERING_COMPLETE": [
-      "alert policy catalog",
-      "continuous monitor evaluator",
-      "deploy preflight",
-      "incident runbooks",
-      "staging deploy approval workflow"
+      "GitHub release protection workflows",
+      "deploy + prod-ops preflight",
+      "Neon recovery / retention policy docs",
+      "Storage/Redis recovery docs",
+      "Audit retention / secrets rotation / version provenance",
+      "Incident runbooks",
+      "Carry-forward gate inventory",
+      "Production deploy approval env-boundary blockers"
     ],
     "LOCAL_VERIFIED": [
-      "continuous-monitor unit tests",
-      "ops-health unit tests",
-      "alert-delivery unit tests"
+      "env-boundaries unit tests (incl. PRODUCTION_DEPLOY_APPROVED / OCR fixture)",
+      "ops-health / continuous-monitor unit tests (historical)"
     ],
     "STAGING_VERIFIED": [
-      "ready HEALTHY",
-      "PITR",
+      "ready HEALTHY (historical)",
+      "PITR PASS_WITH_EVIDENCE (historical; not re-run)",
       "product isolation",
-      "runtime credential rotation",
+      "runtime credential rotation (historical)",
       "SMTP ready-probe human ack",
       "deploy identity rollback"
     ],
-    "PRODUCTION_READY_PENDING_APPROVAL": [
-      "continuous monitor workflow (pending observed schedule runs after merge/push)",
-      "production release checklist items still open for WP-03E/WP-04"
-    ],
     "PRODUCTION_VERIFIED": [],
-    "BLOCKED": [
-      "production Fly app",
-      "Clerk MFA live certification",
-      "managed OCR",
-      "ClamAV production certification",
-      "attorney legal review",
-      "production on-call escalation",
-      "Clerk authenticated E2E without test identities"
+    "CARRY_FORWARD": [
+      "WP-03E legal research gates",
+      "WP-04 OCR/load",
+      "WP-04 Clerk MFA",
+      "WP-04 ClamAV production",
+      "Attorney Terms/Privacy",
+      "Critical security findings",
+      "Production deploy auth / Fly app"
     ]
   },
   "neonCorpusWrites": 0,
   "courtListenerCalls": 0,
   "paidAiCalls": 0,
-  "result": "WP05_STAGING_CERTIFIED_PRODUCTION_APPROVAL_PENDING"
+  "stagingDbTopologyChanged": false,
+  "result": "WP05_FIXABLE_NOW_ENGINEERING_COMPLETE_PRODUCTION_NOT_VERIFIED"
 }

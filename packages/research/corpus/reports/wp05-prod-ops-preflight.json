@@ -1,0 +1,136 @@
+{
+  "classification": "NYAYAGRID_WP05_PROD_OPS_PREFLIGHT",
+  "at": "2026-11-05T03:12:18.041Z",
+  "productionDeployed": false,
+  "neonCorpusWrites": 0,
+  "courtListenerCalls": 0,
+  "paidAiCalls": 0,
+  "stagingDbTopologyChanged": false,
+  "requiredArtifacts": {
+    "ok": true,
+    "missing": [],
+    "checked": 23
+  },
+  "historicalEvidence": {
+    "ok": true,
+    "missing": [],
+    "note": "Preserved; staging PITR not re-executed by this preflight"
+  },
+  "gates": {
+    "githubReleaseProtection": {
+      "status": "ENGINEERING_COMPLETE",
+      "note": "Staging + production gate workflows shipped; Environment reviewers are a human GitHub settings action",
+      "evidence": [
+        ".github/workflows/deploy-staging.yml",
+        ".github/workflows/deploy-production-gate.yml",
+        "docs/operations/WP05_GITHUB_RELEASE_PROTECTION.md"
+      ]
+    },
+    "flyDeploymentSafety": {
+      "status": "ENGINEERING_COMPLETE",
+      "note": "deploy-preflight + ops runbook; staging deploy rehearsed historically; PRODUCTION_DEPLOYED=false",
+      "evidence": [
+        "scripts/maintenance/deploy-preflight.mjs",
+        "docs/operations/WP05_OPS_RUNBOOK.md"
+      ]
+    },
+    "databaseTargetVerification": {
+      "status": "STAGING_VERIFIED",
+      "note": "Migration authorization + product/corpus isolation; staging product branch isolated",
+      "evidence": [
+        "packages/database/src/product-corpus-isolation.ts",
+        "packages/research/corpus/reports/wp05-product-branch-isolation.json"
+      ],
+      "historicalResult": "PASS"
+    },
+    "neonRecoveryPolicy": {
+      "status": "DOCUMENTED_STAGING_PITR_HISTORICAL",
+      "note": "Do not re-run staging PITR unless regression; production restore NOT VERIFIED",
+      "evidence": [
+        "docs/operations/WP05_NEON_RECOVERY_POLICY.md",
+        "docs/operations/WP05_MANAGED_PITR_OPERATOR_ACTION.md",
+        "packages/research/corpus/reports/wp05-pitr-verification.json"
+      ],
+      "historicalResult": "PASS_WITH_EVIDENCE"
+    },
+    "storageRedisRecovery": {
+      "status": "ENGINEERING_COMPLETE",
+      "note": "Recovery docs + staging ready redis/storage historically HEALTHY; production DR NOT VERIFIED",
+      "evidence": [
+        "docs/operations/WP05_STORAGE_REDIS_RECOVERY.md",
+        "docs/operations/WP05_INCIDENT_RUNBOOKS.md"
+      ]
+    },
+    "clamavProduction": {
+      "status": "CARRY_FORWARD",
+      "note": "WP-04 ClamAV production certification gap; staging ClamAV docs exist",
+      "evidence": [
+        "docs/operations/CLAMAV_STAGING.md",
+        "docs/operations/WP05_CARRY_FORWARD_GATES.md"
+      ]
+    },
+    "ocrRequirements": {
+      "status": "CARRY_FORWARD",
+      "note": "WP-04 OCR managed provider + load gate; OCR_PRODUCTION_GATE.md",
+      "evidence": [
+        "docs/security/OCR_PRODUCTION_GATE.md",
+        "docs/operations/WP05_CARRY_FORWARD_GATES.md"
+      ]
+    },
+    "clerkMfa": {
+      "status": "CARRY_FORWARD",
+      "note": "WP-04 Clerk MFA live certification outstanding",
+      "evidence": [
+        "docs/operations/WP05_CARRY_FORWARD_GATES.md"
+      ]
+    },
+    "monitoringEscalation": {
+      "status": "STAGING_VERIFIED_PRODUCTION_OPEN",
+      "note": "Staging SMTP ready-probe ack verified; production on-call / automated ack NOT VERIFIED",
+      "evidence": [
+        "docs/operations/WP05_ALERTING.md",
+        "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json"
+      ],
+      "historicalAck": "STAGING_SYNTHETIC_READY_PROBE_SMTP_ACK_PASS"
+    },
+    "runbooksAuditSecretsProvenance": {
+      "status": "ENGINEERING_COMPLETE",
+      "note": "Incident runbooks, audit retention, secrets rotation, rollback, version provenance documented",
+      "evidence": [
+        "docs/operations/WP05_INCIDENT_RUNBOOKS.md",
+        "docs/operations/WP05_AUDIT_SECRETS_PROVENANCE.md",
+        "packages/research/corpus/reports/wp05-staging-identity-rollback.json"
+      ],
+      "historicalRollback": "PASS"
+    }
+  },
+  "categories": {
+    "ENGINEERING_COMPLETE": [
+      "githubReleaseProtection",
+      "flyDeploymentSafety",
+      "storageRedisRecovery",
+      "runbooksAuditSecretsProvenance"
+    ],
+    "STAGING_VERIFIED": [
+      "databaseTargetVerification",
+      "neonRecoveryPolicy",
+      "monitoringEscalation"
+    ],
+    "CARRY_FORWARD": [
+      "clamavProduction",
+      "ocrRequirements",
+      "clerkMfa"
+    ],
+    "PRODUCTION_VERIFIED": []
+  },
+  "carryForwardUnresolved": [
+    "WP-03E legal research gates (SELECT-only corpus credential / live research)",
+    "WP-04 OCR managed provider + load",
+    "WP-04 Clerk MFA live verification",
+    "WP-04 ClamAV production verification",
+    "Attorney Terms/Privacy approval (SEC-LEGAL-01)",
+    "Critical security findings still open from prior audits",
+    "Production deploy authorization (no production Fly app)"
+  ],
+  "result": "WP05_FIXABLE_NOW_ENGINEERING_COMPLETE_PRODUCTION_NOT_VERIFIED"
+}

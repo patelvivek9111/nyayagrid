@@ -1,0 +1,77 @@
+# WP-05 — production release *protection* gate only.
+# Does NOT deploy. Does NOT create Fly apps. Does NOT run migrations.
+# Requires GitHub Environment "production" with required reviewers configured in repo settings.
+name: Production release gate (approval only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      git_sha:
+        description: "Immutable commit SHA proposed for a future production release"
+        required: true
+        type: string
+      confirm_no_deploy:
+        description: "Type NO_AUTOMATIC_DEPLOY to confirm this workflow never deploys"
+        required: true
+        type: string
+      carry_forward_ack:
+        description: "Type CARRY_FORWARD_ACK if WP-03E/WP-04/ClamAV/OCR/MFA/legal gates remain open"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  refuse-unless-confirmed:
+    name: Confirm gate-only semantics
+    runs-on: ubuntu-latest
+    steps:
+      - name: Refuse misconfigured dispatch
+        run: |
+          if [ "${{ inputs.confirm_no_deploy }}" != "NO_AUTOMATIC_DEPLOY" ]; then
+            echo "Refusing: confirm_no_deploy must be NO_AUTOMATIC_DEPLOY"
+            exit 1
+          fi
+          if [ "${{ inputs.carry_forward_ack }}" != "CARRY_FORWARD_ACK" ]; then
+            echo "Refusing: carry_forward_ack must be CARRY_FORWARD_ACK while external gates remain open"
+            exit 1
+          fi
+
+      - name: Checkout proposed SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.git_sha }}
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Engineering prod-ops preflight inventory
+        env:
+          APP_ENV: development
+          DATABASE_URL: postgresql://nyayagrid:nyayagrid@localhost:5432/nyayagrid
+          FEATURE_NEON_CORPUS_RESEARCH: "0"
+          GIT_SHA: ${{ inputs.git_sha }}
+        run: |
+          npm run ops:deploy-preflight
+          npm run ops:prod-ops-preflight
+
+  production-environment-approval:
+    name: Production environment reviewers
+    needs: refuse-unless-confirmed
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Record approval without deploying
+        run: |
+          echo "PRODUCTION_DEPLOYED=false"
+          echo "GitHub Environment 'production' reviewers approved gate recording for ${{ inputs.git_sha }}."
+          echo "This job intentionally performs ZERO Fly / Neon / secret mutations."
+          echo "Do not treat Environment approval as authorization to create a production Fly app."
+          echo "Remaining external deps: WP-03E, WP-04 OCR/ClamAV/Clerk MFA, attorney Terms/Privacy, critical security findings, production deploy auth."

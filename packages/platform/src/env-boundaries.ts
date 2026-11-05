@@ -121,6 +121,37 @@ export function evaluateEnvironmentBoundaries(
     });
   }
 
+  if (appEnv === "production" && !isTruthy(read(env, "PRODUCTION_DEPLOY_APPROVED"))) {
+    findings.push({
+      code: "PRODUCTION_DEPLOY_NOT_APPROVED",
+      severity: "blocker",
+      message:
+        "APP_ENV=production requires PRODUCTION_DEPLOY_APPROVED=1 from a separate human approval. WP-05 workflows never set this automatically.",
+    });
+  }
+
+  if (
+    appEnv === "production" &&
+    /nyayagrid-staging/i.test(read(env, "FLY_APP") || read(env, "FLY_APP_NAME"))
+  ) {
+    findings.push({
+      code: "STAGING_FLY_APP_IN_PRODUCTION_ENV",
+      severity: "blocker",
+      message: "APP_ENV=production must not target Fly app nyayagrid-staging.",
+    });
+  }
+
+  if (
+    (appEnv === "production" || appEnv === "staging") &&
+    read(env, "OCR_PROVIDER").toLowerCase() === "fixture"
+  ) {
+    findings.push({
+      code: "OCR_FIXTURE_IN_DEPLOYED_ENV",
+      severity: "blocker",
+      message: "OCR_PROVIDER=fixture is forbidden in staging/production.",
+    });
+  }
+
   return findings;
 }
 

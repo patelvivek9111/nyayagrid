@@ -62,4 +62,37 @@ describe("WP-05 environment boundaries", () => {
       expect(f.message).not.toMatch(/secret_pass|secret_user/);
     }
   });
+
+  it("blocks production without PRODUCTION_DEPLOY_APPROVED", () => {
+    const findings = evaluateEnvironmentBoundaries({
+      APP_ENV: "production",
+      DATABASE_URL: "postgresql://u:p@db.example/nyayagrid",
+      AUTH_PROVIDER: "clerk",
+      MALWARE_SCANNER: "clamav",
+    });
+    expect(findings.some((f) => f.code === "PRODUCTION_DEPLOY_NOT_APPROVED")).toBe(true);
+  });
+
+  it("blocks OCR fixture in staging", () => {
+    const findings = evaluateEnvironmentBoundaries({
+      APP_ENV: "staging",
+      DATABASE_URL: "postgresql://u:p@db.example/nyayagrid",
+      AUTH_PROVIDER: "clerk",
+      MALWARE_SCANNER: "clamav",
+      OCR_PROVIDER: "fixture",
+    });
+    expect(findings.some((f) => f.code === "OCR_FIXTURE_IN_DEPLOYED_ENV")).toBe(true);
+  });
+
+  it("allows production only when explicitly approved", () => {
+    const blockers = environmentBoundaryBlockers({
+      APP_ENV: "production",
+      DATABASE_URL: "postgresql://u:p@db.example/nyayagrid",
+      AUTH_PROVIDER: "clerk",
+      MALWARE_SCANNER: "clamav",
+      PRODUCTION_DEPLOY_APPROVED: "1",
+      FLY_APP: "nyayagrid-prod",
+    });
+    expect(blockers).toHaveLength(0);
+  });
 });
