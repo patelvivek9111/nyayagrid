@@ -54,7 +54,9 @@ describe("redactLogText", () => {
     expect(redactLogText("https://accounts.example/sign-up?__clerk_ticket=abc.def")).toBe(
       "[redacted]",
     );
-    expect(redactLogText("/sign-up?__clerk_ticket=abc.def")).toBe("/sign-up?__clerk_ticket=[redacted]");
+    expect(redactLogText("/sign-up?__clerk_ticket=abc.def")).toBe(
+      "/sign-up?__clerk_ticket=[redacted]",
+    );
   });
 });
 
