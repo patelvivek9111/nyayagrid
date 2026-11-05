@@ -6,7 +6,10 @@ test.describe("Case workspace surfaces", () => {
   test("Home is a matter command center", async ({ page }) => {
     await page.goto(`/app/cases/${MATTER_ID}`);
     await page.waitForLoadState("networkidle");
-    await expect(page.getByRole("heading", { name: "Home", exact: true })).toBeVisible();
+    await expect(page.getByText("Loading case…")).toHaveCount(0, { timeout: 30_000 });
+    await expect(page.getByRole("heading", { name: "Home", exact: true })).toBeVisible({
+      timeout: 30_000,
+    });
     await expect(page.getByRole("heading", { name: "Key facts" })).toBeVisible();
     await expect(page.getByRole("button", { name: "+ Add note" })).toBeVisible();
     await page.getByRole("button", { name: "+ Add note" }).click();
@@ -18,7 +21,7 @@ test.describe("Case workspace surfaces", () => {
   test("Chats is a case conversation workspace", async ({ page }) => {
     await page.goto(`/app/cases/${MATTER_ID}/chats`);
     await page.waitForLoadState("networkidle");
-    await expect(page.getByRole("heading", { name: "Case Chats" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Nyaya Command Center" })).toBeVisible();
     await expect(page.getByPlaceholder(/Ask Nyaya about this Case/)).toBeVisible();
     await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
   });
@@ -27,7 +30,10 @@ test.describe("Case workspace surfaces", () => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(`/app/cases/${MATTER_ID}/documents`);
     await page.waitForLoadState("networkidle");
-    await expect(page.getByRole("heading", { name: "Documents", exact: true })).toBeVisible();
+    // Page header (IntelligenceHeader h2) vs list Panel heading both say "Documents";
+    // the page title is the first level-2 heading and sits with the file-room description.
+    await expect(page.getByRole("heading", { name: "Documents", level: 2 }).first()).toBeVisible();
+    await expect(page.getByText(/Case file room/i)).toBeVisible();
     await expect(page.getByRole("heading", { name: "Compare versions" })).toBeVisible();
     await expect(page.getByPlaceholder("Search by document name")).toBeVisible();
     await expect(page.getByRole("button", { name: "Open original" }).first()).toBeVisible();

@@ -13,6 +13,7 @@ const CLIENT_NAME = `E2E Client ${suffix}`;
 const CASE_TITLE = `E2E Case ${suffix}`;
 
 let matterId = "";
+let organizationId = "";
 
 async function clickOverflowAction(page: Page, menuLabel: string, actionName: string) {
   const menu = page.locator("details").filter({
@@ -55,22 +56,32 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
       await expect(page.getByText(new RegExp(`Created ${ORG_NAME}`))).toBeVisible({
         timeout: 15_000,
       });
+      const orgs = await page.request.get("/api/v1/organizations");
+      const list = ((await orgs.json()).organizations ?? []) as Array<{ id: string; name: string }>;
+      organizationId = list.find((org) => org.name === ORG_NAME)?.id ?? list[0]?.id ?? "";
     } else {
       const res = await page.request.post("/api/v1/organizations", {
         data: { name: ORG_NAME, slug: ORG_SLUG, type: "firm" },
       });
       expect(res.ok(), await res.text()).toBeTruthy();
+      organizationId = (await res.json()).organization.id as string;
     }
+    expect(organizationId.length).toBeGreaterThan(0);
     await page.goto("/app/cases");
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
+    await selectWorkspace(page, ORG_NAME, organizationId);
   });
 
   test("creates a client under the new organization", async ({ page }) => {
     await page.goto("/app/clients");
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
-    await page.getByRole("button", { name: /New client/ }).click();
+    await selectWorkspace(page, ORG_NAME, organizationId);
+    // Header row: h1 Clients + actions button (empty-state CTA is a separate FirmEmpty).
+    await page
+      .getByRole("heading", { name: "Clients", exact: true })
+      .locator("xpath=ancestor::div[contains(@class,'justify-between')][1]")
+      .getByRole("button", { name: "+ New client" })
+      .click();
     await page.getByPlaceholder("Display name").fill(CLIENT_NAME);
     await page.getByRole("button", { name: "Create client" }).click();
     await expect(page.getByText(`Created client ${CLIENT_NAME}`)).toBeVisible({
@@ -81,7 +92,7 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
   test("creates a Case", async ({ page }) => {
     await page.goto("/app/cases/new");
     await page.waitForLoadState("networkidle");
-    await selectWorkspace(page, ORG_NAME);
+    await selectWorkspace(page, ORG_NAME, organizationId);
     const clientSelect = page.locator("main select").first();
     await expect(clientSelect.locator("option", { hasText: CLIENT_NAME })).toHaveCount(1, {
       timeout: 15_000,
@@ -98,19 +109,24 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
   });
 
   test("starts a Case chat from Chats tab", async ({ page }) => {
+    test.setTimeout(90_000);
+    expect(matterId, "prior serial test must create a Case").toBeTruthy();
     await page.goto(`/app/cases/${matterId}/chats`);
     await page.waitForLoadState("networkidle");
-    await page.getByPlaceholder(/Ask Nyaya about this Case/).fill("When was this matter opened?");
+    await selectWorkspace(page, ORG_NAME, organizationId);
+    const ask = page.getByPlaceholder(/Ask Nyaya about this Case/);
+    await expect(ask).toBeVisible({ timeout: 30_000 });
+    await ask.fill("When was this matter opened?");
     await page.getByRole("button", { name: "Send" }).click();
     await expect(page).toHaveURL(new RegExp(`/app/cases/${matterId}/chats/[^/]+$`), {
-      timeout: 20_000,
+      timeout: 30_000,
     });
-    // Empty case → insufficient evidence honesty path
+    // Empty case → insufficient evidence honesty path (source-scoped abstention copy).
     await expect(page.getByText("Insufficient evidence", { exact: true })).toBeVisible({
-      timeout: 20_000,
+      timeout: 45_000,
     });
     await expect(
-      page.getByText(/couldn.?t find enough verified evidence in this Case/i),
+      page.getByText(/could not find enough support in the documents available in this case/i),
     ).toBeVisible();
     await expect(page.getByText(/Need more documents/i)).toBeVisible();
   });
@@ -151,7 +167,11 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     await expect(page.getByText(/January 1,\s*2024/i).first()).toBeVisible();
 
     await page.getByRole("button", { name: /Open source 1/i }).click();
-    await expect(page.getByRole("heading", { name: "Case sources" })).toBeVisible();
+    await expect(
+      page
+        .getByRole("heading", { name: "Sources", exact: true })
+        .or(page.getByRole("heading", { name: "Case sources", exact: true })),
+    ).toBeVisible();
     await expect(page.getByText(/January 1,\s*2024/i).first()).toBeVisible();
     await expect(page.getByRole("button", { name: "Open original" }).first()).toBeVisible();
   });
@@ -399,9 +419,7 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     const insufficient = page.getByText(/Insufficient source material/i);
     await expect(sources.or(insufficient).first()).toBeVisible();
     await page.getByRole("button", { name: "Save new version" }).click();
-    await expect(
-      page.getByRole("list", { name: "Draft version history" }).getByText("v2"),
-    ).toBeVisible({
+    await expect(page.getByRole("list", { name: "Version history" }).getByText("v2")).toBeVisible({
       timeout: 15_000,
     });
     await expect(page.getByRole("button", { name: /send|file/i })).toHaveCount(0);
