@@ -1,6 +1,6 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_PR07_POST_PR06_INTEGRATION",
+  "classification": "NYAYAGRID_PR08_INTEGRATION_AND_PROFESSIONAL_COMPLETION",
   "generatedAt": "2026-11-03T22:57:29.530Z",
   "head": "7420710b13198813434c3c8b1a23126fa985f708",
   "branch": "feat/professional-contacts-folders",
@@ -280,11 +280,16 @@
         "clients.view / clients.edit capability gates + contact.* audit events",
         "unit: contacts-folders-schema.test.ts",
         "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS) org isolation",
-        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)"
+        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)",
+        "UI: /app/contacts workspace + client link/unlink",
+        "UI: matter Documents folders panel + document move",
+        "DELETE contact client-link API",
+        "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
+        "PR #8 retargeted to main after PR #7 merge 71989c1"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
-      "nextAction": "Confirm CI on PR #8 after graph tip sync; operator merge after #6 then #7; UI still optional"
+      "nextAction": "Confirm CI on PR #8 tip; operator merge after green CI"
     },
     {
       "id": "PROF-FOLDER-01",
@@ -305,11 +310,16 @@
         "matter access + documents.view/edit; safe rename/move; no cycles",
         "unit: folders.test.ts + contacts-folders-schema.test.ts",
         "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS)",
-        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)"
+        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)",
+        "UI: /app/contacts workspace + client link/unlink",
+        "UI: matter Documents folders panel + document move",
+        "DELETE contact client-link API",
+        "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
+        "PR #8 retargeted to main after PR #7 merge 71989c1"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
-      "nextAction": "Confirm CI on PR #8 after graph tip sync; operator merge after #6 then #7; UI still optional"
+      "nextAction": "Confirm CI on PR #8 tip; operator merge after green CI"
     },
     {
       "id": "PROS-RBAC-01",
@@ -1417,7 +1427,7 @@
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
-  "updatedAt": "2026-11-05T21:12:00.000Z",
+  "updatedAt": "2026-11-05T22:43:14.162Z",
   "productContinuation": {
     "pr6": {
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",

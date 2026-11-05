@@ -25,6 +25,7 @@ describe("Sidebar workspace switcher presentation", () => {
     expect(sidebar).toContain("Other workspaces");
     expect(sidebar).toContain('href="/app"');
     expect(sidebar).toContain('href="/app/clients"');
+    expect(sidebar).toContain('href="/app/contacts"');
     expect(sidebar).toContain('href="/app/calendar"');
     expect(sidebar).toContain('href="/app/time"');
     expect(sidebar).toContain('href="/app/billing"');

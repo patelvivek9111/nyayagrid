@@ -279,6 +279,12 @@ export function GlobalSidebar() {
           active={pathname.startsWith("/app/clients")}
         />
         <WorkspaceNavLink
+          href="/app/contacts"
+          label="Contacts"
+          title="People who are not clients — counsel, witnesses, experts"
+          active={pathname.startsWith("/app/contacts")}
+        />
+        <WorkspaceNavLink
           href="/app/calendar"
           label="Calendar"
           title="Upcoming deadlines and tasks"

@@ -106,3 +106,48 @@ export async function POST(request: Request, { params }: Params) {
     return handleRouteError(error);
   }
 }
+
+export async function DELETE(request: Request, { params }: Params) {
+  try {
+    const { contactId } = await params;
+    const { db, user } = await requireUser(request.headers);
+    const url = new URL(request.url);
+    const linkId = url.searchParams.get("linkId");
+    if (!linkId) return jsonError("VALIDATION_ERROR", "linkId is required", 400);
+
+    const [contact] = await db.select().from(contacts).where(eq(contacts.id, contactId)).limit(1);
+    if (!contact) return jsonError("NOT_FOUND", "Contact not found", 404);
+    await requireCapability(db, {
+      userId: user.id,
+      organizationId: contact.organizationId,
+      capability: "clients.edit",
+    });
+
+    const [removed] = await db
+      .delete(clientContacts)
+      .where(
+        and(
+          eq(clientContacts.id, linkId),
+          eq(clientContacts.contactId, contactId),
+          eq(clientContacts.organizationId, contact.organizationId),
+        ),
+      )
+      .returning();
+    if (!removed) return jsonError("NOT_FOUND", "Client link not found", 404);
+
+    await writeAuditEvent(db, {
+      organizationId: contact.organizationId,
+      actorUserId: user.id,
+      action: "contact.unlinked_client",
+      targetType: "client_contact",
+      targetId: removed.id,
+      metadata: {
+        clientId: removed.clientId,
+        contactId: removed.contactId,
+      },
+    });
+    return jsonOk({ ok: true });
+  } catch (error) {
+    return handleRouteError(error);
+  }
+}
