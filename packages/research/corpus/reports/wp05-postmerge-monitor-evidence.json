@@ -1,0 +1,55 @@
+{
+  "classification": "NYAYAGRID_WP05_POST_MERGE_MONITOR_EVIDENCE",
+  "generatedAt": "2026-11-05T14:45:00.000Z",
+  "mainHead": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+  "pr1": {
+    "merged": true,
+    "sourceHead": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+    "mergeCommit": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+    "mergedAt": "2026-11-05T14:30:10Z"
+  },
+  "pr2": {
+    "githubMerged": true,
+    "mergedAt": "2026-11-05T14:30:12Z",
+    "mergeCommitSha": "d8868dfbf5a214f013e923b6d4804cd24ed7e96e",
+    "semantics": "ALREADY_REACHABLE_AUTO_CLOSE",
+    "doNotRevert": true
+  },
+  "pr3": {
+    "mergeCommit": "af376941dd90ddd1eb9969d10815eb9e9811dd9d"
+  },
+  "monitorWorkflowOnMain": true,
+  "workflowPath": ".github/workflows/staging-continuous-monitor.yml",
+  "runsObserved": [
+    {
+      "id": "42046460657",
+      "event": "workflow_dispatch",
+      "conclusion": "SUCCESS",
+      "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+      "branch": "main",
+      "createdAt": "2026-11-05T14:35:22Z",
+      "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42046460657"
+    }
+  ],
+  "realScheduledExecutionsObserved": false,
+  "monitoringAcceptanceClaimable": false,
+  "stagingReady": {
+    "url": "https://staging.nyayagrid.com/api/health/ready",
+    "ok": true,
+    "status": "HEALTHY",
+    "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+    "appEnv": "staging",
+    "clamav": "ok",
+    "clamavMode": "live",
+    "ocr": "disabled",
+    "neonCorpusResearch": "off",
+    "verificationClass": "CURRENT_VERIFIED"
+  },
+  "gates": {
+    "PRODUCTION_DEPLOYED": "NO",
+    "NEON_CORPUS_WRITES": 0,
+    "PAID_AI_CALLS": 0,
+    "COURTLISTENER_CALLS": 0,
+    "WP06_STARTED": "NO"
+  }
+}

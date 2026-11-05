@@ -1,20 +1,38 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-05T14:15:41.566Z",
-  "head": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+  "generatedAt": "2026-11-05T14:42:13.615Z",
+  "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
   "branch": "wp05/prod-ops-preflight",
   "mainMerge": {
-    "pr": 3,
-    "mergeCommit": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
-    "approvedHead": "81acba9698e4ea312c345be532461b294c3a6359",
-    "sourceBranch": "wp05/ci-baseline-repairs",
-    "scope": "CI/E2E/research baseline repairs; not prod-ops-preflight ops docs merge"
+    "pr": 1,
+    "mergeCommit": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+    "sourceHead": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+    "includesPr3": {
+      "pr": 3,
+      "mergeCommit": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+      "approvedHead": "81acba9698e4ea312c345be532461b294c3a6359",
+      "remoteCi": {
+        "run": "42015520866",
+        "conclusion": "SUCCESS"
+      }
+    },
+    "scope": "PR #1 merged continuous staging monitor onto main (source 7a8ea91). PR #3 CI baseline already on main ancestry. PRODUCTION_DEPLOYED=NO."
   },
   "remoteCi": {
-    "run": "42015520866",
-    "conclusion": "SUCCESS",
-    "head": "81acba9698e4ea312c345be532461b294c3a6359"
+    "note": "Post-merge monitor workflow_dispatch observed; default-branch CI for PR #3 historical SUCCESS",
+    "pr3": {
+      "run": "42015520866",
+      "conclusion": "SUCCESS",
+      "head": "81acba9698e4ea312c345be532461b294c3a6359"
+    },
+    "monitorDispatch": {
+      "run": "42046460657",
+      "conclusion": "SUCCESS",
+      "event": "workflow_dispatch",
+      "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+      "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42046460657"
+    }
   },
   "productCompletionInventory": {
     "methodology": "Requirement rows where product is Professional or Prosecution (includes corpus integration rows); honest status from requirements[] — no production claims from staging-only or CI-only evidence",
@@ -98,7 +116,7 @@
     "p1RemainingCount": 8
   },
   "featureInventoryAudit": {
-    "methodology": "Map tracked Professional/Prosecution/Shared requirements to product feature areas; statuses are requirement-row honesty (CI/local vs authenticated staging vs production). Staging SMTP/PITR/rollback remain HISTORICAL_VERIFIED. No production certification from staging alone.",
+    "methodology": "Map tracked Professional/Prosecution/Shared requirements to product feature areas; statuses are requirement-row honesty (CI/local vs authenticated staging vs production). Staging SMTP/PITR/rollback remain HISTORICAL_VERIFIED. Monitor workflow NOW on main; scheduled acceptance pending. No production certification from staging alone.",
     "verificationLanes": {
       "localOrCi": "Unit/integration/Playwright CI or local harness",
       "authenticatedStaging": "Clerk-authenticated staging E2E — currently BLOCKED on synthetic identities / interactive MFA",
@@ -147,7 +165,7 @@
           "CORPUS-13"
         ],
         "status": "BLOCKED",
-        "note": "WP-03E corpus credential provisioning required",
+        "note": "WP-03E corpus SELECT-only credential provisioning required; staging neonCorpusResearch=off",
         "lane": "blocked"
       },
       "aiDrafting": {
@@ -269,6 +287,13 @@
           "Merged main af376941dd90ddd1eb9969d10815eb9e9811dd9d; CI run 42015520866 SUCCESS"
         ]
       }
+    },
+    "postMergeOps": {
+      "monitorWorkflowOnMain": true,
+      "realScheduledExecutionsObserved": false,
+      "stagingReadyCurrentVerified": true,
+      "stagingGitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "productionDeployed": false
     }
   },
   "productScope": {
@@ -338,7 +363,7 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "WP-05 final verification 2026-11-05: PR #3 merged main @ af376941dd90ddd1eb9969d10815eb9e9811dd9d (approved 81acba9698e4ea312c345be532461b294c3a6359; CI 42015520866; same-document contradiction restored). PR #1 HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed monitor-only 16 files NOT merged — SAFE_TO_MERGE pending CI green + operator approval. PR #2 must NOT be merged. PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; WP06_STARTED=NO. Monitoring scheduled-run acceptance cannot be claimed until PR #1 merges to default branch. Do not mark production certification from staging alone.",
+    "note": "WP-05 POST-MERGE audit 2026-11-05T14:42:13.615Z: main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (PR #1 merge; source 7a8ea91be8392f8c7d770e3699a403151e01f0ed). PR #3 @ af376941dd90ddd1eb9969d10815eb9e9811dd9d. Monitor workflow ON main; workflow_dispatch 42046460657 SUCCESS; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false. PR #2 GitHub MERGED via already-reachable close @ d8868dfbf5a214f013e923b6d4804cd24ed7e96e — do not revert. Staging ready CURRENT_VERIFIED gitSha=add3af38a4c00c6cec631b70981a1c855b660f38. PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; COURTLISTENER_CALLS=0; WP06_STARTED=NO. Staging ≠ production certification.",
     "verifiedComplete": 17,
     "implementedUnverified": 3,
     "partial": 28,
@@ -368,7 +393,8 @@
         "e2e/professional.spec.ts"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROF-MATTER-01",
@@ -384,7 +410,8 @@
         "e2e/case-workspace.spec.ts"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROF-DOC-01",
@@ -400,7 +427,8 @@
         "packages/documents"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P1"
     },
     {
       "id": "PROF-DOC-02",
@@ -423,7 +451,8 @@
         "packages/documents/src/wp04-final-acceptance.test.ts (RUN_DB_TESTS=1 CLAMAV_LIVE=1)",
         "OCR failure never marks READY; native text skips OCR; bounded load p50/p95 measured locally",
         "docs/security/OCR_PRODUCTION_GATE.md",
-        "docs/audits/WP04_FINAL_CLOSURE.md"
+        "docs/audits/WP04_FINAL_CLOSURE.md",
+        "CURRENT_VERIFIED staging ready ocr=disabled / ocrProvider=none @ add3af38a4c00c6cec631b70981a1c855b660f38 — STAGING_LIVE_VERIFIED remains false"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
@@ -442,7 +471,8 @@
         "e2e/case-intelligence.spec.ts"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROF-MEM-01",
@@ -458,7 +488,8 @@
         "packages/intelligence/src/memory"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROF-GRAPH-01",
@@ -473,7 +504,8 @@
         "e2e/graph-relevance.spec.ts"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROF-RES-01",
@@ -511,7 +543,8 @@
         "e2e/professional.spec.ts draft generate"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P1"
     },
     {
       "id": "PROF-BILL-01",
@@ -526,7 +559,8 @@
         "e2e/firm-workspace.spec.ts smoke"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROF-ROLE-01",
@@ -541,7 +575,8 @@
         "packages/database/src/system-roles.ts owner/lawyer/staff/client_guest only"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P1"
     },
     {
       "id": "PROF-CONTACT-01",
@@ -556,7 +591,8 @@
         "No contacts schema found"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P3"
     },
     {
       "id": "PROF-FOLDER-01",
@@ -569,7 +605,8 @@
       "releaseBlocker": false,
       "evidence": [],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P3"
     },
     {
       "id": "PROS-RBAC-01",
@@ -586,7 +623,8 @@
         "39/39 CURRENT_VERIFIED"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "PROS-CASE-01",
@@ -602,7 +640,8 @@
         "packages/intelligence/src/prosecution/postgres.ts"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "PROS-EV-01",
@@ -618,7 +657,8 @@
         "schema typing drift string[] vs objects"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROS-DIS-01",
@@ -635,7 +675,8 @@
         "e2e Stage 4"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "PROS-SAFE-01",
@@ -651,7 +692,8 @@
         "e2e asserts"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "PROS-ISO-01",
@@ -668,7 +710,8 @@
         "permissions integration tests"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "PROS-WF-01",
@@ -684,7 +727,8 @@
         "e2e/prosecution-warrant.spec.ts"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P1"
     },
     {
       "id": "PROS-MEM-01",
@@ -699,7 +743,8 @@
         "memory.ts fixture-style only; no prosecution Memory UI"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROS-GRAPH-01",
@@ -714,7 +759,8 @@
         "phase14 tables exist; graph-bridge projection-only"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROS-AUD-01",
@@ -729,7 +775,8 @@
         "Events written; no dedicated audit route"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P2"
     },
     {
       "id": "PROS-BENCH-01",
@@ -744,7 +791,8 @@
         "npm run bench:prosecution CURRENT_VERIFIED 39/39 this session"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "PROS-EXT-01",
@@ -762,7 +810,8 @@
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09",
-      "remediation": "WP-01 scorer fix landed; remaining: fresh authorized Cite continuation/canary under NEW auth only (WP-08), not silent resume of closed session"
+      "remediation": "WP-01 scorer fix landed; remaining: fresh authorized Cite continuation/canary under NEW auth only (WP-08), not silent resume of closed session",
+      "priority": "P0"
     },
     {
       "id": "AI-ROUTE-01",
@@ -783,7 +832,8 @@
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "d08da37",
-      "remediation": "Confirm staging/production env has flag ON (default) and paid keys; keep live_ai gated separately"
+      "remediation": "Confirm staging/production env has flag ON (default) and paid keys; keep live_ai gated separately",
+      "priority": "P0"
     },
     {
       "id": "AI-GROUND-01",
@@ -799,7 +849,8 @@
         "WP-01 external Cite scorer false-positive fabrication cleared offline; production grounding path still separately unverified"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "AI-EXT-SCORER-01",
@@ -819,7 +870,8 @@
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "8075f47",
-      "remediation": "Closed by WP-01; do not treat offline rescore as new live Cite accuracy; 71 Cite still unexecuted"
+      "remediation": "Closed by WP-01; do not treat offline rescore as new live Cite accuracy; 71 Cite still unexecuted",
+      "priority": "P0"
     },
     {
       "id": "CORPUS-01",
@@ -890,7 +942,8 @@
         "STAGING_LIVE_VERIFIED": false,
         "PRODUCTION_VERIFIED": false,
         "ATTORNEY_APPROVED": null
-      }
+      },
+      "priority": "P0"
     },
     {
       "id": "SEC-ISO-01",
@@ -907,7 +960,8 @@
         "no RLS by design"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P0"
     },
     {
       "id": "SEC-MAL-01",
@@ -922,7 +976,8 @@
         "WP-04 final: pipeline clean->ready + EICAR->scan_blocked + scanner-down fail-closed + concurrent scans",
         "Download blocked for uploaded/awaiting_malware_scan/scan_blocked/malware_scan_failed",
         "docker nyayagrid-clamav healthy; verify-clamav.mjs; malware.test.ts CLAMAV_LIVE=1",
-        "docs/operations/WP04_DEPLOYMENT_READINESS_CHECKLIST.md"
+        "docs/operations/WP04_DEPLOYMENT_READINESS_CHECKLIST.md",
+        "CURRENT_VERIFIED staging ready clamav=ok clamavMode=live @ gitSha=add3af38a4c00c6cec631b70981a1c855b660f38 — scanner connectivity only; upload EICAR quarantine rehearsal still STAGING_LIVE_VERIFIED=false"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
@@ -932,8 +987,10 @@
         "LOCAL_LIVE_VERIFIED": true,
         "STAGING_LIVE_VERIFIED": false,
         "PRODUCTION_VERIFIED": false,
-        "ATTORNEY_APPROVED": null
-      }
+        "ATTORNEY_APPROVED": null,
+        "STAGING_SCANNER_CONNECTIVITY_OBSERVED": true
+      },
+      "priority": "P0"
     },
     {
       "id": "SEC-LEGAL-01",
@@ -958,7 +1015,8 @@
         "STAGING_LIVE_VERIFIED": false,
         "PRODUCTION_VERIFIED": false,
         "ATTORNEY_APPROVED": false
-      }
+      },
+      "priority": "P0"
     },
     {
       "id": "OPS-BACKUP-01",
@@ -977,7 +1035,10 @@
         "Staging physical isolation COMPLETE: product branch wp05-product-staging; corpus remains on production branch",
         "packages/research/corpus/reports/wp05-pitr-verification.json",
         "docs/operations/WP05_NEON_RECOVERY_POLICY.md (retention ~6h Free)",
-        "docs/operations/WP05_STORAGE_REDIS_RECOVERY.md (storage/Redis DR documented; production restore NOT VERIFIED)"
+        "docs/operations/WP05_STORAGE_REDIS_RECOVERY.md (storage/Redis DR documented; production restore NOT VERIFIED)",
+        "CURRENT_VERIFIED 2026-11-05 staging GET /api/health/ready → ok=true status=HEALTHY gitSha=add3af38a4c00c6cec631b70981a1c855b660f38 appEnv=staging database/storage/redis/clamav=ok clamavMode=live ocr=disabled neonCorpusResearch=off",
+        "CURRENT_VERIFIED staging GET /api/v1/health → status=ok appEnv=staging malwareScanner=clamav ocrProvider=none",
+        "PRODUCTION_DEPLOYED=NO — staging evidence is not production certification"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
@@ -1006,7 +1067,8 @@
       },
       "rpo": "Historical checkpoint at parent_timestamp; Neon history retention ~6h; interim local 24h still documented",
       "rto": "Branch readiness + RO verify measuredQueryMs~3840ms; full app failover RTO still ops-runbook 4h interim / target <=1h",
-      "remediation": "Do not overwrite production/corpus branch; production restore remains gated"
+      "remediation": "Do not overwrite production/corpus branch; production restore remains gated",
+      "priority": "P0"
     },
     {
       "id": "OPS-MON-01",
@@ -1018,19 +1080,21 @@
       "severity": "P1",
       "releaseBlocker": true,
       "evidence": [
-        "PR #1 HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed CI SUCCESS runs 42039633576 (PR) and 42039624436 (push); SAFE_TO_MERGE=YES; operator approval required; workflow still NOT on main; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false",
+        "PR #1 MERGED to main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (source HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed) at 2026-11-05T14:30:10Z — staging-continuous-monitor.yml NOW on default branch",
+        "Post-merge workflow_dispatch run 42046460657 SUCCESS on main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (Probe staging ready all steps SUCCESS) — NOT a schedule event",
+        "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false (API: only workflow_dispatch=1 for staging-continuous-monitor.yml as of audit)",
+        "PR #2 GitHub state MERGED=true at 2026-11-05T14:30:12Z merge_commit_sha=d8868dfbf5a214f013e923b6d4804cd24ed7e96e (=head; already-reachable close). All PR #2 commits are ancestors of a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d. Tip tree deltas vs main: hardcoded OPS_ALERT_TO gmail fallback (correctly ABSENT on main) + exact-citation search path intentionally dropped in cfca05b baseline slim. DO NOT REVERT. No separate merge commit added unique product content beyond ancestry.",
         "WP-05 DEFAULT_ALERT_POLICIES + continuous-monitor evaluator (firing/resolved/dedupe/cooldown)",
         "packages/observability WP-05 monitoring unit tests 18/18 PASS (continuous-monitor, ops-health, alert-delivery, release-identity, alert-transport)",
-        "GitHub Actions workflow staging-continuous-monitor.yml (cron */5) on branch wp05/activate-staging-monitor @ 7a8ea91be8392f8c7d770e3699a403151e01f0ed (monitor-only 16-file delta onto post-PR#3 main) — NOT on main; scheduled runs NOT YET; SAFE_TO_MERGE pending CI green + operator approval",
-        "PR #1 updated to HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed (rebase/merge of PR #3 baseline; monitor-only 16 files). Prior CI green at d8868df (run 41969975451) is HISTORICAL for previous tip. Current tip SAFE_TO_MERGE pending CI green on 7a8ea91be8392f8c7d770e3699a403151e01f0ed + operator approval. PR #2 must NOT be merged.",
-        "Live monitor cycle PROBE_HEALTHY against staging.nyayagrid.com (wp05-continuous-monitor-last-cycle.json)",
-        "Policy catalog wp05-alert-policy-catalog.json (unobservable signals explicitly NOT_FABRICATED)",
         "Staging SMTP synthetic ready-probe-failing HISTORICAL: firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z; Gmail human ack verified",
         "packages/research/corpus/reports/wp05-monitoring-human-ack-verified.json",
-        "docs/operations/WP05_ALERTING.md + WP05_INCIDENT_RUNBOOKS.md escalation matrix"
+        "docs/operations/WP05_ALERTING.md + WP05_INCIDENT_RUNBOOKS.md escalation matrix",
+        "CURRENT_VERIFIED 2026-11-05 staging GET /api/health/ready → ok=true status=HEALTHY gitSha=add3af38a4c00c6cec631b70981a1c855b660f38 appEnv=staging database/storage/redis/clamav=ok clamavMode=live ocr=disabled neonCorpusResearch=off",
+        "CURRENT_VERIFIED staging GET /api/v1/health → status=ok appEnv=staging malwareScanner=clamav ocrProvider=none",
+        "PRODUCTION_DEPLOYED=NO — staging evidence is not production certification"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
+      "lastVerifiedSha": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
@@ -1042,11 +1106,10 @@
         "Production on-call escalation NOT VERIFIED",
         "Automated acknowledgment integration not tested",
         "Request-metric policies (5xx/AI/worker heartbeat/TLS) lack telemetry — not fabricated",
-        "staging-continuous-monitor.yml not on default branch main — merge wp05/activate-staging-monitor + operator approval required before cron runs",
-        "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false — Monitoring acceptance (genuine scheduled runs, SMTP firing/recovery) CANNOT be claimed until PR #1 merges to default branch; post-merge observe >=2 scheduled runs + SMTP firing/dedupe/recovery"
+        "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false — only workflow_dispatch SUCCESS observed post-merge; need >=2 genuine schedule events + SMTP firing/dedupe/recovery before claiming monitoring acceptance"
       ],
-      "HUMAN_APPROVAL": "Staging ready-probe Gmail ack HISTORICAL only; production on-call gated; merge monitor PR to main before claiming continuous scheduler",
-      "NEXT_ACTION": "Await CI green on PR #1 HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed; operator-approve merge to main (do NOT merge PR #2); confirm SMTP_* EMAIL_FROM OPS_ALERT_TO remain set; ONLY AFTER default-branch merge observe >=2 genuine scheduled monitor runs + SMTP firing/dedupe/recovery; do not claim monitoring acceptance or production from staging SMTP ack alone",
+      "HUMAN_APPROVAL": "Staging ready-probe Gmail ack HISTORICAL only; production on-call gated; observe genuine cron runs before claiming continuous scheduler acceptance",
+      "NEXT_ACTION": "Keep monitor workflow on main; observe >=2 genuine scheduled (event=schedule) monitor runs + SMTP firing/dedupe/recovery; do not claim monitoring acceptance from workflow_dispatch alone; do not revert PR #2 GitHub state",
       "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED": true,
       "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED_AT": "2026-11-05T03:21:00Z",
       "GITHUB_ACTIONS_SMTP_SECRET_NAMES": [
@@ -1057,17 +1120,17 @@
         "EMAIL_FROM",
         "OPS_ALERT_TO"
       ],
-      "MONITOR_WORKFLOW_BRANCH": "wp05/activate-staging-monitor",
-      "MONITOR_WORKFLOW_HEAD": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+      "MONITOR_WORKFLOW_BRANCH": "main",
+      "MONITOR_WORKFLOW_HEAD": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
       "MONITOR_PR_CI_RUN": "https://github.com/patelvivek9111/nyayagrid/actions/runs/41969975451",
       "MONITOR_PR_CI_RUN_SCOPE": "HISTORICAL_PRIOR_TIP_d8868df",
       "MONITOR_PR_CURRENT_HEAD": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
-      "MONITOR_PR_SAFE_TO_MERGE": "PENDING_CI_GREEN",
-      "MONITOR_PR_MERGED": false,
-      "PR2_MUST_NOT_MERGE": true,
+      "MONITOR_PR_SAFE_TO_MERGE": "MERGED",
+      "MONITOR_PR_MERGED": true,
+      "PR2_MUST_NOT_MERGE": false,
       "MONITOR_PR_CI_RESULT": "SUCCESS",
-      "MONITOR_WORKFLOW_ON_MAIN": false,
-      "DEFAULT_BRANCH_SCHEDULER_ACTIVE": false,
+      "MONITOR_WORKFLOW_ON_MAIN": true,
+      "DEFAULT_BRANCH_SCHEDULER_ACTIVE": true,
       "REAL_SCHEDULED_EXECUTIONS_OBSERVED": false,
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
@@ -1084,10 +1147,19 @@
         "PRODUCTION_ONCALL_ESCALATION_TESTED": false,
         "AUTOMATED_ACK_INTEGRATION_TESTED": false,
         "OTHER_ALERT_POLICIES_TESTED": false,
-        "PRODUCTION_VERIFIED": false
+        "PRODUCTION_VERIFIED": false,
+        "MONITOR_WORKFLOW_ON_MAIN": true,
+        "WORKFLOW_DISPATCH_POST_MERGE_OBSERVED": true,
+        "REAL_SCHEDULED_EXECUTIONS_OBSERVED": false,
+        "MONITORING_ACCEPTANCE_CLAIMABLE": false
       },
       "remediation": "Continuous scheduler + evaluator shipped; keep production paging optional until separately verified",
-      "MONITORING_ACCEPTANCE_CLAIMABLE": false
+      "MONITORING_ACCEPTANCE_CLAIMABLE": false,
+      "priority": "P1",
+      "PR2_GITHUB_STATE": "MERGED_ALREADY_REACHABLE",
+      "PR2_DO_NOT_REVERT": true,
+      "MONITOR_DISPATCH_RUN": "42046460657",
+      "MONITOR_DISPATCH_CONCLUSION": "SUCCESS"
     },
     {
       "id": "OPS-DEP-01",
@@ -1099,20 +1171,18 @@
       "severity": "P0",
       "releaseBlocker": true,
       "evidence": [
-        "Staging deploy add3af38 with --build-arg GIT_SHA + --skip-release-command → image deployment-01M6KTCX6H5ZXPHGRV8SVFD0BF (v87)",
-        "ready/live gitSha=add3af38a4c00c6cec631b70981a1c855b660f38; db/redis/storage/clamav HEALTHY",
+        "CURRENT_VERIFIED 2026-11-05 staging GET /api/health/ready → ok=true status=HEALTHY gitSha=add3af38a4c00c6cec631b70981a1c855b660f38 appEnv=staging database/storage/redis/clamav=ok clamavMode=live ocr=disabled neonCorpusResearch=off",
+        "CURRENT_VERIFIED staging GET /api/v1/health → status=ok appEnv=staging malwareScanner=clamav ocrProvider=none",
+        "PRODUCTION_DEPLOYED=NO — staging evidence is not production certification",
+        "Staging deploy identity HISTORICAL + CURRENT ready gitSha=add3af38a4c00c6cec631b70981a1c855b660f38; db/redis/storage/clamav HEALTHY; ocr disabled; neon corpus research flag off",
         "Staging identity rollback HISTORICAL PASS: v87→v88 previous image gitSha=null → v89 restore baked image gitSha restored (wp05-staging-identity-rollback.json)",
         "PRODUCTION Fly app NOT created; PRODUCTION_DEPLOYED=NO",
         "GitHub release protection workflows: deploy-staging.yml + deploy-production-gate.yml (approval-only; never deploys)",
-        "docs/operations/WP05_GITHUB_RELEASE_PROTECTION.md; WP05_AUDIT_SECRETS_PROVENANCE.md; WP05_CARRY_FORWARD_GATES.md; WP05_OPS_RUNBOOK.md",
-        "ops:prod-ops-preflight scripts + gate workflows + runbooks → WP05_FIXABLE_NOW_ENGINEERING_COMPLETE (wp05/prod-ops-preflight branch; not merged via PR #3)",
-        "env-boundaries + deploy-preflight block APP_ENV=production without PRODUCTION_DEPLOY_APPROVED",
-        "PR #3 merged to main af376941 (approved head 81acba96); CI run 42015520866 SUCCESS — default-branch CI/E2E baseline; does not deploy production or activate monitor cron",
-        "wp05/prod-ops-preflight branch carries prod-ops register/runbooks pending separate merge",
-        "Session gates: PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; WP06_STARTED=NO"
+        "PR #3 merged af376941dd90ddd1eb9969d10815eb9e9811dd9d; PR #1 merged a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (monitor on main); prod-ops preflight register on wp05/prod-ops-preflight",
+        "Session gates: PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; COURTLISTENER_CALLS=0; WP06_STARTED=NO"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+      "lastVerifiedSha": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
@@ -1147,10 +1217,12 @@
         "PRODUCTION_RELEASE_APPROVED": false,
         "GITHUB_RELEASE_PROTECTION_ENGINEERING": true,
         "GITHUB_ENVIRONMENT_REVIEWERS_CONFIGURED": false,
-        "PROD_OPS_PREFLIGHT_ENGINEERING": true
+        "PROD_OPS_PREFLIGHT_ENGINEERING": true,
+        "STAGING_READY_CURRENT_VERIFIED": true
       },
       "remediation": "Production remains gated; staging identity rollback HISTORICAL PASS; FIXABLE_NOW prod-ops preflight/gate/runbook engineering complete",
-      "lastVerifiedShaEngineering": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37"
+      "lastVerifiedShaEngineering": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
+      "priority": "P0"
     },
     {
       "id": "RM-PG-01",
@@ -1166,7 +1238,8 @@
         "WP-03C: migration 0025 drops student_*/guide_* only; Neon still has student/guide tables (0025 NOT applied); Docker applied (29 migs). Shared legal_* intact on both."
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "b428b87"
+      "lastVerifiedSha": "b428b87",
+      "priority": "P1"
     },
     {
       "id": "CJIS-01",
@@ -1182,7 +1255,8 @@
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "c2c3d09",
-      "note": "Release blocker only if marketing claims CJIS"
+      "note": "Release blocker only if marketing claims CJIS",
+      "priority": "P0"
     },
     {
       "id": "TEST-E2E-01",
@@ -1218,7 +1292,8 @@
         "CI 41648686595 SUCCESS; router v2 18/18; external live executor 18/18 this session"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "priority": "P1"
     },
     {
       "id": "CORPUS-03",
@@ -1440,15 +1515,15 @@
     }
   ],
   "topReleaseBlockers": [
-    "PROF-RES-01 / CORPUS-13: Neon has 5621 text-backed cases but product DATABASE_URL not Neon; identity-only must not count as opinions; gap to 10k=4379",
-    "PROF-DOC-02 OCR production gate",
-    "SEC-AUTH-01 Clerk MFA production verification",
-    "SEC-MAL-01 ClamAV production verification",
-    "SEC-LEGAL-01 Attorney Terms/Privacy",
-    "OPS-BACKUP-01 engineering complete; staging PITR HISTORICAL PASS (do not re-run); production restore NOT VERIFIED",
-    "OPS-MON-01 monitoring tests PASS + SMTP secrets configured; PR #1 NOT merged — staging-continuous-monitor.yml not on main; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false; production on-call NOT VERIFIED",
-    "OPS-DEP-01 PRODUCTION_DEPLOYED=NO; main @ af376941 after PR #3 CI baseline only; staging identity rollback HISTORICAL PASS; prod-ops preflight branch; WP-03E/WP-04/attorney/security carry-forward",
-    "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — WP-01 scorer certified)"
+    "PROF-RES-01 / CORPUS-13: Neon text-backed corpus not product-default; WP-03E SELECT-only credential absent; staging neonCorpusResearch=off",
+    "PROF-DOC-02 OCR: staging ocr=disabled; production NOT VERIFIED",
+    "SEC-AUTH-01 Clerk MFA staging/production live verification open",
+    "SEC-MAL-01 ClamAV: staging scanner connectivity observed; upload quarantine rehearsal + production NOT VERIFIED",
+    "SEC-LEGAL-01 Attorney Terms/Privacy sign-off open",
+    "OPS-BACKUP-01 staging PITR HISTORICAL; production restore NOT VERIFIED",
+    "OPS-MON-01 monitor workflow ON main; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false; monitoring acceptance NOT claimable; production on-call NOT VERIFIED",
+    "OPS-DEP-01 PRODUCTION_DEPLOYED=NO",
+    "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required)"
   ],
   "dependencyOrderedPlan": [
     {
@@ -1544,7 +1619,7 @@
       "status": "PARTIAL",
       "result": "WP04_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
       "evidenceArtifact": "docs/audits/WP04_FINAL_CLOSURE.md",
-      "note": "Engineering complete for OCR/ClamAV/MFA/Terms locally. Staging/production OCR+ClamAV+Clerk MFA and attorney sign-off remain external. WP-03E deferred. WP-05 in progress (PR #3 baseline on main; ops/monitor gates open).",
+      "note": "Engineering complete for OCR/ClamAV/MFA/Terms locally. Staging ready currently reports ocr=disabled and clamavMode=live (connectivity only). Staging/production OCR+ClamAV upload rehearsal+Clerk MFA and attorney sign-off remain external. WP-03E still ROLE_PROVISIONING_REQUIRED.",
       "verificationClasses": {
         "OCR_ENGINEERING_COMPLETE": true,
         "OCR_LOCAL_LIVE_VERIFIED": true,
@@ -1576,7 +1651,7 @@
       "effort": "2-4 weeks",
       "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill",
       "status": "PARTIAL",
-      "result": "WP05_FIXABLE_NOW_ENGINEERING_COMPLETE_PRODUCTION_NOT_VERIFIED",
+      "result": "WP05_POST_MERGE_MONITOR_ON_MAIN_SCHEDULED_ACCEPTANCE_PENDING",
       "evidenceArtifact": "packages/research/corpus/reports/wp05-prod-ops-preflight.json",
       "verificationClasses": {
         "BACKUP_ENGINEERING_COMPLETE": true,
@@ -1586,7 +1661,7 @@
         "MONITORING_IMPLEMENTED": true,
         "MONITORING_UNIT_TESTS_18_18": true,
         "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED": true,
-        "MONITOR_WORKFLOW_ON_MAIN": false,
+        "MONITOR_WORKFLOW_ON_MAIN": true,
         "REAL_SCHEDULED_MONITOR_RUNS": false,
         "ALERT_DELIVERED_ONCALL": true,
         "ALERT_ONCALL_SCOPE": "staging_synthetic_ready_probe_gmail_historical_only",
@@ -1602,9 +1677,16 @@
         "PR1_HEAD": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
         "PR1_SAFE_TO_MERGE": "PENDING_CI_GREEN",
         "PR2_MUST_NOT_MERGE": true,
-        "SAME_DOCUMENT_CONTRADICTION_RESTORED": true
+        "SAME_DOCUMENT_CONTRADICTION_RESTORED": true,
+        "WORKFLOW_DISPATCH_POST_MERGE_SUCCESS": true,
+        "STAGING_READY_CURRENT_VERIFIED": true,
+        "PR1_MERGED": true,
+        "PR1_MERGE_COMMIT": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+        "PR1_SOURCE_HEAD": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+        "PR2_GITHUB_MERGED_ALREADY_REACHABLE": true,
+        "PR2_DO_NOT_REVERT": true
       },
-      "note": "WP-05 NOT fully closed — external gates pending. PR #3 MERGED main @ af376941 (approved 81acba96; CI 42015520866 SUCCESS; same-document contradiction restored). PR #1 HEAD 7a8ea91 monitor-only 16 files NOT merged — SAFE_TO_MERGE pending CI green + operator approval; monitoring acceptance NOT claimable until default-branch merge. PR #2 must NOT be merged. FIXABLE_NOW prod-ops engineering on wp05/prod-ops-preflight. Staging PITR/isolation/SMTP human ack/identity rollback HISTORICAL preserved. Clerk authenticated E2E blocked on synthetic staging identities + interactive MFA (non-interactive 7 pass/15 skip). PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; WP06_STARTED=NO; OPS-BACKUP/MON/DEP PRODUCTION_VERIFIED=false. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production. Do not mark production certification from staging alone.",
+      "note": "WP-05 NOT fully closed. PR #3 MERGED af376941dd90ddd1eb9969d10815eb9e9811dd9d. PR #1 MERGED a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (source 7a8ea91be8392f8c7d770e3699a403151e01f0ed) — monitor workflow on main. Post-merge workflow_dispatch 42046460657 SUCCESS; scheduled acceptance still pending. PR #2 unexpectedly GitHub-MERGED via already-reachable close (d8868dfbf5a214f013e923b6d4804cd24ed7e96e); do not revert. Staging ready CURRENT_VERIFIED @ add3af38a4c00c6cec631b70981a1c855b660f38. PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; COURTLISTENER_CALLS=0; WP06_STARTED=NO. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security, production deploy auth. Do not mark production certification from staging alone.",
       "carryForward": [
         "WP-03E legal research gates",
         "WP-04 OCR/load",
@@ -1625,36 +1707,45 @@
         }
       },
       "pr1Monitor": {
-        "merged": false,
-        "head": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
-        "scope": "monitor-only 16 files onto post-PR#3 main",
-        "safeToMerge": "PENDING_CI_GREEN",
-        "monitorWorkflowOnMain": false,
+        "merged": true,
+        "mergeCommit": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+        "sourceHead": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+        "monitorWorkflowOnMain": true,
         "realScheduledExecutionsObserved": false,
         "monitoringAcceptanceClaimable": false,
-        "pr2MustNotMerge": true
+        "workflowDispatchRun": "42046460657",
+        "workflowDispatchConclusion": "SUCCESS"
       },
       "gates": {
         "PRODUCTION_DEPLOYED": "NO",
         "NEON_CORPUS_WRITES": 0,
         "PAID_AI_CALLS": 0,
+        "COURTLISTENER_CALLS": 0,
         "WP06_STARTED": "NO"
       },
       "completedVsOpen": {
         "completed": [
-          "PR #3 CI/E2E baseline merged to main (incl. same-document contradiction detection)",
-          "FIXABLE_NOW prod-ops engineering (release gates, runbooks, register) on wp05/prod-ops-preflight",
-          "Historical staging PITR / SMTP ready-probe ack / identity rollback evidence preserved",
-          "GitHub Actions SMTP secrets configured (historical)",
-          "Unauthenticated staging security negatives PASS (Clerk E2E harness)"
+          "PR #3 CI/E2E baseline merged to main (same-document contradiction restored)",
+          "PR #1 continuous staging monitor merged to main",
+          "Monitor workflow present on default branch; post-merge workflow_dispatch SUCCESS",
+          "Staging /api/health/ready CURRENT_VERIFIED HEALTHY",
+          "FIXABLE_NOW prod-ops engineering on wp05/prod-ops-preflight",
+          "Historical staging PITR / SMTP ready-probe ack / identity rollback evidence preserved"
         ],
         "open": [
-          "PR #1 merge + genuine scheduled monitor runs + SMTP firing/recovery acceptance",
+          ">=2 genuine scheduled monitor runs + SMTP firing/recovery acceptance",
           "OPS-BACKUP/MON/DEP PRODUCTION_VERIFIED",
           "Clerk-authenticated Professional/Prosecution staging E2E",
           "GitHub Environment required reviewers",
           "Carry-forward WP-03E / WP-04 OCR·ClamAV·MFA / attorney Terms / critical security / production deploy auth"
         ]
+      },
+      "pr2": {
+        "githubMerged": true,
+        "mergeCommitShaEqualsHead": "d8868dfbf5a214f013e923b6d4804cd24ed7e96e",
+        "semantics": "ALREADY_REACHABLE_AUTO_CLOSE",
+        "doNotRevert": true,
+        "uniqueTipDeltasSuperseded": "hardcoded SMTP fallback correctly absent on main; exact-citation search intentionally dropped in cfca05b"
       }
     },
     {
@@ -1889,14 +1980,28 @@
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
   "wp05Session": {
-    "classification": "NYAYAGRID_WP05_FINAL_VERIFICATION_REGISTER",
-    "result": "WP05_EXTERNAL_GATES_PENDING",
+    "classification": "NYAYAGRID_WP05_POST_MERGE_PRODUCT_COMPLETION_AUDIT",
+    "result": "WP05_MONITOR_ON_MAIN_EXTERNAL_GATES_PENDING",
     "status": "PARTIAL",
     "finalClosureDecision": "WP05_NOT_FULLY_CLOSED",
+    "generatedAt": "2026-11-05T14:42:13.615Z",
     "wp06Started": false,
     "productionDeployed": false,
     "neonCorpusWrites": 0,
     "paidAiCalls": 0,
+    "courtlistenerCalls": 0,
+    "mainHead": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+    "registerBranch": "wp05/prod-ops-preflight",
+    "stagingVsProduction": {
+      "stagingReady": "CURRENT_VERIFIED_HEALTHY",
+      "stagingGitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "stagingPitr": "HISTORICAL_VERIFIED",
+      "stagingSmtpAck": "HISTORICAL_VERIFIED",
+      "stagingIdentityRollback": "HISTORICAL_VERIFIED",
+      "productionCertified": false,
+      "productionDeployed": false,
+      "distinction": "Staging health/PITR/SMTP/rollback evidence must not be treated as production certification"
+    },
     "pr3": {
       "merged": true,
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/3",
@@ -1909,47 +2014,52 @@
       }
     },
     "pr1": {
-      "merged": false,
+      "merged": true,
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/1",
-      "head": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
-      "scope": "monitor-only 16 files onto new main after PR #3",
-      "safeToMerge": true,
-      "awaitingOperatorApproval": true,
-      "monitorWorkflowOnMain": false,
+      "sourceHead": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+      "mergeCommitMain": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+      "mergedAt": "2026-11-05T14:30:10Z",
+      "monitorWorkflowOnMain": true,
       "realScheduledExecutionsObserved": false,
       "monitoringAcceptanceClaimable": false,
-      "nextAction": "Operator approval to merge PR #1 only (not PR #2). After merge: observe >=2 genuine scheduled runs + SMTP firing/recovery/dedupe. Do not claim monitoring acceptance before default-branch merge.",
-      "changedFiles": 16,
-      "safeToMergeClassification": "SAFE_TO_MERGE",
-      "remoteCi": {
-        "pullRequestRun": "42039633576",
-        "pushRun": "42039624436",
+      "postMergeWorkflowDispatch": {
+        "run": "42046460657",
         "conclusion": "SUCCESS",
-        "headSha": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
-        "urls": [
-          "https://github.com/patelvivek9111/nyayagrid/actions/runs/42039633576",
-          "https://github.com/patelvivek9111/nyayagrid/actions/runs/42039624436"
-        ]
+        "event": "workflow_dispatch",
+        "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+        "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42046460657"
       },
-      "localMonitorUnitTests": "31/31 PASS (observability continuous-monitor/alert/ops-health/release-identity/index)",
-      "safety": {
-        "cron": "*/5 * * * *",
-        "smtpSecretsReferenced": true,
-        "hardcodedRecipient": false,
-        "hardcodedCredentials": false,
-        "productionDeployWorkflowIntroduced": false,
-        "unresolvedCriticalSecurityFindings": false
-      }
+      "nextAction": "Observe >=2 genuine scheduled (event=schedule) monitor runs + SMTP firing/recovery/dedupe before claiming monitoring acceptance"
     },
     "pr2": {
-      "mustNotMerge": true,
-      "url": "https://github.com/patelvivek9111/nyayagrid/pull/2"
+      "url": "https://github.com/patelvivek9111/nyayagrid/pull/2",
+      "githubState": "MERGED",
+      "mergedAt": "2026-11-05T14:30:12Z",
+      "mergeCommitSha": "d8868dfbf5a214f013e923b6d4804cd24ed7e96e",
+      "semantics": "ALREADY_REACHABLE_AUTO_CLOSE_WHEN_COMMITS_BECAME_ANCESTORS_VIA_PR1",
+      "allCommitsAncestorOfMain": true,
+      "doNotRevert": true,
+      "tipTreeDeltasVsMain": [
+        "smtp-alert-transport hardcoded OPS_ALERT_TO gmail fallback — correctly ABSENT on main (do not restore)",
+        "search.ts exact-citation lookup — intentionally dropped in cfca05b baseline slim; not restored in this audit"
+      ]
     },
     "opsProductionVerified": {
       "OPS-BACKUP-01": false,
       "OPS-MON-01": false,
       "OPS-DEP-01": false
     },
+    "opsStagingCurrent": {
+      "readyHealthy": true,
+      "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "clamavModeLive": true,
+      "ocrDisabled": true,
+      "neonCorpusResearchOff": true
+    },
+    "wp03eStatus": "ROLE_PROVISIONING_REQUIRED / SECURITY_PLAN_READY_FOR_HUMAN_APPROVAL",
+    "wp04Status": "ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
+    "legalStatus": "ATTORNEY_APPROVED=false — Terms/Privacy drafts exist; attorney sign-off open",
+    "newlyRepairedFeatures": [],
     "clerkE2E": {
       "branch": "wp05/clerk-e2e-auth",
       "statusArtifact": "packages/research/corpus/reports/wp05-clerk-e2e-status.json",
@@ -1957,35 +2067,33 @@
       "authenticatedStagingVerified": false,
       "blocker": "Synthetic staging Clerk identities + interactive MFA login required"
     },
-    "evidenceClassificationPreserved": [
-      "CURRENT_VERIFIED",
-      "HISTORICAL_VERIFIED",
-      "REPORTED_ONLY",
-      "STALE",
-      "UNKNOWN"
-    ],
     "carryForward": [
-      "WP-03E legal research gates",
-      "WP-04 OCR/load",
-      "WP-04 Clerk MFA",
-      "WP-04 ClamAV",
+      "WP-03E legal research gates (SELECT-only CORPUS_DATABASE_URL + live Phases 4–7)",
+      "WP-04 OCR managed provider + load (staging ocr currently disabled)",
+      "WP-04 Clerk MFA live verification",
+      "WP-04 ClamAV upload quarantine staging rehearsal + production verification",
       "Attorney Terms/Privacy",
       "Critical security findings",
       "Production deploy auth",
-      "PR #1 continuous staging monitor merge + scheduled-run acceptance",
+      "Genuine scheduled monitor runs + SMTP firing/recovery acceptance",
       "Clerk-authenticated Professional/Prosecution staging E2E",
       "GitHub Environment required reviewers"
     ],
     "externalApprovalsStillNeeded": [
-      "Operator approval to merge PR #1 (7a8ea91be8392f8c7d770e3699a403151e01f0ed) after CI green",
-      "Do not merge PR #2",
+      "Observe >=2 genuine scheduled monitor runs + SMTP firing/dedupe/recovery (do not claim from workflow_dispatch alone)",
       "GitHub Environment required reviewers (UI)",
       "Clerk staging synthetic identities + interactive MFA demo",
       "Neon corpus SELECT-only role provisioning (WP-03E)",
       "Attorney Terms/Privacy sign-off",
-      "Production deploy authorization (explicit; no staging-as-prod)",
-      "Managed OCR / ClamAV / Clerk MFA staging+production live verification"
+      "Production deploy authorization (explicit; staging ≠ production certification)",
+      "Managed OCR / ClamAV upload rehearsal / Clerk MFA staging+production live verification"
     ],
-    "registerBranch": "wp05/prod-ops-preflight"
+    "gates": {
+      "PRODUCTION_DEPLOYED": "NO",
+      "NEON_CORPUS_WRITES": 0,
+      "PAID_AI_CALLS": 0,
+      "COURTLISTENER_CALLS": 0,
+      "WP06_STARTED": "NO"
+    }
   }
 }
