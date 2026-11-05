@@ -3,7 +3,7 @@
   "classification": "NYAYAGRID_PRODUCT_COMPLETION_SECURITY_AND_FEATURE_EXECUTION",
   "generatedAt": "2026-11-03T22:57:29.530Z",
   "head": "7420710b13198813434c3c8b1a23126fa985f708",
-  "branch": "wp05/product-completion",
+  "branch": "feat/prosecution-memory-graph-coc",
   "remoteCi": {
     "run": "41689403691",
     "conclusion": "SUCCESS"
@@ -267,12 +267,23 @@
       "subsystem": "Contacts",
       "feature": "Standalone contacts",
       "requirement": "Contacts entity distinct from clients",
-      "status": "MISSING",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P3",
       "releaseBlocker": false,
-      "evidence": ["No contacts schema found"],
+      "evidence": [
+        "packages/database/src/schema/phase18.ts contacts + client_contacts",
+        "packages/database/drizzle/0027_professional_contacts_folders.sql",
+        "apps/web/src/app/api/v1/contacts/route.ts",
+        "apps/web/src/app/api/v1/contacts/[contactId]/route.ts",
+        "apps/web/src/app/api/v1/contacts/[contactId]/clients/route.ts",
+        "apps/web/src/app/api/v1/clients/[clientId]/contacts/route.ts",
+        "clients.view / clients.edit capability gates + contact.* audit events",
+        "unit: contacts-folders-schema.test.ts",
+        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS) org isolation"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "pending",
+      "nextAction": "CI + RUN_DB_TESTS migrate 0027; UI for contacts still optional"
     },
     {
       "id": "PROF-FOLDER-01",
@@ -280,12 +291,23 @@
       "subsystem": "Documents",
       "feature": "Folders",
       "requirement": "Document folder entity",
-      "status": "MISSING",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P3",
       "releaseBlocker": false,
-      "evidence": [],
+      "evidence": [
+        "packages/database/src/schema/phase18.ts document_folders",
+        "documents.folder_id nullable FK in 0027 migration",
+        "apps/web/src/app/api/v1/matters/[matterId]/folders/route.ts",
+        "apps/web/src/app/api/v1/matters/[matterId]/folders/[folderId]/route.ts",
+        "apps/web/src/app/api/v1/matters/[matterId]/documents/[documentId]/folder/route.ts",
+        "packages/documents/src/folders.ts cycle prevention",
+        "matter access + documents.view/edit; safe rename/move; no cycles",
+        "unit: folders.test.ts + contacts-folders-schema.test.ts",
+        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS)"
+      ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "pending",
+      "nextAction": "CI + RUN_DB_TESTS migrate 0027; folder UI still optional"
     },
     {
       "id": "PROS-RBAC-01",
@@ -419,12 +441,19 @@
       "subsystem": "Graph",
       "feature": "Persisted prosecution graph",
       "requirement": "Writable graph_nodes/edges for criminal cases",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["phase14 tables exist; graph-bridge projection-only"],
-      "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "evidence": [
+        "packages/database/drizzle/0026_prosecution_case_graph.sql",
+        "packages/database/src/schema/phase14.ts (node_kind/canonical/reviewable edges)",
+        "packages/intelligence/src/prosecution/case-graph-db.ts",
+        "apps/web graph API/UI + case-section nav",
+        "Disposable DB forward/rollback smoke 0025+0026"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09",
+      "nextAction": "Confirm CI on PR #7 tip; operator merge after PR #6"
     },
     {
       "id": "PROS-AUD-01",
@@ -1381,7 +1410,7 @@
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
-  "updatedAt": "2026-11-05T18:12:05.358Z",
+  "updatedAt": "2026-11-05T19:48:59.335Z",
   "productContinuation": {
     "pr6": {
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",

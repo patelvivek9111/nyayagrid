@@ -26,6 +26,7 @@ export const PROSECUTION_SECTIONS = [
   { segment: "pleas", label: "Pleas" },
   { segment: "timeline", label: "Timeline" },
   { segment: "memory", label: "Memory" },
+  { segment: "graph", label: "Graph" },
   { segment: "research", label: "Research" },
   { segment: "tasks", label: "Tasks" },
 ] as const;
@@ -255,6 +256,20 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
             href={`/app/prosecution/${caseId}/memory`}
           >
             Open case memory
+          </Link>
+        </div>
+      ) : null}
+      {section === "graph" ? (
+        <div className="mt-4 space-y-3">
+          <p className="text-sm text-ink/80">
+            Case Graph persists entities and relationships for this criminal case only. Unreviewed
+            inferred edges stay proposed and are never treated as verified facts.
+          </p>
+          <Link
+            className="font-semibold text-accent underline"
+            href={`/app/prosecution/${caseId}/graph`}
+          >
+            Open case graph
           </Link>
         </div>
       ) : null}

@@ -799,50 +799,6 @@ export const prosecutionTasks = pgTable(
   (table) => [index("prosecution_tasks_case_idx").on(table.criminalCaseId)],
 );
 
-export const prosecutionGraphNodes = pgTable(
-  "prosecution_graph_nodes",
-  {
-    id: uuid("id").defaultRandom().primaryKey(),
-    organizationId: uuid("organization_id")
-      .notNull()
-      .references(() => organizations.id, { onDelete: "cascade" }),
-    criminalCaseId: uuid("criminal_case_id")
-      .notNull()
-      .references(() => criminalCases.id, { onDelete: "cascade" }),
-    nodeType: text("node_type").notNull(),
-    refId: text("ref_id").notNull(),
-    provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
-    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  },
-  (table) => [
-    uniqueIndex("prosecution_graph_nodes_ref_uidx").on(
-      table.criminalCaseId,
-      table.nodeType,
-      table.refId,
-    ),
-    index("prosecution_graph_nodes_case_idx").on(table.criminalCaseId),
-  ],
-);
-
-export const prosecutionGraphEdges = pgTable(
-  "prosecution_graph_edges",
-  {
-    id: uuid("id").defaultRandom().primaryKey(),
-    organizationId: uuid("organization_id")
-      .notNull()
-      .references(() => organizations.id, { onDelete: "cascade" }),
-    criminalCaseId: uuid("criminal_case_id")
-      .notNull()
-      .references(() => criminalCases.id, { onDelete: "cascade" }),
-    fromRef: text("from_ref").notNull(),
-    toRef: text("to_ref").notNull(),
-    relationship: text("relationship").notNull(),
-    provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
-    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
-  },
-  (table) => [index("prosecution_graph_edges_case_idx").on(table.criminalCaseId)],
-);
-
 /** Case-scoped Prosecution Memory — reviewable; proposed ≠ verified fact. No guilt/charging fields. */
 export const PROSECUTION_CASE_MEMORY_TYPES = [
   "confirmed_fact",
@@ -898,6 +854,97 @@ export const prosecutionCaseMemories = pgTable(
     index("prosecution_case_memories_status_idx").on(table.organizationId, table.status),
     index("prosecution_case_memories_case_status_idx").on(table.criminalCaseId, table.status),
     index("prosecution_case_memories_evidence_idx").on(table.evidenceItemId),
+  ],
+);
+
+export const PROSECUTION_GRAPH_NODE_KINDS = [
+  "criminal_case",
+  "defendant",
+  "charge",
+  "charge_element",
+  "evidence",
+  "witness",
+  "warrant",
+  "motion",
+  "hearing",
+  "legal_issue",
+  "other",
+] as const;
+export type ProsecutionGraphNodeKind = (typeof PROSECUTION_GRAPH_NODE_KINDS)[number];
+
+export const PROSECUTION_GRAPH_REVIEW_STATUSES = ["proposed", "approved", "rejected"] as const;
+export type ProsecutionGraphReviewStatus = (typeof PROSECUTION_GRAPH_REVIEW_STATUSES)[number];
+
+/**
+ * Case-scoped prosecution graph — separate from matter graph_nodes to preserve
+ * criminal-case isolation (never invent a matter just to store prosecution relationships).
+ */
+export const prosecutionGraphNodes = pgTable(
+  "prosecution_graph_nodes",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    criminalCaseId: uuid("criminal_case_id")
+      .notNull()
+      .references(() => criminalCases.id, { onDelete: "cascade" }),
+    nodeKind: text("node_kind").notNull(),
+    canonicalEntityType: text("canonical_entity_type").notNull(),
+    canonicalEntityId: uuid("canonical_entity_id").notNull(),
+    displayName: text("display_name").notNull(),
+    provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
+    origin: text("origin").notNull().default("manual"),
+    status: text("status").notNull().default("approved"),
+    metadata: jsonb("metadata").$type<Record<string, unknown>>().notNull().default({}),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id),
+    ...timestamps,
+  },
+  (table) => [
+    uniqueIndex("prosecution_graph_nodes_canonical_uidx").on(
+      table.criminalCaseId,
+      table.canonicalEntityType,
+      table.canonicalEntityId,
+    ),
+    index("prosecution_graph_nodes_case_idx").on(table.criminalCaseId),
+    index("prosecution_graph_nodes_org_idx").on(table.organizationId),
+    index("prosecution_graph_nodes_kind_idx").on(table.criminalCaseId, table.nodeKind),
+  ],
+);
+
+export const prosecutionGraphEdges = pgTable(
+  "prosecution_graph_edges",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    criminalCaseId: uuid("criminal_case_id")
+      .notNull()
+      .references(() => criminalCases.id, { onDelete: "cascade" }),
+    fromNodeId: uuid("from_node_id")
+      .notNull()
+      .references(() => prosecutionGraphNodes.id, { onDelete: "cascade" }),
+    toNodeId: uuid("to_node_id")
+      .notNull()
+      .references(() => prosecutionGraphNodes.id, { onDelete: "cascade" }),
+    relationshipType: text("relationship_type").notNull(),
+    provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
+    origin: text("origin").notNull().default("manual"),
+    status: text("status").notNull().default("proposed"),
+    confidence: text("confidence"),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id),
+    reviewedByUserId: uuid("reviewed_by_user_id").references(() => users.id),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    rejectionReason: text("rejection_reason"),
+    ...timestamps,
+  },
+  (table) => [
+    index("prosecution_graph_edges_case_idx").on(table.criminalCaseId),
+    index("prosecution_graph_edges_org_idx").on(table.organizationId),
+    index("prosecution_graph_edges_from_idx").on(table.fromNodeId),
+    index("prosecution_graph_edges_to_idx").on(table.toNodeId),
+    index("prosecution_graph_edges_status_idx").on(table.criminalCaseId, table.status),
   ],
 );
 
