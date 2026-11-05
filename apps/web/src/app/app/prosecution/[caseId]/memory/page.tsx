@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { ProfessionalShell } from "@/components/shell";
 import { ProsecutionCaseNav } from "@/components/prosecution/case-section";

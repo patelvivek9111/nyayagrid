@@ -407,10 +407,11 @@
         "case-section Memory nav link",
         "unit: case-memory-db.test.ts status transitions + proposed!=verified",
         "integration: case-memory.integration.test.ts (RUN_DB_TESTS) isolation + audits",
-        "audit actions prosecution.memory_*; no guilt/charging fields"
+        "audit actions prosecution.memory_*; no guilt/charging fields",
+        "local vitest suite load broken on Windows junctions — CI authoritative; helpers verified via tsx"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "pending-commit"
+      "lastVerifiedSha": "93962ad"
     },
     {
       "id": "PROS-GRAPH-01",
