@@ -452,7 +452,7 @@
         "Disposable DB forward/rollback smoke 0025+0026"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09",
+      "lastVerifiedSha": "2ab130def9962ed562b583c2e5bd9955f808022c",
       "nextAction": "Confirm CI on PR #7 tip; operator merge after PR #6"
     },
     {
@@ -1410,7 +1410,7 @@
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
-  "updatedAt": "2026-11-05T19:48:59.335Z",
+  "updatedAt": "2026-11-05T19:49:35.505Z",
   "productContinuation": {
     "pr6": {
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",
