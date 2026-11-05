@@ -1,6 +1,10 @@
 import { and, desc, eq } from "drizzle-orm";
 import { aiArtifacts, notes } from "@nyayagrid/database";
-import { createManualNoteSchema, saveNyayaNoteSchema, updateNoteSchema } from "@nyayagrid/validation";
+import {
+  createManualNoteSchema,
+  saveNyayaNoteSchema,
+  updateNoteSchema,
+} from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { trackLiveChange } from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";

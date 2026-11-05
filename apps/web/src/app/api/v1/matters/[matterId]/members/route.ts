@@ -31,7 +31,11 @@ export async function POST(request: Request, { params }: Params) {
       )
       .limit(1);
     if (!membership) {
-      return jsonError("VALIDATION_ERROR", "User is not an active member of this organization", 400);
+      return jsonError(
+        "VALIDATION_ERROR",
+        "User is not an active member of this organization",
+        400,
+      );
     }
 
     const [existing] = await db

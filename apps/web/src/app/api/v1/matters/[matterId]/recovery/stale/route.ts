@@ -12,7 +12,8 @@ export async function GET(request: Request, { params }: Params) {
     const url = new URL(request.url);
     const objectType = url.searchParams.get("objectType");
     const objectId = url.searchParams.get("objectId");
-    const query = objectType && objectId ? legalWorkHistoryQuerySchema.parse({ objectType, objectId }) : null;
+    const query =
+      objectType && objectId ? legalWorkHistoryQuerySchema.parse({ objectType, objectId }) : null;
     const { organizationId } = await requireLegalWorkAccess({
       db,
       userId: user.id,
