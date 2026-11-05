@@ -117,8 +117,10 @@ test.describe("Case Intelligence surfaces", () => {
 
     await page.getByRole("button", { name: "Connections", exact: true }).click();
     await expect(page.getByRole("heading", { name: "Verified connections" })).toBeVisible();
+    // Empty graphs render a paragraph, not the aria-labeled list.
     const verified = page.getByRole("list", { name: "Verified connections" });
-    await expect(verified).toBeVisible();
+    const verifiedEmpty = page.getByText("No verified connections yet.");
+    await expect(verified.or(verifiedEmpty).first()).toBeVisible();
     await expect(page.getByRole("list", { name: "Proposed graph edges" })).toBeVisible();
     const verifiedItems = verified.locator("li");
     if ((await verifiedItems.count()) > 0) {

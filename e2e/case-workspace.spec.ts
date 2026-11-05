@@ -21,7 +21,7 @@ test.describe("Case workspace surfaces", () => {
   test("Chats is a case conversation workspace", async ({ page }) => {
     await page.goto(`/app/cases/${MATTER_ID}/chats`);
     await page.waitForLoadState("networkidle");
-    await expect(page.getByRole("heading", { name: "Nyaya Command Center" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Case Chats" })).toBeVisible();
     await expect(page.getByPlaceholder(/Ask Nyaya about this Case/)).toBeVisible();
     await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
   });

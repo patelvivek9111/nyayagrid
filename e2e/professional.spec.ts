@@ -163,7 +163,8 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     await expect(page.getByText("Grounded in Case sources", { exact: true })).toBeVisible({
       timeout: 30_000,
     });
-    await expect(page.getByText("Sources", { exact: true })).toBeVisible();
+    // Composer chrome and answer panel both expose "Sources"; assert the first match.
+    await expect(page.getByText("Sources", { exact: true }).first()).toBeVisible();
     await expect(page.getByText(/January 1,\s*2024/i).first()).toBeVisible();
 
     await page.getByRole("button", { name: /Open source 1/i }).click();
