@@ -21,6 +21,11 @@ on:
           - smtp
           - memory
           - off
+      ready_url:
+        description: "Dispatch-only probe URL (default staging ready). Use a non-ready path for controlled firing drills. Scheduled runs ignore this and always probe staging ready."
+        required: false
+        default: "https://staging.nyayagrid.com/api/health/ready"
+        type: string
 
 permissions:
   contents: read
@@ -53,6 +58,7 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           DISPATCH_NOTIFY: ${{ github.event.inputs.notify }}
+          DISPATCH_READY_URL: ${{ github.event.inputs.ready_url }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
@@ -61,16 +67,27 @@ jobs:
           OPS_ALERT_TO: ${{ secrets.OPS_ALERT_TO }}
         run: |
           set -euo pipefail
+          DEFAULT_READY_URL="https://staging.nyayagrid.com/api/health/ready"
           if [ "$EVENT_NAME" = "schedule" ]; then
             MODE=smtp
             REQUIRE=1
+            READY_URL="$DEFAULT_READY_URL"
           else
             MODE="${DISPATCH_NOTIFY:-smtp}"
             if [ "$MODE" = "smtp" ]; then REQUIRE=1; else REQUIRE=0; fi
+            READY_URL="${DISPATCH_READY_URL:-$DEFAULT_READY_URL}"
+            case "$READY_URL" in
+              https://staging.nyayagrid.com/*) ;;
+              *)
+                echo "::error::ready_url must stay on https://staging.nyayagrid.com/ (staging-only drills)"
+                exit 2
+                ;;
+            esac
           fi
           echo "mode=$MODE" >> "$GITHUB_OUTPUT"
           echo "require_smtp=$REQUIRE" >> "$GITHUB_OUTPUT"
-          echo "Resolved MONITOR_NOTIFY=$MODE require_smtp=$REQUIRE"
+          echo "ready_url=$READY_URL" >> "$GITHUB_OUTPUT"
+          echo "Resolved MONITOR_NOTIFY=$MODE require_smtp=$REQUIRE ready_url=$READY_URL"
 
           if [ "$REQUIRE" = "1" ]; then
             missing=0
@@ -103,7 +120,7 @@ jobs:
       - name: Run monitor cycle
         id: cycle
         env:
-          MONITOR_READY_URL: https://staging.nyayagrid.com/api/health/ready
+          MONITOR_READY_URL: ${{ steps.notify.outputs.ready_url }}
           MONITOR_STATE_PATH: .monitor-state/staging-monitor-state.json
           MONITOR_PROBE_TIMEOUT_MS: "10000"
           MONITOR_NOTIFY: ${{ steps.notify.outputs.mode }}
