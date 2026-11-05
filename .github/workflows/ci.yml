@@ -57,6 +57,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history so prettier-changed can merge-base against the PR base / prior SHA.
+          fetch-depth: 0
 
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
@@ -77,7 +80,13 @@ jobs:
       - name: Run database migrations
         run: npm run db:migrate
 
+      # Scoped Prettier gate (scripts/ci/prettier-changed.mjs) — avoids repo-wide historical debt.
       - name: Check formatting
+        env:
+          PRETTIER_EVENT: ${{ github.event_name }}
+          PRETTIER_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          PRETTIER_HEAD_SHA: ${{ github.sha }}
+          PRETTIER_BASE_REF: origin/${{ github.event.pull_request.base.ref || 'main' }}
         run: npm run format:check
 
       - name: Lint

@@ -34,10 +34,10 @@ const EXTENSIONS = new Set([
 ]);
 
 const LOCAL_BASE_CANDIDATES = [
-  "origin/nyaya/integration-checkpoint",
-  "nyaya/integration-checkpoint",
   "origin/main",
   "main",
+  "origin/nyaya/integration-checkpoint",
+  "nyaya/integration-checkpoint",
 ];
 
 function git(args) {
