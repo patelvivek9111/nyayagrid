@@ -1,10 +1,13 @@
 {
   "classification": "NYAYAGRID_WP05_CLERK_E2E_STATUS",
-  "at": "2026-11-05T13:57:23.420Z",
-  "headShaBeforeFixes": "1e538c46985b8b761b5e1b8a3dfb117a58f35207",
+  "at": "2026-11-05T14:37:00.000Z",
+  "postMergeCertification": true,
+  "headSha": "b76a6a821160cd564bb7f3dcec35b952560d7ef5",
+  "headShaBeforeMainMerge": "8b453c278b09c35b3679617d029c8fae524940ff",
   "worktree": "c:/Users/patel/Documents/nyayagrid-wp05-clerk-e2e",
   "branch": "wp05/clerk-e2e-auth",
-  "mainHeadReferenced": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+  "mainHeadVerified": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+  "mainMergeCommit": "b76a6a821160cd564bb7f3dcec35b952560d7ef5",
   "framework": "playwright.staging.config.ts",
   "stagingBaseUrl": "https://staging.nyayagrid.com",
   "projects": [
@@ -17,12 +20,8 @@
     "q9-acceptance"
   ],
   "engineeringFixesThisSession": [
-    "Fixed authenticated prosecution forged-case probes to include organizationId (avoids false 400 once auth exists)",
-    "Expanded security negatives: documents list, org members RBAC, prosecution case with orgId",
-    "Expanded professional: forged matter documents + forged org members RBAC",
-    "Expanded prosecution: unauth evidence write; auth forged DA office list + evidence write",
-    "Expanded tenant-isolation: documents + org members probes; prosecution orgId",
-    "Corrected operator MFA docs (no in-repo mfa-acceptance.test.ts / REQUIRE_CLERK_MFA)"
+    "Merged origin/main (a499780 / PR#1) into wp05/clerk-e2e-auth via merge commit b76a6a8",
+    "No fixture/code failures observed in non-interactive run; no assertion weakening"
   ],
   "dependencyStatus": {
     "@clerk/backend": "2.33.6 (apps/web lockfile)",
@@ -31,29 +30,43 @@
   },
   "credentialsAvailable": {
     "E2E_CLERK_USER_EMAIL": false,
+    "E2E_CLERK_USER_EMAIL_B": false,
+    "E2E_CLERK_USER_PASSWORD": false,
     "CLERK_SECRET_KEY": false,
     "CLERK_PUBLISHABLE_KEY": false,
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": false,
     "STAGING_AUTH_INTERACTIVE": false,
+    "STAGING_AUTH_HEADLESS": false,
+    "REQUIRE_CLERK_MFA": false,
     "playwrightAuthStagingUserJson": false,
     "playwrightAuthStagingUserBJson": false,
+    "envLocalInClerkWorktree": false,
+    "envLocalInMainCheckout": false,
+    "envLocalInIntegration": true,
+    "integrationEnvHasClerkOrE2EKeys": false,
+    "processEnvHasClerkOrE2EKeys": false,
     "siblingAuthUsable": false,
-    "siblingAuthNote": "nyayagrid/playwright/.auth has Q9 guest metadata + Cloudflare-only storageState; not a Clerk session for Professional/Prosecution"
+    "siblingAuthNote": "No playwright/.auth/staging-user.json in clerk worktree, main checkout, or integration"
   },
   "executed": {
     "command": "npx playwright test -c playwright.staging.config.ts --project=security-negatives --project=audit-clerk --project=tenant-isolation --project=professional-clerk --project=prosecution-clerk --project=q9-acceptance",
+    "exitCode": 0,
+    "durationSec": 16.5,
     "setup": {
       "result": "SKIPPED_NON_INTERACTIVE",
       "passed": 0,
       "failed": 0,
       "skipped": 1,
+      "blocked": true,
       "names": ["authenticate against staging via Clerk"],
-      "reason": "No E2E_CLERK_* / CLERK_* credentials; STAGING_AUTH_INTERACTIVE unset"
+      "reason": "No E2E_CLERK_* / CLERK_* credentials; STAGING_AUTH_INTERACTIVE unset; no staging-user.json"
     },
     "security-negatives": {
       "result": "PASS",
       "passed": 6,
       "failed": 0,
       "skipped": 0,
+      "blocked": 0,
       "names": [
         "missing session cannot list organizations",
         "missing session cannot read forged matter",
@@ -68,6 +81,7 @@
       "passed": 1,
       "failed": 0,
       "skipped": 2,
+      "blocked": 2,
       "passedNames": ["missing session cannot export forged matter audit"],
       "skippedNames": [
         "forged matter audit export is rejected server-side",
@@ -79,6 +93,7 @@
       "passed": 1,
       "failed": 0,
       "skipped": 5,
+      "blocked": 5,
       "passedNames": ["unauthenticated context cannot list organizations"],
       "skippedNames": [
         "authenticated user never receives forged matter payload",
@@ -93,6 +108,7 @@
       "passed": 0,
       "failed": 0,
       "skipped": 8,
+      "blocked": 8,
       "skippedNames": [
         "session endpoint reports clerk provider",
         "dashboard /app loads for authenticated user",
@@ -110,6 +126,7 @@
       "passed": 2,
       "failed": 0,
       "skipped": 5,
+      "blocked": 5,
       "passedNames": [
         "unauthenticated prosecution case access is rejected",
         "unauthenticated prosecution evidence write is rejected"
@@ -127,25 +144,59 @@
       "passed": 0,
       "failed": 0,
       "skipped": 1,
+      "blocked": 1,
       "skippedNames": ["session is Clerk-authenticated on staging"]
     },
     "fullSuiteWithoutCredentials": {
       "passed": 10,
       "failed": 0,
       "skipped": 22,
-      "exitCode": 0
+      "exitCode": 0,
+      "note": "skipped != passed; authenticated Professional/Prosecution/tenant/audit/q9 remain BLOCKED"
+    }
+  },
+  "summaryByWorkspace": {
+    "professional": {
+      "passed": 0,
+      "failed": 0,
+      "skipped": 8,
+      "blocked": 8,
+      "mfa": "NOT_CERTIFIED — no interactive MFA login completed this session",
+      "tenantIsolation": "BLOCKED — authenticated tenant probes skipped (no staging-user.json / staging-user-b.json)"
+    },
+    "prosecution": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 5,
+      "blocked": 5,
+      "mfa": "NOT_CERTIFIED — no interactive MFA login completed this session",
+      "crossOfficeCaseIsolation": "BLOCKED — authenticated forged DA office / case / evidence probes skipped",
+      "unauthenticatedNegativesPassed": [
+        "unauthenticated prosecution case access is rejected",
+        "unauthenticated prosecution evidence write is rejected"
+      ]
     }
   },
   "mfa": {
     "disabledForTests": false,
     "automatedEnforcementCertified": false,
+    "interactiveLoginCompleted": false,
     "inRepoRequireClerkMfaGate": false,
     "inRepoMfaAcceptanceTest": false,
     "note": "MFA must stay enabled on Clerk staging. @clerk/testing emailAddress helper does not satisfy MFA — use STAGING_AUTH_INTERACTIVE=1 headed login. Live MFA demo remains operator action. No REQUIRE_CLERK_MFA app gate exists yet."
   },
   "identityProvisioning": {
     "status": "BLOCKED",
-    "requiredOperatorAction": "MINIMUM: (1) In Clerk staging Dashboard create four synthetic users with private metadata e2eTestUser=true: e2e-professional (Professional org), e2e-prosecution (Prosecution org), e2e-unauthorized (no membership), e2e-cross-org-b (different org). (2) Enroll MFA on those users; do not disable instance MFA. (3) From nyayagrid-wp05-clerk-e2e: set STAGING_E2E_BASE_URL=https://staging.nyayagrid.com and STAGING_AUTH_INTERACTIVE=1; run npm run staging:auth:setup in a headed browser; complete sign-in+MFA until /app; confirm playwright/.auth/staging-user.json exists and GET /api/v1/session returns provider=clerk. (4) Optionally repeat for staging-user-b.json as e2e-cross-org-b. (5) Re-run npm run staging:e2e:clerk. Do NOT set REQUIRE_CLERK_MFA=0 or disable MFA.",
+    "requiredOperatorActions": [
+      "In Clerk Dashboard (staging instance only): create synthetic users with private metadata e2eTestUser=true: e2e-professional (Professional org), e2e-prosecution (Prosecution org), e2e-unauthorized (no membership), e2e-cross-org-b (different org).",
+      "Enroll MFA on those synthetic users. Do NOT disable instance MFA. Do NOT set REQUIRE_CLERK_MFA=0.",
+      "From c:\\Users\\patel\\Documents\\nyayagrid-wp05-clerk-e2e: set STAGING_E2E_BASE_URL=https://staging.nyayagrid.com and STAGING_AUTH_INTERACTIVE=1; run npm run staging:auth:setup in a headed browser; complete sign-in + MFA as e2e-professional until /app.",
+      "Confirm playwright/.auth/staging-user.json exists and GET /api/v1/session returns { ok: true, provider: \"clerk\" }.",
+      "Optional cross-org: headed login as e2e-cross-org-b saving playwright/.auth/staging-user-b.json.",
+      "Optional prosecution surface: ensure e2e-prosecution membership or re-auth storageState with that identity for prosecution-clerk project.",
+      "Re-run: npm run staging:e2e:clerk against https://staging.nyayagrid.com.",
+      "Live MFA evidence: attempt access without second factor (expect Clerk deny) then complete MFA (expect session provider=clerk)."
+    ],
     "identitiesNeeded": [
       "e2e-professional",
       "e2e-prosecution",
@@ -155,9 +206,14 @@
   },
   "neonCorpusWrites": 0,
   "paidAiCalls": 0,
+  "courtlistenerCalls": 0,
+  "NEON_CORPUS_WRITES": 0,
+  "PAID_AI_CALLS": 0,
+  "COURTLISTENER_CALLS": 0,
   "productionDeploy": false,
   "wp06Started": false,
-  "result": "PARTIAL",
+  "mergedToMain": false,
+  "result": "PARTIAL_BLOCKED_ON_OPERATOR_AUTH",
   "fixableNowComplete": true,
   "remainingExternalDeps": [
     "Staging Clerk synthetic identities + operator interactive MFA login (required for authenticated Professional/Prosecution/tenant/audit/q9)",
