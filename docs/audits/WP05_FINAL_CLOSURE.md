@@ -86,3 +86,9 @@ Newly repaired features this pass: **none** (audit/register only; no prod deploy
 - MONITOR_SCHEDULE_PENDING — PR#5 https://github.com/patelvivek9111/nyayagrid/pull/5
 - CLERK_OPERATOR_SETUP_REQUIRED — synthetic identities + interactive MFA
 - FINAL: WP05_EXTERNAL_OPERATOR_ACTION_REQUIRED
+
+## Final staging certification revalidation (2026-11-05T16:38:05.977Z)
+- main `5b964ab` (PR#5)
+- MONITOR_PENDING_GITHUB (schedule=0)
+- CLERK_OPERATOR_SETUP_REQUIRED
+- FINAL: WP05_EXTERNAL_OPERATOR_ACTION_REQUIRED

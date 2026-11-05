@@ -1,8 +1,8 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_WP05_FINAL_TWO_BLOCKER_CLOSURE",
-  "generatedAt": "2026-11-05T15:13:25.896Z",
-  "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+  "classification": "NYAYAGRID_WP05_FINAL_STAGING_CERTIFICATION",
+  "generatedAt": "2026-11-05T16:38:05.977Z",
+  "head": "5b964ab54186e5e75d5438aaeb7a512278bfecc9",
   "branch": "wp05/prod-ops-preflight",
   "mainMerge": {
     "pr": 1,
@@ -1080,6 +1080,7 @@
       "severity": "P1",
       "releaseBlocker": true,
       "evidence": [
+        "FINAL STAGING CERT 2026-11-05T16:37Z: PR#5 on main 5b964ab; cron 2-57/5; scheduleCount=0 → MONITOR_PENDING_GITHUB / GITHUB_SCHEDULE_PENDING",
         "TWO-BLOCKER 2026-11-05: SCHEDULE still 0 after >5h; PR#5 opened to re-register cron 2-57/5 (operator merge required). Dispatch SMTP firing/recovery/dedupe previously demonstrated.",
         "POST-MERGE 2026-11-05: workflow on main; workflow_dispatch healthy+ SMTP firing/recovery/dedupe demonstrated on PR#4 branch; SCHEDULE_NOT_YET_OBSERVED (0 schedule events); cache durability best-effort documented",
         "PR #1 MERGED to main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (source HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed) at 2026-11-05T14:30:10Z — staging-continuous-monitor.yml NOW on default branch",
@@ -1982,7 +1983,7 @@
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
   "wp05Session": {
-    "classification": "NYAYAGRID_WP05_FINAL_TWO_BLOCKER_CLOSURE",
+    "classification": "NYAYAGRID_WP05_FINAL_STAGING_CERTIFICATION",
     "result": "WP05_EXTERNAL_OPERATOR_ACTION_REQUIRED",
     "status": "PARTIAL",
     "finalClosureDecision": "WP05_NOT_FULLY_CLOSED",
@@ -2077,57 +2078,33 @@
       "purpose": "dispatch-only ready_url for controlled SMTP drills; not merged"
     },
     "monitoring": {
-      "workflowOnMain": true,
+      "status": "MONITOR_PENDING_GITHUB",
+      "scheduleStatus": "GITHUB_SCHEDULE_PENDING",
+      "workflowId": 408254765,
       "workflowState": "active",
-      "cron": "*/5 * * * *",
-      "permissions": {
-        "contents": "read",
-        "actions": "write"
-      },
-      "secretsConfigured": [
-        "SMTP_HOST",
-        "SMTP_PORT",
-        "SMTP_USERNAME",
-        "SMTP_PASSWORD",
-        "EMAIL_FROM",
-        "OPS_ALERT_TO"
-      ],
-      "scheduleObserved": false,
-      "scheduleStatus": "SCHEDULE_NOT_YET_OBSERVED",
-      "scheduleNote": "Workflow registered on default branch at PR#1 merge 2026-11-05T14:30:10Z; zero event=schedule runs as of register update. GitHub may delay first cron. Do not count workflow_dispatch as schedule.",
-      "dispatchEvidence": {
-        "healthyMain": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42046460657",
-        "fail1": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42047095146",
-        "fail2FiringSmtp": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42048054638",
-        "recoverySmtp": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42048318603",
-        "dedupeHealthy": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42048605954",
-        "firingDetail": "smtp:accepted ready-probe-failing",
-        "recoveryDetail": "smtp:accepted ready-probe-failing resolved",
-        "dedupeDetail": "PROBE_HEALTHY transitions=[] deliveries=[]"
-      },
-      "cacheDurability": "Actions cache unique key per run + restore-keys prefix; eviction/miss resets consecutive failure and cooldown — not durable persistence",
-      "stagingProbeUrl": "https://staging.nyayagrid.com/api/health/ready",
-      "stagingIdentityObserved": "add3af38a4c00c6cec631b70981a1c855b660f38 (deploy lag vs main a499780)"
+      "cronOnMain": "2-57/5 * * * *",
+      "scheduleCount": 0,
+      "scheduleRuns": [],
+      "note": "Post-PR5 revalidation: cron present on main; Actions enabled; SMTP secret names present; no deploy steps in monitor workflow. event=schedule still 0 after first post-merge cron slots (:32/:37). Do not change cron again without further evidence. Prior dispatch SMTP firing/recovery/dedupe remain historically valid, not schedule cert.",
+      "smtpFiringRecoveryDedupe": "HISTORICAL_DISPATCH_VERIFIED",
+      "cacheDurability": "NOT_GUARANTEED"
     },
     "clerk": {
-      "branch": "wp05/clerk-e2e-auth",
+      "status": "CLERK_OPERATOR_SETUP_REQUIRED",
       "tip": "1b2113a916ff640d18ddba0cf0aa7fec60c804a1",
       "professional": {
         "passed": 0,
         "failed": 0,
         "skipped": 8,
-        "mfa": "NOT_CERTIFIED"
+        "mfa": "NOT_CERTIFIED",
+        "crossFirm": "BLOCKED"
       },
       "prosecution": {
         "passed": 2,
         "failed": 0,
         "skipped": 5,
-        "mfa": "NOT_CERTIFIED"
-      },
-      "nonInteractiveTotals": {
-        "passed": 10,
-        "failed": 0,
-        "skipped": 22
+        "mfa": "NOT_CERTIFIED",
+        "crossOfficeCase": "BLOCKED"
       }
     },
     "twoBlockers": {
@@ -2159,6 +2136,21 @@
         "mfa": "NOT_CERTIFIED",
         "reason": "No Clerk/E2E credentials or staging-user.json in authorized engineering environment; MFA interactive enrollment required"
       }
+    },
+    "mainSha": "5b964ab54186e5e75d5438aaeb7a512278bfecc9",
+    "pr5": {
+      "merged": true,
+      "source": "b9b1c75bf83ef1aef28d32165fb3e3e7d4a9efd0",
+      "mergeCommit": "5b964ab54186e5e75d5438aaeb7a512278bfecc9",
+      "mergedAt": "2026-11-05T16:30:36Z"
+    },
+    "stagingHealth": {
+      "ok": true,
+      "status": "HEALTHY",
+      "gitSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
+      "clamav": "ok",
+      "ocr": "disabled",
+      "neonCorpusResearch": "off"
     }
   }
 }
