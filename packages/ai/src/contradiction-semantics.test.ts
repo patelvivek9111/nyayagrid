@@ -9,11 +9,7 @@ import {
 } from "./contradiction-semantics";
 import type { ProfessionalChunk } from "./professional";
 
-function chunk(
-  chunkId: string,
-  documentId: string,
-  content: string,
-): ProfessionalChunk {
+function chunk(chunkId: string, documentId: string, content: string): ProfessionalChunk {
   return {
     chunkId,
     documentId,
@@ -238,7 +234,10 @@ describe("contradiction candidate selection and filters", () => {
       ],
       new Map([
         ["a", "The original agreement requires 60 days written notice unless amended."],
-        ["b", "Amendment 1 deleted and replaced the clause and now requires 30 days written notice."],
+        [
+          "b",
+          "Amendment 1 deleted and replaced the clause and now requires 30 days written notice.",
+        ],
       ]),
     );
     expect(refined).toHaveLength(0);
@@ -254,7 +253,9 @@ describe("contradiction candidate selection and filters", () => {
       chunk("a", "doc_a", noticeA),
       chunk("b", "doc_b", noticeB),
     ]);
-    expect(found.some((row) => /10/.test(row.explanation) && /30/.test(row.explanation))).toBe(true);
+    expect(found.some((row) => /10/.test(row.explanation) && /30/.test(row.explanation))).toBe(
+      true,
+    );
     const refined = refineContradictionCandidates(
       found,
       new Map([
@@ -285,7 +286,8 @@ describe("contradiction candidate selection and filters", () => {
     const refined = refineDepositionFindingClass({
       findingType: "direct_contradiction",
       title: "Login activity versus testimony",
-      explanation: "Morgan Hale denied entering Dock B. The account activity recorded login successful.",
+      explanation:
+        "Morgan Hale denied entering Dock B. The account activity recorded login successful.",
       supportingQuotes: [
         "A. I never entered Dock B that morning.",
         "Account activity: credential assigned to Morgan Hale — login successful at Dock B.",
@@ -298,7 +300,8 @@ describe("contradiction candidate selection and filters", () => {
     const refined = refineDepositionFindingClass({
       findingType: "inconsistency",
       title: "Conflicting sworn entry testimony",
-      explanation: "One witness testified they entered the conference room; the other testified they did not enter.",
+      explanation:
+        "One witness testified they entered the conference room; the other testified they did not enter.",
       supportingQuotes: [
         "A. I entered the conference room at 3 p.m.",
         "A. I did not enter the conference room that day.",

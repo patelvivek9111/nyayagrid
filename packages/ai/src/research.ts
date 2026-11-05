@@ -174,9 +174,11 @@ export function formatResearchAuthorityChunks(chunks: ResearchAuthorityChunk[]):
   return chunks
     .map((c) => {
       const controlling =
-        c.hierarchyRelationship === "controlling" || c.hierarchyRelationship === "potentially_binding"
+        c.hierarchyRelationship === "controlling" ||
+        c.hierarchyRelationship === "potentially_binding"
           ? "controlling_or_potentially_binding"
-          : c.hierarchyRelationship === "persuasive" || c.hierarchyRelationship === "out_of_jurisdiction"
+          : c.hierarchyRelationship === "persuasive" ||
+              c.hierarchyRelationship === "out_of_jurisdiction"
             ? "persuasive_or_nonbinding"
             : "unknown";
       return `- authorityId=${c.authorityId} | name=${c.name ?? "null"} | authorityType=${c.authorityType ?? "null"} | chunkId=${c.chunkId} | citation=${c.citation ?? "null"} | court=${c.court ?? "null"} | date=${c.date ?? "null"} | hierarchyRelationship=${c.hierarchyRelationship ?? "unknown"} | controllingOrPersuasive=${controlling} | temporalApplicability=${c.temporalApplicability ?? "unknown"} | jurisdiction=${c.jurisdiction ?? "null"} | text=|${c.content}|`;
@@ -371,9 +373,7 @@ export function buildResearchSynthesisUserPrompt(input: {
     "LegalAuthority:",
     formatResearchAuthorityChunks(input.authorityChunks) || "(none)",
     input.jurisdiction ? `Jurisdiction: ${input.jurisdiction}` : "",
-    input.jurisdictionContext
-      ? `CaseJurisdictionMetadata:\n${input.jurisdictionContext}`
-      : "",
+    input.jurisdictionContext ? `CaseJurisdictionMetadata:\n${input.jurisdictionContext}` : "",
     input.matterContextSummary
       ? `MatterContext (issue framing only, not legal authority):\n${input.matterContextSummary}`
       : "",
