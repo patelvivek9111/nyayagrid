@@ -12,16 +12,21 @@ import { SYSTEM_ROLE_DEFINITIONS } from "./system-roles";
  * - `mode: "strict"` resets a system role to the exact definition set. That is an explicit
  *   administrative enforcement of immutable system-role definitions — call only from an
  *   authorized organization.manage path, never from invites or read requests.
- * - Professional system roles must not receive prosecution.* capabilities via these helpers.
+ * - Owner may include prosecution.* as the organization bridge role (explicit in definitions).
+ * - Other Professional system roles must not receive prosecution.* via these helpers.
  */
 
 const PROSECUTION_CAPABILITY_PREFIX = "prosecution.";
 
-function assertNoProsecutionCapabilities(capabilities: readonly string[]): void {
+function assertProfessionalRoleCapabilities(
+  roleKey: string,
+  capabilities: readonly string[],
+): void {
+  if (roleKey === "owner") return;
   const bad = capabilities.filter((c) => c.startsWith(PROSECUTION_CAPABILITY_PREFIX));
   if (bad.length > 0) {
     throw new Error(
-      `Professional system roles must not grant prosecution capabilities: ${bad.join(", ")}`,
+      `Professional role "${roleKey}" must not grant prosecution capabilities: ${bad.join(", ")}`,
     );
   }
 }
@@ -36,7 +41,7 @@ export async function ensureProfessionalSystemRoles(
   organizationId: string,
 ): Promise<void> {
   for (const def of SYSTEM_ROLE_DEFINITIONS) {
-    assertNoProsecutionCapabilities(def.capabilities);
+    assertProfessionalRoleCapabilities(def.key, def.capabilities);
     const [existing] = await db
       .select({ id: roles.id })
       .from(roles)
@@ -87,7 +92,7 @@ export async function reconcileProfessionalSystemRolePermissions(
   let capabilitiesRemoved = 0;
 
   for (const def of SYSTEM_ROLE_DEFINITIONS) {
-    assertNoProsecutionCapabilities(def.capabilities);
+    assertProfessionalRoleCapabilities(def.key, def.capabilities);
     const [role] = await db
       .select({ id: roles.id })
       .from(roles)

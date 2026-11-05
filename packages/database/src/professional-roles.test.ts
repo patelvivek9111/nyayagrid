@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import { SYSTEM_ROLE_DEFINITIONS } from "./system-roles";
 
 describe("professional system role policy", () => {
-  it("keeps Professional system roles free of prosecution capabilities", () => {
-    for (const def of SYSTEM_ROLE_DEFINITIONS) {
+  it("keeps non-owner Professional roles free of prosecution capabilities", () => {
+    const owner = SYSTEM_ROLE_DEFINITIONS.find((r) => r.key === "owner");
+    expect(owner?.capabilities.some((c) => c.startsWith("prosecution."))).toBe(true);
+    for (const def of SYSTEM_ROLE_DEFINITIONS.filter((r) => r.key !== "owner")) {
       expect(def.capabilities.some((c) => c.startsWith("prosecution."))).toBe(false);
     }
   });
