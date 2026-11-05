@@ -411,7 +411,7 @@
         "local vitest suite load broken on Windows junctions — CI authoritative; helpers verified via tsx"
       ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "93962ad"
+      "lastVerifiedSha": "464e358"
     },
     {
       "id": "PROS-GRAPH-01",
