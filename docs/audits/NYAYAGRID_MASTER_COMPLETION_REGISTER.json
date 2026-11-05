@@ -809,7 +809,8 @@
         "GitHub release protection workflows: deploy-staging.yml + deploy-production-gate.yml (approval-only; never deploys)",
         "docs/operations/WP05_GITHUB_RELEASE_PROTECTION.md; WP05_AUDIT_SECRETS_PROVENANCE.md; WP05_CARRY_FORWARD_GATES.md",
         "ops:prod-ops-preflight → WP05_FIXABLE_NOW_ENGINEERING_COMPLETE_PRODUCTION_NOT_VERIFIED",
-        "env-boundaries + deploy-preflight block APP_ENV=production without PRODUCTION_DEPLOY_APPROVED"
+        "env-boundaries + deploy-preflight block APP_ENV=production without PRODUCTION_DEPLOY_APPROVED",
+        "wp05/prod-ops-preflight commit 0abfa92c5290765270dedc6ee9d84d82a915a0d5 FIXABLE_NOW engineering"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "add3af38a4c00c6cec631b70981a1c855b660f38",
@@ -840,7 +841,8 @@
         "GITHUB_ENVIRONMENT_REVIEWERS_CONFIGURED": false,
         "PROD_OPS_PREFLIGHT_ENGINEERING": true
       },
-      "remediation": "Production remains gated; staging identity durable after image rollback/restore; FIXABLE_NOW ops engineering complete"
+      "remediation": "Production remains gated; staging identity durable after image rollback/restore; FIXABLE_NOW ops engineering complete",
+      "lastVerifiedShaEngineering": "0abfa92c5290765270dedc6ee9d84d82a915a0d5"
     },
     {
       "id": "RM-PG-01",
@@ -1287,7 +1289,8 @@
         "Attorney Terms/Privacy",
         "Critical security findings",
         "Production deploy auth"
-      ]
+      ],
+      "fixCommit": "0abfa92c5290765270dedc6ee9d84d82a915a0d5"
     },
     {
       "id": "WP-06",
