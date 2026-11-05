@@ -843,4 +843,62 @@ export const prosecutionGraphEdges = pgTable(
   (table) => [index("prosecution_graph_edges_case_idx").on(table.criminalCaseId)],
 );
 
+/** Case-scoped Prosecution Memory — reviewable; proposed ≠ verified fact. No guilt/charging fields. */
+export const PROSECUTION_CASE_MEMORY_TYPES = [
+  "confirmed_fact",
+  "disputed_fact",
+  "allegation",
+  "admission",
+  "legal_issue",
+  "open_question",
+  "procedural_context",
+  "evidence_note",
+  "strategy_note",
+  "other",
+] as const;
+
+export type ProsecutionCaseMemoryType = (typeof PROSECUTION_CASE_MEMORY_TYPES)[number];
+
+export const PROSECUTION_CASE_MEMORY_STATUSES = [
+  "proposed",
+  "approved",
+  "rejected",
+  "superseded",
+] as const;
+
+export type ProsecutionCaseMemoryStatus = (typeof PROSECUTION_CASE_MEMORY_STATUSES)[number];
+
+export const prosecutionCaseMemories = pgTable(
+  "prosecution_case_memories",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    criminalCaseId: uuid("criminal_case_id")
+      .notNull()
+      .references(() => criminalCases.id, { onDelete: "cascade" }),
+    evidenceItemId: uuid("evidence_item_id").references(() => prosecutionEvidenceItems.id, {
+      onDelete: "set null",
+    }),
+    memoryType: text("memory_type").notNull().default("other"),
+    content: text("content").notNull(),
+    status: text("status").notNull().default("proposed"),
+    origin: text("origin").notNull().default("manual"),
+    confidence: text("confidence"),
+    provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
+    supersededBy: uuid("superseded_by"),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id),
+    reviewedByUserId: uuid("reviewed_by_user_id").references(() => users.id),
+    ...timestamps,
+  },
+  (table) => [
+    index("prosecution_case_memories_case_idx").on(table.criminalCaseId),
+    index("prosecution_case_memories_org_idx").on(table.organizationId),
+    index("prosecution_case_memories_status_idx").on(table.organizationId, table.status),
+    index("prosecution_case_memories_case_status_idx").on(table.criminalCaseId, table.status),
+    index("prosecution_case_memories_evidence_idx").on(table.evidenceItemId),
+  ],
+);
+
 export const prosecutionElementStatusCheck = sql`status in ('SUPPORTED','PARTIALLY_SUPPORTED','CONFLICTED','NO_EVIDENCE_FOUND','UNKNOWN')`;

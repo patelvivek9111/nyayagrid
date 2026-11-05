@@ -394,12 +394,23 @@
       "subsystem": "Memory",
       "feature": "Case Memory UX",
       "requirement": "Reviewable Memory parity with Professional",
-      "status": "MISSING",
-      "severity": "P2",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "priority": "P2",
       "releaseBlocker": false,
-      "evidence": ["memory.ts fixture-style only; no prosecution Memory UI"],
-      "confidence": "HIGH",
-      "lastVerifiedSha": "c2c3d09"
+      "evidence": [
+        "packages/database/src/schema/phase14.ts prosecutionCaseMemories",
+        "packages/database/drizzle/0025_prosecution_case_memories.sql",
+        "packages/intelligence/src/prosecution/case-memory-db.ts",
+        "apps/web/src/app/api/v1/prosecution/cases/[caseId]/memory/route.ts",
+        "apps/web/src/app/api/v1/prosecution/cases/[caseId]/memory/[memoryId]/review/route.ts",
+        "apps/web/src/app/app/prosecution/[caseId]/memory/page.tsx",
+        "case-section Memory nav link",
+        "unit: case-memory-db.test.ts status transitions + proposed!=verified",
+        "integration: case-memory.integration.test.ts (RUN_DB_TESTS) isolation + audits",
+        "audit actions prosecution.memory_*; no guilt/charging fields"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "pending-commit"
     },
     {
       "id": "PROS-GRAPH-01",

@@ -1072,4 +1072,59 @@ export const updateNoteSchema = z.object({
   expectedVersionId: z.string().uuid().optional(),
 });
 
+const prosecutionCaseMemoryTypeSchema = z.enum([
+  "confirmed_fact",
+  "disputed_fact",
+  "allegation",
+  "admission",
+  "legal_issue",
+  "open_question",
+  "procedural_context",
+  "evidence_note",
+  "strategy_note",
+  "other",
+]);
+
+const prosecutionMemoryProvenanceSchema = z
+  .object({
+    documentId: z.string().uuid().nullable().optional(),
+    authorityId: z.string().uuid().nullable().optional(),
+    sourceSpan: z.string().trim().max(8000).nullable().optional(),
+    sourcePage: z.number().int().nullable().optional(),
+    section: z.string().trim().max(200).nullable().optional(),
+    extractionOrigin: z
+      .enum(["human", "import", "deterministic_fixture", "source_metadata"])
+      .optional(),
+    humanEntered: z.boolean().optional(),
+  })
+  .refine(
+    (value) =>
+      value.humanEntered === true ||
+      value.extractionOrigin === "human" ||
+      Boolean(value.documentId || value.authorityId || value.sourceSpan),
+    { message: "Provenance requires a document, authority, source span, or human origin." },
+  );
+
+export const createProsecutionCaseMemorySchema = z.object({
+  organizationId: z.string().uuid(),
+  memoryType: prosecutionCaseMemoryTypeSchema,
+  content: z.string().trim().min(1).max(8000),
+  evidenceItemId: z.string().uuid().optional().nullable(),
+  origin: z.enum(["ai", "manual"]).optional(),
+  status: z.enum(["proposed", "approved"]).optional(),
+  confidence: z.enum(["low", "medium", "high"]).optional().nullable(),
+  provenance: prosecutionMemoryProvenanceSchema,
+  supersedesId: z.string().uuid().optional().nullable(),
+});
+
+export const reviewProsecutionCaseMemorySchema = z.object({
+  organizationId: z.string().uuid(),
+  action: z.enum(["approve", "reject", "edit", "supersede"]),
+  content: z.string().trim().min(1).max(8000).optional().nullable(),
+  memoryType: prosecutionCaseMemoryTypeSchema.optional().nullable(),
+  evidenceItemId: z.string().uuid().optional().nullable(),
+  rejectionReason: z.string().trim().max(2000).optional().nullable(),
+  provenance: prosecutionMemoryProvenanceSchema.optional().nullable(),
+});
+
 export { z };

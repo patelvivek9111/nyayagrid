@@ -1,5 +1,6 @@
 export * from "./domain";
 export * from "./memory";
+export * from "./case-memory-db";
 export * from "./fixture";
 export * from "./postgres";
 export * from "./graph-bridge";
