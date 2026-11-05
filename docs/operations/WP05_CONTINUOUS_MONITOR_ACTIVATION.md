@@ -50,3 +50,9 @@ post-merge scheduled runs and SMTP delivery are observed.
 - Live scheduled executions (need post-merge observation)
 - Production on-call / PagerDuty
 - Automated acknowledgment
+
+## Schedule re-registration (2026-11-05)
+
+After PR #1 merge, `event=schedule` remained at **0** for >5 hours while `workflow_dispatch` succeeded and the AI-eval daily schedule continued historically. Repository Actions enabled; workflow state active; secrets present.
+
+Remediation (GitHub-documented): commit a **cron schedule change** so the schedule actor reactivates. Interval remains every 5 minutes as `2-57/5 * * * *` (offset from top-of-hour contention). Operator must merge the re-registration PR; do not claim `MONITOR_SCHEDULE_CERTIFIED` until =2 `event=schedule` runs are observed.
