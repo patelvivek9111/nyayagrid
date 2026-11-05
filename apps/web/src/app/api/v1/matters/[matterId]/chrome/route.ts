@@ -1,7 +1,10 @@
 import { clients } from "@nyayagrid/database";
 import { eq } from "drizzle-orm";
 import { getReviewQueueCounts } from "@nyayagrid/intelligence";
-import { resolveMatterJurisdictionContext, uiJurisdictionContract } from "@nyayagrid/jurisdiction";
+import {
+  resolveMatterJurisdictionContext,
+  uiJurisdictionContract,
+} from "@nyayagrid/jurisdiction";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
@@ -35,10 +38,9 @@ export async function GET(request: Request, { params }: Params) {
         organizationId: matter.organizationId,
         matterId: matter.id,
       });
-      pendingCount =
-        typeof queues.pendingCount === "number"
-          ? queues.pendingCount
-          : totalPendingReviewCount(queues);
+      pendingCount = typeof queues.pendingCount === "number"
+        ? queues.pendingCount
+        : totalPendingReviewCount(queues);
     } catch {
       pendingCount = 0;
     }
@@ -61,7 +63,9 @@ export async function GET(request: Request, { params }: Params) {
       },
       client: clientRow ? { displayName: clientRow.displayName } : null,
       organizationId: matter.organizationId,
-      jurisdictionContext: jurisdictionContext ? uiJurisdictionContract(jurisdictionContext) : null,
+      jurisdictionContext: jurisdictionContext
+        ? uiJurisdictionContract(jurisdictionContext)
+        : null,
       review: {
         pendingCount,
         canReview,

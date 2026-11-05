@@ -12,12 +12,7 @@ import {
   storageKeyForOrganization,
   writeAuditEvent,
 } from "@nyayagrid/permissions";
-import {
-  sha256Buffer,
-  rejectZipBombsOrArchives,
-  UploadLimitError,
-  ingestIdempotencyKey,
-} from "@nyayagrid/documents";
+import { sha256Buffer, rejectZipBombsOrArchives, UploadLimitError, ingestIdempotencyKey } from "@nyayagrid/documents";
 import { z } from "zod";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
@@ -354,11 +349,7 @@ export async function POST(request: Request, { params }: Params) {
           updatedAt: new Date(),
         })
         .where(eq(documents.id, documentId));
-      return jsonError(
-        "INGEST_ENQUEUE_FAILED",
-        "Upload stored but processing could not be queued",
-        503,
-      );
+      return jsonError("INGEST_ENQUEUE_FAILED", "Upload stored but processing could not be queued", 503);
     }
 
     const [fresh] = await db.select().from(documents).where(eq(documents.id, documentId)).limit(1);

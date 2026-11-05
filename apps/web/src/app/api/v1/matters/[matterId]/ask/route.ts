@@ -82,6 +82,7 @@ async function answerDirectly(params: {
   }
 }
 
+
 /**
  * Ask-or-task entry point. `mode: "ask"` always answers directly (the classic Nyaya Q&A path).
  * `mode: "task"` always creates an agent run. `mode: "auto"` (default) classifies the goal first
@@ -108,7 +109,8 @@ export async function POST(request: Request, { params }: Params) {
     const mayCreateRun = agentsOn && mode !== "ask";
     const sourceScope: SourceScope = body.sourceScope ?? "case";
     const wantsStream =
-      body.stream === true || (request.headers.get("accept") ?? "").includes("text/event-stream");
+      body.stream === true ||
+      (request.headers.get("accept") ?? "").includes("text/event-stream");
 
     const { matter } = await requireMatterAccess(db, {
       userId: user.id,

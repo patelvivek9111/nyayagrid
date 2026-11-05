@@ -237,7 +237,9 @@ export async function GET(request: Request, { params }: Params) {
 
     return jsonOk({
       matter,
-      jurisdictionContext: jurisdictionContext ? uiJurisdictionContract(jurisdictionContext) : null,
+      jurisdictionContext: jurisdictionContext
+        ? uiJurisdictionContract(jurisdictionContext)
+        : null,
       client: clientRows[0] ?? null,
       recentDocuments,
       recentNotes,
