@@ -5,6 +5,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ProfessionalShell } from "@/components/shell";
 import { useActiveOrganization } from "@/components/use-active-organization";
+import { useOrgCapability } from "@/components/use-org-capability";
 import { EmptyState, ErrorState, LoadingState, StatusLabel } from "@/components/ux";
 import { Button } from "@nyayagrid/ui";
 import { humanizeKey } from "@/lib/plain-labels";
@@ -21,6 +22,7 @@ type CaseRow = {
 export default function ProsecutionListPage() {
   const router = useRouter();
   const { organizationId } = useActiveOrganization();
+  const auditCap = useOrgCapability(organizationId, "audit.view");
   const [cases, setCases] = useState<CaseRow[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -37,11 +39,13 @@ export default function ProsecutionListPage() {
     fetch(`/api/v1/prosecution/cases?organizationId=${organizationId}`)
       .then(async (response) => {
         const data = await response.json();
-        if (!response.ok) throw new Error(data?.error?.message ?? "Could not load prosecution cases.");
+        if (!response.ok)
+          throw new Error(data?.error?.message ?? "Could not load prosecution cases.");
         if (!cancelled) setCases(data.cases ?? []);
       })
       .catch((err: unknown) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : "Could not load prosecution cases.");
+        if (!cancelled)
+          setError(err instanceof Error ? err.message : "Could not load prosecution cases.");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -63,7 +67,8 @@ export default function ProsecutionListPage() {
         body: JSON.stringify({ organizationId, caseNumber, jurisdiction, court }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data?.error?.message ?? "Could not open the criminal case.");
+      if (!response.ok)
+        throw new Error(data?.error?.message ?? "Could not open the criminal case.");
       router.push(`/app/prosecution/${data.criminalCase.id}`);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Could not open the criminal case.");
@@ -72,7 +77,8 @@ export default function ProsecutionListPage() {
   }
 
   const filtered = cases.filter((row) => {
-    const haystack = `${row.caseNumber} ${row.jurisdiction} ${row.court} ${row.caseStatus}`.toLowerCase();
+    const haystack =
+      `${row.caseNumber} ${row.jurisdiction} ${row.court} ${row.caseStatus}`.toLowerCase();
     const matchesQuery = !query.trim() || haystack.includes(query.trim().toLowerCase());
     const matchesStatus = statusFilter === "all" || row.caseStatus === statusFilter;
     return matchesQuery && matchesStatus;
@@ -86,6 +92,14 @@ export default function ProsecutionListPage() {
         Criminal cases for this office. Search and open a case to work charges, the Elements Matrix,
         discovery, and disclosure review — without guilt scoring.
       </p>
+      {auditCap.allowed ? (
+        <p className="mb-4 text-sm">
+          <Link className="text-accent underline" href="/app/prosecution/audit">
+            Office audit
+          </Link>
+          <span className="text-ink/55"> — authorized prosecution action trail</span>
+        </p>
+      ) : null}
       {loading ? <LoadingState label="Loading prosecution cases" /> : null}
       {error ? <ErrorState message={error} /> : null}
       <form className="mb-6 grid gap-2 md:grid-cols-4" onSubmit={onCreate}>
@@ -165,7 +179,14 @@ export default function ProsecutionListPage() {
           title="No matching cases"
           description="Clear the search or status filter to see all criminal cases in this office."
           action={
-            <Button type="button" variant="secondary" onClick={() => { setQuery(""); setStatusFilter("all"); }}>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => {
+                setQuery("");
+                setStatusFilter("all");
+              }}
+            >
               Clear filters
             </Button>
           }
@@ -188,7 +209,10 @@ export default function ProsecutionListPage() {
               {filtered.map((criminalCase) => (
                 <tr key={criminalCase.id} className="border-b border-line/70">
                   <td className="px-3 py-2">
-                    <Link className="font-semibold text-accent underline" href={`/app/prosecution/${criminalCase.id}`}>
+                    <Link
+                      className="font-semibold text-accent underline"
+                      href={`/app/prosecution/${criminalCase.id}`}
+                    >
                       {criminalCase.caseNumber}
                     </Link>
                   </td>
