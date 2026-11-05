@@ -1,0 +1,138 @@
+# WP-05 — continuous staging readiness monitor (independent of the Fly app process).
+# Must live on the repository DEFAULT BRANCH for schedule: to run.
+#
+# Scheduled runs REQUIRE SMTP repository secrets and use MONITOR_NOTIFY=smtp.
+# workflow_dispatch may set notify=off|memory for dry probes, but that does NOT
+# certify notification coverage.
+name: Staging continuous monitor
+
+on:
+  schedule:
+    # Every 5 minutes (GitHub may delay under load).
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      notify:
+        description: "Notify mode for manual runs only: smtp (default) | memory | off"
+        required: false
+        default: "smtp"
+        type: choice
+        options:
+          - smtp
+          - memory
+          - off
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: staging-continuous-monitor
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    name: Probe staging ready
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Resolve notify mode
+        id: notify
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_NOTIFY: ${{ github.event.inputs.notify }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          OPS_ALERT_TO: ${{ secrets.OPS_ALERT_TO }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "schedule" ]; then
+            MODE=smtp
+            REQUIRE=1
+          else
+            MODE="${DISPATCH_NOTIFY:-smtp}"
+            if [ "$MODE" = "smtp" ]; then REQUIRE=1; else REQUIRE=0; fi
+          fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "require_smtp=$REQUIRE" >> "$GITHUB_OUTPUT"
+          echo "Resolved MONITOR_NOTIFY=$MODE require_smtp=$REQUIRE"
+
+          if [ "$REQUIRE" = "1" ]; then
+            missing=0
+            for name in SMTP_HOST SMTP_PORT SMTP_USERNAME SMTP_PASSWORD EMAIL_FROM OPS_ALERT_TO; do
+              eval "val=\${$name:-}"
+              if [ -z "$val" ]; then
+                echo "::error::Missing required repository secret: $name"
+                missing=1
+              else
+                echo "Secret present (name only): $name"
+              fi
+            done
+            if [ "$missing" = "1" ]; then
+              echo "::error::SMTP_SECRETS_MISSING — scheduled/live notification coverage cannot be claimed. Configure repository secrets then re-run."
+              exit 2
+            fi
+          else
+            echo "::warning::MONITOR_NOTIFY=$MODE — notification coverage is NOT certified for this run."
+          fi
+
+      - name: Restore monitor state
+        uses: actions/cache@v4
+        with:
+          path: .monitor-state
+          # Unique key per run (cache keys are immutable once written).
+          key: staging-monitor-state-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            staging-monitor-state-
+
+      - name: Run monitor cycle
+        id: cycle
+        env:
+          MONITOR_READY_URL: https://staging.nyayagrid.com/api/health/ready
+          MONITOR_STATE_PATH: .monitor-state/staging-monitor-state.json
+          MONITOR_PROBE_TIMEOUT_MS: "10000"
+          MONITOR_NOTIFY: ${{ steps.notify.outputs.mode }}
+          MONITOR_REQUIRE_SMTP: ${{ steps.notify.outputs.require_smtp }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          OPS_ALERT_TO: ${{ secrets.OPS_ALERT_TO }}
+        run: |
+          mkdir -p .monitor-state
+          npx tsx scripts/ops/staging-monitor-cycle.ts | tee monitor-cycle-out.json
+          # Redact any accidental secret-shaped strings before artifacting
+          node -e "const fs=require('fs'); let t=fs.readFileSync('monitor-cycle-out.json','utf8'); t=t.replace(/npg_[A-Za-z0-9]+/g,'[REDACTED]').replace(/:[^@\\s\"']{8,}@/g,':[REDACTED]@'); fs.writeFileSync('monitor-cycle-out.json', t);"
+
+      - name: Persist monitor state
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .monitor-state
+          key: staging-monitor-state-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Upload cycle artifact (no secrets)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-monitor-cycle-${{ github.run_id }}
+          path: |
+            monitor-cycle-out.json
+            .monitor-state/staging-monitor-state.json
+          if-no-files-found: warn
