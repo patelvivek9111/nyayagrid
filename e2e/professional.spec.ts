@@ -419,10 +419,17 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     const sources = page.getByRole("list", { name: "Draft source assertions" });
     const insufficient = page.getByText(/Insufficient source material/i);
     await expect(sources.or(insufficient).first()).toBeVisible();
+    // Touch content so save always creates a distinct new version.
+    await page.getByLabel("Draft content").fill(
+      `${(await page.getByLabel("Draft content").inputValue())}\n\n[Attorney note: retain for review.]`,
+    );
     await page.getByRole("button", { name: "Save new version" }).click();
-    await expect(page.getByRole("list", { name: "Version history" }).getByText("v2")).toBeVisible({
+    await expect(page.getByText("v2", { exact: true }).first()).toBeVisible({
       timeout: 15_000,
     });
+    await expect(
+      page.getByRole("list", { name: "Version history" }).getByText("v2", { exact: true }),
+    ).toBeVisible({ timeout: 15_000 });
     await expect(page.getByRole("button", { name: /send|file/i })).toHaveCount(0);
   });
 

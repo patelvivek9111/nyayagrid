@@ -525,6 +525,8 @@ export default function CaseDraftPage() {
 
               <div>
                 <VersionHistoryPanel
+                  // Remount when a new draft version is saved so recovery history reloads.
+                  key={`${selectedDraftId}:${selectedDraft.currentVersionNumber}`}
                   matterId={matterId}
                   objectType="draft"
                   objectId={selectedDraftId}
