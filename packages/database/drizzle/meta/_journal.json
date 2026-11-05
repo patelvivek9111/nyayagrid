@@ -176,6 +176,20 @@
       "when": 1788200000000,
       "tag": "0024_citation_target_classification",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1788300000000,
+      "tag": "0025_prosecution_case_memories",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1788400000000,
+      "tag": "0026_prosecution_case_graph",
+      "breakpoints": true
     }
   ]
 }

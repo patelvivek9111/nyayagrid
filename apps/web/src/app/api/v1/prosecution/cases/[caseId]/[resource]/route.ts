@@ -10,7 +10,9 @@ const provenanceSchema = z
     sourceSpan: z.string().trim().max(8000).nullable().optional(),
     sourcePage: z.number().int().nullable().optional(),
     section: z.string().trim().max(200).nullable().optional(),
-    extractionOrigin: z.enum(["human", "import", "deterministic_fixture", "source_metadata"]).optional(),
+    extractionOrigin: z
+      .enum(["human", "import", "deterministic_fixture", "source_metadata"])
+      .optional(),
     humanEntered: z.boolean().optional(),
   })
   .refine(
@@ -54,7 +56,9 @@ const prosecutionResourceSchemas = {
     uncertainEvidenceIds: z.array(z.string().uuid()).max(100).optional(),
     missingEvidenceIds: z.array(z.string().max(200)).max(100).optional(),
     relatedAuthorityIds: z.array(z.string().uuid()).max(100).optional(),
-    status: z.enum(["SUPPORTED", "PARTIALLY_SUPPORTED", "CONFLICTED", "NO_EVIDENCE_FOUND", "UNKNOWN"]).optional(),
+    status: z
+      .enum(["SUPPORTED", "PARTIALLY_SUPPORTED", "CONFLICTED", "NO_EVIDENCE_FOUND", "UNKNOWN"])
+      .optional(),
     confidence: z.enum(["high", "medium", "low"]).optional(),
     humanReviewStatus: z.string().trim().max(40).optional(),
     provenance: provenanceSchema,
@@ -64,7 +68,23 @@ const prosecutionResourceSchemas = {
     sourceAgency: optionalText,
     collector: optionalText,
     storageReference: optionalText,
-    chainOfCustody: z.array(z.string().max(200)).max(50).optional(),
+    chainOfCustody: z
+      .array(
+        z.union([
+          z.string().max(200),
+          z.object({
+            actor: z.string().trim().min(1).max(200),
+            timestamp: z.string().trim().min(1).max(80),
+            from: z.string().trim().max(200).nullable().optional(),
+            to: z.string().trim().min(1).max(200),
+            location: z.string().trim().max(200).nullable().optional(),
+            notes: z.string().trim().max(4000).nullable().optional(),
+            source: provenanceSchema.optional(),
+          }),
+        ]),
+      )
+      .max(50)
+      .optional(),
     relatedDefendantIds: z.array(z.string().uuid()).max(20).optional(),
     sensitivity: z.string().trim().max(40).optional(),
     reviewStatus: z.string().trim().max(40).optional(),
@@ -103,15 +123,42 @@ const prosecutionResourceSchemas = {
     sourceSpan: optionalText,
     interviewer: optionalText,
     eventContext: optionalText,
-    claims: z.array(z.object({ key: text, value: z.string().max(2000), kind: z.enum(["fact", "time"]).optional() })).max(100).optional(),
+    claims: z
+      .array(
+        z.object({
+          key: text,
+          value: z.string().max(2000),
+          kind: z.enum(["fact", "time"]).optional(),
+        }),
+      )
+      .max(100)
+      .optional(),
     confidence: z.enum(["high", "medium", "low"]).optional(),
     provenance: provenanceSchema,
   }),
   discovery: z.object({
     source: text,
     category: text,
-    reviewStatus: z.enum(["RECEIVED", "REVIEWED", "FLAGGED", "PRODUCED", "WITHHELD_FOR_ATTORNEY_REVIEW", "UNKNOWN"]).optional(),
-    productionStatus: z.enum(["RECEIVED", "REVIEWED", "FLAGGED", "PRODUCED", "WITHHELD_FOR_ATTORNEY_REVIEW", "UNKNOWN"]).optional(),
+    reviewStatus: z
+      .enum([
+        "RECEIVED",
+        "REVIEWED",
+        "FLAGGED",
+        "PRODUCED",
+        "WITHHELD_FOR_ATTORNEY_REVIEW",
+        "UNKNOWN",
+      ])
+      .optional(),
+    productionStatus: z
+      .enum([
+        "RECEIVED",
+        "REVIEWED",
+        "FLAGGED",
+        "PRODUCED",
+        "WITHHELD_FOR_ATTORNEY_REVIEW",
+        "UNKNOWN",
+      ])
+      .optional(),
     notes: optionalText,
     relatedDocumentIds: z.array(z.string().uuid()).max(100).optional(),
     provenance: provenanceSchema,
@@ -128,7 +175,15 @@ const prosecutionResourceSchemas = {
       "OTHER",
       "UNKNOWN",
     ]),
-    status: z.enum(["UNREVIEWED", "REVIEW_REQUIRED", "REVIEWED_DISCLOSE", "REVIEWED_NOT_DISCLOSE", "ESCALATE"]).optional(),
+    status: z
+      .enum([
+        "UNREVIEWED",
+        "REVIEW_REQUIRED",
+        "REVIEWED_DISCLOSE",
+        "REVIEWED_NOT_DISCLOSE",
+        "ESCALATE",
+      ])
+      .optional(),
     notes: optionalText,
     provenance: provenanceSchema,
   }),
@@ -249,13 +304,21 @@ const prosecutionResourceSchemas = {
   }),
 } as const;
 
-export async function POST(request: Request, context: { params: Promise<{ caseId: string; resource: string }> }) {
+export async function POST(
+  request: Request,
+  context: { params: Promise<{ caseId: string; resource: string }> },
+) {
   try {
     const { db, user } = await requireUser(request.headers);
     const { caseId, resource } = await context.params;
     const organizationId = new URL(request.url).searchParams.get("organizationId");
     const schema = prosecutionResourceSchemas[resource as keyof typeof prosecutionResourceSchemas];
-    if (!schema || !organizationId || !z.string().uuid().safeParse(organizationId).success || !z.string().uuid().safeParse(caseId).success) {
+    if (
+      !schema ||
+      !organizationId ||
+      !z.string().uuid().safeParse(organizationId).success ||
+      !z.string().uuid().safeParse(caseId).success
+    ) {
       return jsonError("VALIDATION_ERROR", "Unknown prosecution resource or id.", 400);
     }
     const body = schema.parse(await request.json());
@@ -264,7 +327,7 @@ export async function POST(request: Request, context: { params: Promise<{ caseId
       organizationId,
       caseId,
       resource,
-    body: body as Record<string, unknown>,
+      body: body as Record<string, unknown>,
     });
     return jsonOk({ record }, { status: 201 });
   } catch (error) {
