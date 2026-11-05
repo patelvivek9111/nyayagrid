@@ -1,6 +1,6 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_PRODUCT_COMPLETION_SECURITY_AND_FEATURE_EXECUTION",
+  "classification": "NYAYAGRID_MASTER_PRODUCT_COMPLETION_EXECUTION",
   "generatedAt": "2026-11-03T22:57:29.530Z",
   "head": "7420710b13198813434c3c8b1a23126fa985f708",
   "branch": "feat/prosecution-memory-graph-coc",
@@ -441,19 +441,19 @@
       "subsystem": "Graph",
       "feature": "Persisted prosecution graph",
       "requirement": "Writable graph_nodes/edges for criminal cases",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "VERIFIED",
       "severity": "P2",
       "releaseBlocker": false,
       "evidence": [
-        "packages/database/drizzle/0026_prosecution_case_graph.sql",
-        "packages/database/src/schema/phase14.ts (node_kind/canonical/reviewable edges)",
-        "packages/intelligence/src/prosecution/case-graph-db.ts",
-        "apps/web graph API/UI + case-section nav",
-        "Disposable DB forward/rollback smoke 0025+0026"
+        "0026 upgrades 0018 stub tables (DROP+CREATE reviewable schema)",
+        "case-graph-db.ts + graph API/UI + case-section nav",
+        "Disposable DB stub→upgrade and rollback smoke",
+        "CI migrate SUCCESS on f09034b (awaiting full CI incl E2E)",
+        "CI SUCCESS run 42098640222 @ f09034b"
       ],
-      "confidence": "MEDIUM",
-      "lastVerifiedSha": "2ab130def9962ed562b583c2e5bd9955f808022c",
-      "nextAction": "Confirm CI on PR #7 tip; operator merge after PR #6"
+      "confidence": "HIGH",
+      "lastVerifiedSha": "f09034b5db3852140f68f0b5b626172233f16442",
+      "nextAction": "Operator merge after PR #6; then rebase PR #8"
     },
     {
       "id": "PROS-AUD-01",
@@ -1410,7 +1410,7 @@
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
-  "updatedAt": "2026-11-05T19:49:35.505Z",
+  "updatedAt": "2026-11-05T20:36:40.530Z",
   "productContinuation": {
     "pr6": {
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",
