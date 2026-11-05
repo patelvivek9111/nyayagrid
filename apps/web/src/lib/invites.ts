@@ -1,5 +1,5 @@
 import { and, eq } from "drizzle-orm";
-import { roles, type Database } from "@nyayagrid/database";
+import { ensureProfessionalSystemRoles, roles, type Database } from "@nyayagrid/database";
 import {
   assertInviteableRoleKey,
   createOrganizationInvite,
@@ -27,13 +27,14 @@ export async function inviteMemberByRoleKey(params: {
   roleKey: string;
   invitedByUserId: string;
 }): Promise<CreateOrganizationInviteResult> {
+  assertInviteableRoleKey(params.roleKey);
+  await ensureProfessionalSystemRoles(params.db, params.organizationId);
   const [role] = await params.db
     .select()
     .from(roles)
     .where(and(eq(roles.organizationId, params.organizationId), eq(roles.key, params.roleKey)))
     .limit(1);
   if (!role) throw new InviteRoleNotFoundError(params.roleKey);
-  assertInviteableRoleKey(params.roleKey);
 
   return createOrganizationInvite({
     db: params.db,

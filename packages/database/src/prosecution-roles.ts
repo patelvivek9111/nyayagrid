@@ -47,6 +47,22 @@ export async function ensureProsecutionRoles(db: Database, organizationId: strin
     .where(eq(permissions.roleId, owner.id));
   const have = new Set(existingCaps.map((row) => row.capability));
   const missing = OWNER_PROSECUTION_CAPABILITIES.filter((capability) => !have.has(capability));
-  if (missing.length === 0) return;
-  await db.insert(permissions).values(missing.map((capability) => ({ roleId: owner.id, capability })));
+  if (missing.length === 0) {
+    // fall through to legal_support hardening
+  } else {
+    await db.insert(permissions).values(missing.map((capability) => ({ roleId: owner.id, capability })));
+  }
+
+  // Hardening: Legal Support must not retain prosecution.edit (consequential case edits).
+  const [legalSupport] = await db
+    .select({ id: roles.id })
+    .from(roles)
+    .where(and(eq(roles.organizationId, organizationId), eq(roles.key, "legal_support")))
+    .limit(1);
+  if (!legalSupport) return;
+  await db
+    .delete(permissions)
+    .where(
+      and(eq(permissions.roleId, legalSupport.id), eq(permissions.capability, "prosecution.edit")),
+    );
 }

@@ -69,4 +69,8 @@ export { schema };
 export { SYSTEM_ROLE_DEFINITIONS, OWNER_CAPABILITIES, PROSECUTION_ROLE_DEFINITIONS } from "./system-roles";
 export { createOrganizationWithDefaults } from "./organizations";
 export { ensureProsecutionRoles } from "./prosecution-roles";
+export {
+  ensureProfessionalSystemRoles,
+  reconcileProfessionalSystemRolePermissions,
+} from "./professional-roles";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";

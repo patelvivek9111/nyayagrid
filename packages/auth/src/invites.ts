@@ -22,7 +22,10 @@ import { sendInviteEmail, type EmailProvider } from "@nyayagrid/platform";
  * Public invitation roles. Supervising and office-admin prosecution roles stay with the owner.
  */
 export const INVITEABLE_ROLE_KEYS = [
+  "admin",
+  "partner",
   "lawyer",
+  "paralegal",
   "staff",
   "client_guest",
   "prosecutor",
