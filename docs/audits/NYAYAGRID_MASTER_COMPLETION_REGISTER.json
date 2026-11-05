@@ -1,7 +1,7 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-05T13:52:00.000Z",
+  "generatedAt": "2026-11-05T14:05:00.000Z",
   "head": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
   "branch": "wp05/prod-ops-preflight",
   "mainMerge": {
@@ -20,22 +20,28 @@
     "methodology": "Requirement rows where product is Professional or Prosecution (includes corpus integration rows); honest status from requirements[] — no production claims from staging-only or CI-only evidence",
     "productionVerifiedAny": false,
     "stagingAuthenticatedE2EVerified": false,
+    "verificationLanes": {
+      "localOrCi": "Unit/integration/Playwright CI or local harness",
+      "authenticatedStaging": "Clerk-authenticated staging E2E — currently BLOCKED on synthetic identities / interactive MFA",
+      "production": "PRODUCTION_DEPLOYED=NO — none production-verified"
+    },
     "Professional": {
       "requirementsInventoried": 14,
       "byStatus": {
-        "VERIFIED_COMPLETE": 6,
+        "VERIFIED_COMPLETE": 5,
         "IMPLEMENTED_UNVERIFIED": 2,
         "PARTIAL": 4,
         "MISSING": 2,
         "BLOCKED": 1,
-        "OUT_OF_SCOPE": 0
+        "OUT_OF_SCOPE": 0,
+        "BROKEN": 0
       },
       "releaseBlockersOpen": [
         "PROF-DOC-02",
         "PROF-RES-01",
         "CORPUS-13"
       ],
-      "note": "Matters/doc ingest/timeline/memory/graph CI-verified; OCR/research/corpus Neon integration partial or blocked; Clerk-authenticated staging E2E not closed"
+      "note": "Matters/doc ingest/timeline/memory/graph CI-verified (5 VERIFIED_COMPLETE); OCR/research/corpus Neon integration partial or blocked; Clerk-authenticated staging E2E not closed; folders/contacts MISSING"
     },
     "Prosecution": {
       "requirementsInventoried": 15,
@@ -45,14 +51,224 @@
         "PARTIAL": 5,
         "MISSING": 1,
         "BLOCKED": 1,
-        "OUT_OF_SCOPE": 1
+        "OUT_OF_SCOPE": 1,
+        "BROKEN": 0
       },
       "releaseBlockersOpen": [
         "PROS-EXT-01",
         "CORPUS-07",
         "CORPUS-14"
       ],
+      "cjisNote": "CJIS-01 remains OUT_OF_SCOPE release blocker only if marketed as certified",
       "note": "Core case/RBAC/disclosure/safety/isolation/warrant tracking verified; Memory UI missing; graph/audit/CoC partial; live corpus blocked; CJIS out of scope unless marketed"
+    },
+    "p0RemainingOpen": [
+      "PROF-DOC-02:PARTIAL",
+      "PROF-RES-01:BLOCKED",
+      "PROS-EXT-01:PARTIAL",
+      "AI-GROUND-01:IMPLEMENTED_UNVERIFIED",
+      "CORPUS-01:PARTIAL",
+      "SEC-AUTH-01:PARTIAL",
+      "SEC-MAL-01:PARTIAL",
+      "SEC-LEGAL-01:PARTIAL",
+      "OPS-BACKUP-01:PARTIAL",
+      "OPS-DEP-01:PARTIAL",
+      "CORPUS-03:PARTIAL",
+      "CORPUS-04:PARTIAL",
+      "CORPUS-06:PARTIAL",
+      "CORPUS-07:BLOCKED",
+      "CORPUS-08:PARTIAL",
+      "CORPUS-09:PARTIAL",
+      "CORPUS-11:PARTIAL",
+      "CORPUS-13:PARTIAL",
+      "CORPUS-14:PARTIAL",
+      "CORPUS-15:PARTIAL"
+    ],
+    "p1RemainingOpen": [
+      "PROF-DRAFT-01:IMPLEMENTED_UNVERIFIED",
+      "PROF-ROLE-01:PARTIAL",
+      "CORPUS-02:PARTIAL",
+      "OPS-MON-01:PARTIAL",
+      "RM-PG-01:PARTIAL",
+      "CORPUS-05:PARTIAL",
+      "CORPUS-10:PARTIAL",
+      "CORPUS-12:PARTIAL"
+    ],
+    "p0RemainingCount": 20,
+    "p1RemainingCount": 8
+  },
+  "featureInventoryAudit": {
+    "methodology": "Map tracked Professional/Prosecution/Shared requirements to product feature areas; statuses are requirement-row honesty (CI/local vs authenticated staging vs production). Staging SMTP/PITR/rollback remain HISTORICAL_VERIFIED. No production certification from staging alone.",
+    "verificationLanes": {
+      "localOrCi": "Unit/integration/Playwright CI or local harness",
+      "authenticatedStaging": "Clerk-authenticated staging E2E — currently BLOCKED on synthetic identities / interactive MFA",
+      "production": "PRODUCTION_DEPLOYED=NO — none production-verified"
+    },
+    "areas": {
+      "matters": {
+        "product": "Professional",
+        "requirementIds": [
+          "PROF-MATTER-01"
+        ],
+        "status": "VERIFIED_COMPLETE",
+        "lane": "localOrCi"
+      },
+      "cases": {
+        "product": "Prosecution",
+        "requirementIds": [
+          "PROS-CASE-01"
+        ],
+        "status": "VERIFIED_COMPLETE",
+        "lane": "localOrCi"
+      },
+      "clients": {
+        "product": "Professional",
+        "requirementIds": [
+          "PROF-CLIENT-01"
+        ],
+        "status": "IMPLEMENTED_UNVERIFIED",
+        "lane": "localOrCi"
+      },
+      "documents": {
+        "product": "Professional",
+        "requirementIds": [
+          "PROF-DOC-01",
+          "PROF-DOC-02",
+          "PROF-FOLDER-01"
+        ],
+        "status": "PARTIAL",
+        "note": "Text ingest CI-verified; OCR staging/prod open; folders MISSING",
+        "lane": "mixed"
+      },
+      "research": {
+        "product": "Professional",
+        "requirementIds": [
+          "PROF-RES-01",
+          "CORPUS-13"
+        ],
+        "status": "BLOCKED",
+        "note": "WP-03E corpus credential provisioning required",
+        "lane": "blocked"
+      },
+      "aiDrafting": {
+        "product": "Professional",
+        "requirementIds": [
+          "PROF-DRAFT-01"
+        ],
+        "status": "IMPLEMENTED_UNVERIFIED",
+        "lane": "localOrCi"
+      },
+      "timeline": {
+        "product": "Professional",
+        "requirementIds": [
+          "PROF-TL-01"
+        ],
+        "status": "VERIFIED_COMPLETE",
+        "lane": "localOrCi"
+      },
+      "memory": {
+        "products": [
+          "Professional",
+          "Prosecution"
+        ],
+        "requirementIds": [
+          "PROF-MEM-01",
+          "PROS-MEM-01"
+        ],
+        "status": "PARTIAL",
+        "note": "Professional VERIFIED_COMPLETE; Prosecution Memory UX MISSING",
+        "lane": "mixed"
+      },
+      "graph": {
+        "products": [
+          "Professional",
+          "Prosecution"
+        ],
+        "requirementIds": [
+          "PROF-GRAPH-01",
+          "PROS-GRAPH-01"
+        ],
+        "status": "PARTIAL",
+        "note": "Professional VERIFIED_COMPLETE; Prosecution graph writers PARTIAL",
+        "lane": "mixed"
+      },
+      "billing": {
+        "product": "Professional",
+        "requirementIds": [
+          "PROF-BILL-01"
+        ],
+        "status": "PARTIAL",
+        "lane": "localOrCi"
+      },
+      "evidence": {
+        "product": "Prosecution",
+        "requirementIds": [
+          "PROS-EV-01"
+        ],
+        "status": "PARTIAL",
+        "note": "CoC typing drift; WP-06 polish",
+        "lane": "localOrCi"
+      },
+      "disclosure": {
+        "product": "Prosecution",
+        "requirementIds": [
+          "PROS-DIS-01"
+        ],
+        "status": "VERIFIED_COMPLETE",
+        "lane": "localOrCi"
+      },
+      "legalWorkflows": {
+        "product": "Prosecution",
+        "requirementIds": [
+          "PROS-WF-01"
+        ],
+        "status": "VERIFIED_COMPLETE",
+        "lane": "localOrCi"
+      },
+      "rbac": {
+        "products": [
+          "Professional",
+          "Prosecution"
+        ],
+        "requirementIds": [
+          "PROF-ROLE-01",
+          "PROS-RBAC-01"
+        ],
+        "status": "PARTIAL",
+        "note": "Prosecution six roles VERIFIED; Professional role set PARTIAL vs spec",
+        "lane": "localOrCi"
+      },
+      "auditTrails": {
+        "product": "Prosecution",
+        "requirementIds": [
+          "PROS-AUD-01"
+        ],
+        "status": "PARTIAL",
+        "note": "Events written; dedicated Audit nav incomplete",
+        "lane": "localOrCi"
+      },
+      "tenantIsolation": {
+        "products": [
+          "Shared",
+          "Prosecution"
+        ],
+        "requirementIds": [
+          "SEC-ISO-01",
+          "PROS-ISO-01"
+        ],
+        "status": "VERIFIED_COMPLETE",
+        "lane": "localOrCi",
+        "stagingAuthNote": "Authenticated cross-org staging probes still blocked on Clerk identities"
+      },
+      "sameDocumentContradictionDetection": {
+        "product": "Shared",
+        "status": "VERIFIED_COMPLETE",
+        "lane": "localOrCi",
+        "evidence": [
+          "PR #3 approved head 81acba9698e4ea312c345be532461b294c3a6359 restored packages/ai contradiction-semantics",
+          "Merged main af376941dd90ddd1eb9969d10815eb9e9811dd9d; CI run 42015520866 SUCCESS"
+        ]
+      }
     }
   },
   "productScope": {
@@ -122,18 +338,20 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "WP-04: OCR/ClamAV/MFA/Terms external gates; WP-03E deferred; WP-05 PARTIAL — PR #3 merged main @ af376941; PR #1 monitor not merged; production deploy OFF",
-    "verifiedComplete": 16,
-    "implementedUnverified": 4,
-    "partial": 21,
-    "missing": 4,
+    "note": "WP-05 final verification 2026-11-05: PR #3 merged main @ af376941dd90ddd1eb9969d10815eb9e9811dd9d (approved 81acba9698e4ea312c345be532461b294c3a6359; CI 42015520866; same-document contradiction restored). PR #1 HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed monitor-only 16 files NOT merged — SAFE_TO_MERGE pending CI green + operator approval. PR #2 must NOT be merged. PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; WP06_STARTED=NO. Monitoring scheduled-run acceptance cannot be claimed until PR #1 merges to default branch. Do not mark production certification from staging alone.",
+    "verifiedComplete": 17,
+    "implementedUnverified": 3,
+    "partial": 28,
+    "missing": 3,
     "broken": 0,
-    "blocked": 8,
+    "blocked": 2,
     "outOfScope": 1,
     "p0": 30,
     "p1": 12,
     "p2": 10,
-    "p3": 2
+    "p3": 2,
+    "p0RemainingOpen": 20,
+    "p1RemainingOpen": 8
   },
   "requirements": [
     {
@@ -802,8 +1020,8 @@
       "evidence": [
         "WP-05 DEFAULT_ALERT_POLICIES + continuous-monitor evaluator (firing/resolved/dedupe/cooldown)",
         "packages/observability WP-05 monitoring unit tests 18/18 PASS (continuous-monitor, ops-health, alert-delivery, release-identity, alert-transport)",
-        "GitHub Actions workflow staging-continuous-monitor.yml (cron */5) on branch wp05/activate-staging-monitor @ d8868dfbf5a214f013e923b6d4804cd24ed7e96e targeting main — NOT on main (404); scheduled runs NOT YET",
-        "PR #1 required CI SUCCESS on head d8868df (run https://github.com/patelvivek9111/nyayagrid/actions/runs/41969975451) — format/lint/typecheck/unit/build/AI-eval/E2E all green; awaiting operator merge approval",
+        "GitHub Actions workflow staging-continuous-monitor.yml (cron */5) on branch wp05/activate-staging-monitor @ 7a8ea91be8392f8c7d770e3699a403151e01f0ed (monitor-only 16-file delta onto post-PR#3 main) — NOT on main; scheduled runs NOT YET; SAFE_TO_MERGE pending CI green + operator approval",
+        "PR #1 updated to HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed (rebase/merge of PR #3 baseline; monitor-only 16 files). Prior CI green at d8868df (run 41969975451) is HISTORICAL for previous tip. Current tip SAFE_TO_MERGE pending CI green on 7a8ea91be8392f8c7d770e3699a403151e01f0ed + operator approval. PR #2 must NOT be merged.",
         "Live monitor cycle PROBE_HEALTHY against staging.nyayagrid.com (wp05-continuous-monitor-last-cycle.json)",
         "Policy catalog wp05-alert-policy-catalog.json (unobservable signals explicitly NOT_FABRICATED)",
         "Staging SMTP synthetic ready-probe-failing HISTORICAL: firing 2026-11-04T16:37:32.025Z + resolved 2026-11-04T16:37:32.597Z; Gmail human ack verified",
@@ -824,10 +1042,10 @@
         "Automated acknowledgment integration not tested",
         "Request-metric policies (5xx/AI/worker heartbeat/TLS) lack telemetry — not fabricated",
         "staging-continuous-monitor.yml not on default branch main — merge wp05/activate-staging-monitor + operator approval required before cron runs",
-        "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false — post-merge observe >=2 scheduled runs + SMTP firing/dedupe/recovery"
+        "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false — Monitoring acceptance (genuine scheduled runs, SMTP firing/recovery) CANNOT be claimed until PR #1 merges to default branch; post-merge observe >=2 scheduled runs + SMTP firing/dedupe/recovery"
       ],
       "HUMAN_APPROVAL": "Staging ready-probe Gmail ack HISTORICAL only; production on-call gated; merge monitor PR to main before claiming continuous scheduler",
-      "NEXT_ACTION": "Operator-approve and merge PR #1 exact SHA d8868dfbf5a214f013e923b6d4804cd24ed7e96e to main; confirm SMTP_* EMAIL_FROM OPS_ALERT_TO remain set; observe >=2 scheduled monitor runs + SMTP firing/dedupe/recovery; do not claim production from staging SMTP ack",
+      "NEXT_ACTION": "Await CI green on PR #1 HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed; operator-approve merge to main (do NOT merge PR #2); confirm SMTP_* EMAIL_FROM OPS_ALERT_TO remain set; ONLY AFTER default-branch merge observe >=2 genuine scheduled monitor runs + SMTP firing/dedupe/recovery; do not claim monitoring acceptance or production from staging SMTP ack alone",
       "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED": true,
       "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED_AT": "2026-11-05T03:21:00Z",
       "GITHUB_ACTIONS_SMTP_SECRET_NAMES": [
@@ -839,8 +1057,13 @@
         "OPS_ALERT_TO"
       ],
       "MONITOR_WORKFLOW_BRANCH": "wp05/activate-staging-monitor",
-      "MONITOR_WORKFLOW_HEAD": "d8868dfbf5a214f013e923b6d4804cd24ed7e96e",
+      "MONITOR_WORKFLOW_HEAD": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
       "MONITOR_PR_CI_RUN": "https://github.com/patelvivek9111/nyayagrid/actions/runs/41969975451",
+      "MONITOR_PR_CI_RUN_SCOPE": "HISTORICAL_PRIOR_TIP_d8868df",
+      "MONITOR_PR_CURRENT_HEAD": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+      "MONITOR_PR_SAFE_TO_MERGE": "PENDING_CI_GREEN",
+      "MONITOR_PR_MERGED": false,
+      "PR2_MUST_NOT_MERGE": true,
       "MONITOR_PR_CI_RESULT": "SUCCESS",
       "MONITOR_WORKFLOW_ON_MAIN": false,
       "DEFAULT_BRANCH_SCHEDULER_ACTIVE": false,
@@ -862,7 +1085,8 @@
         "OTHER_ALERT_POLICIES_TESTED": false,
         "PRODUCTION_VERIFIED": false
       },
-      "remediation": "Continuous scheduler + evaluator shipped; keep production paging optional until separately verified"
+      "remediation": "Continuous scheduler + evaluator shipped; keep production paging optional until separately verified",
+      "MONITORING_ACCEPTANCE_CLAIMABLE": false
     },
     {
       "id": "OPS-DEP-01",
@@ -883,7 +1107,8 @@
         "ops:prod-ops-preflight scripts + gate workflows + runbooks → WP05_FIXABLE_NOW_ENGINEERING_COMPLETE (wp05/prod-ops-preflight branch; not merged via PR #3)",
         "env-boundaries + deploy-preflight block APP_ENV=production without PRODUCTION_DEPLOY_APPROVED",
         "PR #3 merged to main af376941 (approved head 81acba96); CI run 42015520866 SUCCESS — default-branch CI/E2E baseline; does not deploy production or activate monitor cron",
-        "wp05/prod-ops-preflight branch carries prod-ops register/runbooks pending separate merge"
+        "wp05/prod-ops-preflight branch carries prod-ops register/runbooks pending separate merge",
+        "Session gates: PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; WP06_STARTED=NO"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
@@ -964,14 +1189,20 @@
       "subsystem": "Testing",
       "feature": "Playwright E2E",
       "requirement": "Professional+Prosecution E2E green in CI",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "severity": "P1",
+      "status": "VERIFIED_COMPLETE",
+      "priority": "P1",
       "releaseBlocker": false,
       "evidence": [
-        "CI SUCCESS at HEAD; PRODUCTION_READINESS still lists professor/guide e2e STALE"
+        "CI run 42015520866 SUCCESS at approved PR #3 head 81acba9698e4ea312c345be532461b294c3a6359 (merged main af376941dd90ddd1eb9969d10815eb9e9811dd9d)",
+        "Same-document contradiction detection restored in PR #3 (packages/ai contradiction-semantics)",
+        "Lane=localOrCi only — Clerk-authenticated staging E2E remains BLOCKED (wp05-clerk-e2e-status.json: 7 pass / 15 skip without identities)",
+        "PRODUCTION_READINESS professor/guide e2e references may still be STALE (RM-PG-01)"
       ],
-      "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09"
+      "confidence": "HIGH",
+      "lastVerifiedSha": "81acba9698e4ea312c345be532461b294c3a6359",
+      "verificationLane": "localOrCi",
+      "authenticatedStagingVerified": false,
+      "productionVerified": false
     },
     {
       "id": "TEST-UNIT-01",
@@ -1365,9 +1596,14 @@
         "STAGING_IDENTITY_ROLLBACK_VERIFIED": "HISTORICAL_PASS",
         "GITHUB_RELEASE_PROTECTION_ENGINEERING": true,
         "PROD_OPS_PREFLIGHT_ENGINEERING": true,
-        "PRODUCTION_DEPLOYED": false
+        "PRODUCTION_DEPLOYED": false,
+        "MONITORING_ACCEPTANCE_CLAIMABLE": false,
+        "PR1_HEAD": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+        "PR1_SAFE_TO_MERGE": "PENDING_CI_GREEN",
+        "PR2_MUST_NOT_MERGE": true,
+        "SAME_DOCUMENT_CONTRADICTION_RESTORED": true
       },
-      "note": "WP-05 NOT fully closed — external gates pending. PR #3 MERGED main @ af376941 (approved 81acba96; CI 42015520866 SUCCESS). PR #1 NOT merged — continuous monitor cron not on default branch; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false. FIXABLE_NOW prod-ops engineering on wp05/prod-ops-preflight (release gates, runbooks, register). Staging PITR/isolation/SMTP human ack/identity rollback HISTORICAL preserved. SMTP Actions secrets configured. Clerk authenticated Professional/Prosecution E2E blocked on synthetic staging identities + interactive MFA. PRODUCTION_DEPLOYED=NO; OPS-BACKUP/MON/DEP PRODUCTION_VERIFIED=false. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production.",
+      "note": "WP-05 NOT fully closed — external gates pending. PR #3 MERGED main @ af376941 (approved 81acba96; CI 42015520866 SUCCESS; same-document contradiction restored). PR #1 HEAD 7a8ea91 monitor-only 16 files NOT merged — SAFE_TO_MERGE pending CI green + operator approval; monitoring acceptance NOT claimable until default-branch merge. PR #2 must NOT be merged. FIXABLE_NOW prod-ops engineering on wp05/prod-ops-preflight. Staging PITR/isolation/SMTP human ack/identity rollback HISTORICAL preserved. Clerk authenticated E2E blocked on synthetic staging identities + interactive MFA (non-interactive 7 pass/15 skip). PRODUCTION_DEPLOYED=NO; NEON_CORPUS_WRITES=0; PAID_AI_CALLS=0; WP06_STARTED=NO; OPS-BACKUP/MON/DEP PRODUCTION_VERIFIED=false. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production. Do not mark production certification from staging alone.",
       "carryForward": [
         "WP-03E legal research gates",
         "WP-04 OCR/load",
@@ -1389,8 +1625,35 @@
       },
       "pr1Monitor": {
         "merged": false,
+        "head": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+        "scope": "monitor-only 16 files onto post-PR#3 main",
+        "safeToMerge": "PENDING_CI_GREEN",
         "monitorWorkflowOnMain": false,
-        "realScheduledExecutionsObserved": false
+        "realScheduledExecutionsObserved": false,
+        "monitoringAcceptanceClaimable": false,
+        "pr2MustNotMerge": true
+      },
+      "gates": {
+        "PRODUCTION_DEPLOYED": "NO",
+        "NEON_CORPUS_WRITES": 0,
+        "PAID_AI_CALLS": 0,
+        "WP06_STARTED": "NO"
+      },
+      "completedVsOpen": {
+        "completed": [
+          "PR #3 CI/E2E baseline merged to main (incl. same-document contradiction detection)",
+          "FIXABLE_NOW prod-ops engineering (release gates, runbooks, register) on wp05/prod-ops-preflight",
+          "Historical staging PITR / SMTP ready-probe ack / identity rollback evidence preserved",
+          "GitHub Actions SMTP secrets configured (historical)",
+          "Unauthenticated staging security negatives PASS (Clerk E2E harness)"
+        ],
+        "open": [
+          "PR #1 merge + genuine scheduled monitor runs + SMTP firing/recovery acceptance",
+          "OPS-BACKUP/MON/DEP PRODUCTION_VERIFIED",
+          "Clerk-authenticated Professional/Prosecution staging E2E",
+          "GitHub Environment required reviewers",
+          "Carry-forward WP-03E / WP-04 OCR·ClamAV·MFA / attorney Terms / critical security / production deploy auth"
+        ]
       }
     },
     {
@@ -1625,17 +1888,20 @@
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
   "wp05Session": {
-    "classification": "NYAYAGRID_WP05_POST_PR3_MERGE_REGISTER",
+    "classification": "NYAYAGRID_WP05_FINAL_VERIFICATION_REGISTER",
     "result": "WP05_EXTERNAL_GATES_PENDING",
     "status": "PARTIAL",
     "finalClosureDecision": "WP05_NOT_FULLY_CLOSED",
     "wp06Started": false,
     "productionDeployed": false,
+    "neonCorpusWrites": 0,
+    "paidAiCalls": 0,
     "pr3": {
       "merged": true,
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/3",
       "mergeCommitMain": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
       "approvedHead": "81acba9698e4ea312c345be532461b294c3a6359",
+      "includesSameDocumentContradictionDetection": true,
       "remoteCi": {
         "run": "42015520866",
         "conclusion": "SUCCESS"
@@ -1644,15 +1910,38 @@
     "pr1": {
       "merged": false,
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/1",
+      "head": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+      "scope": "monitor-only 16 files onto new main after PR #3",
+      "safeToMerge": "PENDING_CI_GREEN",
+      "awaitingOperatorApproval": true,
       "monitorWorkflowOnMain": false,
       "realScheduledExecutionsObserved": false,
-      "nextAction": "Rebase PR #1 onto post-PR#3 main; green CI; operator merge approval; then observe >=2 scheduled runs + SMTP firing/recovery"
+      "monitoringAcceptanceClaimable": false,
+      "nextAction": "CI green on 7a8ea91be8392f8c7d770e3699a403151e01f0ed; operator merge approval; then observe >=2 scheduled runs + SMTP firing/recovery. Do not claim monitoring acceptance before default-branch merge."
+    },
+    "pr2": {
+      "mustNotMerge": true,
+      "url": "https://github.com/patelvivek9111/nyayagrid/pull/2"
     },
     "opsProductionVerified": {
       "OPS-BACKUP-01": false,
       "OPS-MON-01": false,
       "OPS-DEP-01": false
     },
+    "clerkE2E": {
+      "branch": "wp05/clerk-e2e-auth",
+      "statusArtifact": "packages/research/corpus/reports/wp05-clerk-e2e-status.json",
+      "nonInteractive": "7 passed / 0 failed / 15 skipped",
+      "authenticatedStagingVerified": false,
+      "blocker": "Synthetic staging Clerk identities + interactive MFA login required"
+    },
+    "evidenceClassificationPreserved": [
+      "CURRENT_VERIFIED",
+      "HISTORICAL_VERIFIED",
+      "REPORTED_ONLY",
+      "STALE",
+      "UNKNOWN"
+    ],
     "carryForward": [
       "WP-03E legal research gates",
       "WP-04 OCR/load",
@@ -1664,6 +1953,16 @@
       "PR #1 continuous staging monitor merge + scheduled-run acceptance",
       "Clerk-authenticated Professional/Prosecution staging E2E",
       "GitHub Environment required reviewers"
+    ],
+    "externalApprovalsStillNeeded": [
+      "Operator approval to merge PR #1 (7a8ea91be8392f8c7d770e3699a403151e01f0ed) after CI green",
+      "Do not merge PR #2",
+      "GitHub Environment required reviewers (UI)",
+      "Clerk staging synthetic identities + interactive MFA demo",
+      "Neon corpus SELECT-only role provisioning (WP-03E)",
+      "Attorney Terms/Privacy sign-off",
+      "Production deploy authorization (explicit; no staging-as-prod)",
+      "Managed OCR / ClamAV / Clerk MFA staging+production live verification"
     ],
     "registerBranch": "wp05/prod-ops-preflight"
   }

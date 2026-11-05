@@ -1,11 +1,11 @@
 # WP-05 Final Operational Certification — Closure Note
 
 **Classification:** `NYAYAGRID_WP05_FINAL_OPERATIONAL_CERTIFICATION`  
-**Date:** 2026-11-04 / updated 2026-11-05 (post PR #3 merge register)  
-**Branch:** `wp05/prod-ops-preflight` (register); **main** @ `af376941dd90ddd1eb9969d10815eb9e9811dd9d` after PR #3 (`81acba96`, CI `42015520866`)  
+**Date:** 2026-11-04 / updated 2026-11-05 (WP-05 final verification register)  
+**Branch:** `wp05/prod-ops-preflight` (register); **main** @ `af376941dd90ddd1eb9969d10815eb9e9811dd9d` after PR #3 (`81acba96`, CI `42015520866`; same-document contradiction restored)  
 **Prior staging bake commit:** `add3af38a4c00c6cec631b70981a1c855b660f38`
 
-PR #3 (CI/E2E baseline) merged to `main`. PR #1 (continuous monitor) **not** merged — scheduler still off default branch. WP-05 **not** fully closed.
+PR #3 (CI/E2E baseline) **merged** to `main`. PR #1 (continuous monitor) HEAD `7a8ea91be8392f8c7d770e3699a403151e01f0ed` (monitor-only 16 files onto new main) — **not** merged; `SAFE_TO_MERGE` pending CI green + operator approval. **PR #2 must NOT be merged.** Monitoring acceptance (genuine scheduled runs / SMTP firing+recovery) **cannot** be claimed until PR #1 merges to default branch. Gates: `PRODUCTION_DEPLOYED=NO`; `NEON_CORPUS_WRITES=0`; `PAID_AI_CALLS=0`; `WP06_STARTED=NO`. WP-05 **not** fully closed.
 
 ## Verdict
 
@@ -40,21 +40,33 @@ PR #3 (CI/E2E baseline) merged to `main`. PR #1 (continuous monitor) **not** mer
 
 ## Carry forward (unresolved)
 
-1. WP-03E legal research gates
-2. WP-04 OCR managed provider + load
-3. WP-04 Clerk MFA live verification
-4. WP-04 ClamAV production verification
-5. Attorney Terms/Privacy approval
-6. Critical security findings from prior audits
-7. Production deploy authorization (no production Fly app)
-8. GitHub Environment required reviewers (human UI)
-9. Clerk-authenticated staging E2E identities
+1. PR #1 merge after CI green on `7a8ea91` + observe ≥2 scheduled monitor runs + SMTP firing/recovery
+2. WP-03E legal research gates
+3. WP-04 OCR managed provider + load
+4. WP-04 Clerk MFA live verification
+5. WP-04 ClamAV production verification
+6. Attorney Terms/Privacy approval
+7. Critical security findings from prior audits
+8. Production deploy authorization (no production Fly app)
+9. GitHub Environment required reviewers (human UI)
+10. Clerk-authenticated staging E2E identities
+
+## External approvals still needed
+
+- Operator approval to merge PR #1 (`7a8ea91`) after CI green — do **not** merge PR #2
+- GitHub Environment required reviewers (UI)
+- Clerk staging synthetic identities + interactive MFA demo
+- Neon corpus SELECT-only role provisioning (WP-03E)
+- Attorney Terms/Privacy sign-off
+- Explicit production deploy authorization (staging ≠ production certification)
 
 ## Do not claim
 
 - Production on-call escalation
 - Automated acknowledgment integration
 - Live rehearsal of alert policies other than `ready-probe-failing`
-- Full Clerk E2E
-- Production deployment / production PITR
+- Continuous monitor scheduled-run acceptance (blocked on PR #1 default-branch merge)
+- Full Clerk-authenticated E2E
+- Production deployment / production PITR / production certification from staging alone
 - WP-06 started
+- Neon corpus writes or paid AI calls in this verification pass
