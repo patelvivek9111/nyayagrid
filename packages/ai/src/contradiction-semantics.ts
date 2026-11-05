@@ -397,11 +397,9 @@ export function findDeterministicContradictionCandidates(
     for (let j = i + 1; j < chunks.length; j += 1) {
       const left = chunks[i]!;
       const right = chunks[j]!;
+      if (left.documentId === right.documentId) continue;
       const relation = classifyEvidenceRelation(left.content, right.content);
       if (relation !== "contradiction" && relation !== "tension") continue;
-      // Same-document pairs are usually sequential clauses, not conflicts — but sworn
-      // testimony in one transcript can contain direct opposing propositions (signed vs never signed).
-      if (left.documentId === right.documentId && relation !== "contradiction") continue;
       const durationConflict = hasConflictingDurations(left.content, right.content);
       const daysA = extractDayQuantities(left.content);
       const daysB = extractDayQuantities(right.content);

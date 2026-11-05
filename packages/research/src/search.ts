@@ -571,29 +571,6 @@ export class AuthorityHybridRetriever {
           `)
         : [];
 
-    // Exact-citation lookup: do not rely on vector/FTS recall alone when the query names a citation.
-    const citationList = [...queryCitations];
-    const citationMatch =
-      citationList.length > 0
-        ? sql`(${sql.join(
-            citationList.map((citation) => sql`a.normalized_citation = ${citation}`),
-            sql` OR `,
-          )} OR lower(coalesce(a.citation, '')) = lower(${trimmed}))`
-        : null;
-    const citationRows = citationMatch
-      ? await execute(sql`
-            SELECT ${selection},
-              1.0::float8 AS score
-            FROM legal_authority_chunks c
-            JOIN legal_authorities a ON a.id = c.authority_id
-            JOIN legal_authority_versions v ON v.id = c.authority_version_id
-            WHERE ${where}
-              AND ${citationMatch}
-            ORDER BY c.chunk_index ASC
-            LIMIT ${limit * 3}
-          `)
-      : [];
-
     const merged = new Map<string, AuthoritySearchHit>();
     const addRows = (rows: ChunkRow[], weight: number) => {
       for (const row of Array.from(rows)) {
@@ -629,7 +606,6 @@ export class AuthorityHybridRetriever {
       }
     };
 
-    addRows(citationRows, 1.0);
     addRows(vectorRows, VECTOR_WEIGHT);
     addRows(ftsRows, FTS_WEIGHT);
 
