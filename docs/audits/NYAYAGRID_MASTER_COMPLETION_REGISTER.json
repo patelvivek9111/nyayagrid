@@ -768,11 +768,22 @@
         "Production on-call escalation not tested",
         "Automated acknowledgment integration not tested",
         "Request-metric policies (5xx/AI/worker heartbeat/TLS) lack telemetry — not fabricated",
-        "Continuous SMTP notify defaults off in Actions (set MONITOR_NOTIFY=smtp + repo SMTP secrets for live email from scheduler)",
-        "GitHub Actions schedule/dispatch for staging-continuous-monitor.yml only runs after the workflow exists on the repository default branch"
+        "GitHub Actions schedule for staging-continuous-monitor.yml only runs after the workflow exists on the repository default branch (PR #1 open; merge approval required)",
+        "Post-merge: observe >=2 scheduled runs + real SMTP firing/dedupe/recovery before claiming continuous notification coverage"
       ],
-      "HUMAN_APPROVAL": "Staging ready-probe Gmail ack recorded; production on-call still gated",
-      "NEXT_ACTION": "Enable staging-continuous-monitor.yml on default branch after merge approval; configure production paging vendor separately; do not claim prod from staging SMTP ack",
+      "HUMAN_APPROVAL": "Staging ready-probe Gmail ack recorded; production on-call still gated; PR #1 merge approval required for default-branch scheduler",
+      "NEXT_ACTION": "Approve/merge reviewed PR #1 SHA onto main; confirm Actions secrets SMTP_* EMAIL_FROM OPS_ALERT_TO remain set; observe scheduled runs + SMTP delivery; do not claim prod from staging SMTP ack",
+      "GITHUB_ACTIONS_SMTP_SECRETS_CONFIGURED": true,
+      "GITHUB_ACTIONS_SMTP_SECRET_NAMES": [
+        "SMTP_HOST",
+        "SMTP_PORT",
+        "SMTP_USERNAME",
+        "SMTP_PASSWORD",
+        "EMAIL_FROM",
+        "OPS_ALERT_TO"
+      ],
+      "DEFAULT_BRANCH_SCHEDULER_ACTIVE": false,
+      "REAL_SCHEDULED_EXECUTIONS_OBSERVED": false,
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "MONITORING_IMPLEMENTED": true,
