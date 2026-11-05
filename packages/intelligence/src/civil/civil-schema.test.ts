@@ -50,6 +50,6 @@ describe("civil claims schema contract", () => {
     expect(whole.liabilityConclusion).toBeNull();
     expect(buildCivilClaimMatrix(review).length).toBe(matrix.length);
     expect(buildCivilWholeMatterView(review).currentClaims.length).toBe(whole.currentClaims.length);
-    expect(matrix.every((row) => row.supportStatus !== "LIABLE")).toBe(true);
+    expect(matrix.every((row) => !/LIABLE|WIN|LOSE/i.test(row.supportStatus))).toBe(true);
   });
 });
