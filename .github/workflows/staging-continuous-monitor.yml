@@ -8,8 +8,11 @@ name: Staging continuous monitor
 
 on:
   schedule:
-    # Every 5 minutes (GitHub may delay under load).
-    - cron: "*/5 * * * *"
+    # Every 5 minutes, offset from :00/:05 to reduce hourly-load drops.
+    # Cron expression changed intentionally to re-register the schedule actor
+    # after 0 event=schedule runs were observed for hours on */5 (dispatch OK).
+    # See: GitHub docs — changing cron reactivates scheduled workflows.
+    - cron: "2-57/5 * * * *"
   workflow_dispatch:
     inputs:
       notify:
