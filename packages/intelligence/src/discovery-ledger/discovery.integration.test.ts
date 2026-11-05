@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { sql } from "drizzle-orm";
 import {
@@ -11,7 +10,6 @@ import {
   eq,
   isGraphNodeType,
   matters,
-  matterCommunications,
   matterEntities,
   matterMembers,
   memberships,
@@ -433,19 +431,6 @@ describe.runIf(runDbTests)("discovery production ledger integration", () => {
       responsiblePartyEntityId: ids.defendant!,
       provenance,
     });
-    const meetAndConferCommunicationId = randomUUID();
-    await db.insert(matterCommunications).values({
-      id: meetAndConferCommunicationId,
-      organizationId: ids.orgA!,
-      matterId: ids.matterA!,
-      communicationType: "MEET_AND_CONFER",
-      direction: "OUTBOUND",
-      status: "SENT",
-      subject: "March meet and confer letter",
-      provenance,
-      createdByUserId: ids.owner!,
-      updatedByUserId: ids.owner!,
-    });
     await createDiscoveryMeetAndConferIssue(db, {
       userId: ids.owner!,
       organizationId: ids.orgA!,
@@ -454,7 +439,7 @@ describe.runIf(runDbTests)("discovery production ledger integration", () => {
       occurredAt: new Date("2026-03-10T00:00:00Z"),
       deficiencyIds: [deficiency.id],
       taskId: ids.task!,
-      communicationId: meetAndConferCommunicationId,
+      communicationId: "00000000-0000-4000-8000-0000000000aa",
       outcomeNotes: "Parties discussing supplemental production",
       provenance,
     });
@@ -493,7 +478,7 @@ describe.runIf(runDbTests)("discovery production ledger integration", () => {
     expect(review.meetAndConferIssues.some((row) => row.deficiencyIds.length > 0)).toBe(true);
     expect(
       review.meetAndConferIssues.some(
-        (row) => row.communicationId === meetAndConferCommunicationId,
+        (row) => row.communicationId === "00000000-0000-4000-8000-0000000000aa",
       ),
     ).toBe(true);
     expect(review.sanctionsConclusion).toBeNull();

@@ -267,8 +267,6 @@ export type GenerateResearchMemoParams = {
   limit?: number;
   retriever?: AuthorityRetrieverLike;
   provider?: LegalAuthorityProvider;
-  /** Merged into hybrid search options (e.g. includeSyntheticFixtures for integration fixtures). */
-  searchOptions?: import("./search").AuthoritySearchOptions;
 };
 
 export type GenerateResearchMemoResult = {
@@ -390,10 +388,7 @@ export async function generateResearchMemo(
       search,
       filters,
       limit,
-      searchOptions: {
-        ...jurisdictionLayer.searchOptions,
-        ...params.searchOptions,
-      },
+      searchOptions: jurisdictionLayer.searchOptions,
       queries: [
         { text: question, origin: "primary" },
         ...concepts.map((concept) => ({

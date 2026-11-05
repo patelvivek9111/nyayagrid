@@ -66,9 +66,6 @@ import {
 
 const runDbTests = process.env.RUN_DB_TESTS === "1";
 
-/** Integration fixtures use source_provider=synthetic-fixtures; customer retain drops those unless opted in. */
-const syntheticSearchOptions = { includeSyntheticFixtures: true } as const;
-
 /**
  * Synthetic case that reaches the opposite conclusion from `syntheticCaseAuthority` on the same
  * statutory question, so contrary-authority retrieval has something real to surface. Fictional
@@ -435,14 +432,7 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
   describe("search", () => {
     it("finds the authority by exact citation", async () => {
       const retriever = new AuthorityHybridRetriever(db, new MockEmbeddingProvider());
-      const hits = await retriever.search(
-        SYNTHETIC_CASE_CITATION,
-        {},
-        {
-          limit: 5,
-          ...syntheticSearchOptions,
-        },
-      );
+      const hits = await retriever.search(SYNTHETIC_CASE_CITATION, {}, { limit: 5 });
       expect(hits.length).toBeGreaterThan(0);
       expect(hits[0]!.authorityId).toBe(caseAuthorityId);
     });
@@ -452,7 +442,7 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
       const hits = await retriever.search(
         "irreparable harm compensable damages",
         {},
-        { limit: 10, ...syntheticSearchOptions },
+        { limit: 10 },
       );
       const authorityIds = new Set(hits.map((h) => h.authorityId));
       expect(hits.length).toBeGreaterThan(0);
@@ -464,7 +454,7 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
       const hits = await retriever.search(
         "irreparable harm",
         { jurisdiction: "Synthetic Federal" },
-        { limit: 10, ...syntheticSearchOptions },
+        { limit: 10 },
       );
       expect(hits.length).toBeGreaterThan(0);
       expect(hits.every((h) => h.jurisdiction === "Synthetic Federal")).toBe(true);
@@ -477,7 +467,7 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
       const hits = await retriever.search(
         "Widget Alpha units delivery schedule Exhibit A quarterly inventory reconciliation",
         {},
-        { limit: 10, ...syntheticSearchOptions },
+        { limit: 10 },
       );
       const hitChunkIds = new Set(hits.map((h) => h.chunkId));
       for (const docChunkId of matterDocChunkIds) {
@@ -526,7 +516,6 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
           "What must a party show to obtain a preliminary injunction under Synthetic Jurisdiction Code § 100?",
         ai: new MockAIProvider(),
         embeddings: new MockEmbeddingProvider(),
-        searchOptions: syntheticSearchOptions,
       });
       expect(result.hits.length).toBeGreaterThan(0);
       expect(result.grounded).toBe(true);
@@ -569,7 +558,6 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
         includeContrary: true,
         ai: new MockAIProvider(),
         embeddings: new MockEmbeddingProvider(),
-        searchOptions: syntheticSearchOptions,
       });
       expect(result.contrarySearchPerformed).toBe(true);
       expect(result.hits.some((h) => h.authorityId === contraryAuthorityId)).toBe(true);
@@ -585,11 +573,8 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
         matterId,
         question:
           "Given our delivery schedule dispute, what standard governs a preliminary injunction under Synthetic Jurisdiction Code § 100?",
-        // Keep this suite's fixtures even when a seeded local corpus is present.
-        filters: { sourceProvider: SYNTHETIC_SOURCE_PROVIDER },
         ai: new MockAIProvider(),
         embeddings: new MockEmbeddingProvider(),
-        searchOptions: syntheticSearchOptions,
       });
       expect(result.usedMatterContext).toBe(true);
 
@@ -662,7 +647,6 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
         documentIds: [matterDocId],
         ai: new MockAIProvider(),
         embeddings: new MockEmbeddingProvider(),
-        searchOptions: syntheticSearchOptions,
       });
       expect(memoResult.grounded).toBe(true);
       expect(memoResult.matterChunkIds.length).toBeGreaterThan(0);
@@ -748,8 +732,6 @@ describe.runIf(runDbTests)("phase 6 research corpus integration", () => {
         userId: ownerId,
         question:
           "What standard governs a preliminary injunction under Synthetic Jurisdiction Code § 100?",
-        // Case-only Ask deliberately excludes the legal corpus; this assertion needs legal scope.
-        sourceScope: "case_plus_legal",
         ai: new MockAIProvider(),
         embeddings: new MockEmbeddingProvider(),
       });

@@ -16,8 +16,7 @@ const CONTRACT_TERM_RE =
   /\b(notice period|formal notice|requires \d+\s*days|\d+\s*days.{0,60}notice|liability cap|aggregate.{0,40}liability)\b/i;
 const SEQUENCE_RE =
   /\b(amendment|amended|effective|deleted and replaced|now requires|supersed|unless amended|later signed|original agreement)\b/i;
-const FILLER_RE =
-  /\b(general provision|headings are for convenience|administrative renumbering)\b/i;
+const FILLER_RE = /\b(general provision|headings are for convenience|administrative renumbering)\b/i;
 const TRANSMITTAL_RE = /\b(send|sent|emailed|uploaded|transmitted|transmission)\b/i;
 
 export function isCredentialActivity(text: string): boolean {
@@ -97,11 +96,7 @@ function parseDayToken(raw: string): number | null {
   if (paren) return Number(paren[1]);
   const digits = raw.match(/\d{1,3}/);
   if (digits && !/[a-z]/i.test(raw.replace(/\(\d+\)/g, ""))) return Number(digits[0]);
-  const folded = raw
-    .toLowerCase()
-    .replace(/\s+/g, " ")
-    .replace(/\(\d+\)/g, "")
-    .trim();
+  const folded = raw.toLowerCase().replace(/\s+/g, " ").replace(/\(\d+\)/g, "").trim();
   return DAY_WORD_VALUE[folded] ?? null;
 }
 
@@ -118,10 +113,7 @@ export function extractOperativeDayQuantities(text: string): number[] {
 }
 
 export function hasConflictingDurations(textA: string, textB: string): boolean {
-  if (
-    !/\b(notice|cure|terminat|renew)\b/i.test(textA) ||
-    !/\b(notice|cure|terminat|renew)\b/i.test(textB)
-  ) {
+  if (!/\b(notice|cure|terminat|renew)\b/i.test(textA) || !/\b(notice|cure|terminat|renew)\b/i.test(textB)) {
     return false;
   }
   const a = extractOperativeDayQuantities(textA);
@@ -141,11 +133,7 @@ function extractPersonNames(text: string): Set<string> {
     for (const match of text.matchAll(re)) {
       const name = (match[1] ?? "").replace(/\s+/g, " ").trim().toLowerCase();
       if (name.length < 5) continue;
-      if (
-        /\b(room|office|building|exhibit|section|amendment|agreement|schedule|provision)\b/.test(
-          name,
-        )
-      ) {
+      if (/\b(room|office|building|exhibit|section|amendment|agreement|schedule|provision)\b/.test(name)) {
         continue;
       }
       if (/^(the |this |that )/.test(name)) continue;
@@ -397,11 +385,9 @@ export function findDeterministicContradictionCandidates(
     for (let j = i + 1; j < chunks.length; j += 1) {
       const left = chunks[i]!;
       const right = chunks[j]!;
+      if (left.documentId === right.documentId) continue;
       const relation = classifyEvidenceRelation(left.content, right.content);
       if (relation !== "contradiction" && relation !== "tension") continue;
-      // Same-document pairs are usually sequential clauses, not conflicts — but sworn
-      // testimony in one transcript can contain direct opposing propositions (signed vs never signed).
-      if (left.documentId === right.documentId && relation !== "contradiction") continue;
       const durationConflict = hasConflictingDurations(left.content, right.content);
       const daysA = extractDayQuantities(left.content);
       const daysB = extractDayQuantities(right.content);
@@ -431,10 +417,8 @@ export function findDeterministicContradictionCandidates(
     }
   }
   return candidates.sort((a, b) => {
-    const scoreA =
-      chunkContradictionScore(a.sideA.summary) + chunkContradictionScore(a.sideB.summary);
-    const scoreB =
-      chunkContradictionScore(b.sideA.summary) + chunkContradictionScore(b.sideB.summary);
+    const scoreA = chunkContradictionScore(a.sideA.summary) + chunkContradictionScore(a.sideB.summary);
+    const scoreB = chunkContradictionScore(b.sideA.summary) + chunkContradictionScore(b.sideB.summary);
     return scoreB - scoreA;
   });
 }

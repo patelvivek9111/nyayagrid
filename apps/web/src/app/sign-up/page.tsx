@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { AuthShell } from "@/components/ux/auth-shell";
 
 export const dynamic = "force-dynamic";
@@ -6,11 +7,12 @@ export const dynamic = "force-dynamic";
 /**
  * Public Clerk hosted registration is not offered for the private design-partner preview.
  * Operators still must disable public sign-up in the Clerk dashboard; this page does not link it.
- *
- * DevAuth renders the same invitation-only shell (no redirect) so the public contract stays
- * visible without requiring Clerk credentials in local/CI E2E.
  */
 export default function SignUpPage() {
+  if ((process.env.AUTH_PROVIDER ?? "dev") !== "clerk") {
+    redirect("/app");
+  }
+
   return (
     <AuthShell
       title="Invitation only"

@@ -32,7 +32,7 @@ export function smtpConfigFromEnv(
     from: required("EMAIL_FROM", env.EMAIL_FROM ?? env.SMTP_FROM),
     to: required(
       "OPS_ALERT_TO",
-      env.OPS_ALERT_TO ?? env.ALERT_EMAIL_TO ?? "patelvivek9111@gmail.com",
+      env.OPS_ALERT_TO ?? env.ALERT_EMAIL_TO,
     ),
     secure: String(env.SMTP_SECURE ?? "").toLowerCase() === "true" || Number(env.SMTP_PORT) === 465,
   };
