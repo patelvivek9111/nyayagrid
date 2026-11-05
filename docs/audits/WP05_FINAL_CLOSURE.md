@@ -72,3 +72,12 @@ Newly repaired features this pass: **none** (audit/register only; no prod deploy
 - WP-06 started
 - Neon corpus writes or paid AI / CourtListener calls in this verification pass
 - That PR #2 introduced a separate unique merge that must be reverted
+
+## Post-merge certification (2026-11-05T09:50:35.8731140-05:00)
+- main: `a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d`
+- Monitor on main: YES; cron `*/5`; Actions workflow active
+- Schedule: `SCHEDULE_NOT_YET_OBSERVED`
+- Dispatch SMTP: firing `42048054638` + recovery `42048318603` (`smtp:accepted`); dedupe `42048605954` empty transitions
+- PR #4 ready_url drills: https://github.com/patelvivek9111/nyayagrid/pull/4 (awaiting review; not auto-merged)
+- Clerk: operator-blocked (synthetic identities + interactive MFA)
+- FINAL: `WP05_STAGING_EXTERNAL_GATES_PENDING`

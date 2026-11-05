@@ -1,7 +1,7 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-05T14:42:13.615Z",
+  "classification": "NYAYAGRID_WP05_POST_MERGE_CERTIFICATION",
+  "generatedAt": "2026-11-05T14:50:35.858Z",
   "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
   "branch": "wp05/prod-ops-preflight",
   "mainMerge": {
@@ -1080,6 +1080,7 @@
       "severity": "P1",
       "releaseBlocker": true,
       "evidence": [
+        "POST-MERGE 2026-11-05: workflow on main; workflow_dispatch healthy+ SMTP firing/recovery/dedupe demonstrated on PR#4 branch; SCHEDULE_NOT_YET_OBSERVED (0 schedule events); cache durability best-effort documented",
         "PR #1 MERGED to main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (source HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed) at 2026-11-05T14:30:10Z — staging-continuous-monitor.yml NOW on default branch",
         "Post-merge workflow_dispatch run 42046460657 SUCCESS on main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (Probe staging ready all steps SUCCESS) — NOT a schedule event",
         "REAL_SCHEDULED_EXECUTIONS_OBSERVED=false (API: only workflow_dispatch=1 for staging-continuous-monitor.yml as of audit)",
@@ -1980,8 +1981,8 @@
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
   "wp05Session": {
-    "classification": "NYAYAGRID_WP05_POST_MERGE_PRODUCT_COMPLETION_AUDIT",
-    "result": "WP05_MONITOR_ON_MAIN_EXTERNAL_GATES_PENDING",
+    "classification": "NYAYAGRID_WP05_POST_MERGE_CERTIFICATION",
+    "result": "WP05_STAGING_EXTERNAL_GATES_PENDING",
     "status": "PARTIAL",
     "finalClosureDecision": "WP05_NOT_FULLY_CLOSED",
     "generatedAt": "2026-11-05T14:42:13.615Z",
@@ -2004,45 +2005,17 @@
     },
     "pr3": {
       "merged": true,
-      "url": "https://github.com/patelvivek9111/nyayagrid/pull/3",
-      "mergeCommitMain": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
-      "approvedHead": "81acba9698e4ea312c345be532461b294c3a6359",
-      "includesSameDocumentContradictionDetection": true,
-      "remoteCi": {
-        "run": "42015520866",
-        "conclusion": "SUCCESS"
-      }
+      "mergeCommit": "af376941dd90ddd1eb9969d10815eb9e9811dd9d"
     },
     "pr1": {
       "merged": true,
-      "url": "https://github.com/patelvivek9111/nyayagrid/pull/1",
-      "sourceHead": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
-      "mergeCommitMain": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
-      "mergedAt": "2026-11-05T14:30:10Z",
-      "monitorWorkflowOnMain": true,
-      "realScheduledExecutionsObserved": false,
-      "monitoringAcceptanceClaimable": false,
-      "postMergeWorkflowDispatch": {
-        "run": "42046460657",
-        "conclusion": "SUCCESS",
-        "event": "workflow_dispatch",
-        "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
-        "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42046460657"
-      },
-      "nextAction": "Observe >=2 genuine scheduled (event=schedule) monitor runs + SMTP firing/recovery/dedupe before claiming monitoring acceptance"
+      "mergeCommit": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
+      "source": "7a8ea91be8392f8c7d770e3699a403151e01f0ed"
     },
     "pr2": {
-      "url": "https://github.com/patelvivek9111/nyayagrid/pull/2",
       "githubState": "MERGED",
-      "mergedAt": "2026-11-05T14:30:12Z",
-      "mergeCommitSha": "d8868dfbf5a214f013e923b6d4804cd24ed7e96e",
-      "semantics": "ALREADY_REACHABLE_AUTO_CLOSE_WHEN_COMMITS_BECAME_ANCESTORS_VIA_PR1",
-      "allCommitsAncestorOfMain": true,
-      "doNotRevert": true,
-      "tipTreeDeltasVsMain": [
-        "smtp-alert-transport hardcoded OPS_ALERT_TO gmail fallback — correctly ABSENT on main (do not restore)",
-        "search.ts exact-citation lookup — intentionally dropped in cfca05b baseline slim; not restored in this audit"
-      ]
+      "note": "already-reachable close; tip behind main; not content promotion; operator merged near PR#1",
+      "head": "d8868dfbf5a214f013e923b6d4804cd24ed7e96e"
     },
     "opsProductionVerified": {
       "OPS-BACKUP-01": false,
@@ -2094,6 +2067,67 @@
       "PAID_AI_CALLS": 0,
       "COURTLISTENER_CALLS": 0,
       "WP06_STARTED": "NO"
+    },
+    "stagingCertification": "NOT_COMPLETE",
+    "productionCertification": "NOT_COMPLETE",
+    "pr4": {
+      "url": "https://github.com/patelvivek9111/nyayagrid/pull/4",
+      "head": "74a191e",
+      "purpose": "dispatch-only ready_url for controlled SMTP drills; not merged"
+    },
+    "monitoring": {
+      "workflowOnMain": true,
+      "workflowState": "active",
+      "cron": "*/5 * * * *",
+      "permissions": {
+        "contents": "read",
+        "actions": "write"
+      },
+      "secretsConfigured": [
+        "SMTP_HOST",
+        "SMTP_PORT",
+        "SMTP_USERNAME",
+        "SMTP_PASSWORD",
+        "EMAIL_FROM",
+        "OPS_ALERT_TO"
+      ],
+      "scheduleObserved": false,
+      "scheduleStatus": "SCHEDULE_NOT_YET_OBSERVED",
+      "scheduleNote": "Workflow registered on default branch at PR#1 merge 2026-11-05T14:30:10Z; zero event=schedule runs as of register update. GitHub may delay first cron. Do not count workflow_dispatch as schedule.",
+      "dispatchEvidence": {
+        "healthyMain": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42046460657",
+        "fail1": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42047095146",
+        "fail2FiringSmtp": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42048054638",
+        "recoverySmtp": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42048318603",
+        "dedupeHealthy": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42048605954",
+        "firingDetail": "smtp:accepted ready-probe-failing",
+        "recoveryDetail": "smtp:accepted ready-probe-failing resolved",
+        "dedupeDetail": "PROBE_HEALTHY transitions=[] deliveries=[]"
+      },
+      "cacheDurability": "Actions cache unique key per run + restore-keys prefix; eviction/miss resets consecutive failure and cooldown — not durable persistence",
+      "stagingProbeUrl": "https://staging.nyayagrid.com/api/health/ready",
+      "stagingIdentityObserved": "add3af38a4c00c6cec631b70981a1c855b660f38 (deploy lag vs main a499780)"
+    },
+    "clerk": {
+      "branch": "wp05/clerk-e2e-auth",
+      "tip": "1b2113a916ff640d18ddba0cf0aa7fec60c804a1",
+      "professional": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 8,
+        "mfa": "NOT_CERTIFIED"
+      },
+      "prosecution": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 5,
+        "mfa": "NOT_CERTIFIED"
+      },
+      "nonInteractiveTotals": {
+        "passed": 10,
+        "failed": 0,
+        "skipped": 22
+      }
     }
   }
 }
