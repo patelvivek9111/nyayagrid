@@ -50,3 +50,15 @@ post-merge scheduled runs and SMTP delivery are observed.
 - Live scheduled executions (need post-merge observation)
 - Production on-call / PagerDuty
 - Automated acknowledgment
+
+## Controlled firing / recovery drill (dispatch-only)
+
+Scheduled runs always probe `https://staging.nyayagrid.com/api/health/ready`.
+
+For SMTP firing/recovery without taking staging offline, `workflow_dispatch` accepts optional `ready_url` restricted to `https://staging.nyayagrid.com/*`. Example:
+
+1. Point `ready_url` at a non-ready staging path twice (threshold = 2) with `notify=smtp`.
+2. Restore `ready_url` to `/api/health/ready` for recovery mail.
+3. Do **not** count these dispatch runs as scheduled-execution evidence.
+
+Actions cache state is best-effort (unique save keys + `restore-keys` prefix). Cache eviction/misses can reset consecutive-failure / cooldown state — treat durable alerting state as **not guaranteed**.
