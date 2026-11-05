@@ -1,9 +1,11 @@
 # WP-05 Final Operational Certification — Closure Note
 
 **Classification:** `NYAYAGRID_WP05_FINAL_OPERATIONAL_CERTIFICATION`  
-**Date:** 2026-11-04 / updated 2026-11-05 (FIXABLE_NOW prod-ops preflight)  
-**Branch:** `wp05/prod-ops-preflight`  
+**Date:** 2026-11-04 / updated 2026-11-05 (post PR #3 merge register)  
+**Branch:** `wp05/prod-ops-preflight` (register); **main** @ `af376941dd90ddd1eb9969d10815eb9e9811dd9d` after PR #3 (`81acba96`, CI `42015520866`)  
 **Prior staging bake commit:** `add3af38a4c00c6cec631b70981a1c855b660f38`
+
+PR #3 (CI/E2E baseline) merged to `main`. PR #1 (continuous monitor) **not** merged — scheduler still off default branch. WP-05 **not** fully closed.
 
 ## Verdict
 

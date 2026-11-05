@@ -1,12 +1,59 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-05T04:15:00.000Z",
-  "head": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
+  "generatedAt": "2026-11-05T13:52:00.000Z",
+  "head": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
   "branch": "wp05/prod-ops-preflight",
+  "mainMerge": {
+    "pr": 3,
+    "mergeCommit": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+    "approvedHead": "81acba9698e4ea312c345be532461b294c3a6359",
+    "sourceBranch": "wp05/ci-baseline-repairs",
+    "scope": "CI/E2E/research baseline repairs; not prod-ops-preflight ops docs merge"
+  },
   "remoteCi": {
-    "run": "41689403691",
-    "conclusion": "SUCCESS"
+    "run": "42015520866",
+    "conclusion": "SUCCESS",
+    "head": "81acba9698e4ea312c345be532461b294c3a6359"
+  },
+  "productCompletionInventory": {
+    "methodology": "Requirement rows where product is Professional or Prosecution (includes corpus integration rows); honest status from requirements[] — no production claims from staging-only or CI-only evidence",
+    "productionVerifiedAny": false,
+    "stagingAuthenticatedE2EVerified": false,
+    "Professional": {
+      "requirementsInventoried": 14,
+      "byStatus": {
+        "VERIFIED_COMPLETE": 6,
+        "IMPLEMENTED_UNVERIFIED": 2,
+        "PARTIAL": 4,
+        "MISSING": 2,
+        "BLOCKED": 1,
+        "OUT_OF_SCOPE": 0
+      },
+      "releaseBlockersOpen": [
+        "PROF-DOC-02",
+        "PROF-RES-01",
+        "CORPUS-13"
+      ],
+      "note": "Matters/doc ingest/timeline/memory/graph CI-verified; OCR/research/corpus Neon integration partial or blocked; Clerk-authenticated staging E2E not closed"
+    },
+    "Prosecution": {
+      "requirementsInventoried": 15,
+      "byStatus": {
+        "VERIFIED_COMPLETE": 7,
+        "IMPLEMENTED_UNVERIFIED": 0,
+        "PARTIAL": 5,
+        "MISSING": 1,
+        "BLOCKED": 1,
+        "OUT_OF_SCOPE": 1
+      },
+      "releaseBlockersOpen": [
+        "PROS-EXT-01",
+        "CORPUS-07",
+        "CORPUS-14"
+      ],
+      "note": "Core case/RBAC/disclosure/safety/isolation/warrant tracking verified; Memory UI missing; graph/audit/CoC partial; live corpus blocked; CJIS out of scope unless marketed"
+    }
   },
   "productScope": {
     "professional": "IN_SCOPE",
@@ -75,7 +122,7 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "WP-04: OCR allowlist+PDF integrity, ClamAV live probe, Clerk MFA server policy, Terms/Privacy drafts+acceptance API; WP-03E deferred; production deploy OFF",
+    "note": "WP-04: OCR/ClamAV/MFA/Terms external gates; WP-03E deferred; WP-05 PARTIAL — PR #3 merged main @ af376941; PR #1 monitor not merged; production deploy OFF",
     "verifiedComplete": 16,
     "implementedUnverified": 4,
     "partial": 21,
@@ -833,12 +880,13 @@
         "PRODUCTION Fly app NOT created; PRODUCTION_DEPLOYED=NO",
         "GitHub release protection workflows: deploy-staging.yml + deploy-production-gate.yml (approval-only; never deploys)",
         "docs/operations/WP05_GITHUB_RELEASE_PROTECTION.md; WP05_AUDIT_SECRETS_PROVENANCE.md; WP05_CARRY_FORWARD_GATES.md; WP05_OPS_RUNBOOK.md",
-        "ops:prod-ops-preflight scripts + gate workflows + runbooks → WP05_FIXABLE_NOW_ENGINEERING_COMPLETE",
+        "ops:prod-ops-preflight scripts + gate workflows + runbooks → WP05_FIXABLE_NOW_ENGINEERING_COMPLETE (wp05/prod-ops-preflight branch; not merged via PR #3)",
         "env-boundaries + deploy-preflight block APP_ENV=production without PRODUCTION_DEPLOY_APPROVED",
-        "wp05/prod-ops-preflight @ b1e9c4db17a547d4fe6a79761a1e0e89aea30b37 FIXABLE_NOW prod-ops engineering complete"
+        "PR #3 merged to main af376941 (approved head 81acba96); CI run 42015520866 SUCCESS — default-branch CI/E2E baseline; does not deploy production or activate monitor cron",
+        "wp05/prod-ops-preflight branch carries prod-ops register/runbooks pending separate merge"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37",
+      "lastVerifiedSha": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
       "ENGINEERING_IMPLEMENTED": true,
       "LOCAL_VERIFIED": true,
       "STAGING_VERIFIED": true,
@@ -1166,8 +1214,8 @@
     "SEC-MAL-01 ClamAV production verification",
     "SEC-LEGAL-01 Attorney Terms/Privacy",
     "OPS-BACKUP-01 engineering complete; staging PITR HISTORICAL PASS (do not re-run); production restore NOT VERIFIED",
-    "OPS-MON-01 monitoring tests PASS + SMTP secrets configured; PR #1 CI green @ d8868df (run 41969975451); workflow not on main until merge; scheduled runs pending; production on-call NOT VERIFIED",
-    "OPS-DEP-01 PRODUCTION_DEPLOYED=NO; staging identity rollback HISTORICAL PASS; FIXABLE_NOW prod-ops engineering complete; WP-03E/WP-04/attorney/security carry-forward",
+    "OPS-MON-01 monitoring tests PASS + SMTP secrets configured; PR #1 NOT merged — staging-continuous-monitor.yml not on main; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false; production on-call NOT VERIFIED",
+    "OPS-DEP-01 PRODUCTION_DEPLOYED=NO; main @ af376941 after PR #3 CI baseline only; staging identity rollback HISTORICAL PASS; prod-ops preflight branch; WP-03E/WP-04/attorney/security carry-forward",
     "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — WP-01 scorer certified)"
   ],
   "dependencyOrderedPlan": [
@@ -1264,7 +1312,7 @@
       "status": "PARTIAL",
       "result": "WP04_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
       "evidenceArtifact": "docs/audits/WP04_FINAL_CLOSURE.md",
-      "note": "Engineering complete for OCR/ClamAV/MFA/Terms locally. Staging/production OCR+ClamAV+Clerk MFA and attorney sign-off remain external. WP-03E deferred. WP-05 not started.",
+      "note": "Engineering complete for OCR/ClamAV/MFA/Terms locally. Staging/production OCR+ClamAV+Clerk MFA and attorney sign-off remain external. WP-03E deferred. WP-05 in progress (PR #3 baseline on main; ops/monitor gates open).",
       "verificationClasses": {
         "OCR_ENGINEERING_COMPLETE": true,
         "OCR_LOCAL_LIVE_VERIFIED": true,
@@ -1319,7 +1367,7 @@
         "PROD_OPS_PREFLIGHT_ENGINEERING": true,
         "PRODUCTION_DEPLOYED": false
       },
-      "note": "WP-05 NOT fully closed — external gates pending. FIXABLE_NOW engineering complete: PR #1 CI SUCCESS @ d8868df (run 41969975451), SMTP Actions secrets configured, Clerk E2E harness on wp05/clerk-e2e-auth @ a36c7e9, prod-ops preflight on wp05/prod-ops-preflight @ 8ecd781. Staging PITR/isolation/SMTP human ack/identity rollback HISTORICAL. Continuous monitor awaits operator merge of PR #1 SHA d8868df to main before scheduled runs. Clerk authenticated Professional/Prosecution blocked on synthetic staging identities + interactive MFA. PRODUCTION_DEPLOYED=NO. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production.",
+      "note": "WP-05 NOT fully closed — external gates pending. PR #3 MERGED main @ af376941 (approved 81acba96; CI 42015520866 SUCCESS). PR #1 NOT merged — continuous monitor cron not on default branch; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false. FIXABLE_NOW prod-ops engineering on wp05/prod-ops-preflight (release gates, runbooks, register). Staging PITR/isolation/SMTP human ack/identity rollback HISTORICAL preserved. SMTP Actions secrets configured. Clerk authenticated Professional/Prosecution E2E blocked on synthetic staging identities + interactive MFA. PRODUCTION_DEPLOYED=NO; OPS-BACKUP/MON/DEP PRODUCTION_VERIFIED=false. Carry forward WP-03E, WP-04 OCR/ClamAV/MFA, attorney Terms/Privacy, critical security findings, production deploy auth. Do not start WP-06. Do not deploy production.",
       "carryForward": [
         "WP-03E legal research gates",
         "WP-04 OCR/load",
@@ -1329,7 +1377,21 @@
         "Critical security findings",
         "Production deploy auth"
       ],
-      "fixCommit": "b1e9c4db17a547d4fe6a79761a1e0e89aea30b37"
+      "fixCommit": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+      "pr3Merge": {
+        "merged": true,
+        "mergeCommit": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+        "approvedHead": "81acba9698e4ea312c345be532461b294c3a6359",
+        "remoteCi": {
+          "run": "42015520866",
+          "conclusion": "SUCCESS"
+        }
+      },
+      "pr1Monitor": {
+        "merged": false,
+        "monitorWorkflowOnMain": false,
+        "realScheduledExecutionsObserved": false
+      }
     },
     {
       "id": "WP-06",
@@ -1561,5 +1623,48 @@
     },
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
+  },
+  "wp05Session": {
+    "classification": "NYAYAGRID_WP05_POST_PR3_MERGE_REGISTER",
+    "result": "WP05_EXTERNAL_GATES_PENDING",
+    "status": "PARTIAL",
+    "finalClosureDecision": "WP05_NOT_FULLY_CLOSED",
+    "wp06Started": false,
+    "productionDeployed": false,
+    "pr3": {
+      "merged": true,
+      "url": "https://github.com/patelvivek9111/nyayagrid/pull/3",
+      "mergeCommitMain": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
+      "approvedHead": "81acba9698e4ea312c345be532461b294c3a6359",
+      "remoteCi": {
+        "run": "42015520866",
+        "conclusion": "SUCCESS"
+      }
+    },
+    "pr1": {
+      "merged": false,
+      "url": "https://github.com/patelvivek9111/nyayagrid/pull/1",
+      "monitorWorkflowOnMain": false,
+      "realScheduledExecutionsObserved": false,
+      "nextAction": "Rebase PR #1 onto post-PR#3 main; green CI; operator merge approval; then observe >=2 scheduled runs + SMTP firing/recovery"
+    },
+    "opsProductionVerified": {
+      "OPS-BACKUP-01": false,
+      "OPS-MON-01": false,
+      "OPS-DEP-01": false
+    },
+    "carryForward": [
+      "WP-03E legal research gates",
+      "WP-04 OCR/load",
+      "WP-04 Clerk MFA",
+      "WP-04 ClamAV",
+      "Attorney Terms/Privacy",
+      "Critical security findings",
+      "Production deploy auth",
+      "PR #1 continuous staging monitor merge + scheduled-run acceptance",
+      "Clerk-authenticated Professional/Prosecution staging E2E",
+      "GitHub Environment required reviewers"
+    ],
+    "registerBranch": "wp05/prod-ops-preflight"
   }
 }
