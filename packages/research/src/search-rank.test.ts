@@ -180,4 +180,20 @@ describe("retainAuthorityHits", () => {
     );
     expect(retained).toEqual([]);
   });
+
+  it("keeps synthetic fixtures when includeSyntheticFixtures is requested", () => {
+    const retained = retainAuthorityHits(
+      [
+        hit({
+          authorityId: "synth",
+          score: 1.5,
+          citation: "Synthetic Jurisdiction Code § 100",
+          sourceProvider: "synthetic-fixtures",
+        }),
+      ],
+      "Synthetic Jurisdiction Code § 100",
+      { limit: 6, includeSyntheticFixtures: true },
+    );
+    expect(retained.map((row) => row.authorityId)).toEqual(["synth"]);
+  });
 });
