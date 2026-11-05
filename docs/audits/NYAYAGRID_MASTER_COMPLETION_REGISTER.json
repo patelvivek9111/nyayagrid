@@ -1,7 +1,7 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_FULL_PLATFORM_MASTER_COMPLETION_AUDIT",
-  "generatedAt": "2026-11-05T14:05:00.000Z",
+  "generatedAt": "2026-11-05T14:15:41.566Z",
   "head": "af376941dd90ddd1eb9969d10815eb9e9811dd9d",
   "branch": "wp05/prod-ops-preflight",
   "mainMerge": {
@@ -1018,6 +1018,7 @@
       "severity": "P1",
       "releaseBlocker": true,
       "evidence": [
+        "PR #1 HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed CI SUCCESS runs 42039633576 (PR) and 42039624436 (push); SAFE_TO_MERGE=YES; operator approval required; workflow still NOT on main; REAL_SCHEDULED_EXECUTIONS_OBSERVED=false",
         "WP-05 DEFAULT_ALERT_POLICIES + continuous-monitor evaluator (firing/resolved/dedupe/cooldown)",
         "packages/observability WP-05 monitoring unit tests 18/18 PASS (continuous-monitor, ops-health, alert-delivery, release-identity, alert-transport)",
         "GitHub Actions workflow staging-continuous-monitor.yml (cron */5) on branch wp05/activate-staging-monitor @ 7a8ea91be8392f8c7d770e3699a403151e01f0ed (monitor-only 16-file delta onto post-PR#3 main) — NOT on main; scheduled runs NOT YET; SAFE_TO_MERGE pending CI green + operator approval",
@@ -1912,12 +1913,33 @@
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/1",
       "head": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
       "scope": "monitor-only 16 files onto new main after PR #3",
-      "safeToMerge": "PENDING_CI_GREEN",
+      "safeToMerge": true,
       "awaitingOperatorApproval": true,
       "monitorWorkflowOnMain": false,
       "realScheduledExecutionsObserved": false,
       "monitoringAcceptanceClaimable": false,
-      "nextAction": "CI green on 7a8ea91be8392f8c7d770e3699a403151e01f0ed; operator merge approval; then observe >=2 scheduled runs + SMTP firing/recovery. Do not claim monitoring acceptance before default-branch merge."
+      "nextAction": "Operator approval to merge PR #1 only (not PR #2). After merge: observe >=2 genuine scheduled runs + SMTP firing/recovery/dedupe. Do not claim monitoring acceptance before default-branch merge.",
+      "changedFiles": 16,
+      "safeToMergeClassification": "SAFE_TO_MERGE",
+      "remoteCi": {
+        "pullRequestRun": "42039633576",
+        "pushRun": "42039624436",
+        "conclusion": "SUCCESS",
+        "headSha": "7a8ea91be8392f8c7d770e3699a403151e01f0ed",
+        "urls": [
+          "https://github.com/patelvivek9111/nyayagrid/actions/runs/42039633576",
+          "https://github.com/patelvivek9111/nyayagrid/actions/runs/42039624436"
+        ]
+      },
+      "localMonitorUnitTests": "31/31 PASS (observability continuous-monitor/alert/ops-health/release-identity/index)",
+      "safety": {
+        "cron": "*/5 * * * *",
+        "smtpSecretsReferenced": true,
+        "hardcodedRecipient": false,
+        "hardcodedCredentials": false,
+        "productionDeployWorkflowIntroduced": false,
+        "unresolvedCriticalSecurityFindings": false
+      }
     },
     "pr2": {
       "mustNotMerge": true,

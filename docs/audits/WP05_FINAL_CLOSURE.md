@@ -70,3 +70,10 @@ PR #3 (CI/E2E baseline) **merged** to `main`. PR #1 (continuous monitor) HEAD `7
 - Production deployment / production PITR / production certification from staging alone
 - WP-06 started
 - Neon corpus writes or paid AI calls in this verification pass
+
+## PR #1 CI green (post-update)
+- HEAD: `7a8ea91be8392f8c7d770e3699a403151e01f0ed`
+- CI: SUCCESS — https://github.com/patelvivek9111/nyayagrid/actions/runs/42039633576
+- SAFE_TO_MERGE: YES (operator approval required; not auto-merged)
+- Recorded: 2026-11-05T09:15:41Z
+
