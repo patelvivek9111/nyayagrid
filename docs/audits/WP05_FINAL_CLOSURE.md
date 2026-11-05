@@ -81,3 +81,8 @@ Newly repaired features this pass: **none** (audit/register only; no prod deploy
 - PR #4 ready_url drills: https://github.com/patelvivek9111/nyayagrid/pull/4 (awaiting review; not auto-merged)
 - Clerk: operator-blocked (synthetic identities + interactive MFA)
 - FINAL: `WP05_STAGING_EXTERNAL_GATES_PENDING`
+
+## Two-blocker closure (2026-11-05T15:13:25.896Z)
+- MONITOR_SCHEDULE_PENDING — PR#5 https://github.com/patelvivek9111/nyayagrid/pull/5
+- CLERK_OPERATOR_SETUP_REQUIRED — synthetic identities + interactive MFA
+- FINAL: WP05_EXTERNAL_OPERATOR_ACTION_REQUIRED

@@ -1,7 +1,7 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_WP05_POST_MERGE_CERTIFICATION",
-  "generatedAt": "2026-11-05T14:50:35.858Z",
+  "classification": "NYAYAGRID_WP05_FINAL_TWO_BLOCKER_CLOSURE",
+  "generatedAt": "2026-11-05T15:13:25.896Z",
   "head": "a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d",
   "branch": "wp05/prod-ops-preflight",
   "mainMerge": {
@@ -1080,6 +1080,7 @@
       "severity": "P1",
       "releaseBlocker": true,
       "evidence": [
+        "TWO-BLOCKER 2026-11-05: SCHEDULE still 0 after >5h; PR#5 opened to re-register cron 2-57/5 (operator merge required). Dispatch SMTP firing/recovery/dedupe previously demonstrated.",
         "POST-MERGE 2026-11-05: workflow on main; workflow_dispatch healthy+ SMTP firing/recovery/dedupe demonstrated on PR#4 branch; SCHEDULE_NOT_YET_OBSERVED (0 schedule events); cache durability best-effort documented",
         "PR #1 MERGED to main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (source HEAD 7a8ea91be8392f8c7d770e3699a403151e01f0ed) at 2026-11-05T14:30:10Z — staging-continuous-monitor.yml NOW on default branch",
         "Post-merge workflow_dispatch run 42046460657 SUCCESS on main @ a499780a3780d4a6a9c176bcd65a7c1ab02c5c2d (Probe staging ready all steps SUCCESS) — NOT a schedule event",
@@ -1981,8 +1982,8 @@
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
   "wp05Session": {
-    "classification": "NYAYAGRID_WP05_POST_MERGE_CERTIFICATION",
-    "result": "WP05_STAGING_EXTERNAL_GATES_PENDING",
+    "classification": "NYAYAGRID_WP05_FINAL_TWO_BLOCKER_CLOSURE",
+    "result": "WP05_EXTERNAL_OPERATOR_ACTION_REQUIRED",
     "status": "PARTIAL",
     "finalClosureDecision": "WP05_NOT_FULLY_CLOSED",
     "generatedAt": "2026-11-05T14:42:13.615Z",
@@ -2127,6 +2128,36 @@
         "passed": 10,
         "failed": 0,
         "skipped": 22
+      }
+    },
+    "twoBlockers": {
+      "monitoring": {
+        "status": "MONITOR_SCHEDULE_PENDING",
+        "scheduleCount": 0,
+        "minutesSincePr1MergeApprox": 340,
+        "diagnosis": "Workflow active on main; dispatch OK; AI-eval schedules historically OK; 0 event=schedule for monitor after >5h. Not normal latency. GitHub remediation: change cron to re-register schedule actor.",
+        "remediationPr": "https://github.com/patelvivek9111/nyayagrid/pull/5",
+        "remediationHead": "bdcf2d7",
+        "cronProposed": "2-57/5 * * * *",
+        "dispatchSmtpFiringRecoveryDedupe": "HISTORICAL_VERIFIED (not schedule)",
+        "pr4": "OPEN diagnostic helper — not required for schedule cert"
+      },
+      "clerk": {
+        "status": "CLERK_OPERATOR_SETUP_REQUIRED",
+        "branch": "wp05/clerk-e2e-auth",
+        "tip": "1b2113a916ff640d18ddba0cf0aa7fec60c804a1",
+        "professional": {
+          "passed": 0,
+          "failed": 0,
+          "skipped": 8
+        },
+        "prosecution": {
+          "passed": 2,
+          "failed": 0,
+          "skipped": 5
+        },
+        "mfa": "NOT_CERTIFIED",
+        "reason": "No Clerk/E2E credentials or staging-user.json in authorized engineering environment; MFA interactive enrollment required"
       }
     }
   }
