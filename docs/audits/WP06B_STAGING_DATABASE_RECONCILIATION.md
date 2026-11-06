@@ -2,8 +2,8 @@
 
 **Classification:** `NYAYAGRID_WP06B_STAGING_DATABASE_RECONCILIATION`  
 **Branch:** `nyaya/integration-checkpoint`  
-**Integration HEAD:** `02924d2d4c7d7e79e1304f436601b6ab1dc02324`  
-**Integration CI:** SUCCESS — https://github.com/patelvivek9111/nyayagrid/actions/runs/42235463135  
+**Integration HEAD:** `92c7f4addbf10db6aa9f90a3287bf779fdec9231`  
+**Integration CI:** SUCCESS — https://github.com/patelvivek9111/nyayagrid/actions/runs/42237758338  
 **Status:** PARTIAL (engineering complete; shared staging still blocked on operator attestation)
 
 ## 1. Database identity (non-SQL)
