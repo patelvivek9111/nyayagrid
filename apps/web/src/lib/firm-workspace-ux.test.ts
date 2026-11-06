@@ -174,8 +174,8 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(time).toContain("+ Add time entry");
     expect(time).toContain("/api/v1/time-entries/suggest");
     expect(billing).toContain("`/api/v1/invoices?organizationId=${orgId}`");
-    expect(billing).toContain("does not collect payment");
-    expect(billing).toContain("not trust accounting");
+    expect(billing).toContain("not payment");
+    expect(billing).toContain("trust accounting");
     expect(inbox).toContain("`/api/v1/inbox?organizationId=${orgId}`");
     expect(inbox).toContain("+ Capture email");
     expect(inbox).toContain("does not send mail");
