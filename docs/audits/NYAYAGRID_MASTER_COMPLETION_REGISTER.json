@@ -1,23 +1,36 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_PR09_0031_SCHEMA_INTEGRITY_REMEDIATION",
-  "generatedAt": "2026-11-06T03:42:00.000Z",
-  "head": "1a2e53fc0cbf4d91fa30ff863027ed9afc377862",
-  "branch": "verify/post-pr08-product-verification",
+  "classification": "NYAYAGRID_WP06_STAGING_RELEASE_READINESS",
+  "generatedAt": "2026-11-06T09:46:15.702Z",
+  "head": "009f8cd4aad0fbf9666e8bd573a628d8a18be430",
+  "branch": "nyaya/integration-checkpoint",
   "remoteCi": {
-    "run": "42156641606",
-    "conclusion": "SUCCESS",
-    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42156641606",
-    "note": "Required PR #9 check green on tip 1a2e53f after 0031/0032 schema integrity repair."
+    "note": "Integration merge includes main through PR #9. Claim release CI only after Integration tip green.",
+    "mainPr9": {
+      "run": "42158092012",
+      "conclusion": "SUCCESS",
+      "head": "d9dc0a6cf19304affe69cd430d0bf2928bcc8ce9"
+    }
   },
   "pr09Remediation": {
-    "result": "PR09_SCHEMA_INTEGRITY_VERIFIED_SAFE_TO_MERGE",
-    "billingE2eRepair": "firm-workspace billing notice assertions + whitespace-safe unit check",
-    "migrationMatrix": "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md A–G PASS incl. catalog parity + negative SQL",
-    "journalRootCause": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
-    "schemaIntegrity": "0031 full FKs/CHECKs/indexes; 0032 composite case/org isolation + fail-closed contract",
-    "merged": false,
-    "productionDeployed": false
+    "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
+    "playwrightFix": "e2e/firm-workspace.spec.ts asserts not payment collection + trust accounting; billing notice restored explicit not trust accounting",
+    "failedRun": 42144881311,
+    "migrationRootCauseDoc": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
+    "matrixScript": "scripts/migration-safety/pr09-matrix.mjs",
+    "matrix": {
+      "A_fresh": "PASS",
+      "B_fully_migrated_retry": "PASS",
+      "C_journaled_missing_objects": "PASS",
+      "D_partial_schema_fail_closed": "PASS",
+      "E_populated_preservation": "PASS",
+      "G_stub_graph_upgrade": "PASS"
+    },
+    "migrationsAdded": ["0031_migration_safety_assertions"],
+    "drizzleWhenGate": "hash never rechecked; created_at < when only",
+    "merged": true,
+    "mergeCommit": "8d99bf3081ed0914554495907be8b409c663e6d2",
+    "result": "PR09_MERGED_MAIN"
   },
   "productScope": {
     "professional": "IN_SCOPE",
@@ -83,7 +96,7 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "POST_PR08 recount from requirement entries; VERIFIED counted with VERIFIED_COMPLETE in verifiedComplete. Do not upgrade solely because PRs merged.",
+    "note": "WP-06 recount from requirement entries; do not upgrade solely because PRs merged.",
     "verifiedComplete": 15,
     "verifiedCompleteStrict": 15,
     "verifiedAlias": 0,
@@ -279,7 +292,8 @@
         "PR09_REMED: Playwright firm-workspace billing locator fixed; notice keeps not payment collection + This is not trust accounting",
         "PR09_REMED: migration matrix A–E+G PASS via scripts/migration-safety/pr09-matrix.mjs",
         "PR09_REMED: required CI SUCCESS run 42150423360 @ 68dd927 (Playwright End-to-end tests success)",
-        "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md"
+        "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md",
+        "WP06: PR #9 merged to main 8d99bf3; disposable matrix A–G PASS on Integration"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "68dd927da8285070977fbb900db125f40e31ed6e",
@@ -821,10 +835,13 @@
         "WP-05 DEFAULT_ALERT_POLICIES + ready status model",
         "WP-05B packages/observability/src/alert-transport.test.ts local receiver PASS",
         "No PagerDuty/Opsgenie credentials — live paging BLOCKED",
-        "docs/operations/WP05B_OPERATOR_ACTIONS.md Action 4"
+        "docs/operations/WP05B_OPERATOR_ACTIONS.md Action 4",
+        "WP06: schedule SUCCESS 42119654855 (PROBE_HEALTHY, smtp coverage)",
+        "WP06: schedule SUCCESS 42150903565 (PROBE_UNHEALTHY timeout; smtp:accepted deliveries)",
+        "WP06: two genuine event=schedule criterion SATISFIED; on-call ack still open"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "c91cc75ecbe007d2ec87ba1fd800bfaabfde975b",
+      "lastVerifiedSha": "009f8cd4aad0fbf9666e8bd573a628d8a18be430",
       "acceptance": {
         "ENGINEERING_IMPLEMENTED": true,
         "MONITORING_IMPLEMENTED": true,
@@ -832,8 +849,10 @@
         "ALERT_DELIVERED": false,
         "ONCALL_ACKNOWLEDGED": false,
         "FAILURE_REHEARSAL_VERIFIED": false,
-        "STAGING_TESTED": false,
-        "PRODUCTION_VERIFIED": false
+        "STAGING_TESTED": true,
+        "PRODUCTION_VERIFIED": false,
+        "SCHEDULE_TWO_SUCCESS_VERIFIED": true,
+        "SMTP_ALERT_DELIVERY_OBSERVED": true
       },
       "remediation": "Wire page policies to on-call vendor; rehearse ready-fail and clamav-down alerts in staging"
     },
@@ -1587,21 +1606,16 @@
       "smokes": ["verify-prosecution-graph-custody-db.mjs ok"]
     }
   },
-  "pr09Remediation": {
-    "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
-    "playwrightFix": "e2e/firm-workspace.spec.ts asserts not payment collection + trust accounting; billing notice restored explicit not trust accounting",
-    "failedRun": 42144881311,
-    "migrationRootCauseDoc": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
-    "matrixScript": "scripts/migration-safety/pr09-matrix.mjs",
-    "matrix": {
-      "A_fresh": "PASS",
-      "B_fully_migrated_retry": "PASS",
-      "C_journaled_missing_objects": "PASS",
-      "D_partial_schema_fail_closed": "PASS",
-      "E_populated_preservation": "PASS",
-      "G_stub_graph_upgrade": "PASS"
-    },
-    "migrationsAdded": ["0031_migration_safety_assertions"],
-    "drizzleWhenGate": "hash never rechecked; created_at < when only"
+  "mainBaseline": "8d99bf3081ed0914554495907be8b409c663e6d2",
+  "wp06": {
+    "classification": "NYAYAGRID_WP06_STAGING_RELEASE_READINESS",
+    "disposableMigrationMatrix": "A–G PASS on localhost Docker",
+    "stagingSqlReadonly": "UNAVAILABLE_THIS_SESSION",
+    "stagingReadyHttp": "HEALTHY_200",
+    "stagingMigrateApplied": false,
+    "scheduleRunsVerified": ["42119654855", "42150903565"],
+    "scheduleCriterion": "SATISFIED",
+    "clerkE2e": "DEFERRED_OPERATOR_ACTION",
+    "evidenceArtifact": "docs/audits/WP06_STAGING_RELEASE_READINESS.md"
   }
 }
