@@ -21,22 +21,22 @@
 
 Observed on local Docker (`nyayagrid`) during POST_PR08:
 
-| Symptom | Explanation |
-|---------|-------------|
+| Symptom                                                                                   | Explanation                                                                                                                                           |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Journal contains `when` for 0025/0027/0028/0026 but tables/columns missing or stub-shaped | SQL was edited/fixed **after** that `when` was first recorded. Re-running `migrate` skips those tags because `created_at < when` is false (equality). |
-| 0026 stub (`node_type`/`ref_id`) remains while journal shows 0026 | Earlier 0026 used `CREATE IF NOT EXISTS` (no-op on stubs). Later DROP+CREATE rewrite kept the **same `when`**, so Drizzle never re-applied. |
-| Multi-statement file without breakpoints | Driver may execute as a single simple query; combined with the when-gate, failed/partial first applications are not retried after file fixes. |
+| 0026 stub (`node_type`/`ref_id`) remains while journal shows 0026                         | Earlier 0026 used `CREATE IF NOT EXISTS` (no-op on stubs). Later DROP+CREATE rewrite kept the **same `when`**, so Drizzle never re-applied.           |
+| Multi-statement file without breakpoints                                                  | Driver may execute as a single simple query; combined with the when-gate, failed/partial first applications are not retried after file fixes.         |
 
 **Acceptance proof (disposable):** `scripts/migration-safety/pr09-matrix.mjs` state **C** — drop objects after migrate, re-migrate leaves them missing; applying `0029_repair_journaled_schema.sql` restores them.
 
 ## Mitigations in this PR
 
-| Migration | Role |
-|-----------|------|
-| **0028** | Billing columns (`billable`, rates, totals) with statement-breakpoints |
-| **0029** | Idempotent recreate of missing 0025/0027/0028 objects (`IF NOT EXISTS`) |
-| **0030** | Re-run 0026 upgrade path (skip if `node_kind` present) |
-| **0031** | Fail-closed column assertions; stub graph upgrade that **renames** prior archives instead of silent `DROP` overwrite; backfill legacy rows as **`proposed`** only |
+| Migration | Role                                                                                                                                                              |
+| --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **0028**  | Billing columns (`billable`, rates, totals) with statement-breakpoints                                                                                            |
+| **0029**  | Idempotent recreate of missing 0025/0027/0028 objects (`IF NOT EXISTS`)                                                                                           |
+| **0030**  | Re-run 0026 upgrade path (skip if `node_kind` present)                                                                                                            |
+| **0031**  | Fail-closed column assertions; stub graph upgrade that **renames** prior archives instead of silent `DROP` overwrite; backfill legacy rows as **`proposed`** only |
 
 ## Deploy prerequisites
 
