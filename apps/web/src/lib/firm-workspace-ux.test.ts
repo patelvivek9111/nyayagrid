@@ -185,7 +185,9 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(research).not.toContain("shouldShowWorkspaceSwitcher");
     expect(settings).toContain("`/api/v1/organizations/${orgId}/members`");
     expect(settings).toContain("`/api/v1/organizations/${orgId}/account`");
-    expect(settings).toContain("`/api/v1/organizations/${orgId}/usage?period=${period}&scope=${scope}`");
+    expect(settings).toContain(
+      "`/api/v1/organizations/${orgId}/usage?period=${period}&scope=${scope}`",
+    );
     expect(settings).toContain("My account");
     expect(settings).toContain("Nyaya activity");
     expect(settings).toContain("{account.plan.name}");

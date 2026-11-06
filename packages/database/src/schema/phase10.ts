@@ -20,11 +20,7 @@ import { drafts } from "./phase5";
  */
 
 export const timeEntrySourceEnum = pgEnum("time_entry_source", ["manual", "chat", "draft"]);
-export const timeEntryStatusEnum = pgEnum("time_entry_status", [
-  "suggested",
-  "posted",
-  "rejected",
-]);
+export const timeEntryStatusEnum = pgEnum("time_entry_status", ["suggested", "posted", "rejected"]);
 export const invoiceStatusEnum = pgEnum("invoice_status", ["draft", "issued", "void"]);
 export const inboundEmailStatusEnum = pgEnum("inbound_email_status", [
   "pending",

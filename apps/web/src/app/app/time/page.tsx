@@ -96,7 +96,8 @@ export default function TimePage() {
           description,
           minutes: Number(minutes),
           billable,
-          hourlyRateCents: billable && hourlyRate.trim() ? Math.round(Number(hourlyRate) * 100) : null,
+          hourlyRateCents:
+            billable && hourlyRate.trim() ? Math.round(Number(hourlyRate) * 100) : null,
           source: "manual",
         }),
       });

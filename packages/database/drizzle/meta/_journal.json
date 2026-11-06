@@ -204,6 +204,13 @@
       "when": 1788600000000,
       "tag": "0028_firm_time_billing_rates",
       "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1788700000000,
+      "tag": "0029_repair_journaled_schema",
+      "breakpoints": true
     }
   ]
 }

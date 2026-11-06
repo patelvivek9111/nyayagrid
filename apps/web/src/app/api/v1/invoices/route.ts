@@ -114,11 +114,7 @@ export async function POST(request: Request) {
     );
 
     if (eligible.length === 0) {
-      return jsonError(
-        "VALIDATION_ERROR",
-        "No unbilled posted billable time on this case",
-        400,
-      );
+      return jsonError("VALIDATION_ERROR", "No unbilled posted billable time on this case", 400);
     }
 
     const lineDrafts = buildInvoiceLineDrafts(eligible);

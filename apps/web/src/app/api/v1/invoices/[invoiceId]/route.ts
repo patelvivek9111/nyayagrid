@@ -179,9 +179,7 @@ export async function PATCH(request: Request, { params }: Params) {
       (error as { code?: string }).code === "NOT_FOUND"
     ) {
       const message =
-        error instanceof Error
-          ? error.message
-          : "Invoice line item not found on this draft";
+        error instanceof Error ? error.message : "Invoice line item not found on this draft";
       return jsonError("NOT_FOUND", message, 404);
     }
     return handleRouteError(error);
