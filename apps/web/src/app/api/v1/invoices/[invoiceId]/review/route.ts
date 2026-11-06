@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { invoices } from "@nyayagrid/database";
+import { canTransitionInvoiceStatus, invoices } from "@nyayagrid/database";
 import { reviewInvoiceSchema } from "@nyayagrid/validation";
 import { requireCapability, writeAuditEvent } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
@@ -22,11 +22,9 @@ export async function POST(request: Request, { params }: Params) {
       capability: "organization.manage",
     });
 
-    if (body.action === "issue" && existing.status !== "draft") {
-      return jsonError("CONFLICT", "Only draft invoices can be issued", 409);
-    }
-    if (body.action === "void" && existing.status === "void") {
-      return jsonError("CONFLICT", "Invoice is already void", 409);
+    const transition = canTransitionInvoiceStatus(existing.status, body.action);
+    if (!transition.ok) {
+      return jsonError("CONFLICT", transition.reason, 409);
     }
 
     const [invoice] = await db

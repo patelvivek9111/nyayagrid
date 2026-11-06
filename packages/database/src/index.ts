@@ -81,4 +81,17 @@ export {
   reconcileProfessionalSystemRolePermissions,
   type ProfessionalReconcileMode,
 } from "./professional-roles";
+export {
+  assertValidHourlyRateCents,
+  assertValidMinutes,
+  buildInvoiceLineDrafts,
+  canTransitionInvoiceStatus,
+  computeLineAmountCents,
+  rollupInvoiceTotals,
+  selectPostedUnbilledEntries,
+  type FirmInvoiceLineDraft,
+  type FirmInvoiceStatus,
+  type FirmInvoiceTotals,
+  type FirmTimeEntryForBilling,
+} from "./firm-time-billing";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";

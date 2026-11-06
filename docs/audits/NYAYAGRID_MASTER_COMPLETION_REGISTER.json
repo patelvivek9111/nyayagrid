@@ -1,12 +1,23 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_PR08_INTEGRATION_AND_PROFESSIONAL_COMPLETION",
-  "generatedAt": "2026-11-03T22:57:29.530Z",
-  "head": "7420710b13198813434c3c8b1a23126fa985f708",
-  "branch": "feat/professional-contacts-folders",
+  "classification": "NYAYAGRID_PR09_0031_SCHEMA_INTEGRITY_REMEDIATION",
+  "generatedAt": "2026-11-06T03:42:00.000Z",
+  "head": "1a2e53fc0cbf4d91fa30ff863027ed9afc377862",
+  "branch": "verify/post-pr08-product-verification",
   "remoteCi": {
-    "run": "41689403691",
-    "conclusion": "SUCCESS"
+    "run": "42156641606",
+    "conclusion": "SUCCESS",
+    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42156641606",
+    "note": "Required PR #9 check green on tip 1a2e53f after 0031/0032 schema integrity repair."
+  },
+  "pr09Remediation": {
+    "result": "PR09_SCHEMA_INTEGRITY_VERIFIED_SAFE_TO_MERGE",
+    "billingE2eRepair": "firm-workspace billing notice assertions + whitespace-safe unit check",
+    "migrationMatrix": "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md A–G PASS incl. catalog parity + negative SQL",
+    "journalRootCause": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
+    "schemaIntegrity": "0031 full FKs/CHECKs/indexes; 0032 composite case/org isolation + fail-closed contract",
+    "merged": false,
+    "productionDeployed": false
   },
   "productScope": {
     "professional": "IN_SCOPE",
@@ -72,18 +83,27 @@
   },
   "totals": {
     "requirementsInventoried": 54,
-    "note": "WP-04: OCR allowlist+PDF integrity, ClamAV live probe, Clerk MFA server policy, Terms/Privacy drafts+acceptance API; WP-03E deferred; production deploy OFF",
-    "verifiedComplete": 16,
-    "implementedUnverified": 4,
-    "partial": 21,
-    "missing": 4,
+    "note": "POST_PR08 recount from requirement entries; VERIFIED counted with VERIFIED_COMPLETE in verifiedComplete. Do not upgrade solely because PRs merged.",
+    "verifiedComplete": 15,
+    "verifiedCompleteStrict": 15,
+    "verifiedAlias": 0,
+    "implementedUnverified": 11,
+    "partial": 25,
+    "missing": 0,
     "broken": 0,
-    "blocked": 8,
+    "blocked": 2,
     "outOfScope": 1,
-    "p0": 30,
-    "p1": 12,
-    "p2": 10,
-    "p3": 2
+    "byStatus": {
+      "IMPLEMENTED_UNVERIFIED": 11,
+      "VERIFIED_COMPLETE": 15,
+      "PARTIAL": 25,
+      "BLOCKED": 2,
+      "OUT_OF_SCOPE": 1
+    },
+    "p0": 13,
+    "p1": 4,
+    "p2": 2,
+    "p3": 0
   },
   "requirements": [
     {
@@ -207,7 +227,8 @@
         "WP-03A: local certification DB access recovered + live census complete; research go-live still blocked (843 cases, synthetic majority, thin citation graph)",
         "WP-03C: Neon has 5621 text-backed cases but product research binds DATABASE_URL (local cert DB is not Neon); research go-live blocked",
         "WP-03D implementation complete (partial): guarded corpus adapter + quote safety; live Neon RO cert blocked on SELECT-only credential",
-        "WP-03E: ROLE_DESIGNED; CREDENTIAL_PROVISIONING_REQUIRED; live staging acceptance not run; 10k acquisition not closed"
+        "WP-03E: ROLE_DESIGNED; CREDENTIAL_PROVISIONING_REQUIRED; live staging acceptance not run; 10k acquisition not closed",
+        "POST_PR08_INV: WP-03E remains ROLE/CREDENTIAL provisioning required; no Neon RO live cert this session"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "b428b87",
@@ -223,9 +244,17 @@
       "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P1",
       "releaseBlocker": false,
-      "evidence": ["e2e/professional.spec.ts draft generate"],
+      "evidence": [
+        "e2e/professional.spec.ts draft generate",
+        "POST_PR08: scripts/verify-draft-helpers.mjs DRAFT_HELPERS_OK (assertion filter, quote neutralize, source guard, insufficient source)",
+        "POST_PR08: e2e/professional.spec.ts Draft generate shows sources or insufficient then saves a version (Clerk auth deferred)",
+        "POST_PR08: APIs matters/[matterId]/drafts + versions/restore/transform + status PATCH",
+        "Human review required; no send/file from draft UI",
+        "POST_PR08_INV: no draft export route/UI; review is in_review only (no final); draft.* audit rows untested; authorityWarnings not surfaced in UI"
+      ],
       "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09"
+      "lastVerifiedSha": "c2c3d09",
+      "nextAction": "Authenticated E2E after Clerk MFA; keep IMPLEMENTED_UNVERIFIED until then"
     },
     {
       "id": "PROF-BILL-01",
@@ -233,12 +262,28 @@
       "subsystem": "Billing",
       "feature": "Time/invoice assistance",
       "requirement": "Basic time entries and draft invoices (not trust accounting)",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P2",
       "releaseBlocker": false,
-      "evidence": ["e2e/firm-workspace.spec.ts smoke"],
-      "confidence": "MEDIUM",
-      "lastVerifiedSha": "c2c3d09"
+      "evidence": [
+        "e2e/firm-workspace.spec.ts smoke",
+        "POST_PR08: packages/database/src/firm-time-billing.ts rate/billable/totals helpers",
+        "POST_PR08: migration 0028_firm_time_billing_rates.sql (+ statement-breakpoint)",
+        "POST_PR08: invoices GET/POST org-scoped billed query; PATCH draft lines; GET by id",
+        "POST_PR08: scripts/verify-firm-billing.mjs UNIT_OK",
+        "POST_PR08: scripts/verify-firm-billing-db.mjs ok totals 120min/65000c + audit + cross-firm deny",
+        "POST_PR08: disposable nyaya_mig_smoke_0028 full migrate verified billable columns then dropped",
+        "Not trust accounting / payment processing",
+        "Windows vitest junction: suite discovery flaky; CI Linux remains authoritative for vitest",
+        "Authenticated UI E2E still DEFERRED_OPERATOR_ACTION (Clerk MFA)",
+        "PR09_REMED: Playwright firm-workspace billing locator fixed; notice keeps not payment collection + This is not trust accounting",
+        "PR09_REMED: migration matrix A–E+G PASS via scripts/migration-safety/pr09-matrix.mjs",
+        "PR09_REMED: required CI SUCCESS run 42150423360 @ 68dd927 (Playwright End-to-end tests success)",
+        "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "68dd927da8285070977fbb900db125f40e31ed6e",
+      "nextAction": "Operator merge approval for PR #9; authenticated billing UI E2E remains DEFERRED_OPERATOR_ACTION (Clerk MFA)"
     },
     {
       "id": "PROF-ROLE-01",
@@ -285,11 +330,13 @@
         "UI: matter Documents folders panel + document move",
         "DELETE contact client-link API",
         "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
-        "PR #8 retargeted to main after PR #7 merge 71989c1"
+        "PR #8 retargeted to main after PR #7 merge 71989c1",
+        "POST_PR08: merged to main via PR #8 @ 2453d874403b0ee6379c0974487e0cc541ae0849",
+        "POST_PR08: still IMPLEMENTED_UNVERIFIED pending authenticated E2E / staging certification"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
-      "nextAction": "Confirm CI on PR #8 tip; operator merge after green CI"
+      "nextAction": "Authenticated E2E + staging certification; do not auto-upgrade on merge alone"
     },
     {
       "id": "PROF-FOLDER-01",
@@ -315,11 +362,13 @@
         "UI: matter Documents folders panel + document move",
         "DELETE contact client-link API",
         "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
-        "PR #8 retargeted to main after PR #7 merge 71989c1"
+        "PR #8 retargeted to main after PR #7 merge 71989c1",
+        "POST_PR08: merged to main via PR #8 @ 2453d874403b0ee6379c0974487e0cc541ae0849",
+        "POST_PR08: still IMPLEMENTED_UNVERIFIED pending authenticated E2E / staging certification"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
-      "nextAction": "Confirm CI on PR #8 tip; operator merge after green CI"
+      "nextAction": "Authenticated E2E + staging certification; do not auto-upgrade on merge alone"
     },
     {
       "id": "PROS-RBAC-01",
@@ -357,18 +406,20 @@
       "subsystem": "Evidence",
       "feature": "Chain of custody",
       "requirement": "Evidence inventory + CoC provenance",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
       "evidence": [
         "ProsecutionCustodyTransfer typed jsonb (was string[])",
         "normalizeCustody on evidence create",
         "appendProsecutionEvidenceCustody append-only API",
-        "chain-of-custody.test.ts"
+        "chain-of-custody.test.ts",
+        "POST_PR08_INV: custody API append-only; no CoC UI; no prior RUN_DB custody suite",
+        "POST_PR08_INV: scripts/verify-prosecution-graph-custody-db.mjs custodyLength 2 + cross-office deny"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "pending",
-      "nextAction": "CI verify on feat/prosecution-memory-graph-coc; human UX for CoC still thin"
+      "nextAction": "Add RUN_DB custody append tests to CI; CoC UI still thin; authenticated E2E deferred"
     },
     {
       "id": "PROS-DIS-01",
@@ -443,10 +494,13 @@
         "integration: case-memory.integration.test.ts (RUN_DB_TESTS) isolation + audits",
         "audit actions prosecution.memory_*; no guilt/charging fields",
         "local vitest suite load broken on Windows junctions — CI authoritative; helpers verified via tsx",
-        "0025 forward/rollback disposable smoke re-verified post-PR#6 main merge"
+        "0025 forward/rollback disposable smoke re-verified post-PR#6 main merge",
+        "POST_PR08: scripts/verify-prosecution-memory-db.mjs ok proposed->approved + cross-office deny",
+        "POST_PR08: local 0025 applied via 0029 repair (journal-without-SQL recovered)"
       ],
-      "confidence": "MEDIUM",
-      "lastVerifiedSha": "464e358"
+      "confidence": "HIGH",
+      "lastVerifiedSha": "464e358",
+      "nextAction": "Authenticated E2E deferred; keep IMPLEMENTED_UNVERIFIED until staging/Clerk"
     },
     {
       "id": "PROS-GRAPH-01",
@@ -454,7 +508,7 @@
       "subsystem": "Graph",
       "feature": "Persisted prosecution graph",
       "requirement": "Writable graph_nodes/edges for criminal cases",
-      "status": "VERIFIED",
+      "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
       "evidence": [
@@ -466,11 +520,14 @@
         "0026 archives 0018 stub rows then backfills UUID refs as proposed projections",
         "Disposable smoke: 3 archive / 2 proposed nodes / 1 proposed edge; non-UUID archive-only",
         "Rollback restores stub rows from archives; post-0026 reviewable rows discarded (documented)",
-        "Merged origin/main 1549eb5 (PR #6) into PR #7 without conflict"
+        "Merged origin/main 1549eb5 (PR #6) into PR #7 without conflict",
+        "POST_PR08_INV: Draft/Prosecution inventory — no dedicated graph RUN_DB isolation suite; migration/UI present",
+        "POST_PR08_INV: scripts/verify-prosecution-graph-custody-db.mjs ok (sync projection + cross-office deny)",
+        "POST_PR08_INV: local docker had stub node_type schema despite 0026 journal — healed by applying 0026 + 0030 repair"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "f09034b5db3852140f68f0b5b626172233f16442",
-      "nextAction": "Confirm CI after data-preserving 0026; operator merge PR #7; then PR #8"
+      "nextAction": "Add CI RUN_DB graph isolation suite; authenticated E2E; keep PARTIAL until then"
     },
     {
       "id": "PROS-AUD-01",
@@ -489,12 +546,13 @@
         "Unit + integration tests added; local vitest junction broken — CI authoritative",
         "audit-browser read-only (no ensureProsecutionRoles)",
         "admin POST /api/v1/organizations/:id/system-roles provision path",
-        "metadata redaction + invite privilege rank"
+        "metadata redaction + invite privilege rank",
+        "POST_PR08_INV: RUN_DB audit listing/redaction/isolation in prosecution.integration.test.ts; no Playwright E2E"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "7420710b13198813434c3c8b1a23126fa985f708",
       "priority": "P2",
-      "nextAction": "Confirm CI on security remediation tip; operator merge PR #6"
+      "nextAction": "Authenticated prosecution audit E2E after Clerk MFA"
     },
     {
       "id": "PROS-BENCH-01",
@@ -570,7 +628,7 @@
       "subsystem": "External bench scorers",
       "feature": "LegalCite abstention/fabrication",
       "requirement": "Accurate abstention + fabrication detection without false P0",
-      "status": "VERIFIED_COMPLETE",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P0",
       "releaseBlocker": false,
       "evidence": [
@@ -578,11 +636,12 @@
         "adversarial scorer tests (20+ controls) + offline replay 37 LB + 9 Cite",
         "12576371 FP cleared: fabricatedAuthority false, abstention detected; gold still unmet",
         "internal prosecution 39/39; external-bench 221 tests",
-        "remote CI 41665323949 SUCCESS at 8075f47"
+        "remote CI 41665323949 SUCCESS at 8075f47",
+        "POST_PR08_INV: WP-03E inventory — citation-utils.ts / benchmarks/external / 28/28 WP-01 LegalCite scorers NOT_IN_WORKTREE; do not treat prior VERIFIED_COMPLETE as reproducible here"
       ],
-      "confidence": "HIGH",
+      "confidence": "MEDIUM",
       "lastVerifiedSha": "8075f47",
-      "remediation": "Closed by WP-01; do not treat offline rescore as new live Cite accuracy; 71 Cite still unexecuted"
+      "remediation": "Restore external scorer tree or regenerate evidence on this tip before reclaiming VERIFIED_COMPLETE"
     },
     {
       "id": "CORPUS-01",
@@ -965,7 +1024,8 @@
       "lastVerifiedSha": "b428b87",
       "evidence": [
         "classifyAuthorityEligibility + GuardedAuthorityRetriever; identity-only cannot quote; conflicting flags conservative",
-        "Unit tests 7 eligibility + 3 guarded retriever"
+        "Unit tests 7 eligibility + 3 guarded retriever",
+        "POST_PR08_INV: GuardedAuthorityRetriever / classifyAuthorityEligibility symbols absent in this worktree; AuthorityHybridRetriever on DATABASE_URL only — register/code drift"
       ]
     },
     {
@@ -1441,5 +1501,107 @@
       "schedule": "PENDING_LIVE_VERIFICATION",
       "production": "PRODUCTION_GATE_OPEN"
     }
+  },
+  "postPr08Session": {
+    "classification": "NYAYAGRID_POST_PR08_PRODUCT_VERIFICATION",
+    "mainSha": "2453d874403b0ee6379c0974487e0cc541ae0849",
+    "startingMainSha": "2453d874403b0ee6379c0974487e0cc541ae0849",
+    "mergedPrs": [6, 7, 8],
+    "registerRecount": {
+      "before": {
+        "verifiedComplete": 16,
+        "implementedUnverified": 4,
+        "partial": 21,
+        "missing": 4,
+        "blocked": 8,
+        "outOfScope": 1
+      },
+      "after": {
+        "requirementsInventoried": 54,
+        "note": "POST_PR08 recount from requirement entries; VERIFIED counted with VERIFIED_COMPLETE in verifiedComplete. Do not upgrade solely because PRs merged.",
+        "verifiedComplete": 17,
+        "verifiedCompleteStrict": 16,
+        "verifiedAlias": 1,
+        "implementedUnverified": 10,
+        "partial": 24,
+        "missing": 0,
+        "broken": 0,
+        "blocked": 2,
+        "outOfScope": 1,
+        "byStatus": {
+          "IMPLEMENTED_UNVERIFIED": 10,
+          "VERIFIED_COMPLETE": 16,
+          "PARTIAL": 24,
+          "BLOCKED": 2,
+          "VERIFIED": 1,
+          "OUT_OF_SCOPE": 1
+        },
+        "p0": 13,
+        "p1": 4,
+        "p2": 2,
+        "p3": 0
+      }
+    },
+    "scheduleMonitor": {
+      "workflow": "Staging continuous monitor",
+      "genuineScheduleRuns": [
+        {
+          "id": 42119654855,
+          "conclusion": "success",
+          "createdAt": "2026-11-05T22:13:36Z"
+        }
+      ],
+      "criterion": ">=2 genuine event=schedule",
+      "satisfied": false,
+      "manualDispatchNotCounted": true
+    },
+    "clerkMfaE2e": "DEFERRED_OPERATOR_ACTION",
+    "production": "PRODUCTION_GATE_OPEN",
+    "billing": {
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "unitOk": true,
+      "dbSmokeOk": true,
+      "migration0028DisposableOk": true,
+      "paymentProcessing": false,
+      "trustAccounting": false
+    },
+    "schemaRepair": {
+      "issue": "Local docker journaled 0025/0027/0028 without applying SQL",
+      "fix": "0029_repair_journaled_schema.sql idempotent IF NOT EXISTS",
+      "freshMigrateVerified": true,
+      "note": "Deploy prerequisite: run migrate including 0029 on any DB that may have journal-only entries"
+    },
+    "draft": {
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "helpersOk": true
+    },
+    "prosecutionMemory": {
+      "dbSmokeOk": true
+    },
+    "inventoryFollowUp": {
+      "agents": ["Draft/Prosecution inventory", "WP-03E research inventory"],
+      "graphStatusCorrectedTo": "PARTIAL",
+      "evidenceCustodyCorrectedTo": "PARTIAL",
+      "aiExtScorerDowngradedTo": "IMPLEMENTED_UNVERIFIED",
+      "schemaRepairs": ["0029 contacts/memory/billing", "0030 graph 0026 upgrade"],
+      "smokes": ["verify-prosecution-graph-custody-db.mjs ok"]
+    }
+  },
+  "pr09Remediation": {
+    "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
+    "playwrightFix": "e2e/firm-workspace.spec.ts asserts not payment collection + trust accounting; billing notice restored explicit not trust accounting",
+    "failedRun": 42144881311,
+    "migrationRootCauseDoc": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
+    "matrixScript": "scripts/migration-safety/pr09-matrix.mjs",
+    "matrix": {
+      "A_fresh": "PASS",
+      "B_fully_migrated_retry": "PASS",
+      "C_journaled_missing_objects": "PASS",
+      "D_partial_schema_fail_closed": "PASS",
+      "E_populated_preservation": "PASS",
+      "G_stub_graph_upgrade": "PASS"
+    },
+    "migrationsAdded": ["0031_migration_safety_assertions"],
+    "drizzleWhenGate": "hash never rechecked; created_at < when only"
   }
 }

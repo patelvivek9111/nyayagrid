@@ -68,6 +68,8 @@ export async function POST(request: Request) {
         status: "suggested",
         description: body.description,
         minutes: body.minutes,
+        billable: body.billable ?? true,
+        hourlyRateCents: body.hourlyRateCents ?? null,
         conversationId: body.conversationId ?? null,
         draftId: body.draftId ?? null,
       })

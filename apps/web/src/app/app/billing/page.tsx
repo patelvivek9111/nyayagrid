@@ -17,6 +17,7 @@ import {
 } from "@/components/ux/firm-workspace";
 import {
   billingSummary,
+  formatAssistedFeeCents,
   formatDurationMinutes,
   formatShortDate,
   invoiceStatusLabel,
@@ -105,8 +106,8 @@ export default function BillingPage() {
       <FirmPageHeader title="Billing" description="Draft invoices from posted time." />
       <div className="mt-4">
         <FirmNotice>
-          This is not trust accounting and does not collect payment. Amounts are posted minutes, not
-          fees.
+          Draft invoices from posted billable time. Fee totals are assistance only — not payment
+          collection. This is not trust accounting.
         </FirmNotice>
       </div>
       {error ? (
@@ -160,7 +161,7 @@ export default function BillingPage() {
                   <FirmRow
                     title={invoice.invoiceNumber}
                     subtitle={`${matter?.clientDisplayName ? `${matter.clientDisplayName} · ` : ""}${matter?.title ?? "Case"}`}
-                    meta={`${formatDurationMinutes(invoice.totalMinutes)} posted${formatShortDate(invoice.createdAt) ? ` · ${formatShortDate(invoice.createdAt)}` : ""}`}
+                    meta={`${formatDurationMinutes(invoice.totalMinutes)} posted${formatAssistedFeeCents(invoice.totalCents) ? ` · ${formatAssistedFeeCents(invoice.totalCents)} assisted` : invoice.hasCompleteRates === false ? " · rates incomplete" : ""}${formatShortDate(invoice.createdAt) ? ` · ${formatShortDate(invoice.createdAt)}` : ""}`}
                     status={<FirmStatusText>{invoiceStatusLabel(invoice.status)}</FirmStatusText>}
                     actions={
                       invoice.status === "draft" ? (

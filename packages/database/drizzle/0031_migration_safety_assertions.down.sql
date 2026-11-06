@@ -1,0 +1,2 @@
+-- No-op. 0031 asserts schema shapes and may upgrade stub graph tables.
+-- Reverse would risk dropping reviewable graph / billing / contacts data.

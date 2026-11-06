@@ -53,7 +53,9 @@ test.describe("Firm workspace surfaces", () => {
 
     await openPinned("/app/billing");
     await expect(page.getByRole("heading", { name: "Billing" })).toBeVisible();
-    await expect(page.getByText(/not trust accounting/i)).toBeVisible();
+    // Fee assistance only — must keep both limitation phrases visible.
+    await expect(page.getByText(/not payment collection/i)).toBeVisible();
+    await expect(page.getByText(/trust accounting/i)).toBeVisible();
     await expect(page.getByRole("button", { name: "Create draft invoice" })).toBeVisible();
 
     await openPinned("/app/inbox");

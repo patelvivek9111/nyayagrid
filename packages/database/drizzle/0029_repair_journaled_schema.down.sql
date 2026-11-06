@@ -1,0 +1,2 @@
+-- No-op down migration. 0029 is an idempotent repair for missing objects from 0025/0027/0028.
+-- Do not drop contacts, folders, billing columns, or prosecution_case_memories here.

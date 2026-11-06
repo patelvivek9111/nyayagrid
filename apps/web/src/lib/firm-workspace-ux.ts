@@ -26,6 +26,8 @@ export type FirmTimeEntry = {
   minutes: number;
   source: string;
   status: string;
+  billable?: boolean;
+  hourlyRateCents?: number | null;
   createdAt?: string | Date | null;
 };
 
@@ -35,8 +37,16 @@ export type FirmInvoiceRow = {
   status: string;
   matterId: string;
   totalMinutes: number;
+  totalCents?: number | null;
+  hasCompleteRates?: boolean;
   createdAt?: string | Date | null;
 };
+
+/** Fee-assistance display only — not payment collection. */
+export function formatAssistedFeeCents(cents: number | null | undefined): string | null {
+  if (cents == null || !Number.isFinite(cents)) return null;
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(cents / 100);
+}
 
 export type FirmInboxEmail = {
   id: string;
