@@ -152,6 +152,16 @@ async function main() {
     if (String(j[0].mx) !== "1788200000000") throw new Error(`bad max when ${j[0].mx}`);
     const cc = await sql`select to_regclass('public.criminal_cases') as r`;
     if (cc[0].r) throw new Error("precondition: criminal_cases should be absent");
+    // Match verified staging drift: research_* may exist but legal_authorities catalog is gone.
+    await sql.unsafe(`
+      DROP TABLE IF EXISTS legal_authority_relationships CASCADE;
+      DROP TABLE IF EXISTS legal_authority_citations CASCADE;
+      DROP TABLE IF EXISTS legal_authority_chunks CASCADE;
+      DROP TABLE IF EXISTS legal_authority_versions CASCADE;
+      DROP TABLE IF EXISTS legal_authorities CASCADE;
+    `);
+    const la = await sql`select to_regclass('public.legal_authorities') as r`;
+    if (la[0].r) throw new Error("precondition: legal_authorities should be absent");
   });
 
   // Seed product-ish rows before migrate
@@ -195,11 +205,21 @@ async function main() {
     if (!whens.includes("1789100000000")) throw new Error("0033 when missing");
     // collision millis for Deepening should now be present via main tags (expected)
     if (!whens.includes("1788300000000")) throw new Error("0025 when missing");
+    const la = await sql`select to_regclass('public.legal_authorities') as r`;
+    if (!la[0].r) throw new Error("legal_authorities shell not restored");
+    const laCount = await sql`select count(*)::int as n from legal_authorities`;
+    if (laCount[0].n !== 0) {
+      throw new Error(`legal_authorities must stay empty after repair; got ${laCount[0].n}`);
+    }
+    const statuteFk = await sql`
+      select 1 from pg_constraint where conname='prosecution_charges_statute_fk'
+    `;
+    if (!statuteFk.length) throw new Error("prosecution_charges_statute_fk missing");
   });
   record(
     "A_staging_baseline_to_0033",
     true,
-    "0034 repaired hole; product contract; seed preserved",
+    "0034 repaired hole + empty legal_authorities shell; product contract; seed preserved",
   );
 
   // --- B: Retry idempotent ---

@@ -78,6 +78,22 @@ MIGRATE_ALLOW_NEONDB_PRODUCT=1
 5. Post-migrate: schema contract + `/api/health/ready`
 6. Do not merge Integration wholesale into main — cherry-pick 0034+gates if promoting
 
+## Dependency correction (legal_authorities)
+
+Live read-only probes (`nyaya_product_runtime_v3` on Fly):
+
+| Object                                                                                                                                    | Staging                                      |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `legal_authorities`                                                                                                                       | **ABSENT**                                   |
+| `legal_authority_*` child tables                                                                                                          | **ABSENT**                                   |
+| Research enums (`authority_type`, …)                                                                                                      | present                                      |
+| `research_*` / `matter_authorities`                                                                                                       | present (no live FKs to `legal_authorities`) |
+| Other 0034 external refs (`organizations`, `users`, `matters`, `documents`, `tasks`, `inbound_emails`, `matter_entities`, `matter_facts`) | present                                      |
+
+**Architecture:** Phase 6 defines `legal_authorities` on the **product** schema as a shared authority _catalog_ (no `organization_id`). Populated corpus rows belong on `CORPUS_DATABASE_URL` when research is enabled — not invented by migrate. Staging journal includes 0005/0012/0014 hashes but the catalog table was verified missing (schema drift).
+
+**0034 fix:** create empty `legal_authorities` shell (+ 0012/0014 columns/indexes) before week3 FK attach. No corpus INSERT. Disposable matrix drops the table to match staging and asserts `count(*)=0` after migrate.
+
 ## FINAL RESULT
 
 `STAGING_MIGRATION_READY_FOR_OPERATOR_APPROVAL`
