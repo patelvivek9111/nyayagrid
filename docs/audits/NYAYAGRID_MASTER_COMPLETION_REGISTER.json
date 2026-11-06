@@ -1,17 +1,17 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_PR09_0031_SCHEMA_INTEGRITY_REMEDIATION",
-  "generatedAt": "2026-11-06T03:25:00.000Z",
-  "head": "pending-0032-tip",
+  "generatedAt": "2026-11-06T03:42:00.000Z",
+  "head": "1a2e53fc0cbf4d91fa30ff863027ed9afc377862",
   "branch": "verify/post-pr08-product-verification",
   "remoteCi": {
-    "run": "42152232546",
+    "run": "42156641606",
     "conclusion": "SUCCESS",
-    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42152232546",
-    "note": "Prior green on 00aa7e4. Re-confirm required CI after 0031/0032 integrity repair tip."
+    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42156641606",
+    "note": "Required PR #9 check green on tip 1a2e53f after 0031/0032 schema integrity repair."
   },
   "pr09Remediation": {
-    "result": "PR09_SCHEMA_INTEGRITY_REPAIR_PENDING_CI",
+    "result": "PR09_SCHEMA_INTEGRITY_VERIFIED_SAFE_TO_MERGE",
     "billingE2eRepair": "firm-workspace billing notice assertions + whitespace-safe unit check",
     "migrationMatrix": "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md A–G PASS incl. catalog parity + negative SQL",
     "journalRootCause": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
