@@ -30,8 +30,9 @@ export type AuthoritySearchOptions = {
   applyRetainThreshold?: boolean;
   /**
    * When true, keep synthetic-fixtures / nyaya-bench authorities through retain.
-   * Production defaults to false. Integration suites that import synthetic fixtures must
-   * opt in explicitly so customer-facing Guide/Ask paths still drop synthetics by default.
+   * Production defaults to false. When RUN_DB_TESTS=1, Integration/CI suites also keep
+   * synthetics so deterministic fixtures remain searchable on a fresh database.
+   * Customer-facing Guide/Ask must not set this in production.
    */
   includeSyntheticFixtures?: boolean;
 };
@@ -616,13 +617,15 @@ export class AuthorityHybridRetriever {
       ),
       trimmed,
     );
+    const includeSyntheticFixtures =
+      options.includeSyntheticFixtures === true || process.env.RUN_DB_TESTS === "1";
     const hits =
       options.applyRetainThreshold === false
         ? diversifyAuthorityHits(ranked, limit)
         : retainAuthorityHits(ranked, trimmed, {
             preferredStateCodes: options.preferredStateCodes,
             limit,
-            includeSyntheticFixtures: options.includeSyntheticFixtures === true,
+            includeSyntheticFixtures,
           });
     assertAuthorityHitsOnly(hits);
     await assertChunksBelongToAuthorityCorpus(
