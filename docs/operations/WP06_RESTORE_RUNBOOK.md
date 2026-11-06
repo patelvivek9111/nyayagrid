@@ -34,10 +34,17 @@ pg_restore --clean --if-exists -d \
 
 ## Staging / managed PITR (operator)
 
-1. Create **isolated** restore branch / fork — never overwrite live staging primary.
-2. Restore to PITR timestamp before last migrate.
-3. Run schema contract + app ready probe against restore endpoint.
-4. Record RPO/RTO evidence; update OPS-BACKUP-01 acceptance flags.
+Staging product DB is expected on **Neon** (not Fly Postgres — no Fly PG clusters). Corpus and product must be attested as **separate** projects/roles before any restore or migrate.
+
+1. Neon Console → open the **attested product** project (not the legal corpus project).
+2. Settings → Postgres → confirm **History window ≥ 24h** (Free plan max 6h — upgrade/extend if needed).
+3. Branches → create **isolated** restore/child branch or snapshot `pre-0032-<UTC>` — never overwrite live primary for drills.
+4. Optional private `pg_dump --format=custom` of product DB only (no URL paste to chat).
+5. On incident: Instant Restore only on a **root** branch within history window; Neon auto-creates `{branch}_old_{timestamp}` backup branch.
+6. Run schema contract + `/api/health/ready` against restore endpoint / branch connection.
+7. Record RPO/RTO evidence; set OPS-BACKUP-01 `MANAGED_PITR_VERIFIED=true`.
+
+**If Neon Admin/branch credentials unavailable:** required operator action = grant access to the attested **product** Neon project (Admin or create-branch). Engineering cannot certify PITR without that grant.
 
 ## Escalation
 

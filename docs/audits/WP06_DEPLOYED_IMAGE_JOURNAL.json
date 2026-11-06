@@ -1,0 +1,151 @@
+﻿{
+  "classification": "DEPLOYED_IMAGE_JOURNAL_FULL",
+  "count": 29,
+  "entries": [
+    {
+      "idx": 0,
+      "when": 1754928000000,
+      "tag": "0000_phase1_foundation"
+    },
+    {
+      "idx": 1,
+      "when": 1755014400000,
+      "tag": "0001_phase2_matter_workflow"
+    },
+    {
+      "idx": 2,
+      "when": 1755100800000,
+      "tag": "0002_phase3_matter_intelligence"
+    },
+    {
+      "idx": 3,
+      "when": 1755187200000,
+      "tag": "0003_phase4_graph_memory"
+    },
+    {
+      "idx": 4,
+      "when": 1755273600000,
+      "tag": "0004_phase5_professional_intelligence"
+    },
+    {
+      "idx": 5,
+      "when": 1755360000000,
+      "tag": "0005_phase6_nyaya_research"
+    },
+    {
+      "idx": 6,
+      "when": 1755446400000,
+      "tag": "0006_phase7_nyaya_agents"
+    },
+    {
+      "idx": 7,
+      "when": 1755532800000,
+      "tag": "0007_phase8_professor_guide"
+    },
+    {
+      "idx": 8,
+      "when": 1786493583536,
+      "tag": "0008_phase9_production_readiness"
+    },
+    {
+      "idx": 9,
+      "when": 1786650000000,
+      "tag": "0009_professor_hardening"
+    },
+    {
+      "idx": 10,
+      "when": 1786820000000,
+      "tag": "0010_firm_ops"
+    },
+    {
+      "idx": 11,
+      "when": 1786900000000,
+      "tag": "0011_enterprise_trust"
+    },
+    {
+      "idx": 12,
+      "when": 1787000000000,
+      "tag": "0012_phase6s_jurisdiction"
+    },
+    {
+      "idx": 13,
+      "when": 1787100000000,
+      "tag": "0013_usage_action_id"
+    },
+    {
+      "idx": 14,
+      "when": 1787200000000,
+      "tag": "0014_corpus_expansion"
+    },
+    {
+      "idx": 15,
+      "when": 1787300000000,
+      "tag": "0015_corpus_ingest_jobs"
+    },
+    {
+      "idx": 16,
+      "when": 1787400000000,
+      "tag": "0016_corpus_refresh"
+    },
+    {
+      "idx": 17,
+      "when": 1787500000000,
+      "tag": "0017_legal_work_recovery"
+    },
+    {
+      "idx": 18,
+      "when": 1787600000000,
+      "tag": "0018_week3_legal_intelligence"
+    },
+    {
+      "idx": 19,
+      "when": 1787700000000,
+      "tag": "0019_week3_case_isolation"
+    },
+    {
+      "idx": 20,
+      "when": 1787800000000,
+      "tag": "0020_civil_claims"
+    },
+    {
+      "idx": 21,
+      "when": 1787900000000,
+      "tag": "0021_graph_claim_defense_node_types"
+    },
+    {
+      "idx": 22,
+      "when": 1788000000000,
+      "tag": "0022_discovery_production_ledger"
+    },
+    {
+      "idx": 23,
+      "when": 1788100000000,
+      "tag": "0023_matter_motions_communications"
+    },
+    {
+      "idx": 24,
+      "when": 1788200000000,
+      "tag": "0024_citation_target_classification"
+    },
+    {
+      "idx": 25,
+      "when": 1788300000000,
+      "tag": "0025_drop_professor_guide_schema"
+    },
+    {
+      "idx": 26,
+      "when": 1788400000000,
+      "tag": "0026_prosecution_disclosure_deepening"
+    },
+    {
+      "idx": 27,
+      "when": 1788500000000,
+      "tag": "0027_prosecution_legal_workflow"
+    },
+    {
+      "idx": 28,
+      "when": 1788600000000,
+      "tag": "0028_prosecution_office_operations"
+    }
+  ]
+}

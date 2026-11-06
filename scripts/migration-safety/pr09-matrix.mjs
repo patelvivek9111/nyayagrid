@@ -341,13 +341,14 @@ async function main() {
       ALTER TABLE prosecution_graph_edges DROP CONSTRAINT IF EXISTS prosecution_graph_edges_confidence_chk;
       ALTER TABLE prosecution_graph_nodes DROP CONSTRAINT IF EXISTS prosecution_graph_nodes_kind_chk;
     `);
-    await sql`delete from drizzle.__drizzle_migrations where created_at = 1789000000000`;
+    // Clear 0032 and any later reconciliation tags (0033+) so remigrate re-applies integrity.
+    await sql`delete from drizzle.__drizzle_migrations where created_at >= 1789000000000`;
   });
   migrate(e);
   await withDb(e, async (sql) => {
     await assertGraphSchemaContract(sql);
   });
-  record("E_partial_repaired", true, "0032 restored dropped constraints; contract pass");
+  record("E_partial_repaired", true, "0032/0033 restored dropped constraints; contract pass");
 
   // --- F: Cross-case / cross-office / invalid enum rejection ---
   const f = `nyaya_pr09_f_${stamp}`;

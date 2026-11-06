@@ -99,4 +99,12 @@ export {
   isLocalCertificationDatabaseUrl,
   type LocalCertificationDbOptions,
 } from "./local-cert-db";
+export {
+  assertMigrateIdentity,
+  migrateIdentityFromEnv,
+  parseDbTarget,
+  redactSecrets,
+  type MigrateIdentityInput,
+  type MigrateIdentityResult,
+} from "./migrate-identity";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";
