@@ -94,4 +94,9 @@ export {
   type FirmInvoiceTotals,
   type FirmTimeEntryForBilling,
 } from "./firm-time-billing";
+export {
+  assertLocalCertificationDatabaseUrl,
+  isLocalCertificationDatabaseUrl,
+  type LocalCertificationDbOptions,
+} from "./local-cert-db";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";
