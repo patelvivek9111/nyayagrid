@@ -197,6 +197,13 @@
       "when": 1788500000000,
       "tag": "0027_professional_contacts_folders",
       "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1788600000000,
+      "tag": "0028_firm_time_billing_rates",
+      "breakpoints": true
     }
   ]
 }

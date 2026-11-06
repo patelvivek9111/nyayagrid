@@ -10,6 +10,7 @@ import {
   filterCalendarEvents,
   filterClients,
   filterInbox,
+  formatAssistedFeeCents,
   formatDurationMinutes,
   holdScopeLabel,
   holdStatusLabel,
@@ -103,6 +104,8 @@ describe("firm workspace presentation helpers", () => {
       draftCount: 1,
       issuedCount: 1,
     });
+    expect(formatAssistedFeeCents(12500)).toMatch(/\$125\.00/);
+    expect(formatAssistedFeeCents(null)).toBeNull();
   });
 
   it("splits inbox pending vs filed and ignores discarded", () => {

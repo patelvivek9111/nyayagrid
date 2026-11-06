@@ -906,6 +906,8 @@ export const createTimeEntrySchema = z.object({
     .int()
     .min(1)
     .max(24 * 60),
+  billable: z.boolean().optional(),
+  hourlyRateCents: z.number().int().min(0).max(10_000_00).optional().nullable(),
   source: z.enum(["manual", "chat", "draft"]).optional(),
   conversationId: z.string().uuid().optional().nullable(),
   draftId: z.string().uuid().optional().nullable(),
@@ -931,6 +933,20 @@ export const createInvoiceFromTimeSchema = z.object({
   organizationId: z.string().uuid(),
   matterId: z.string().uuid(),
   notes: z.string().trim().max(4000).optional().nullable(),
+});
+
+export const updateDraftInvoiceSchema = z.object({
+  notes: z.string().trim().max(4000).optional().nullable(),
+  lineItems: z
+    .array(
+      z.object({
+        id: z.string().uuid(),
+        description: z.string().trim().min(1).max(2000).optional(),
+        hourlyRateCents: z.number().int().min(0).max(10_000_00).optional().nullable(),
+      }),
+    )
+    .max(500)
+    .optional(),
 });
 
 export const reviewInvoiceSchema = z.object({
