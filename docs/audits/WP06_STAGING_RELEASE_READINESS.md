@@ -2,7 +2,8 @@
 
 **Classification:** `NYAYAGRID_WP06_STAGING_RELEASE_READINESS`  
 **Branch:** `nyaya/integration-checkpoint`  
-**Integration HEAD (this report):** see git tip after WP-06 docs push  
+**Integration HEAD:** `84d061d201f0896bef66b06b8b7a17629eb133c4`  
+**Integration CI:** SUCCESS — https://github.com/patelvivek9111/nyayagrid/actions/runs/42199704634  
 **Main baseline:** `8d99bf3081ed0914554495907be8b409c663e6d2` (PR #9 merge)
 
 ## Merged PRs confirmed

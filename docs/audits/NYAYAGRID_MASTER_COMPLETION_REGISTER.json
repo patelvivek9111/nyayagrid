@@ -1,16 +1,14 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
   "classification": "NYAYAGRID_WP06_STAGING_RELEASE_READINESS",
-  "generatedAt": "2026-11-06T09:46:15.702Z",
-  "head": "009f8cd4aad0fbf9666e8bd573a628d8a18be430",
+  "generatedAt": "2026-11-06T10:16:39.398Z",
+  "head": "84d061d201f0896bef66b06b8b7a17629eb133c4",
   "branch": "nyaya/integration-checkpoint",
   "remoteCi": {
-    "note": "Integration merge includes main through PR #9. Claim release CI only after Integration tip green.",
-    "mainPr9": {
-      "run": "42158092012",
-      "conclusion": "SUCCESS",
-      "head": "d9dc0a6cf19304affe69cd430d0bf2928bcc8ce9"
-    }
+    "run": "42199704634",
+    "conclusion": "SUCCESS",
+    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42199704634",
+    "branch": "nyaya/integration-checkpoint"
   },
   "pr09Remediation": {
     "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
@@ -1616,6 +1614,8 @@
     "scheduleRunsVerified": ["42119654855", "42150903565"],
     "scheduleCriterion": "SATISFIED",
     "clerkE2e": "DEFERRED_OPERATOR_ACTION",
-    "evidenceArtifact": "docs/audits/WP06_STAGING_RELEASE_READINESS.md"
+    "evidenceArtifact": "docs/audits/WP06_STAGING_RELEASE_READINESS.md",
+    "integrationCi": "SUCCESS",
+    "integrationHead": "84d061d201f0896bef66b06b8b7a17629eb133c4"
   }
 }
