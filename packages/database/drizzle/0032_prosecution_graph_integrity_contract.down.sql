@@ -1,0 +1,2 @@
+-- No-op. Removing case/organization isolation FKs or CHECK constraints would
+-- weaken live graph integrity. Forward-only; restore from backup if needed.

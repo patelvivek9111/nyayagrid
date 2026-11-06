@@ -1,6 +1,7 @@
 -- PR #9 migration safety: assert expected shapes after 0025–0030 repairs.
 -- Fail closed when a table exists but lacks required columns (IF NOT EXISTS alone is insufficient).
--- Also upgrades remaining stub graph tables without silently discarding prior archives.
+-- Stub→reviewable graph upgrade must create the FULL reviewable schema (FKs, CHECKs, indexes),
+-- matching 0026 — not bare CREATE TABLE shells.
 --> statement-breakpoint
 DO $$
 DECLARE
@@ -78,7 +79,7 @@ DECLARE
   archive_suffix text := to_char(clock_timestamp(), 'YYYYMMDDHH24MISS');
 BEGIN
   IF to_regclass('public.prosecution_graph_nodes') IS NULL THEN
-    RAISE NOTICE '0031: no prosecution_graph_nodes; skip graph upgrade';
+    RAISE NOTICE '0031: no prosecution_graph_nodes; skip stub archive/drop';
     RETURN;
   END IF;
 
@@ -93,7 +94,7 @@ BEGIN
   ) INTO has_node_type;
 
   IF has_node_kind THEN
-    RAISE NOTICE '0031: graph already reviewable (node_kind present); skip upgrade';
+    RAISE NOTICE '0031: graph already reviewable (node_kind present); skip stub archive/drop';
     RETURN;
   END IF;
 
@@ -133,6 +134,11 @@ BEGIN
     );
   END IF;
 
+  -- Verified archives exist before DROP.
+  IF to_regclass('public.prosecution_graph_nodes_0018_archive') IS NULL THEN
+    RAISE EXCEPTION '0031: refusing DROP — nodes archive missing';
+  END IF;
+
   DROP TABLE IF EXISTS public.prosecution_graph_edges;
   DROP TABLE IF EXISTS public.prosecution_graph_nodes;
 END $$;
@@ -151,8 +157,32 @@ CREATE TABLE IF NOT EXISTS "prosecution_graph_nodes" (
   "metadata" jsonb DEFAULT '{}'::jsonb NOT NULL,
   "created_by_user_id" uuid,
   "created_at" timestamp with time zone DEFAULT now() NOT NULL,
-  "updated_at" timestamp with time zone DEFAULT now() NOT NULL
+  "updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+  CONSTRAINT "prosecution_graph_nodes_organization_id_fkey"
+    FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE cascade,
+  CONSTRAINT "prosecution_graph_nodes_criminal_case_id_fkey"
+    FOREIGN KEY ("criminal_case_id") REFERENCES "criminal_cases"("id") ON DELETE cascade,
+  CONSTRAINT "prosecution_graph_nodes_created_by_user_id_fkey"
+    FOREIGN KEY ("created_by_user_id") REFERENCES "users"("id"),
+  CONSTRAINT "prosecution_graph_nodes_kind_chk" CHECK ("node_kind" IN (
+    'criminal_case','defendant','charge','charge_element','evidence','witness',
+    'warrant','motion','hearing','legal_issue','other'
+  )),
+  CONSTRAINT "prosecution_graph_nodes_origin_chk" CHECK ("origin" IN ('ai','manual','projection')),
+  CONSTRAINT "prosecution_graph_nodes_status_chk" CHECK ("status" IN ('proposed','approved','rejected'))
 );
+--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "prosecution_graph_nodes_canonical_uidx"
+  ON "prosecution_graph_nodes" ("criminal_case_id", "canonical_entity_type", "canonical_entity_id");
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_case_idx"
+  ON "prosecution_graph_nodes" ("criminal_case_id");
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_org_idx"
+  ON "prosecution_graph_nodes" ("organization_id");
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_nodes_kind_idx"
+  ON "prosecution_graph_nodes" ("criminal_case_id", "node_kind");
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "prosecution_graph_edges" (
   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
@@ -170,8 +200,135 @@ CREATE TABLE IF NOT EXISTS "prosecution_graph_edges" (
   "reviewed_at" timestamp with time zone,
   "rejection_reason" text,
   "created_at" timestamp with time zone DEFAULT now() NOT NULL,
-  "updated_at" timestamp with time zone DEFAULT now() NOT NULL
+  "updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+  CONSTRAINT "prosecution_graph_edges_organization_id_fkey"
+    FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE cascade,
+  CONSTRAINT "prosecution_graph_edges_criminal_case_id_fkey"
+    FOREIGN KEY ("criminal_case_id") REFERENCES "criminal_cases"("id") ON DELETE cascade,
+  CONSTRAINT "prosecution_graph_edges_from_node_id_fkey"
+    FOREIGN KEY ("from_node_id") REFERENCES "prosecution_graph_nodes"("id") ON DELETE cascade,
+  CONSTRAINT "prosecution_graph_edges_to_node_id_fkey"
+    FOREIGN KEY ("to_node_id") REFERENCES "prosecution_graph_nodes"("id") ON DELETE cascade,
+  CONSTRAINT "prosecution_graph_edges_created_by_user_id_fkey"
+    FOREIGN KEY ("created_by_user_id") REFERENCES "users"("id"),
+  CONSTRAINT "prosecution_graph_edges_reviewed_by_user_id_fkey"
+    FOREIGN KEY ("reviewed_by_user_id") REFERENCES "users"("id"),
+  CONSTRAINT "prosecution_graph_edges_origin_chk" CHECK ("origin" IN ('ai','manual','projection')),
+  CONSTRAINT "prosecution_graph_edges_status_chk" CHECK ("status" IN ('proposed','approved','rejected')),
+  CONSTRAINT "prosecution_graph_edges_confidence_chk" CHECK (
+    "confidence" IS NULL OR "confidence" IN ('low','medium','high')
+  )
 );
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_case_idx"
+  ON "prosecution_graph_edges" ("criminal_case_id");
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_org_idx"
+  ON "prosecution_graph_edges" ("organization_id");
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_from_idx"
+  ON "prosecution_graph_edges" ("from_node_id");
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_to_idx"
+  ON "prosecution_graph_edges" ("to_node_id");
+--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "prosecution_graph_edges_status_idx"
+  ON "prosecution_graph_edges" ("criminal_case_id", "status");
+--> statement-breakpoint
+-- If a prior broken 0031 left bare reviewable tables (CREATE IF NOT EXISTS no-op),
+-- attach missing 0026-parity constraints/indexes. 0032 also covers already-journaled DBs.
+DO $$
+BEGIN
+  IF to_regclass('public.prosecution_graph_nodes') IS NULL THEN
+    RETURN;
+  END IF;
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = 'prosecution_graph_nodes' AND column_name = 'node_kind'
+  ) THEN
+    RETURN;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_nodes_organization_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_nodes"
+      ADD CONSTRAINT "prosecution_graph_nodes_organization_id_fkey"
+      FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE cascade;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_nodes_criminal_case_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_nodes"
+      ADD CONSTRAINT "prosecution_graph_nodes_criminal_case_id_fkey"
+      FOREIGN KEY ("criminal_case_id") REFERENCES "criminal_cases"("id") ON DELETE cascade;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_nodes_created_by_user_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_nodes"
+      ADD CONSTRAINT "prosecution_graph_nodes_created_by_user_id_fkey"
+      FOREIGN KEY ("created_by_user_id") REFERENCES "users"("id");
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_nodes_kind_chk') THEN
+    ALTER TABLE "prosecution_graph_nodes"
+      ADD CONSTRAINT "prosecution_graph_nodes_kind_chk" CHECK ("node_kind" IN (
+        'criminal_case','defendant','charge','charge_element','evidence','witness',
+        'warrant','motion','hearing','legal_issue','other'
+      ));
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_nodes_origin_chk') THEN
+    ALTER TABLE "prosecution_graph_nodes"
+      ADD CONSTRAINT "prosecution_graph_nodes_origin_chk" CHECK ("origin" IN ('ai','manual','projection'));
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_nodes_status_chk') THEN
+    ALTER TABLE "prosecution_graph_nodes"
+      ADD CONSTRAINT "prosecution_graph_nodes_status_chk" CHECK ("status" IN ('proposed','approved','rejected'));
+  END IF;
+
+  IF to_regclass('public.prosecution_graph_edges') IS NULL THEN
+    RETURN;
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_organization_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_organization_id_fkey"
+      FOREIGN KEY ("organization_id") REFERENCES "organizations"("id") ON DELETE cascade;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_criminal_case_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_criminal_case_id_fkey"
+      FOREIGN KEY ("criminal_case_id") REFERENCES "criminal_cases"("id") ON DELETE cascade;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_from_node_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_from_node_id_fkey"
+      FOREIGN KEY ("from_node_id") REFERENCES "prosecution_graph_nodes"("id") ON DELETE cascade;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_to_node_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_to_node_id_fkey"
+      FOREIGN KEY ("to_node_id") REFERENCES "prosecution_graph_nodes"("id") ON DELETE cascade;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_created_by_user_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_created_by_user_id_fkey"
+      FOREIGN KEY ("created_by_user_id") REFERENCES "users"("id");
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_reviewed_by_user_id_fkey') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_reviewed_by_user_id_fkey"
+      FOREIGN KEY ("reviewed_by_user_id") REFERENCES "users"("id");
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_origin_chk') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_origin_chk" CHECK ("origin" IN ('ai','manual','projection'));
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_status_chk') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_status_chk" CHECK ("status" IN ('proposed','approved','rejected'));
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'prosecution_graph_edges_confidence_chk') THEN
+    ALTER TABLE "prosecution_graph_edges"
+      ADD CONSTRAINT "prosecution_graph_edges_confidence_chk" CHECK (
+        "confidence" IS NULL OR "confidence" IN ('low','medium','high')
+      );
+  END IF;
+END $$;
 --> statement-breakpoint
 -- Backfill proposed projections from the latest archive when present.
 DO $$

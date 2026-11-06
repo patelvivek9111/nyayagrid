@@ -1,20 +1,21 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
-  "generatedAt": "2026-11-06T02:40:00.000Z",
-  "head": "68dd927da8285070977fbb900db125f40e31ed6e",
+  "classification": "NYAYAGRID_PR09_0031_SCHEMA_INTEGRITY_REMEDIATION",
+  "generatedAt": "2026-11-06T03:25:00.000Z",
+  "head": "pending-0032-tip",
   "branch": "verify/post-pr08-product-verification",
   "remoteCi": {
-    "run": "42150423360",
+    "run": "42152232546",
     "conclusion": "SUCCESS",
-    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42150423360",
-    "note": "Required PR #9 check green on tip 68dd927 (format/lint/typecheck/unit/build/Playwright). Register reconcile commit may advance tip; re-confirm CI on latest HEAD."
+    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42152232546",
+    "note": "Prior green on 00aa7e4. Re-confirm required CI after 0031/0032 integrity repair tip."
   },
   "pr09Remediation": {
-    "result": "PR09_SAFE_TO_MERGE_PENDING_OPERATOR_APPROVAL",
+    "result": "PR09_SCHEMA_INTEGRITY_REPAIR_PENDING_CI",
     "billingE2eRepair": "firm-workspace billing notice assertions + whitespace-safe unit check",
-    "migrationMatrix": "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md A–E+G PASS",
+    "migrationMatrix": "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md A–G PASS incl. catalog parity + negative SQL",
     "journalRootCause": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
+    "schemaIntegrity": "0031 full FKs/CHECKs/indexes; 0032 composite case/org isolation + fail-closed contract",
     "merged": false,
     "productionDeployed": false
   },

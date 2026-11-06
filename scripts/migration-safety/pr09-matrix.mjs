@@ -1,13 +1,19 @@
 /**
  * PR #9 disposable migration acceptance matrix (localhost Docker only).
- * States: A fresh, B fully migrated retry, C journaled-without-SQL, D partial schema,
- * E populated contacts/folders/invoices/memory + legacy stub graph.
+ * States A–G: fresh, retry, journaled-stub repair, populated legacy, partial repair,
+ * cross-case/office rejection, retry/interruption.
  */
 import postgres from "postgres";
 import { execFileSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import crypto from "node:crypto";
+import fs from "node:fs";
+import {
+  assertGraphSchemaContract,
+  snapshotGraphCatalog,
+  diffCatalog,
+} from "./graph-schema-contract.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const ADMIN_URL = "postgresql://nyayagrid:nyayagrid@localhost:5433/postgres";
@@ -85,24 +91,14 @@ async function assertContactsShape(sql) {
     `;
     if (!rows.length) throw new Error(`missing table ${t}`);
   }
-  if (!(await columnExists(sql, "documents", "folder_id"))) {
-    throw new Error("missing documents.folder_id");
-  }
-}
-
-async function assertGraphReviewable(sql) {
-  if (!(await columnExists(sql, "prosecution_graph_nodes", "node_kind"))) {
-    throw new Error("graph not reviewable (node_kind missing)");
-  }
-  if (await columnExists(sql, "prosecution_graph_nodes", "node_type")) {
-    // reviewable schema should not still be stub-shaped
-    const both = await sql`
-      select column_name from information_schema.columns
-      where table_schema='public' and table_name='prosecution_graph_nodes'
-        and column_name in ('node_kind','node_type')
-    `;
-    if (both.length === 2) throw new Error("graph has both stub and reviewable columns");
-  }
+  const folderFk = await sql`
+    select 1 from pg_constraint where conname = 'document_folders_matter_org_fk'
+  `;
+  if (!folderFk.length) throw new Error("missing document_folders_matter_org_fk");
+  const contactFk = await sql`
+    select 1 from pg_constraint where conname = 'client_contacts_contact_org_fk'
+  `;
+  if (!contactFk.length) throw new Error("missing client_contacts_contact_org_fk");
 }
 
 async function seedOrgMatter(sql, suffix) {
@@ -116,7 +112,6 @@ async function seedOrgMatter(sql, suffix) {
     values (${`MX ${suffix}`}, ${`mx-${suffix}`}, 'firm')
     returning id
   `;
-  // Minimal role+membership for org integrity (best-effort)
   try {
     const [role] = await sql`
       insert into roles (organization_id, key, name, is_system)
@@ -128,7 +123,7 @@ async function seedOrgMatter(sql, suffix) {
       values (${org.id}, ${user.id}, ${role.id}, 'active')
     `;
   } catch {
-    /* role seed optional for shape tests */
+    /* optional */
   }
   const [client] = await sql`
     insert into clients (organization_id, client_type, display_name, created_by_user_id)
@@ -143,24 +138,76 @@ async function seedOrgMatter(sql, suffix) {
   return { user, org, client, matter };
 }
 
+async function insertCase(sql, orgId, caseNumber) {
+  const [cc] = await sql`
+    insert into criminal_cases (organization_id, case_number, jurisdiction, court)
+    values (${orgId}, ${caseNumber}, 'PA', 'st-pa-trial')
+    returning id
+  `;
+  return cc;
+}
+
+async function insertNode(sql, { orgId, caseId, kind, entityId, name, status = "approved" }) {
+  const [n] = await sql`
+    insert into prosecution_graph_nodes (
+      organization_id, criminal_case_id, node_kind, canonical_entity_type,
+      canonical_entity_id, display_name, provenance, origin, status
+    ) values (
+      ${orgId}, ${caseId}, ${kind}, ${kind}, ${entityId}, ${name},
+      ${sql.json({ extractionOrigin: "human", humanEntered: true })},
+      'manual', ${status}
+    )
+    returning id
+  `;
+  return n;
+}
+
+function recreateStubGraphSql() {
+  return `
+    DROP TABLE IF EXISTS prosecution_graph_edges CASCADE;
+    DROP TABLE IF EXISTS prosecution_graph_nodes CASCADE;
+    CREATE TABLE prosecution_graph_nodes (
+      id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+      organization_id uuid NOT NULL,
+      criminal_case_id uuid NOT NULL,
+      node_type text NOT NULL,
+      ref_id text NOT NULL,
+      provenance jsonb NOT NULL,
+      created_at timestamptz NOT NULL DEFAULT now()
+    );
+    CREATE TABLE prosecution_graph_edges (
+      id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+      organization_id uuid NOT NULL,
+      criminal_case_id uuid NOT NULL,
+      from_ref text NOT NULL,
+      to_ref text NOT NULL,
+      relationship text NOT NULL,
+      provenance jsonb NOT NULL,
+      created_at timestamptz NOT NULL DEFAULT now()
+    );
+  `;
+}
+
 async function main() {
   const stamp = Date.now().toString(36);
+  const dbs = [];
 
-  // --- A: Fresh schema ---
+  // --- A: Fresh schema + contract ---
   const a = `nyaya_pr09_a_${stamp}`;
+  dbs.push(a);
   await resetDb(a);
   migrate(a);
-  await withDb(a, async (sql) => {
+  const cleanSnap = await withDb(a, async (sql) => {
     await assertBillingShape(sql);
     await assertContactsShape(sql);
-    await assertGraphReviewable(sql);
-    const mem = await sql`select to_regclass('public.prosecution_case_memories') as r`;
-    if (!mem[0].r) throw new Error("memory table missing");
+    const contract = await assertGraphSchemaContract(sql);
+    return { contract, snap: await snapshotGraphCatalog(sql) };
   });
-  record("A_fresh", true, "full migrate created billing/contacts/graph/memory shapes");
+  record("A_fresh", true, `contract ok constraints≈${cleanSnap.contract.constraints}`);
 
-  // --- B: Fully migrated retry (idempotent) ---
+  // --- B: Fully migrated retry ---
   const b = `nyaya_pr09_b_${stamp}`;
+  dbs.push(b);
   await resetDb(b);
   migrate(b);
   const before = await withDb(b, async (sql) => {
@@ -171,269 +218,369 @@ async function main() {
   await withDb(b, async (sql) => {
     const after = await sql`select count(*)::int as n from drizzle.__drizzle_migrations`;
     if (after[0].n !== before) throw new Error(`journal grew on retry ${before}->${after[0].n}`);
-    await assertBillingShape(sql);
-    await assertContactsShape(sql);
-    await assertGraphReviewable(sql);
+    await assertGraphSchemaContract(sql);
   });
   record("B_fully_migrated_retry", true, `retry no-op journal_count=${before}`);
 
-  // --- C: Journaled 0025/0027/0028 without objects ---
+  // --- C: Journaled 0026/0030 while stub remains; repair via 0031/0032 ---
   const c = `nyaya_pr09_c_${stamp}`;
+  dbs.push(c);
   await resetDb(c);
-  // Base migrate through 0024-ish by running full migrate then stripping objects + leaving journal
-  // Faster approach: migrate full, drop objects, keep journal rows with high when — then re-migrate
-  // should skip (drizzle when) proving the defect, then we manually need 0029/0031 already in chain.
-  // Instead: migrate to create journal, delete tables/columns, re-run migrate (should NOT recreate
-  // because when already recorded), documenting the hazard; then apply repair by running only
-  // later migrations that weren't recorded yet.
   migrate(c);
   await withDb(c, async (sql) => {
-    await sql`alter table time_entries drop column if exists billable`;
-    await sql`alter table time_entries drop column if exists hourly_rate_cents`;
-    await sql`drop table if exists contacts cascade`;
-    await sql`drop table if exists client_contacts cascade`;
-    await sql`drop table if exists document_folders cascade`;
-    await sql`drop table if exists prosecution_case_memories cascade`;
+    await sql.unsafe(recreateStubGraphSql());
+    // Keep journal claiming 0026–0032 applied; delete 0031+0032 so re-migrate repairs
+    await sql`delete from drizzle.__drizzle_migrations where created_at >= 1788900000000`;
   });
-  // Re-migrate: should NOT restore dropped objects (created_at gate) — document hazard
   migrate(c);
-  const stillBroken = await withDb(
-    c,
-    async (sql) => !(await columnExists(sql, "time_entries", "billable")),
-  );
-  if (!stillBroken) {
-    record(
-      "C_journal_without_sql_hazard",
-      false,
-      "unexpected: re-migrate restored columns — drizzle when-gate behavior changed",
-    );
-  }
-  // Prove repair path: a NEW migration when (0031 already in folder) already applied on first migrate.
-  // Simulate pre-repair DB by building base without 0029–0031: insert fake high when and missing objects.
-  // Practical proof: manually re-add columns via applying 0029 SQL file content.
-  const fs = await import("node:fs");
-  const repair29 = fs.readFileSync(
-    path.join(ROOT, "packages/database/drizzle/0029_repair_journaled_schema.sql"),
-    "utf8",
-  );
-  await withDb(c, async (sql) => {
-    // Execute repair statements split on breakpoints
-    for (const part of repair29.split("--> statement-breakpoint")) {
-      const stmt = part.trim();
-      if (!stmt) continue;
-      await sql.unsafe(stmt);
+  const repairedSnap = await withDb(c, async (sql) => {
+    await assertGraphSchemaContract(sql);
+    const snap = await snapshotGraphCatalog(sql);
+    const d = diffCatalog(cleanSnap.snap, snap);
+    const unresolved = [
+      ...d.columns.onlyA,
+      ...d.columns.onlyB,
+      ...d.constraints.onlyA,
+      ...d.constraints.onlyB,
+      ...d.indexes.onlyA,
+      ...d.indexes.onlyB,
+    ];
+    if (unresolved.length) {
+      throw new Error(`clean vs repaired parity gap: ${unresolved.slice(0, 8).join(" | ")}`);
     }
-    await assertBillingShape(sql);
-    await assertContactsShape(sql);
-    const mem = await sql`select to_regclass('public.prosecution_case_memories') as r`;
-    if (!mem[0].r) throw new Error("0029 did not restore memories");
+    return snap;
   });
-  record(
-    "C_journaled_missing_objects",
-    true,
-    "drizzle when-gate left objects missing after re-migrate; 0029 SQL restore succeeded",
-  );
+  record("C_journaled_stub_repaired", true, "0031/0032 restored full contract; parity with clean");
 
-  // --- D: Partial schema (table exists, wrong/missing columns) ---
+  // --- D: Populated legacy graph (valid/invalid/cross refs) ---
   const d = `nyaya_pr09_d_${stamp}`;
+  dbs.push(d);
   await resetDb(d);
   migrate(d);
-  await withDb(d, async (sql) => {
-    // Create a decoy contacts-like failure: drop a required column if possible
-    // contacts.display_name is NOT NULL — simulate by creating shadow wrong table name check via 0031
-    // Drop billable and ensure 0031 assertion would fail if re-run after journal delete of 0031
-    await sql`alter table time_entries drop column if exists billable`;
-    let failed = false;
-    try {
-      await sql.unsafe(`
-        DO $$
-        BEGIN
-          IF EXISTS (
-            SELECT 1 FROM information_schema.tables
-            WHERE table_schema='public' AND table_name='time_entries'
-          ) AND NOT EXISTS (
-            SELECT 1 FROM information_schema.columns
-            WHERE table_schema='public' AND table_name='time_entries' AND column_name='billable'
-          ) THEN
-            RAISE EXCEPTION '0031: time_entries exists but missing billing columns: billable';
-          END IF;
-        END $$;
-      `);
-    } catch (err) {
-      failed = /missing billing columns/i.test(String(err));
-    }
-    if (!failed) throw new Error("expected fail-closed on partial billing schema");
-    // Restore for cleanup migrate paths
-    await sql`alter table time_entries add column if not exists billable boolean default true not null`;
-  });
-  record("D_partial_schema_fail_closed", true, "assertion raises when required column missing");
-
-  // --- E: Populated data preservation ---
-  const e = `nyaya_pr09_e_${stamp}`;
-  await resetDb(e);
-  migrate(e);
-  const suffix = crypto.randomBytes(3).toString("hex");
-  const counts = await withDb(e, async (sql) => {
-    const ctx = await seedOrgMatter(sql, suffix);
-    const [contact] = await sql`
-      insert into contacts (organization_id, display_name, email, created_by_user_id)
-      values (${ctx.org.id}, ${`Contact ${suffix}`}, ${`c_${suffix}@example.nyayagrid.local`}, ${ctx.user.id})
-      returning id
+  const legacyCounts = await withDb(d, async (sql) => {
+    await sql.unsafe(recreateStubGraphSql());
+    const ctx1 = await seedOrgMatter(sql, `d1${stamp}`);
+    const ctx2 = await seedOrgMatter(sql, `d2${stamp}`);
+    const case1 = await insertCase(sql, ctx1.org.id, `D1-${stamp}`);
+    const case2 = await insertCase(sql, ctx1.org.id, `D1b-${stamp}`);
+    const caseOther = await insertCase(sql, ctx2.org.id, `D2-${stamp}`);
+    const validRef = crypto.randomUUID();
+    const validNodeId = crypto.randomUUID();
+    const badRefNodeId = crypto.randomUUID();
+    const edgeId = crypto.randomUUID();
+    await sql`
+      insert into prosecution_graph_nodes (id, organization_id, criminal_case_id, node_type, ref_id, provenance)
+      values
+        (${validNodeId}, ${ctx1.org.id}, ${case1.id}, 'evidence', ${validRef}, ${sql.json({ k: 1 })}),
+        (${badRefNodeId}, ${ctx1.org.id}, ${case1.id}, 'witness', 'not-a-uuid', ${sql.json({ k: 2 })}),
+        (${crypto.randomUUID()}, ${ctx1.org.id}, ${case2.id}, 'charge', ${crypto.randomUUID()}, ${sql.json({ k: 3 })}),
+        (${crypto.randomUUID()}, ${ctx2.org.id}, ${caseOther.id}, 'defendant', ${crypto.randomUUID()}, ${sql.json({ k: 4 })})
     `;
     await sql`
-      insert into client_contacts (organization_id, client_id, contact_id, relationship_role, created_by_user_id)
-      values (${ctx.org.id}, ${ctx.client.id}, ${contact.id}, 'legal', ${ctx.user.id})
+      insert into prosecution_graph_edges (id, organization_id, criminal_case_id, from_ref, to_ref, relationship, provenance)
+      values
+        (${edgeId}, ${ctx1.org.id}, ${case1.id}, ${validRef}, 'missing-endpoint', 'related_to', ${sql.json({ e: 1 })}),
+        (${crypto.randomUUID()}, ${ctx1.org.id}, ${case1.id}, 'ghost', 'ghost2', 'related_to', ${sql.json({ e: 2 })})
     `;
-    const [folder] = await sql`
-      insert into document_folders (organization_id, matter_id, name, created_by_user_id)
-      values (${ctx.org.id}, ${ctx.matter.id}, 'Root', ${ctx.user.id})
-      returning id
-    `;
-    // document insert may need more cols — skip if too heavy; folder row is enough
-    const [inv] = await sql`
-      insert into invoices (organization_id, matter_id, invoice_number, status, total_minutes, total_cents, created_by_user_id)
-      values (${ctx.org.id}, ${ctx.matter.id}, ${`INV-${suffix}`}, 'draft', 60, 15000, ${ctx.user.id})
-      returning id, total_minutes, total_cents
-    `;
-    // stub graph rows then repair via 0031 path already applied — insert reviewable node
-    const [caseRow] = await sql`
-      insert into criminal_cases (organization_id, case_number, jurisdiction, court, case_status)
-      values (${ctx.org.id}, ${`CASE-${suffix}`}, 'PA', 'st-pa-trial', 'open')
-      returning id
-    `.catch(async () => {
-      // schema may require more fields
-      return sql`
-        insert into criminal_cases (organization_id, case_number, jurisdiction, court)
-        values (${ctx.org.id}, ${`CASE-${suffix}`}, 'PA', 'st-pa-trial')
-        returning id
-      `;
-    });
-    await sql`
-      insert into prosecution_case_memories (
-        organization_id, criminal_case_id, memory_type, content, status, origin, provenance, created_by_user_id
-      ) values (
-        ${ctx.org.id}, ${caseRow.id}, 'open_question', 'Preserve me', 'proposed', 'manual',
-        ${sql.json({ extractionOrigin: "human", humanEntered: true })}, ${ctx.user.id}
-      )
-    `;
-    const beforeContacts =
-      await sql`select count(*)::int as n from contacts where organization_id=${ctx.org.id}`;
-    const beforeInv = await sql`select total_minutes, total_cents from invoices where id=${inv.id}`;
-    const beforeMem =
-      await sql`select count(*)::int as n from prosecution_case_memories where organization_id=${ctx.org.id}`;
-    const beforeFolders =
-      await sql`select count(*)::int as n from document_folders where id=${folder.id}`;
+    const nodeArchBefore = await sql`select count(*)::int as n from prosecution_graph_nodes`;
+    const edgeArchBefore = await sql`select count(*)::int as n from prosecution_graph_edges`;
+    await sql`delete from drizzle.__drizzle_migrations where created_at >= 1788900000000`;
     return {
-      orgId: ctx.org.id,
-      contactId: contact.id,
-      invoiceId: inv.id,
-      folderId: folder.id,
-      beforeContacts: beforeContacts[0].n,
-      beforeInv: beforeInv[0],
-      beforeMem: beforeMem[0].n,
-      beforeFolders: beforeFolders[0].n,
+      nodeArchBefore: nodeArchBefore[0].n,
+      edgeArchBefore: edgeArchBefore[0].n,
+      validNodeId,
+      badRefNodeId,
     };
   });
-  migrate(e); // retry with data
-  await withDb(e, async (sql) => {
-    const afterContacts =
-      await sql`select count(*)::int as n from contacts where organization_id=${counts.orgId}`;
-    const afterInv =
-      await sql`select total_minutes, total_cents from invoices where id=${counts.invoiceId}`;
-    const afterMem =
-      await sql`select count(*)::int as n from prosecution_case_memories where organization_id=${counts.orgId}`;
-    const afterFolders =
-      await sql`select count(*)::int as n from document_folders where id=${counts.folderId}`;
-    if (afterContacts[0].n !== counts.beforeContacts) throw new Error("contacts not preserved");
-    if (afterInv[0].total_minutes !== counts.beforeInv.total_minutes)
-      throw new Error("invoice minutes lost");
-    if (afterInv[0].total_cents !== counts.beforeInv.total_cents)
-      throw new Error("invoice cents lost");
-    if (afterMem[0].n !== counts.beforeMem) throw new Error("memory not preserved");
-    if (afterFolders[0].n !== counts.beforeFolders) throw new Error("folder not preserved");
-
-    // Legacy stub upgrade preservation: recreate stub DB subset
+  migrate(d);
+  await withDb(d, async (sql) => {
+    await assertGraphSchemaContract(sql);
+    const archN = await sql`select count(*)::int as n from prosecution_graph_nodes_0018_archive`;
+    const archE = await sql`select count(*)::int as n from prosecution_graph_edges_0018_archive`;
+    if (archN[0].n !== legacyCounts.nodeArchBefore) {
+      throw new Error(`node archive incomplete ${archN[0].n}!=${legacyCounts.nodeArchBefore}`);
+    }
+    if (archE[0].n !== legacyCounts.edgeArchBefore) {
+      throw new Error(`edge archive incomplete ${archE[0].n}!=${legacyCounts.edgeArchBefore}`);
+    }
+    const badStillArchived = await sql`
+      select ref_id from prosecution_graph_nodes_0018_archive where id = ${legacyCounts.badRefNodeId}
+    `;
+    if (!badStillArchived.length || badStillArchived[0].ref_id !== "not-a-uuid") {
+      throw new Error("malformed ref not preserved in archive");
+    }
+    const projected = await sql`
+      select id, status, origin from prosecution_graph_nodes where origin = 'projection'
+    `;
+    for (const row of projected) {
+      if (row.status !== "proposed") throw new Error(`projection not proposed: ${row.status}`);
+    }
+    const badProjected = projected.some((r) => r.id === legacyCounts.badRefNodeId);
+    if (badProjected) throw new Error("non-UUID legacy node must not project");
   });
   record(
-    "E_populated_preservation",
+    "D_populated_legacy",
     true,
-    `contacts=${counts.beforeContacts} invoice=${counts.invoiceId} memory=${counts.beforeMem} folder=${counts.folderId}`,
+    `archives nodes=${legacyCounts.nodeArchBefore} edges=${legacyCounts.edgeArchBefore}; proposed-only projections`,
   );
 
-  // --- 0030/0031 stub graph with legacy rows ---
+  // --- E: Partially repaired bare schema (missing constraints) ---
+  const e = `nyaya_pr09_e_${stamp}`;
+  dbs.push(e);
+  await resetDb(e);
+  migrate(e);
+  await withDb(e, async (sql) => {
+    // Simulate broken 0031 shells: drop constraints that 0032 must restore
+    await sql.unsafe(`
+      ALTER TABLE prosecution_graph_edges DROP CONSTRAINT IF EXISTS prosecution_graph_edges_from_case_fk;
+      ALTER TABLE prosecution_graph_edges DROP CONSTRAINT IF EXISTS prosecution_graph_edges_to_case_fk;
+      ALTER TABLE prosecution_graph_edges DROP CONSTRAINT IF EXISTS prosecution_graph_edges_from_org_fk;
+      ALTER TABLE prosecution_graph_edges DROP CONSTRAINT IF EXISTS prosecution_graph_edges_to_org_fk;
+      ALTER TABLE prosecution_graph_edges DROP CONSTRAINT IF EXISTS prosecution_graph_edges_case_org_fk;
+      ALTER TABLE prosecution_graph_nodes DROP CONSTRAINT IF EXISTS prosecution_graph_nodes_case_org_fk;
+      ALTER TABLE prosecution_graph_edges DROP CONSTRAINT IF EXISTS prosecution_graph_edges_confidence_chk;
+      ALTER TABLE prosecution_graph_nodes DROP CONSTRAINT IF EXISTS prosecution_graph_nodes_kind_chk;
+    `);
+    await sql`delete from drizzle.__drizzle_migrations where created_at = 1789000000000`;
+  });
+  migrate(e);
+  await withDb(e, async (sql) => {
+    await assertGraphSchemaContract(sql);
+  });
+  record("E_partial_repaired", true, "0032 restored dropped constraints; contract pass");
+
+  // --- F: Cross-case / cross-office / invalid enum rejection ---
+  const f = `nyaya_pr09_f_${stamp}`;
+  dbs.push(f);
+  await resetDb(f);
+  migrate(f);
+  await withDb(f, async (sql) => {
+    await assertGraphSchemaContract(sql);
+    const officeA = await seedOrgMatter(sql, `fa${stamp}`);
+    const officeB = await seedOrgMatter(sql, `fb${stamp}`);
+    const caseA1 = await insertCase(sql, officeA.org.id, `FA1-${stamp}`);
+    const caseA2 = await insertCase(sql, officeA.org.id, `FA2-${stamp}`);
+    const caseB = await insertCase(sql, officeB.org.id, `FB-${stamp}`);
+    const ent1 = crypto.randomUUID();
+    const ent2 = crypto.randomUUID();
+    const ent3 = crypto.randomUUID();
+    const nA1 = await insertNode(sql, {
+      orgId: officeA.org.id,
+      caseId: caseA1.id,
+      kind: "evidence",
+      entityId: ent1,
+      name: "A1 evidence",
+    });
+    const nA2 = await insertNode(sql, {
+      orgId: officeA.org.id,
+      caseId: caseA2.id,
+      kind: "witness",
+      entityId: ent2,
+      name: "A2 witness",
+    });
+    const nB = await insertNode(sql, {
+      orgId: officeB.org.id,
+      caseId: caseB.id,
+      kind: "defendant",
+      entityId: ent3,
+      name: "B defendant",
+    });
+
+    async function expectReject(label, fn) {
+      let rejected = false;
+      try {
+        await fn();
+      } catch {
+        rejected = true;
+      }
+      if (!rejected) throw new Error(`expected reject: ${label}`);
+    }
+
+    await expectReject(
+      "cross-case edge",
+      () =>
+        sql`
+        insert into prosecution_graph_edges (
+          organization_id, criminal_case_id, from_node_id, to_node_id,
+          relationship_type, provenance, origin, status
+        ) values (
+          ${officeA.org.id}, ${caseA1.id}, ${nA1.id}, ${nA2.id},
+          'related_to', ${sql.json({ t: 1 })}, 'manual', 'proposed'
+        )
+      `,
+    );
+
+    await expectReject(
+      "cross-office edge",
+      () =>
+        sql`
+        insert into prosecution_graph_edges (
+          organization_id, criminal_case_id, from_node_id, to_node_id,
+          relationship_type, provenance, origin, status
+        ) values (
+          ${officeA.org.id}, ${caseA1.id}, ${nA1.id}, ${nB.id},
+          'related_to', ${sql.json({ t: 2 })}, 'manual', 'proposed'
+        )
+      `,
+    );
+
+    await expectReject(
+      "nonexistent actor",
+      () =>
+        sql`
+        insert into prosecution_graph_edges (
+          organization_id, criminal_case_id, from_node_id, to_node_id,
+          relationship_type, provenance, origin, status, created_by_user_id
+        ) values (
+          ${officeA.org.id}, ${caseA1.id}, ${nA1.id}, ${nA1.id},
+          'related_to', ${sql.json({ t: 3 })}, 'manual', 'proposed',
+          ${crypto.randomUUID()}
+        )
+      `,
+    );
+
+    await expectReject(
+      "invalid status",
+      () =>
+        sql`
+        insert into prosecution_graph_edges (
+          organization_id, criminal_case_id, from_node_id, to_node_id,
+          relationship_type, provenance, origin, status
+        ) values (
+          ${officeA.org.id}, ${caseA1.id}, ${nA1.id}, ${nA1.id},
+          'related_to', ${sql.json({ t: 4 })}, 'manual', 'verified_fact'
+        )
+      `,
+    );
+
+    await expectReject(
+      "invalid origin",
+      () =>
+        sql`
+        insert into prosecution_graph_nodes (
+          organization_id, criminal_case_id, node_kind, canonical_entity_type,
+          canonical_entity_id, display_name, provenance, origin, status
+        ) values (
+          ${officeA.org.id}, ${caseA1.id}, 'evidence', 'evidence', ${crypto.randomUUID()},
+          'bad origin', ${sql.json({ t: 5 })}, 'imported', 'proposed'
+        )
+      `,
+    );
+
+    await expectReject(
+      "invalid node_kind",
+      () =>
+        sql`
+        insert into prosecution_graph_nodes (
+          organization_id, criminal_case_id, node_kind, canonical_entity_type,
+          canonical_entity_id, display_name, provenance, origin, status
+        ) values (
+          ${officeA.org.id}, ${caseA1.id}, 'jury', 'jury', ${crypto.randomUUID()},
+          'bad kind', ${sql.json({ t: 6 })}, 'manual', 'proposed'
+        )
+      `,
+    );
+
+    // Same-case edge must succeed
+    await sql`
+      insert into prosecution_graph_edges (
+        organization_id, criminal_case_id, from_node_id, to_node_id,
+        relationship_type, provenance, origin, status
+      ) values (
+        ${officeA.org.id}, ${caseA1.id}, ${nA1.id}, ${nA1.id},
+        'related_to', ${sql.json({ t: 7 })}, 'manual', 'proposed'
+      )
+    `;
+  });
+  record(
+    "F_cross_isolation_rejects",
+    true,
+    "DB rejected cross-case/office/invalid enum/actor inserts",
+  );
+
+  // --- G: Retry + archive rename (no overwrite) ---
   const g = `nyaya_pr09_g_${stamp}`;
+  dbs.push(g);
   await resetDb(g);
   migrate(g);
   await withDb(g, async (sql) => {
-    // Force stub shape: drop reviewable and create stub + rows
-    await sql`drop table if exists prosecution_graph_edges cascade`;
-    await sql`drop table if exists prosecution_graph_nodes cascade`;
-    await sql.unsafe(`
-      CREATE TABLE prosecution_graph_nodes (
-        id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-        organization_id uuid NOT NULL,
-        criminal_case_id uuid NOT NULL,
-        node_type text NOT NULL,
-        ref_id text NOT NULL,
-        provenance jsonb NOT NULL,
-        created_at timestamptz NOT NULL DEFAULT now()
-      );
-      CREATE TABLE prosecution_graph_edges (
-        id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-        organization_id uuid NOT NULL,
-        criminal_case_id uuid NOT NULL,
-        from_ref text NOT NULL,
-        to_ref text NOT NULL,
-        relationship text NOT NULL,
-        provenance jsonb NOT NULL,
-        created_at timestamptz NOT NULL DEFAULT now()
-      );
-    `);
-    const ctx = await seedOrgMatter(sql, `g${suffix}`);
-    const [cc] = await sql`
-      insert into criminal_cases (organization_id, case_number, jurisdiction, court)
-      values (${ctx.org.id}, ${`G-${suffix}`}, 'PA', 'st-pa-trial')
-      returning id
-    `;
+    await sql.unsafe(recreateStubGraphSql());
+    const ctx = await seedOrgMatter(sql, `g${stamp}`);
+    const cc = await insertCase(sql, ctx.org.id, `G-${stamp}`);
     const nodeId = crypto.randomUUID();
     const refId = crypto.randomUUID();
     await sql`
       insert into prosecution_graph_nodes (id, organization_id, criminal_case_id, node_type, ref_id, provenance)
       values (${nodeId}, ${ctx.org.id}, ${cc.id}, 'evidence', ${refId}, ${sql.json({ humanEntered: true })})
     `;
-    // Apply 0031 SQL directly (already in journal on migrate — delete 0031 journal row first)
-    await sql`delete from drizzle.__drizzle_migrations where created_at = 1788900000000`;
+    // Prior archive (from 0026 or earlier) must be renamed by 0031, not overwritten.
+    // Ensure a marker row exists in whatever archive table is present.
+    const archExists =
+      await sql`select to_regclass('public.prosecution_graph_nodes_0018_archive') as r`;
+    if (!archExists[0].r) {
+      await sql.unsafe(`
+        CREATE TABLE prosecution_graph_nodes_0018_archive (
+          id uuid NOT NULL,
+          organization_id uuid NOT NULL,
+          criminal_case_id uuid NOT NULL,
+          node_type text NOT NULL,
+          ref_id text NOT NULL,
+          provenance jsonb NOT NULL,
+          created_at timestamptz NOT NULL
+        );
+      `);
+    }
+    await sql`
+      insert into prosecution_graph_nodes_0018_archive (
+        id, organization_id, criminal_case_id, node_type, ref_id, provenance, created_at
+      ) values (
+        ${crypto.randomUUID()}, ${ctx.org.id}, ${cc.id}, 'other', 'prior-archive-marker',
+        ${sql.json({ prior: true })}, now()
+      )
+    `;
+    await sql`delete from drizzle.__drizzle_migrations where created_at >= 1788900000000`;
   });
   migrate(g);
+  migrate(g); // retry
   await withDb(g, async (sql) => {
-    await assertGraphReviewable(sql);
-    const proposed = await sql`
-      select status, origin from prosecution_graph_nodes where origin='projection' or status='proposed'
+    await assertGraphSchemaContract(sql);
+    const renamed = await sql`
+      select tablename from pg_tables
+      where schemaname='public' and tablename like 'prosecution_graph_nodes_0018_archive_%'
+      order by tablename desc
     `;
-    // at least archive exists
-    const arch = await sql`select to_regclass('public.prosecution_graph_nodes_0018_archive') as r`;
-    if (!arch[0].r) throw new Error("expected archive after stub upgrade");
-    const statuses = await sql`select status::text as s from prosecution_graph_nodes`;
-    if (statuses.some((r) => r.s === "approved" && false)) {
-      /* projection backfill must be proposed */
+    if (!renamed.length) throw new Error("prior archive was not renamed before rewrite");
+    // Quote identifier safely
+    const table = renamed[0].tablename;
+    if (!/^prosecution_graph_nodes_0018_archive_\d+$/.test(table)) {
+      throw new Error(`unexpected renamed archive name: ${table}`);
     }
+    const marker = await sql.unsafe(
+      `select 1 from "${table}" where ref_id = 'prior-archive-marker'`,
+    );
+    if (!marker.length) throw new Error("prior archive contents lost");
+    const latest = await sql`select count(*)::int as n from prosecution_graph_nodes_0018_archive`;
+    if (latest[0].n < 1) throw new Error("latest archive empty");
     const projected = await sql`
-      select status from prosecution_graph_nodes where metadata->>'migratedFrom' = '0018' or origin='projection'
+      select status from prosecution_graph_nodes where origin='projection'
     `;
     for (const row of projected) {
-      if (row.status !== "proposed") throw new Error(`legacy backfill not proposed: ${row.status}`);
+      if (row.status !== "proposed") throw new Error("retry projected non-proposed");
     }
-    record("G_stub_graph_upgrade", true, `archive_ok projected=${projected.length}`);
+    const dup = await sql`
+      select id, count(*)::int as n from prosecution_graph_nodes group by id having count(*) > 1
+    `;
+    if (dup.length) throw new Error("duplicate projections after retry");
   });
+  record("G_retry_archive_safe", true, "prior archive renamed; no overwrite; retry idempotent");
 
-  // cleanup disposable DBs
-  for (const name of [a, b, c, d, e, g]) {
+  for (const name of dbs) {
     await withAdmin(async (sql) => {
       await sql.unsafe(`DROP DATABASE IF EXISTS ${name}`);
     });
   }
 
-  console.log(JSON.stringify({ ok: true, results }, null, 2));
+  console.log(JSON.stringify({ ok: true, results, cleanVsRepaired: "parity" }, null, 2));
 }
 
 main().catch(async (err) => {
