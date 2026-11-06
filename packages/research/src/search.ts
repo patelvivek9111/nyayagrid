@@ -30,8 +30,8 @@ export type AuthoritySearchOptions = {
   applyRetainThreshold?: boolean;
   /**
    * When true, keep synthetic-fixtures / nyaya-bench authorities through retain.
-   * Production defaults to false. Integration suites also enable this when RUN_DB_TESTS=1
-   * so deterministic fixtures remain searchable on a fresh CI database.
+   * Production defaults to false. Integration suites that import synthetic fixtures must
+   * opt in explicitly so customer-facing Guide/Ask paths still drop synthetics by default.
    */
   includeSyntheticFixtures?: boolean;
 };
@@ -533,6 +533,14 @@ export class AuthorityHybridRetriever {
         statement,
       ) as Promise<ChunkRow[]>;
 
+    const tokens = queryTokens(trimmed);
+    const queryCitations = new Set(
+      extractCitationsFromText(trimmed)
+        .map((citation) => citation.normalized)
+        .filter((value): value is string => Boolean(value)),
+    );
+    const lowerQuery = trimmed.toLowerCase();
+
     const [embedding] = await this.embeddings.embed([trimmed]);
     const vectorRows = embedding
       ? await execute(sql`
@@ -562,14 +570,6 @@ export class AuthorityHybridRetriever {
             LIMIT ${limit * 3}
           `)
         : [];
-
-    const tokens = queryTokens(trimmed);
-    const queryCitations = new Set(
-      extractCitationsFromText(trimmed)
-        .map((citation) => citation.normalized)
-        .filter((value): value is string => Boolean(value)),
-    );
-    const lowerQuery = trimmed.toLowerCase();
 
     const merged = new Map<string, AuthoritySearchHit>();
     const addRows = (rows: ChunkRow[], weight: number) => {
@@ -616,15 +616,13 @@ export class AuthorityHybridRetriever {
       ),
       trimmed,
     );
-    const includeSyntheticFixtures =
-      options.includeSyntheticFixtures === true || process.env.RUN_DB_TESTS === "1";
     const hits =
       options.applyRetainThreshold === false
         ? diversifyAuthorityHits(ranked, limit)
         : retainAuthorityHits(ranked, trimmed, {
             preferredStateCodes: options.preferredStateCodes,
             limit,
-            includeSyntheticFixtures,
+            includeSyntheticFixtures: options.includeSyntheticFixtures === true,
           });
     assertAuthorityHitsOnly(hits);
     await assertChunksBelongToAuthorityCorpus(

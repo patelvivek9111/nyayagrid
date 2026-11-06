@@ -36,6 +36,8 @@ export default function TimePage() {
   const [conversationId, setConversationId] = useState("");
   const [description, setDescription] = useState("");
   const [minutes, setMinutes] = useState("6");
+  const [billable, setBillable] = useState(true);
+  const [hourlyRate, setHourlyRate] = useState("300");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -93,6 +95,9 @@ export default function TimePage() {
           matterId,
           description,
           minutes: Number(minutes),
+          billable,
+          hourlyRateCents:
+            billable && hourlyRate.trim() ? Math.round(Number(hourlyRate) * 100) : null,
           source: "manual",
         }),
       });
@@ -179,7 +184,8 @@ export default function TimePage() {
       />
       <div className="mt-4">
         <FirmNotice>
-          This is not a billable-rate engine. Totals are minutes, not amounts.
+          Optional hourly rates are fee assistance only. This is not payment collection or trust
+          accounting.
         </FirmNotice>
       </div>
       {error ? (
@@ -294,6 +300,27 @@ export default function TimePage() {
               onChange={(e) => setMinutes(e.target.value)}
             />
           </label>
+          <label className="flex items-center gap-2 text-sm font-semibold">
+            <input
+              type="checkbox"
+              checked={billable}
+              onChange={(e) => setBillable(e.target.checked)}
+            />
+            Billable
+          </label>
+          {billable ? (
+            <label className="text-sm font-semibold">
+              Hourly rate (USD, optional)
+              <input
+                className="mt-1 block w-full rounded border border-line px-2 py-1.5 font-normal"
+                type="number"
+                min={0}
+                step="0.01"
+                value={hourlyRate}
+                onChange={(e) => setHourlyRate(e.target.value)}
+              />
+            </label>
+          ) : null}
           <Button type="submit" disabled={busy}>
             Save entry
           </Button>

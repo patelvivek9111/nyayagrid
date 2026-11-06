@@ -1,5 +1,7 @@
 export * from "./domain";
 export * from "./memory";
+export * from "./case-memory-db";
+export * from "./case-graph-db";
 export * from "./fixture";
 export * from "./postgres";
 export * from "./graph-bridge";
@@ -8,3 +10,5 @@ export * from "./suppression-review";
 export * from "./suppression-catalog";
 export * from "./suppression-fixtures";
 export * from "./suppression-source-backed";
+export * from "./audit-browser";
+export * from "./role-provisioning";

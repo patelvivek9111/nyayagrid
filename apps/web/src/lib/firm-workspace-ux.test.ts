@@ -10,6 +10,7 @@ import {
   filterCalendarEvents,
   filterClients,
   filterInbox,
+  formatAssistedFeeCents,
   formatDurationMinutes,
   holdScopeLabel,
   holdStatusLabel,
@@ -103,6 +104,8 @@ describe("firm workspace presentation helpers", () => {
       draftCount: 1,
       issuedCount: 1,
     });
+    expect(formatAssistedFeeCents(12500)).toMatch(/\$125\.00/);
+    expect(formatAssistedFeeCents(null)).toBeNull();
   });
 
   it("splits inbox pending vs filed and ignores discarded", () => {
@@ -171,8 +174,11 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(time).toContain("+ Add time entry");
     expect(time).toContain("/api/v1/time-entries/suggest");
     expect(billing).toContain("`/api/v1/invoices?organizationId=${orgId}`");
-    expect(billing).toContain("does not collect payment");
-    expect(billing).toContain("not trust accounting");
+    // Collapse JSX whitespace so prettier line wraps do not weaken the limitation copy check.
+    const billingCopy = billing.replace(/\s+/g, " ");
+    expect(billingCopy).toContain("not payment collection");
+    expect(billingCopy).toContain("This is not trust accounting");
+    expect(billingCopy).toContain("assistance only");
     expect(inbox).toContain("`/api/v1/inbox?organizationId=${orgId}`");
     expect(inbox).toContain("+ Capture email");
     expect(inbox).toContain("does not send mail");
@@ -182,7 +188,9 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(research).not.toContain("shouldShowWorkspaceSwitcher");
     expect(settings).toContain("`/api/v1/organizations/${orgId}/members`");
     expect(settings).toContain("`/api/v1/organizations/${orgId}/account`");
-    expect(settings).toContain("`/api/v1/organizations/${orgId}/usage?period=${period}&scope=${scope}`");
+    expect(settings).toContain(
+      "`/api/v1/organizations/${orgId}/usage?period=${period}&scope=${scope}`",
+    );
     expect(settings).toContain("My account");
     expect(settings).toContain("Nyaya activity");
     expect(settings).toContain("{account.plan.name}");

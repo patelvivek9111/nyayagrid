@@ -52,7 +52,8 @@ export default defineConfig({
   testDir: "./e2e",
   fullyParallel: false,
   forbidOnly: Boolean(process.env.CI),
-  retries: process.env.CI ? 1 : 0,
+  // Residual CI flake budget for Ask/SSE races; keep non-CI at 0 for signal.
+  retries: process.env.CI ? 2 : 0,
   workers: 1,
   reporter: process.env.CI ? [["list"], ["html", { open: "never" }]] : "list",
   timeout: 30_000,

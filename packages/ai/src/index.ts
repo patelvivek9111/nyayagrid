@@ -281,6 +281,39 @@ export class MockAIProvider implements AIProvider {
         usage: { inputTokens: 0, outputTokens: 0 },
       };
     }
+    // Prefer schemaName over prompt-text regex so mock fixtures stay wired when system prompts evolve.
+    if (request.schemaName === "contract_analysis") {
+      return {
+        provider: "mock",
+        model: "mock-1",
+        text: JSON.stringify(mockContractAnalysis(user)),
+        usage: { inputTokens: 0, outputTokens: 0 },
+      };
+    }
+    if (request.schemaName === "redline_suggestions") {
+      return {
+        provider: "mock",
+        model: "mock-1",
+        text: JSON.stringify(mockRedlineSuggestions(user)),
+        usage: { inputTokens: 0, outputTokens: 0 },
+      };
+    }
+    if (request.schemaName === "deposition_analysis") {
+      return {
+        provider: "mock",
+        model: "mock-1",
+        text: JSON.stringify(mockDepositionAnalysis(user)),
+        usage: { inputTokens: 0, outputTokens: 0 },
+      };
+    }
+    if (request.schemaName === "contradiction_analysis") {
+      return {
+        provider: "mock",
+        model: "mock-1",
+        text: JSON.stringify(mockContradictionCandidates(user)),
+        usage: { inputTokens: 0, outputTokens: 0 },
+      };
+    }
 
     if (
       /extract proposed matter intelligence/i.test(system) ||

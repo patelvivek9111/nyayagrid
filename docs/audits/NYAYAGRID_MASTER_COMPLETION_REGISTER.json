@@ -1,0 +1,1607 @@
+{
+  "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
+  "classification": "NYAYAGRID_PR09_0031_SCHEMA_INTEGRITY_REMEDIATION",
+  "generatedAt": "2026-11-06T03:42:00.000Z",
+  "head": "1a2e53fc0cbf4d91fa30ff863027ed9afc377862",
+  "branch": "verify/post-pr08-product-verification",
+  "remoteCi": {
+    "run": "42156641606",
+    "conclusion": "SUCCESS",
+    "url": "https://github.com/patelvivek9111/nyayagrid/actions/runs/42156641606",
+    "note": "Required PR #9 check green on tip 1a2e53f after 0031/0032 schema integrity repair."
+  },
+  "pr09Remediation": {
+    "result": "PR09_SCHEMA_INTEGRITY_VERIFIED_SAFE_TO_MERGE",
+    "billingE2eRepair": "firm-workspace billing notice assertions + whitespace-safe unit check",
+    "migrationMatrix": "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md A–G PASS incl. catalog parity + negative SQL",
+    "journalRootCause": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
+    "schemaIntegrity": "0031 full FKs/CHECKs/indexes; 0032 composite case/org isolation + fail-closed contract",
+    "merged": false,
+    "productionDeployed": false
+  },
+  "productScope": {
+    "professional": "IN_SCOPE",
+    "prosecution": "IN_SCOPE",
+    "professorGuideStudentPublic": "REMOVED_RUNTIME_PARTIAL_CLEANUP"
+  },
+  "evidenceClasses": {
+    "CURRENT_VERIFIED": "Reproduced this session or CI at matching HEAD",
+    "HISTORICAL_VERIFIED": "Prior artifact/snapshot; not re-verified live",
+    "REPORTED_ONLY": "Document claim without runtime re-check",
+    "STALE": "Contradicted by current code/state",
+    "UNKNOWN": "Environment blocked verification"
+  },
+  "externalBenchmarkSession": {
+    "status": "CLOSED",
+    "result": "EXTERNAL_PROSECUTION_GROUNDING_BLOCKED",
+    "legalbench": {
+      "executed": 37,
+      "passed": 34,
+      "accuracy": 0.9189
+    },
+    "legalcitebench": {
+      "executed": 9,
+      "passed": 0,
+      "unexecuted": 71
+    },
+    "spendUsd": 0.679894,
+    "providerRequests": 46,
+    "criticalExample": "legalcitebench::CITATION_COMPLETION::12576371",
+    "additionalPaidExecution": false
+  },
+  "criticalFailureRootCause": {
+    "exampleId": "legalcitebench::CITATION_COMPLETION::12576371",
+    "primaryClass": "SCORER_DEFECT",
+    "secondaryClasses": ["EVALUATOR_DEFECT", "TASK_ROUTING"],
+    "summary": "Model titled response 'Abstention' and refused to invent cites; discussed the INPUT citation '355 Or. 319, 431 P.3d 90' as potentially inconsistent. detectAbstention() previously missed 'Abstention'/'cannot recommend'. CLOSED_BOOK fabricatedAuthority heuristic then flagged the discussed reporter pattern as FABRICATED_OR_MISLEADING_AUTHORITY. Confirmed false-positive critical grounding flag (not model invention of a new authority).",
+    "modelBehavior": "Policy-aligned abstention + warning about provided cite",
+    "nyayaPipelineIssue": "Closed-book LegalCite completion previously scored as exact-label + citation-regex without source-aware provenance or abstention-aware classification",
+    "legalCiteOtherFailures": "ORIGINAL_LIVE_SCORE Cite 0/9 exact. OFFLINE_RESCORE_ONLY (zero paid): 2/9 task-correct after task-aware scorers (error-detection format mismatch fixed); prior critical 12576371 → abstained=true, fabricatedAuthority=false, still incorrect vs gold completion list (ABSTAINED_INCORRECTLY). Remaining failures include abstention on completion/retrieval and case-matching misses; grounded mode still lacks retrieved sources.",
+    "legalBenchFails": "3/3 incorrect were gpt-6.1-sol ROUTINE citation_prediction_* with abstention (EXACT_LABEL_MISMATCH); offline rescore 37/37 replayed with 34/34 correctness unchanged.",
+    "wp01Remediation": {
+      "status": "VERIFIED_COMPLETE",
+      "reproduced": true,
+      "inputCitationProvenPresent": "355 Or. 319, 431 P.3d 90",
+      "offlineReplayArtifact": "benchmarks/external/cache/runs/prosecution-external-live/offline-rescore-wp01.json",
+      "fixes": [
+        "Expanded abstention detection (Abstention, unable to verify, insufficient evidence, etc.)",
+        "Evidence-aware citation origin classes; input-supplied cites never fabricated solely by output presence",
+        "Task-specific LegalCite scorers (error detection, case matching, verification/correction, completion/retrieval)",
+        "Closed-book vs grounded mode separation + missing grounded source context flag",
+        "Unique LegalCite taskIds (qa_style/fake_type/index) + legacy id replay disambiguation",
+        "Gold fields excluded from input provenance extraction"
+      ],
+      "paidCalls": 0,
+      "courtlistenerCalls": 0,
+      "fixCommit": "ba6d9a537e271d5e03a313bfb4ebc2ee35d7c5c2",
+      "formatCommit": "8075f4717745d245704f1914a1a3f08cc0caaee0",
+      "remoteCi": {
+        "run": "41665323949",
+        "conclusion": "SUCCESS"
+      }
+    }
+  },
+  "totals": {
+    "requirementsInventoried": 54,
+    "note": "POST_PR08 recount from requirement entries; VERIFIED counted with VERIFIED_COMPLETE in verifiedComplete. Do not upgrade solely because PRs merged.",
+    "verifiedComplete": 15,
+    "verifiedCompleteStrict": 15,
+    "verifiedAlias": 0,
+    "implementedUnverified": 11,
+    "partial": 25,
+    "missing": 0,
+    "broken": 0,
+    "blocked": 2,
+    "outOfScope": 1,
+    "byStatus": {
+      "IMPLEMENTED_UNVERIFIED": 11,
+      "VERIFIED_COMPLETE": 15,
+      "PARTIAL": 25,
+      "BLOCKED": 2,
+      "OUT_OF_SCOPE": 1
+    },
+    "p0": 13,
+    "p1": 4,
+    "p2": 2,
+    "p3": 0
+  },
+  "requirements": [
+    {
+      "id": "PROF-CLIENT-01",
+      "product": "Professional",
+      "subsystem": "Clients",
+      "feature": "Client CRUD",
+      "requirement": "Create/update/archive clients with org isolation",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": ["apps/web/src/app/app/clients/page.tsx", "e2e/professional.spec.ts"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-MATTER-01",
+      "product": "Professional",
+      "subsystem": "Matters",
+      "feature": "Case dashboard",
+      "requirement": "Matter create/assign/team/status/dashboard",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": ["e2e/professional.spec.ts", "e2e/case-workspace.spec.ts"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-DOC-01",
+      "product": "Professional",
+      "subsystem": "Documents",
+      "feature": "Text ingest pipeline",
+      "requirement": "Upload→extract→chunk→embed→ready",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": ["e2e/document-ingest.spec.ts", "packages/documents"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-DOC-02",
+      "product": "Professional",
+      "subsystem": "Documents",
+      "feature": "OCR",
+      "requirement": "Production OCR for image-only PDFs",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "acceptance": {
+        "IMPLEMENTED": true,
+        "LOCAL_LIVE_VERIFIED": true,
+        "STAGING_LIVE_VERIFIED": false,
+        "PRODUCTION_VERIFIED": false,
+        "ATTORNEY_APPROVED": null
+      },
+      "evidence": [
+        "WP-04 final: HttpOcrProvider harness + processDocumentPipeline gold-text OCR with page provenance",
+        "packages/documents/src/wp04-final-acceptance.test.ts (RUN_DB_TESTS=1 CLAMAV_LIVE=1)",
+        "OCR failure never marks READY; native text skips OCR; bounded load p50/p95 measured locally",
+        "docs/security/OCR_PRODUCTION_GATE.md",
+        "docs/audits/WP04_FINAL_CLOSURE.md"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
+      "remediation": "Configure managed OCR_ENDPOINT on staging; load-test; then production verification"
+    },
+    {
+      "id": "PROF-TL-01",
+      "product": "Professional",
+      "subsystem": "Timeline",
+      "feature": "Nyaya Timeline",
+      "requirement": "Reviewable timeline with provenance",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": ["e2e/case-intelligence.spec.ts"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-MEM-01",
+      "product": "Professional",
+      "subsystem": "Memory",
+      "feature": "Nyaya Memory",
+      "requirement": "Structured reviewable memory entries",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": ["e2e/professional.spec.ts", "packages/intelligence/src/memory"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-GRAPH-01",
+      "product": "Professional",
+      "subsystem": "Graph",
+      "feature": "Nyaya Graph",
+      "requirement": "Entity/relationship graph with review",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": ["e2e/graph-relevance.spec.ts"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROF-RES-01",
+      "product": "Professional",
+      "subsystem": "Research",
+      "feature": "Nyaya Research corpus",
+      "requirement": "Real licensed jurisdiction-aware authority research",
+      "status": "BLOCKED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "Research package hierarchy/treatment/currentness unit tests PASS",
+        "Live corpus verification BLOCKED",
+        "Historical corpus far below 10k useful-cases target (2392 cases HISTORICAL)",
+        "WP-03A: local certification DB access recovered + live census complete; research go-live still blocked (843 cases, synthetic majority, thin citation graph)",
+        "WP-03C: Neon has 5621 text-backed cases but product research binds DATABASE_URL (local cert DB is not Neon); research go-live blocked",
+        "WP-03D implementation complete (partial): guarded corpus adapter + quote safety; live Neon RO cert blocked on SELECT-only credential",
+        "WP-03E: ROLE_DESIGNED; CREDENTIAL_PROVISIONING_REQUIRED; live staging acceptance not run; 10k acquisition not closed",
+        "POST_PR08_INV: WP-03E remains ROLE/CREDENTIAL provisioning required; no Neon RO live cert this session"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "b428b87",
+      "remediation": "Provision SELECT-only CORPUS_DATABASE_URL; complete WP-03E live staging cert; continue text-backed acquisition toward 10k",
+      "priority": "P0"
+    },
+    {
+      "id": "PROF-DRAFT-01",
+      "product": "Professional",
+      "subsystem": "Draft",
+      "feature": "Nyaya Draft",
+      "requirement": "Draft generation with human review",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/professional.spec.ts draft generate",
+        "POST_PR08: scripts/verify-draft-helpers.mjs DRAFT_HELPERS_OK (assertion filter, quote neutralize, source guard, insufficient source)",
+        "POST_PR08: e2e/professional.spec.ts Draft generate shows sources or insufficient then saves a version (Clerk auth deferred)",
+        "POST_PR08: APIs matters/[matterId]/drafts + versions/restore/transform + status PATCH",
+        "Human review required; no send/file from draft UI",
+        "POST_PR08_INV: no draft export route/UI; review is in_review only (no final); draft.* audit rows untested; authorityWarnings not surfaced in UI"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09",
+      "nextAction": "Authenticated E2E after Clerk MFA; keep IMPLEMENTED_UNVERIFIED until then"
+    },
+    {
+      "id": "PROF-BILL-01",
+      "product": "Professional",
+      "subsystem": "Billing",
+      "feature": "Time/invoice assistance",
+      "requirement": "Basic time entries and draft invoices (not trust accounting)",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "e2e/firm-workspace.spec.ts smoke",
+        "POST_PR08: packages/database/src/firm-time-billing.ts rate/billable/totals helpers",
+        "POST_PR08: migration 0028_firm_time_billing_rates.sql (+ statement-breakpoint)",
+        "POST_PR08: invoices GET/POST org-scoped billed query; PATCH draft lines; GET by id",
+        "POST_PR08: scripts/verify-firm-billing.mjs UNIT_OK",
+        "POST_PR08: scripts/verify-firm-billing-db.mjs ok totals 120min/65000c + audit + cross-firm deny",
+        "POST_PR08: disposable nyaya_mig_smoke_0028 full migrate verified billable columns then dropped",
+        "Not trust accounting / payment processing",
+        "Windows vitest junction: suite discovery flaky; CI Linux remains authoritative for vitest",
+        "Authenticated UI E2E still DEFERRED_OPERATOR_ACTION (Clerk MFA)",
+        "PR09_REMED: Playwright firm-workspace billing locator fixed; notice keeps not payment collection + This is not trust accounting",
+        "PR09_REMED: migration matrix A–E+G PASS via scripts/migration-safety/pr09-matrix.mjs",
+        "PR09_REMED: required CI SUCCESS run 42150423360 @ 68dd927 (Playwright End-to-end tests success)",
+        "docs/audits/PR09_MIGRATION_ACCEPTANCE_MATRIX.md"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "68dd927da8285070977fbb900db125f40e31ed6e",
+      "nextAction": "Operator merge approval for PR #9; authenticated billing UI E2E remains DEFERRED_OPERATOR_ACTION (Clerk MFA)"
+    },
+    {
+      "id": "PROF-ROLE-01",
+      "product": "Professional",
+      "subsystem": "RBAC",
+      "feature": "Professional roles",
+      "requirement": "Owner/Admin/Partner/Lawyer/Paralegal/Staff/Client Guest",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/database/src/system-roles.ts admin/partner/paralegal",
+        "legal_support without prosecution.edit",
+        "PR #6 CI SUCCESS run 42072482522 @ e0b8cb31",
+        "Await operator merge to main + live role seed verification",
+        "invite authority rank blocks privilege escalation",
+        "additive professional reconcile default"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "e0b8cb31d7ebf2972c53aaf503035bc5ed3f4def",
+      "nextAction": "Operator merge PR #6; re-verify ensureProfessionalSystemRoles on staging"
+    },
+    {
+      "id": "PROF-CONTACT-01",
+      "product": "Professional",
+      "subsystem": "Contacts",
+      "feature": "Standalone contacts",
+      "requirement": "Contacts entity distinct from clients",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P3",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/database/src/schema/phase18.ts contacts + client_contacts",
+        "packages/database/drizzle/0027_professional_contacts_folders.sql",
+        "apps/web/src/app/api/v1/contacts/route.ts",
+        "apps/web/src/app/api/v1/contacts/[contactId]/route.ts",
+        "apps/web/src/app/api/v1/contacts/[contactId]/clients/route.ts",
+        "apps/web/src/app/api/v1/clients/[clientId]/contacts/route.ts",
+        "clients.view / clients.edit capability gates + contact.* audit events",
+        "unit: contacts-folders-schema.test.ts",
+        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS) org isolation",
+        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)",
+        "UI: /app/contacts workspace + client link/unlink",
+        "UI: matter Documents folders panel + document move",
+        "DELETE contact client-link API",
+        "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
+        "PR #8 retargeted to main after PR #7 merge 71989c1",
+        "POST_PR08: merged to main via PR #8 @ 2453d874403b0ee6379c0974487e0cc541ae0849",
+        "POST_PR08: still IMPLEMENTED_UNVERIFIED pending authenticated E2E / staging certification"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
+      "nextAction": "Authenticated E2E + staging certification; do not auto-upgrade on merge alone"
+    },
+    {
+      "id": "PROF-FOLDER-01",
+      "product": "Professional",
+      "subsystem": "Documents",
+      "feature": "Folders",
+      "requirement": "Document folder entity",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P3",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/database/src/schema/phase18.ts document_folders",
+        "documents.folder_id nullable FK in 0027 migration",
+        "apps/web/src/app/api/v1/matters/[matterId]/folders/route.ts",
+        "apps/web/src/app/api/v1/matters/[matterId]/folders/[folderId]/route.ts",
+        "apps/web/src/app/api/v1/matters/[matterId]/documents/[documentId]/folder/route.ts",
+        "packages/documents/src/folders.ts cycle prevention",
+        "matter access + documents.view/edit; safe rename/move; no cycles",
+        "unit: folders.test.ts + contacts-folders-schema.test.ts",
+        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS)",
+        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)",
+        "UI: /app/contacts workspace + client link/unlink",
+        "UI: matter Documents folders panel + document move",
+        "DELETE contact client-link API",
+        "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
+        "PR #8 retargeted to main after PR #7 merge 71989c1",
+        "POST_PR08: merged to main via PR #8 @ 2453d874403b0ee6379c0974487e0cc541ae0849",
+        "POST_PR08: still IMPLEMENTED_UNVERIFIED pending authenticated E2E / staging certification"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
+      "nextAction": "Authenticated E2E + staging certification; do not auto-upgrade on merge alone"
+    },
+    {
+      "id": "PROS-RBAC-01",
+      "product": "Prosecution",
+      "subsystem": "RBAC",
+      "feature": "Prosecution roles",
+      "requirement": "Six prosecution roles with capabilities",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/database/src/prosecution-roles.ts",
+        "PB-RBAC-01/02",
+        "39/39 CURRENT_VERIFIED"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-CASE-01",
+      "product": "Prosecution",
+      "subsystem": "Cases",
+      "feature": "Criminal case lifecycle",
+      "requirement": "Intake, assignment, defendants, charges, elements",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": ["e2e/prosecution.spec.ts", "packages/intelligence/src/prosecution/postgres.ts"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-EV-01",
+      "product": "Prosecution",
+      "subsystem": "Evidence",
+      "feature": "Chain of custody",
+      "requirement": "Evidence inventory + CoC provenance",
+      "status": "PARTIAL",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "ProsecutionCustodyTransfer typed jsonb (was string[])",
+        "normalizeCustody on evidence create",
+        "appendProsecutionEvidenceCustody append-only API",
+        "chain-of-custody.test.ts",
+        "POST_PR08_INV: custody API append-only; no CoC UI; no prior RUN_DB custody suite",
+        "POST_PR08_INV: scripts/verify-prosecution-graph-custody-db.mjs custodyLength 2 + cross-office deny"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "pending",
+      "nextAction": "Add RUN_DB custody append tests to CI; CoC UI still thin; authenticated E2E deferred"
+    },
+    {
+      "id": "PROS-DIS-01",
+      "product": "Prosecution",
+      "subsystem": "Disclosure",
+      "feature": "Brady/Giglio candidates",
+      "requirement": "Human review only; no autonomous final Brady",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": ["disclosure-workflow.ts", "PB-DIS-01/02", "e2e Stage 4"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-SAFE-01",
+      "product": "Prosecution",
+      "subsystem": "Safety",
+      "feature": "No guilt/charging autonomy",
+      "requirement": "Null guilt/charging; forbidden language",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": ["prosecution bench critical taxonomy", "e2e asserts"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-ISO-01",
+      "product": "Prosecution",
+      "subsystem": "Isolation",
+      "feature": "Tenant/case isolation",
+      "requirement": "No cross-tenant or cross-case bleed",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": ["PB-TEN-01", "PB-EV-03", "permissions integration tests"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-WF-01",
+      "product": "Prosecution",
+      "subsystem": "Legal workflow",
+      "feature": "Warrants/motions/hearings/pleas tracking",
+      "requirement": "Tracking only; no autonomous filing",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": ["legal-workflow.ts", "e2e/prosecution-warrant.spec.ts"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-MEM-01",
+      "product": "Prosecution",
+      "subsystem": "Memory",
+      "feature": "Case Memory UX",
+      "requirement": "Reviewable Memory parity with Professional",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "priority": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/database/src/schema/phase14.ts prosecutionCaseMemories",
+        "packages/database/drizzle/0025_prosecution_case_memories.sql",
+        "packages/intelligence/src/prosecution/case-memory-db.ts",
+        "apps/web/src/app/api/v1/prosecution/cases/[caseId]/memory/route.ts",
+        "apps/web/src/app/api/v1/prosecution/cases/[caseId]/memory/[memoryId]/review/route.ts",
+        "apps/web/src/app/app/prosecution/[caseId]/memory/page.tsx",
+        "case-section Memory nav link",
+        "unit: case-memory-db.test.ts status transitions + proposed!=verified",
+        "integration: case-memory.integration.test.ts (RUN_DB_TESTS) isolation + audits",
+        "audit actions prosecution.memory_*; no guilt/charging fields",
+        "local vitest suite load broken on Windows junctions — CI authoritative; helpers verified via tsx",
+        "0025 forward/rollback disposable smoke re-verified post-PR#6 main merge",
+        "POST_PR08: scripts/verify-prosecution-memory-db.mjs ok proposed->approved + cross-office deny",
+        "POST_PR08: local 0025 applied via 0029 repair (journal-without-SQL recovered)"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "464e358",
+      "nextAction": "Authenticated E2E deferred; keep IMPLEMENTED_UNVERIFIED until staging/Clerk"
+    },
+    {
+      "id": "PROS-GRAPH-01",
+      "product": "Prosecution",
+      "subsystem": "Graph",
+      "feature": "Persisted prosecution graph",
+      "requirement": "Writable graph_nodes/edges for criminal cases",
+      "status": "PARTIAL",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "0026 upgrades 0018 stub tables (DROP+CREATE reviewable schema)",
+        "case-graph-db.ts + graph API/UI + case-section nav",
+        "Disposable DB stub→upgrade and rollback smoke",
+        "CI migrate SUCCESS on f09034b (awaiting full CI incl E2E)",
+        "CI SUCCESS run 42098640222 @ f09034b",
+        "0026 archives 0018 stub rows then backfills UUID refs as proposed projections",
+        "Disposable smoke: 3 archive / 2 proposed nodes / 1 proposed edge; non-UUID archive-only",
+        "Rollback restores stub rows from archives; post-0026 reviewable rows discarded (documented)",
+        "Merged origin/main 1549eb5 (PR #6) into PR #7 without conflict",
+        "POST_PR08_INV: Draft/Prosecution inventory — no dedicated graph RUN_DB isolation suite; migration/UI present",
+        "POST_PR08_INV: scripts/verify-prosecution-graph-custody-db.mjs ok (sync projection + cross-office deny)",
+        "POST_PR08_INV: local docker had stub node_type schema despite 0026 journal — healed by applying 0026 + 0030 repair"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "f09034b5db3852140f68f0b5b626172233f16442",
+      "nextAction": "Add CI RUN_DB graph isolation suite; authenticated E2E; keep PARTIAL until then"
+    },
+    {
+      "id": "PROS-AUD-01",
+      "product": "Prosecution",
+      "subsystem": "Audit",
+      "feature": "Dedicated Audit nav",
+      "requirement": "Authorized audit browser for office",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P2",
+      "releaseBlocker": false,
+      "evidence": [
+        "packages/intelligence/src/prosecution/audit-browser.ts",
+        "apps/web/src/app/api/v1/prosecution/audit/route.ts",
+        "apps/web/src/app/app/prosecution/audit/page.tsx",
+        "supervising_prosecutor + office admin audit.view",
+        "Unit + integration tests added; local vitest junction broken — CI authoritative",
+        "audit-browser read-only (no ensureProsecutionRoles)",
+        "admin POST /api/v1/organizations/:id/system-roles provision path",
+        "metadata redaction + invite privilege rank",
+        "POST_PR08_INV: RUN_DB audit listing/redaction/isolation in prosecution.integration.test.ts; no Playwright E2E"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "7420710b13198813434c3c8b1a23126fa985f708",
+      "priority": "P2",
+      "nextAction": "Authenticated prosecution audit E2E after Clerk MFA"
+    },
+    {
+      "id": "PROS-BENCH-01",
+      "product": "Prosecution",
+      "subsystem": "Benchmarks",
+      "feature": "Internal 39-scenario bench",
+      "requirement": "39/39 deterministic PASS",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": ["npm run bench:prosecution CURRENT_VERIFIED 39/39 this session"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "PROS-EXT-01",
+      "product": "Prosecution",
+      "subsystem": "External validation",
+      "feature": "LegalBench/LegalCite live",
+      "requirement": "Independent external validation of pipeline",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "LB 37/37 91.89% ORIGINAL_LIVE preserved",
+        "Cite 9/80 ORIGINAL_LIVE preserved; offline rescore only (not a new live eval)",
+        "WP-01 scorer integrity remediated; 71 Cite examples remain unexecuted — do not resume without NEW paid auth"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09",
+      "remediation": "WP-01 scorer fix landed; remaining: fresh authorized Cite continuation/canary under NEW auth only (WP-08), not silent resume of closed session"
+    },
+    {
+      "id": "AI-ROUTE-01",
+      "product": "Shared",
+      "subsystem": "Model router",
+      "feature": "Router v2 high-stakes",
+      "requirement": "Claude→Grok→FAIL_CLOSED; no GPT/Gemini high-stakes",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "FEATURE_NYAYA_MODEL_ROUTER_V2 defaults ON (platform + createAIProviderFromEnv)",
+        "Ask route server-derives prosecution workspace from criminalCases linkage",
+        "askNyayaAboutMatter sets subsystem=prosecution + highStakesLegal; strips client HS modelId",
+        "Router v2 always plans when enabled (modelId no longer bypasses)",
+        "CI 41675421499 SUCCESS at d08da37; mock stand-ins for Claude/Grok/GPT/Gemini",
+        "PRODUCTION_RUNTIME_UNVERIFIED — no production deploy in WP-02"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "d08da37",
+      "remediation": "Confirm staging/production env has flag ON (default) and paid keys; keep live_ai gated separately"
+    },
+    {
+      "id": "AI-GROUND-01",
+      "product": "Shared",
+      "subsystem": "Grounding",
+      "feature": "Citation validators",
+      "requirement": "Drop unsupported cites/quotes against retrieval",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "research synthesize/memo validators; search validateCitedAnswerAgainstPassages",
+        "WP-01 external Cite scorer false-positive fabrication cleared offline; production grounding path still separately unverified"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "AI-EXT-SCORER-01",
+      "product": "Shared",
+      "subsystem": "External bench scorers",
+      "feature": "LegalCite abstention/fabrication",
+      "requirement": "Accurate abstention + fabrication detection without false P0",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": [
+        "citation-utils.ts + scoreCitationReliability task-aware rewrite",
+        "adversarial scorer tests (20+ controls) + offline replay 37 LB + 9 Cite",
+        "12576371 FP cleared: fabricatedAuthority false, abstention detected; gold still unmet",
+        "internal prosecution 39/39; external-bench 221 tests",
+        "remote CI 41665323949 SUCCESS at 8075f47",
+        "POST_PR08_INV: WP-03E inventory — citation-utils.ts / benchmarks/external / 28/28 WP-01 LegalCite scorers NOT_IN_WORKTREE; do not treat prior VERIFIED_COMPLETE as reproducible here"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "8075f47",
+      "remediation": "Restore external scorer tree or regenerate evidence on this tip before reclaiming VERIFIED_COMPLETE"
+    },
+    {
+      "id": "CORPUS-01",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Live authority inventory",
+      "requirement": "Live case/authority counts vs 10k goal",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "WP-03C Neon RO: case rows 34508; text-backed 5621; identityOnly 29403; do NOT use 34508 as research-ready",
+        "Strict research-ready (>=500 chars + URL + ext id): 5445",
+        "Remaining to 10k substantive vs 5621: 4379 (vs strict 5445 gap 4555)",
+        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "priority": "P0",
+      "remediation": "Wire authorized read-only/product corpus to Neon text-backed set; enrich high-demand identity-only; do not treat identity rows as opinions",
+      "verificationClasses": {
+        "DATABASE_ACCESS_RECOVERED": true,
+        "DATABASE_IDENTITY_VERIFIED": true,
+        "LIVE_CENSUS_COMPLETE": true,
+        "FULL_RESEARCH_CERTIFIED": false
+      }
+    },
+    {
+      "id": "CORPUS-02",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Citation integrity",
+      "requirement": "Resolved citations; low TARGET_ABSENT; no orphans",
+      "status": "PARTIAL",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "Neon citations 80842; resolved 62523 (77.34%); unresolved 18319",
+        "Resolved-to-full-text 18860; resolved-to-identity-only 51777; resolved-to-zero-chunks 43663",
+        "classification dominated by CASE_CITATION/CASE_LIKE_BUT_MALFORMED — not TARGET_ABSENT taxonomy labels",
+        "dup edges 0 orphans 0"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "b428b87",
+      "priority": "P1",
+      "remediation": "Citation graph on local certification DB is thin; do not claim production citation integrity from 7 edges"
+    },
+    {
+      "id": "SEC-AUTH-01",
+      "product": "Shared",
+      "subsystem": "Security",
+      "feature": "Clerk MFA production",
+      "requirement": "Live Clerk+MFA verified for production",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "WP-04 final: REQUIRE_CLERK_MFA in requireUser; MfaRequiredError -> 403 without secret leak",
+        "packages/auth/src/mfa-acceptance.test.ts deterministic matrix",
+        "CLERK_STAGING_LIVE_UNVERIFIED — no approved staging Clerk credentials; no production Dashboard changes"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
+      "remediation": "Staging Clerk enrollment+challenge with authorized credentials; then production ops sign-off",
+      "acceptance": {
+        "IMPLEMENTED": true,
+        "LOCAL_LIVE_VERIFIED": false,
+        "STAGING_LIVE_VERIFIED": false,
+        "PRODUCTION_VERIFIED": false,
+        "ATTORNEY_APPROVED": null
+      }
+    },
+    {
+      "id": "SEC-ISO-01",
+      "product": "Shared",
+      "subsystem": "Security",
+      "feature": "Tenant isolation",
+      "requirement": "App-layer org/matter isolation",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P0",
+      "releaseBlocker": false,
+      "evidence": ["permissions integration tests", "e2e/security.spec.ts", "no RLS by design"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "SEC-MAL-01",
+      "product": "Shared",
+      "subsystem": "Security",
+      "feature": "ClamAV production",
+      "requirement": "Live malware scan for uploads",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "WP-04 final: pipeline clean->ready + EICAR->scan_blocked + scanner-down fail-closed + concurrent scans",
+        "Download blocked for uploaded/awaiting_malware_scan/scan_blocked/malware_scan_failed",
+        "docker nyayagrid-clamav healthy; verify-clamav.mjs; malware.test.ts CLAMAV_LIVE=1",
+        "docs/operations/WP04_DEPLOYMENT_READINESS_CHECKLIST.md"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
+      "remediation": "Point staging/production MALWARE_SCANNER=clamav at managed clamd; rehearse upload quarantine in staging",
+      "acceptance": {
+        "IMPLEMENTED": true,
+        "LOCAL_LIVE_VERIFIED": true,
+        "STAGING_LIVE_VERIFIED": false,
+        "PRODUCTION_VERIFIED": false,
+        "ATTORNEY_APPROVED": null
+      }
+    },
+    {
+      "id": "SEC-LEGAL-01",
+      "product": "Shared",
+      "subsystem": "Legal",
+      "feature": "Terms/Privacy",
+      "requirement": "Attorney-reviewed Terms and Privacy",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "WP-04 final: /terms /privacy drafts; CURRENT_*_VERSION; GET/POST /api/v1/legal/acceptances",
+        "packages/platform/src/legal-acceptance.test.ts + permissions legal-acceptance.integration.test.ts",
+        "docs/security/WP04_ATTORNEY_REVIEW_PACKAGE.md — ATTORNEY_APPROVED: NO"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "5ec26c7ad727244bfda1146bdc3d816d55820822",
+      "remediation": "Independent attorney review and sign-off; then bump versions for production publication",
+      "acceptance": {
+        "IMPLEMENTED": true,
+        "LOCAL_LIVE_VERIFIED": true,
+        "STAGING_LIVE_VERIFIED": false,
+        "PRODUCTION_VERIFIED": false,
+        "ATTORNEY_APPROVED": false
+      }
+    },
+    {
+      "id": "OPS-BACKUP-01",
+      "product": "Shared",
+      "subsystem": "Ops",
+      "feature": "Backup/restore/PITR",
+      "requirement": "Managed Postgres restore rehearsed",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "WP-05 local docker restore PASS; freshness BACKUP_FRESH",
+        "WP-05B: managed PITR NOT executed — no Fly/Neon operator auth in session",
+        "docs/operations/WP05B_OPERATOR_ACTIONS.md Action 5",
+        "packages/research/corpus/reports/wp05b-operational-release-closure.json"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c91cc75ecbe007d2ec87ba1fd800bfaabfde975b",
+      "acceptance": {
+        "ENGINEERING_IMPLEMENTED": true,
+        "LOCAL_TESTED": true,
+        "LOCAL_RESTORE_VERIFIED": true,
+        "MANAGED_PITR_VERIFIED": false,
+        "RESTORE_INTEGRITY_VERIFIED": true,
+        "STAGING_TESTED": false,
+        "PRODUCTION_VERIFIED": false
+      },
+      "rpo": "24h interim local; target <=5m managed PITR uncertified",
+      "rto": "4h interim local; target <=1h managed uncertified",
+      "remediation": "Authorized Neon isolated restore branch rehearsal; never overwrite production corpus branch"
+    },
+    {
+      "id": "OPS-MON-01",
+      "product": "Shared",
+      "subsystem": "Ops",
+      "feature": "Monitoring",
+      "requirement": "External monitoring/alerting/on-call",
+      "status": "PARTIAL",
+      "severity": "P1",
+      "releaseBlocker": true,
+      "evidence": [
+        "WP-05 DEFAULT_ALERT_POLICIES + ready status model",
+        "WP-05B packages/observability/src/alert-transport.test.ts local receiver PASS",
+        "No PagerDuty/Opsgenie credentials — live paging BLOCKED",
+        "docs/operations/WP05B_OPERATOR_ACTIONS.md Action 4"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c91cc75ecbe007d2ec87ba1fd800bfaabfde975b",
+      "acceptance": {
+        "ENGINEERING_IMPLEMENTED": true,
+        "MONITORING_IMPLEMENTED": true,
+        "LOCAL_ALERT_TRANSPORT_VERIFIED": true,
+        "ALERT_DELIVERED": false,
+        "ONCALL_ACKNOWLEDGED": false,
+        "FAILURE_REHEARSAL_VERIFIED": false,
+        "STAGING_TESTED": false,
+        "PRODUCTION_VERIFIED": false
+      },
+      "remediation": "Wire page policies to on-call vendor; rehearse ready-fail and clamav-down alerts in staging"
+    },
+    {
+      "id": "OPS-DEP-01",
+      "product": "Shared",
+      "subsystem": "Ops",
+      "feature": "Production deploy",
+      "requirement": "Deployed production environment",
+      "status": "PARTIAL",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": [
+        "WP-05B local immutable image nyayagrid-web:wp05b-4634dc7 (docker build from HEAD; not pushed to registry.fly.io)",
+        "WP-05B probe: https://staging.nyayagrid.com live=200 ready=503 redis=error",
+        "Fly CLI unauthenticated — cannot deploy/rollback this session",
+        "packages/research/corpus/reports/wp05b-staging-probe.json",
+        "docs/operations/WP05B_OPERATOR_ACTIONS.md Actions 1-3"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c91cc75ecbe007d2ec87ba1fd800bfaabfde975b",
+      "acceptance": {
+        "ENGINEERING_IMPLEMENTED": true,
+        "IMAGE_BUILT": true,
+        "STAGING_HOST_REACHABLE": true,
+        "STAGING_DEPLOYED": false,
+        "STAGING_E2E_PASSED": false,
+        "ROLLBACK_VERIFIED": false,
+        "PRODUCTION_DEPLOYED": false,
+        "PRODUCTION_RELEASE_APPROVED": false
+      },
+      "remediation": "Authorized staging host secrets + image push; separate production approval"
+    },
+    {
+      "id": "RM-PG-01",
+      "product": "Shared",
+      "subsystem": "Scope",
+      "feature": "Professor/Guide removal",
+      "requirement": "No active Professor/Guide/student/public surfaces",
+      "status": "PARTIAL",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "No apps/web professor/guide routes; schema drop 0025; workspace_type enum still student/public; docs STALE",
+        "WP-03C: migration 0025 drops student_*/guide_* only; Neon still has student/guide tables (0025 NOT applied); Docker applied (29 migs). Shared legal_* intact on both."
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87"
+    },
+    {
+      "id": "CJIS-01",
+      "product": "Prosecution",
+      "subsystem": "Compliance",
+      "feature": "CJIS certification",
+      "requirement": "Do not claim CJIS without program",
+      "status": "OUT_OF_SCOPE",
+      "severity": "P0",
+      "releaseBlocker": true,
+      "evidence": ["staging-audit cjis.certified===false; product rule"],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09",
+      "note": "Release blocker only if marketing claims CJIS"
+    },
+    {
+      "id": "TEST-E2E-01",
+      "product": "Shared",
+      "subsystem": "Testing",
+      "feature": "Playwright E2E",
+      "requirement": "Professional+Prosecution E2E green in CI",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "CI SUCCESS at HEAD; PRODUCTION_READINESS still lists professor/guide e2e STALE"
+      ],
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "TEST-UNIT-01",
+      "product": "Shared",
+      "subsystem": "Testing",
+      "feature": "Unit/integration",
+      "requirement": "Workspace unit tests in CI",
+      "status": "VERIFIED_COMPLETE",
+      "severity": "P1",
+      "releaseBlocker": false,
+      "evidence": [
+        "CI 41648686595 SUCCESS; router v2 18/18; external live executor 18/18 this session"
+      ],
+      "confidence": "HIGH",
+      "lastVerifiedSha": "c2c3d09"
+    },
+    {
+      "id": "CORPUS-03",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Jurisdiction/historical coverage",
+      "requirement": "State/DC ~7650 and federal ~2350 useful-case balance toward 10k",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "Text-backed geo: state/DC 3457 federal 2164 SCOTUS 604 circuit 798 district 201 state_high 2958 intermediate 575",
+        "pre-2000 2319 pre-1980 1151; gap to 10k remains 4379 substantive"
+      ],
+      "remediation": "Live coverage gap remains primary WP-03 blocker after access recovery"
+    },
+    {
+      "id": "CORPUS-04",
+      "product": "Shared",
+      "subsystem": "Retrieval",
+      "feature": "Search/index/embeddings health",
+      "requirement": "Keyword/semantic/hybrid retrieval against live corpus with source fidelity",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "Chunks 129160 all embedded; models text-embedding-3-small:384 (129123) + mock-embed-384 (37)",
+        "search_vector empty 0; keyword FTS over content PASS; semantic/hybrid skipped zero-paid (need EmbeddingProvider)",
+        "Product AuthorityHybridRetriever uses DATABASE_URL legal_authority_chunks — Neon NOT default-connected"
+      ],
+      "remediation": "RETRIEVAL_VERIFIED partial; full hybrid/semantic query certification still open"
+    },
+    {
+      "id": "CORPUS-05",
+      "product": "Shared",
+      "subsystem": "Legal intelligence",
+      "feature": "Hierarchy/treatment/currentness",
+      "requirement": "Binding/persuasive labels; no unverified currentness claims",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "releaseBlocker": false,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "Neon treatment/currentness not re-full-scanned this WP; prior unknown-majority on local; text samples have URLs"
+      ],
+      "remediation": "Do not claim live treatment/currentness readiness; nearly all unknown"
+    },
+    {
+      "id": "CORPUS-06",
+      "product": "Shared",
+      "subsystem": "Ingestion",
+      "feature": "Refresh/ingestion operational readiness",
+      "requirement": "CourtListener/licensed ingest + refresh implemented, tested, operational, production-verified",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "MEDIUM",
+      "lastVerifiedSha": "e5678e0",
+      "evidence": [
+        "Queue#2 / CL scripts present; WP-03 forbade running acquisition; production verified=NO"
+      ],
+      "remediation": "Separate readiness gates after live DB restore; never claim operational without live job evidence"
+    },
+    {
+      "id": "CORPUS-07",
+      "product": "Prosecution",
+      "subsystem": "Research",
+      "feature": "Prosecution research with live corpus",
+      "requirement": "Prosecution Ask retrieval uses live authority corpus with isolation",
+      "status": "BLOCKED",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "Prosecution Ask shares getDb(DATABASE_URL); Neon corpus not product-default",
+        "High-stakes Router v2 preserved in unit tests; live Neon prosecution retrieval not certified"
+      ],
+      "remediation": "After corpus depth + citation graph gates, run zero-paid prosecution retrieval fixtures"
+    },
+    {
+      "id": "CORPUS-08",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Identity-only classification",
+      "requirement": "Distinguish identityOnly metadata authorities from full-text opinions in retrieval and metrics",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "classifyAuthorityEligibility + GuardedAuthorityRetriever; identity-only cannot quote; conflicting flags conservative",
+        "Unit tests 7 eligibility + 3 guarded retriever",
+        "POST_PR08_INV: GuardedAuthorityRetriever / classifyAuthorityEligibility symbols absent in this worktree; AuthorityHybridRetriever on DATABASE_URL only — register/code drift"
+      ]
+    },
+    {
+      "id": "CORPUS-09",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Citation graph health",
+      "requirement": "Report identity-resolved vs full-text target coverage separately from edge resolution rate",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "77.34% edge resolution but 51777/62523 resolved edges point to identityOnly targets",
+        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+      ]
+    },
+    {
+      "id": "CORPUS-10",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Source provenance",
+      "requirement": "Text-backed authorities expose traceable canonical_source_url and source_external_id",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "releaseBlocker": false,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "All 5621 text-backed have URL+ext id; strict>=500 chars 5445",
+        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+      ]
+    },
+    {
+      "id": "CORPUS-11",
+      "product": "Shared",
+      "subsystem": "Retrieval",
+      "feature": "Full-text retrieval readiness",
+      "requirement": "Keyword/semantic/hybrid retrieve only chunked text-backed authorities",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "Guarded path filters non-groundable hits; live Neon keyword/semantic still blocked on credential"
+      ]
+    },
+    {
+      "id": "CORPUS-12",
+      "product": "Shared",
+      "subsystem": "Retrieval",
+      "feature": "Embedding/index integrity",
+      "requirement": "Chunks fully embedded with consistent model; no orphans/dup indexes",
+      "status": "PARTIAL",
+      "priority": "P1",
+      "releaseBlocker": false,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "129160/129160 embedded; 0 orphan chunks; 0 dup chunk_index; 37 mock-embed-384 residual",
+        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+      ]
+    },
+    {
+      "id": "CORPUS-13",
+      "product": "Professional",
+      "subsystem": "Research",
+      "feature": "Professional Neon corpus integration",
+      "requirement": "Professional research/Ask corpus path uses authorized Neon (or replica) text-backed authorities",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "WP-03D: CORPUS_DATABASE_URL + FEATURE_NEON_CORPUS_RESEARCH + GuardedAuthorityRetriever wired into Ask/agents/searchAuthorities",
+        "Product getDb() remains DATABASE_URL; Neon not substituted",
+        "WP-03E recovery: password-safe Step A/B plan; ROLE_PROVISIONING_REQUIRED; neonctl owner not used as app credential",
+        "packages/research/corpus/reports/wp03d-neon-research-integration.json",
+        "packages/research/corpus/reports/wp03e-neon-staging-research-certification.json",
+        "packages/research/corpus/reports/wp03e-credential-approval-and-live-certification.json",
+        "docs/security/NEON_CORPUS_READONLY_ROLE_PROVISIONING.md"
+      ],
+      "remediation": "Human-approve checklist; Neon Console create nyayagrid_corpus_readonly; run Step B grants; verify.sql as restricted login; set staging CORPUS_DATABASE_URL; re-run live Phases 4–7; keep production flag OFF"
+    },
+    {
+      "id": "CORPUS-14",
+      "product": "Prosecution",
+      "subsystem": "Research",
+      "feature": "Prosecution Neon corpus integration",
+      "requirement": "Prosecution Ask uses same guarded Neon corpus with case isolation and high-stakes routing",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": true,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "WP-03D: Prosecution Ask shares getAuthorityRetriever(); Router v2 preserved",
+        "WP-03E: PROFESSIONAL_LIVE_CORPUS_PASS/PROSECUTION_LIVE_CORPUS_PASS blocked on missing SELECT-only credential",
+        "packages/research/corpus/reports/wp03e-neon-staging-research-certification.json"
+      ]
+    },
+    {
+      "id": "CORPUS-15",
+      "product": "Shared",
+      "subsystem": "Corpus",
+      "feature": "Historical deletion impact",
+      "requirement": "Professor/Guide removal must not destroy shared legal corpus",
+      "status": "PARTIAL",
+      "priority": "P0",
+      "releaseBlocker": false,
+      "confidence": "HIGH",
+      "lastVerifiedSha": "b428b87",
+      "evidence": [
+        "0025 SQL touches student_*/guide_* only; Neon 0025 not applied (tables remain); Docker applied; legal_* intact; 4680 pre-2026-10-06 cases still text-backed (timestamp cohort, not dump-join NO_DATA_LOSS_PROVEN)",
+        "packages/research/corpus/reports/wp03c-neon-research-readiness.json"
+      ]
+    }
+  ],
+  "topReleaseBlockers": [
+    "PROF-RES-01 / CORPUS-13: Neon has 5621 text-backed cases but product DATABASE_URL not Neon; identity-only must not count as opinions; gap to 10k=4379",
+    "PROF-DOC-02 OCR production gate",
+    "SEC-AUTH-01 Clerk MFA production verification",
+    "SEC-MAL-01 ClamAV production verification",
+    "SEC-LEGAL-01 Attorney Terms/Privacy",
+    "OPS-BACKUP-01 Managed restore/PITR",
+    "OPS-MON-01 Monitoring/on-call",
+    "OPS-DEP-01 No production deployment",
+    "PROS-EXT-01 External Cite validation incomplete (71 unexecuted; NEW auth required — WP-01 scorer certified)"
+  ],
+  "dependencyOrderedPlan": [
+    {
+      "id": "WP-01",
+      "title": "Fix LegalCite evaluation integrity",
+      "closes": ["AI-EXT-SCORER-01"],
+      "partiallyAddresses": ["PROS-EXT-01"],
+      "deps": [],
+      "effort": "2-5 days",
+      "status": "VERIFIED_COMPLETE",
+      "acceptance": "Abstention lexicon matches Abstention/cannot recommend; fabrication heuristic excludes task-supplied cites; structured Cite scorers; zero-cost regression tests; remote CI SUCCESS",
+      "note": "Does not close PROS-EXT-01 fully — 71 Cite examples remain unexecuted; no paid resume in WP-01"
+    },
+    {
+      "id": "WP-02",
+      "title": "Activate production model-router v2 for prosecution/high-stakes",
+      "closes": ["AI-ROUTE-01"],
+      "deps": ["WP-01"],
+      "effort": "3-7 days",
+      "acceptance": "Flag ON with env/DB alignment; Ask prosecution paths set subsystem/highStakesLegal; GPT/Gemini high-stakes remain 0 in tests",
+      "status": "VERIFIED_COMPLETE",
+      "verificationClasses": {
+        "ROUTER_IMPLEMENTATION_VERIFIED": true,
+        "APPLICATION_E2E_VERIFIED": "CI_PLAYWRIGHT_AND_HANDLER_TESTS",
+        "PRODUCTION_RUNTIME_UNVERIFIED": true
+      },
+      "fixCommit": "d08da37cbee9ea846b3393fb9cb6d1d7f99c0995",
+      "remoteCi": {
+        "run": "41675421499",
+        "conclusion": "SUCCESS"
+      }
+    },
+    {
+      "id": "WP-03",
+      "title": "Live corpus inventory + research honesty gate",
+      "closes": ["CORPUS-01", "PROF-RES-01", "CORPUS-02"],
+      "deps": [],
+      "effort": "1-3 weeks (ops+data)",
+      "acceptance": "Live inventory report at SHA; update PRODUCTION_READINESS; UI honesty until licensed depth; close citation TARGET_ABSENT hotspots",
+      "status": "ROLE_PROVISIONING_REQUIRED",
+      "result": "WP03E_SECURITY_PLAN_READY_FOR_HUMAN_APPROVAL",
+      "evidenceArtifact": "packages/research/corpus/reports/wp03e-credential-approval-and-live-certification.json",
+      "note": "WP-03E recovery: SQL hardened (no password placeholders; Step A/B + verify); restricted credential still absent; live staging not started. Do not deploy/activate production. Do not auto-start WP-04.",
+      "verificationClasses": {
+        "DATABASE_ACCESS_RECOVERED": true,
+        "DATABASE_IDENTITY_VERIFIED": true,
+        "LIVE_CENSUS_COMPLETE": true,
+        "CITATION_INTEGRITY_VERIFIED": "PARTIAL_THIN_GRAPH",
+        "RETRIEVAL_VERIFIED": "PARTIAL_KEYWORD_AND_INDEX_HEALTH",
+        "ROLE_DESIGNED": true,
+        "ROLE_PROVISIONING_REQUIRED": true,
+        "ROLE_PROVISIONED": false,
+        "SELECT_ONLY_VERIFIED": false,
+        "CORPUS_DB_IDENTITY_VERIFIED": false,
+        "STAGING_KEYWORD_PASS": false,
+        "STAGING_SEMANTIC_PASS": false,
+        "STAGING_HYBRID_PASS": false,
+        "PROFESSIONAL_LIVE_CORPUS_PASS": false,
+        "PROSECUTION_LIVE_CORPUS_PASS": false,
+        "PRODUCTION_NOT_CERTIFIED": true,
+        "FULL_RESEARCH_CERTIFIED": false,
+        "SECURITY_PLAN_READY_FOR_HUMAN_APPROVAL": true
+      },
+      "remoteCi": {
+        "run": "41752486900",
+        "conclusion": "SUCCESS"
+      }
+    },
+    {
+      "id": "WP-04",
+      "title": "Production security/config gate closure",
+      "closes": ["SEC-AUTH-01", "SEC-MAL-01", "PROF-DOC-02", "SEC-LEGAL-01"],
+      "deps": [],
+      "effort": "2-4 weeks",
+      "acceptance": "Clerk MFA verified; ClamAV prod verified; OCR policy decided; attorney Terms/Privacy",
+      "status": "PARTIAL",
+      "result": "WP04_ENGINEERING_COMPLETE_EXTERNAL_GATES_PENDING",
+      "evidenceArtifact": "docs/audits/WP04_FINAL_CLOSURE.md",
+      "note": "Engineering complete for OCR/ClamAV/MFA/Terms locally. Staging/production OCR+ClamAV+Clerk MFA and attorney sign-off remain external. WP-03E deferred. WP-05 not started.",
+      "verificationClasses": {
+        "OCR_ENGINEERING_COMPLETE": true,
+        "OCR_LOCAL_LIVE_VERIFIED": true,
+        "OCR_STAGING_LIVE_VERIFIED": false,
+        "OCR_PRODUCTION_VERIFIED": false,
+        "CLAMAV_ENGINEERING_COMPLETE": true,
+        "CLAMAV_LOCAL_LIVE_VERIFIED": true,
+        "CLAMAV_STAGING_LIVE_VERIFIED": false,
+        "CLAMAV_PRODUCTION_VERIFIED": false,
+        "CLERK_MFA_SERVER_POLICY": true,
+        "CLERK_MFA_STAGING_LIVE_VERIFIED": false,
+        "CLERK_MFA_PRODUCTION_VERIFIED": false,
+        "TERMS_PRIVACY_ENGINEERING_COMPLETE": true,
+        "TERMS_PRIVACY_LOCAL_ACCEPTANCE_VERIFIED": true,
+        "ATTORNEY_REVIEW_COMPLETE": false
+      }
+    },
+    {
+      "id": "WP-05",
+      "title": "Ops resilience",
+      "closes": ["OPS-BACKUP-01", "OPS-MON-01", "OPS-DEP-01"],
+      "deps": ["WP-04"],
+      "effort": "2-4 weeks",
+      "acceptance": "Managed PITR restore rehearsal; monitoring/paging; staged then prod deploy with rollback drill",
+      "status": "PARTIAL",
+      "result": "WP05_EXTERNAL_INFRASTRUCTURE_BLOCKED",
+      "evidenceArtifact": "packages/research/corpus/reports/wp05b-operational-release-closure.json",
+      "verificationClasses": {
+        "BACKUP_LOCAL_RESTORE_VERIFIED": true,
+        "BACKUP_MANAGED_PITR_VERIFIED": false,
+        "MONITORING_IMPLEMENTED": true,
+        "ALERT_DELIVERED_ONCALL": false,
+        "STAGING_HOST_REACHABLE": true,
+        "STAGING_READY_PASS": false,
+        "STAGING_DEPLOYED_THIS_SESSION": false,
+        "PRODUCTION_DEPLOYED": false
+      },
+      "note": "WP-05B: staging host exists but ready=503 (redis) and Fly auth missing; managed PITR and on-call delivery blocked. Keep WP-05 open. Do not start WP-06."
+    },
+    {
+      "id": "WP-06",
+      "title": "Prosecution product parity polish",
+      "closes": ["PROS-MEM-01", "PROS-GRAPH-01", "PROS-AUD-01", "PROS-EV-01"],
+      "deps": ["WP-02"],
+      "effort": "1-2 weeks",
+      "acceptance": "Memory/Audit UX; graph writers or explicit OUT_OF_SCOPE; CoC schema aligned"
+    },
+    {
+      "id": "WP-07",
+      "title": "Professional RBAC + cleanup",
+      "closes": ["PROF-ROLE-01", "RM-PG-01", "PROF-CONTACT-01"],
+      "deps": [],
+      "effort": "1 week",
+      "acceptance": "Spec roles or documented reduction; enum/docs cleanup; contacts decision"
+    },
+    {
+      "id": "WP-08",
+      "title": "Design-partner external acceptance",
+      "closes": ["PROS-EXT-01", "AI-GROUND-01"],
+      "deps": ["WP-01", "WP-02", "WP-03", "WP-05"],
+      "effort": "2-4 weeks",
+      "acceptance": "Fresh authorized external Cite+LB run; attorney/DA partner written acceptance; no CJIS claims"
+    }
+  ],
+  "november20Feasibility": {
+    "verdict": "NOT_FEASIBLE",
+    "reasons": [
+      "No production deployment exists (OPS-DEP-01)",
+      "Multiple P0 ops/security gates open (Clerk MFA, ClamAV, backup/PITR, monitoring, Terms)",
+      "Live corpus access recovered but depth far below 10k (843 cases live; synthetic majority); research go-live still blocked",
+      "Router v2 not production-default; prosecution Ask under-wired",
+      "External LegalCite validation incomplete (71 unexecuted); WP-01 scorer remediation pending remote CI",
+      "Calendar date 2026-11-20 is ~17 days from audit; WP-04+WP-05 alone exceed that window for production"
+    ]
+  },
+  "wp02Remediation": {
+    "status": "VERIFIED_COMPLETE",
+    "fixCommit": "d08da37cbee9ea846b3393fb9cb6d1d7f99c0995",
+    "remoteCi": {
+      "run": "41675421499",
+      "conclusion": "SUCCESS"
+    },
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "productionRuntime": "UNVERIFIED"
+  },
+  "wp03Session": {
+    "classification": "NYAYAGRID_WP03_LIVE_CORPUS_AND_RESEARCH_CERTIFICATION",
+    "result": "SUPERSEDED_BY_WP03A",
+    "note": "Prior LIVE_CORPUS_ACCESS_BLOCKED resolved by WP-03A access recovery"
+  },
+  "wp03aSession": {
+    "classification": "NYAYAGRID_WP03A_CORPUS_DATABASE_ACCESS_RECOVERY",
+    "result": "WP03A_CORPUS_ACCESS_RECOVERED",
+    "status": "PARTIAL",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "mutations": 0,
+    "migrations": 0,
+    "newDatabaseCreated": false,
+    "volumePreserved": true,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03a-corpus-access-recovery.json",
+    "censusScript": "scripts/corpus/wp03a-identity-and-census.cjs",
+    "intendedDb": "localhost:5433/nyayagrid",
+    "identityLabel": "persistent-local-docker-nyayagrid",
+    "volume": "nyayagrid_nyayagrid_postgres_data",
+    "live": {
+      "authorities": 989,
+      "cases": 843,
+      "remainingTo10k": 9157,
+      "citationEdges": 7,
+      "resolved": 1
+    },
+    "verificationClasses": {
+      "DATABASE_ACCESS_RECOVERED": true,
+      "DATABASE_IDENTITY_VERIFIED": true,
+      "LIVE_CENSUS_COMPLETE": true,
+      "CITATION_INTEGRITY_VERIFIED": "PARTIAL_THIN_GRAPH",
+      "RETRIEVAL_VERIFIED": "PARTIAL_KEYWORD_AND_INDEX_HEALTH",
+      "FULL_RESEARCH_CERTIFIED": false
+    },
+    "regressions": {
+      "wp01Scorers": "28/28 PASS",
+      "wp02Router": "35/35 PASS",
+      "internalProsecution": "39/39 PASS",
+      "researchPackage": "160 passed / 6 skipped (live-certification skipped)"
+    },
+    "remoteCi": {
+      "run": "41689403691",
+      "conclusion": "SUCCESS"
+    },
+    "headAfter": "5cfd9e06c755ab50ec226e6c8f9928508d3addae"
+  },
+  "wp03cSession": {
+    "classification": "NYAYAGRID_WP03C_NEON_CORPUS_RESEARCH_READINESS",
+    "result": "WP03C_RESEARCH_CERTIFICATION_PARTIAL",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "mutations": 0,
+    "neonWrites": 0,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03c-neon-research-readiness.json",
+    "neon": {
+      "project": "nyayagrid-staging",
+      "branch": "production",
+      "db": "neondb",
+      "textBacked": 5621,
+      "strictReady": 5445,
+      "identityOnly": 29403,
+      "caseRows": 34508
+    },
+    "integration": {
+      "neonDefaultInProduct": false,
+      "binding": "DATABASE_URL"
+    },
+    "migration0025": {
+      "neonApplied": false,
+      "dockerApplied": true,
+      "sharedCorpusSqlImpact": "NONE"
+    },
+    "regressions": {
+      "wp01": "28/28",
+      "wp02": "35/35",
+      "prosecution": "39/39"
+    }
+  },
+  "wp03dSession": {
+    "classification": "NYAYAGRID_WP03D_NEON_RESEARCH_INTEGRATION_AND_SOURCE_SAFETY",
+    "result": "WP03D_RESEARCH_INTEGRATION_PARTIAL",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "neonWrites": 0,
+    "mutations": 0,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03d-neon-research-integration.json",
+    "verificationClasses": {
+      "IMPLEMENTATION_COMPLETE": true,
+      "MOCK_E2E_COMPLETE": true,
+      "LIVE_READ_ONLY_VERIFIED": false,
+      "LIVE_NEON_READ_ONLY_CERTIFICATION_BLOCKED": true,
+      "PRODUCTION_CONFIG_UNVERIFIED": true,
+      "PRODUCTION_DEPLOYMENT_UNVERIFIED": true
+    },
+    "regressions": {
+      "wp01": "28/28",
+      "wp02": "35/35",
+      "prosecution": "39/39"
+    }
+  },
+  "wp03eSession": {
+    "classification": "NYAYAGRID_WP03E_NEON_STAGING_RESEARCH_CERTIFICATION",
+    "result": "WP03E_CREDENTIAL_PROVISIONING_REQUIRED",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "neonWrites": 0,
+    "mutations": 0,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03e-neon-staging-research-certification.json",
+    "provisioningPlan": "docs/security/NEON_CORPUS_READONLY_ROLE_PROVISIONING.md",
+    "provisioningSql": "scripts/corpus/neon-corpus-readonly-role.sql",
+    "verificationClasses": {
+      "ROLE_DESIGNED": true,
+      "ROLE_PROVISIONED": false,
+      "SELECT_ONLY_VERIFIED": false,
+      "CORPUS_DB_IDENTITY_VERIFIED": false,
+      "STAGING_KEYWORD_PASS": false,
+      "STAGING_SEMANTIC_PASS": false,
+      "STAGING_HYBRID_PASS": false,
+      "PROFESSIONAL_LIVE_CORPUS_PASS": false,
+      "PROSECUTION_LIVE_CORPUS_PASS": false,
+      "PRODUCTION_NOT_CERTIFIED": true
+    },
+    "keywordSearchFinding": "Current retriever uses computed to_tsvector(content) + GIN legal_authority_chunks_fts_idx; empty search_vector is not a defect for this path",
+    "nextAction": "Provision nyayagrid_corpus_readonly; set staging CORPUS_DATABASE_URL; resume live Phases 3–7. Do not auto-start WP-04."
+  },
+  "wp03eRecoverySession": {
+    "classification": "NYAYAGRID_WP03E_CREDENTIAL_APPROVAL_AND_LIVE_CERTIFICATION",
+    "result": "WP03E_SECURITY_PLAN_READY_FOR_HUMAN_APPROVAL",
+    "gate": "ROLE_PROVISIONING_REQUIRED",
+    "paidCalls": 0,
+    "courtlistenerCalls": 0,
+    "neonWrites": 0,
+    "neonRoleGrantChanges": 0,
+    "mutations": 0,
+    "evidenceArtifact": "packages/research/corpus/reports/wp03e-credential-approval-and-live-certification.json",
+    "provisioningPlan": "docs/security/NEON_CORPUS_READONLY_ROLE_PROVISIONING.md",
+    "stepA": "scripts/corpus/neon-corpus-readonly-role-step-a-create-role.sql",
+    "stepB": "scripts/corpus/neon-corpus-readonly-role-step-b-grants.sql",
+    "verify": "scripts/corpus/neon-corpus-readonly-role-verify.sql",
+    "securityReview": {
+      "sqlCorrected": true,
+      "passwordSafe": true,
+      "leastPrivilegeGrants": true,
+      "inheritedPrivilegesReviewed": true,
+      "publicPrivilegesReviewed": true,
+      "verificationQueriesSafe": true
+    },
+    "verificationClasses": {
+      "ROLE_DESIGNED": true,
+      "ROLE_PROVISIONING_REQUIRED": true,
+      "ROLE_PROVISIONED": false,
+      "SELECT_ONLY_VERIFIED": false,
+      "CORPUS_DB_IDENTITY_VERIFIED": false,
+      "STAGING_KEYWORD_PASS": false,
+      "STAGING_SEMANTIC_PASS": false,
+      "STAGING_HYBRID_PASS": false,
+      "PROFESSIONAL_LIVE_CORPUS_PASS": false,
+      "PROSECUTION_LIVE_CORPUS_PASS": false,
+      "PRODUCTION_NOT_CERTIFIED": true,
+      "SECURITY_PLAN_READY_FOR_HUMAN_APPROVAL": true
+    },
+    "liveStagingStopped": true,
+    "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
+  },
+  "updatedAt": "2026-11-05T22:43:14.162Z",
+  "productContinuation": {
+    "pr6": {
+      "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",
+      "tipAtRbac": "e0b8cb31d7ebf2972c53aaf503035bc5ed3f4def",
+      "ciRun": "42072482522",
+      "ciConclusion": "SUCCESS",
+      "merge": "OPERATOR_ONLY_SAFE_TO_MERGE"
+    },
+    "wp05": {
+      "clerk": "DEFERRED_OPERATOR_ACTION",
+      "schedule": "PENDING_LIVE_VERIFICATION",
+      "production": "PRODUCTION_GATE_OPEN"
+    }
+  },
+  "postPr08Session": {
+    "classification": "NYAYAGRID_POST_PR08_PRODUCT_VERIFICATION",
+    "mainSha": "2453d874403b0ee6379c0974487e0cc541ae0849",
+    "startingMainSha": "2453d874403b0ee6379c0974487e0cc541ae0849",
+    "mergedPrs": [6, 7, 8],
+    "registerRecount": {
+      "before": {
+        "verifiedComplete": 16,
+        "implementedUnverified": 4,
+        "partial": 21,
+        "missing": 4,
+        "blocked": 8,
+        "outOfScope": 1
+      },
+      "after": {
+        "requirementsInventoried": 54,
+        "note": "POST_PR08 recount from requirement entries; VERIFIED counted with VERIFIED_COMPLETE in verifiedComplete. Do not upgrade solely because PRs merged.",
+        "verifiedComplete": 17,
+        "verifiedCompleteStrict": 16,
+        "verifiedAlias": 1,
+        "implementedUnverified": 10,
+        "partial": 24,
+        "missing": 0,
+        "broken": 0,
+        "blocked": 2,
+        "outOfScope": 1,
+        "byStatus": {
+          "IMPLEMENTED_UNVERIFIED": 10,
+          "VERIFIED_COMPLETE": 16,
+          "PARTIAL": 24,
+          "BLOCKED": 2,
+          "VERIFIED": 1,
+          "OUT_OF_SCOPE": 1
+        },
+        "p0": 13,
+        "p1": 4,
+        "p2": 2,
+        "p3": 0
+      }
+    },
+    "scheduleMonitor": {
+      "workflow": "Staging continuous monitor",
+      "genuineScheduleRuns": [
+        {
+          "id": 42119654855,
+          "conclusion": "success",
+          "createdAt": "2026-11-05T22:13:36Z"
+        }
+      ],
+      "criterion": ">=2 genuine event=schedule",
+      "satisfied": false,
+      "manualDispatchNotCounted": true
+    },
+    "clerkMfaE2e": "DEFERRED_OPERATOR_ACTION",
+    "production": "PRODUCTION_GATE_OPEN",
+    "billing": {
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "unitOk": true,
+      "dbSmokeOk": true,
+      "migration0028DisposableOk": true,
+      "paymentProcessing": false,
+      "trustAccounting": false
+    },
+    "schemaRepair": {
+      "issue": "Local docker journaled 0025/0027/0028 without applying SQL",
+      "fix": "0029_repair_journaled_schema.sql idempotent IF NOT EXISTS",
+      "freshMigrateVerified": true,
+      "note": "Deploy prerequisite: run migrate including 0029 on any DB that may have journal-only entries"
+    },
+    "draft": {
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "helpersOk": true
+    },
+    "prosecutionMemory": {
+      "dbSmokeOk": true
+    },
+    "inventoryFollowUp": {
+      "agents": ["Draft/Prosecution inventory", "WP-03E research inventory"],
+      "graphStatusCorrectedTo": "PARTIAL",
+      "evidenceCustodyCorrectedTo": "PARTIAL",
+      "aiExtScorerDowngradedTo": "IMPLEMENTED_UNVERIFIED",
+      "schemaRepairs": ["0029 contacts/memory/billing", "0030 graph 0026 upgrade"],
+      "smokes": ["verify-prosecution-graph-custody-db.mjs ok"]
+    }
+  },
+  "pr09Remediation": {
+    "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
+    "playwrightFix": "e2e/firm-workspace.spec.ts asserts not payment collection + trust accounting; billing notice restored explicit not trust accounting",
+    "failedRun": 42144881311,
+    "migrationRootCauseDoc": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
+    "matrixScript": "scripts/migration-safety/pr09-matrix.mjs",
+    "matrix": {
+      "A_fresh": "PASS",
+      "B_fully_migrated_retry": "PASS",
+      "C_journaled_missing_objects": "PASS",
+      "D_partial_schema_fail_closed": "PASS",
+      "E_populated_preservation": "PASS",
+      "G_stub_graph_upgrade": "PASS"
+    },
+    "migrationsAdded": ["0031_migration_safety_assertions"],
+    "drizzleWhenGate": "hash never rechecked; created_at < when only"
+  }
+}

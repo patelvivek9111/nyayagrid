@@ -53,3 +53,6 @@ packages/research/corpus/reports/*-last.json
 
 # Generated esbuild bundles (reproducible from scripts sources; rebuild before remote use)
 scripts/**/*-bundled.cjs
+
+# WP-05 continuous monitor state
+.monitor-state/

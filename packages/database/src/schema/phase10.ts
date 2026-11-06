@@ -6,6 +6,7 @@ import {
   uniqueIndex,
   index,
   integer,
+  boolean,
   pgEnum,
 } from "drizzle-orm/pg-core";
 import { conversations, documents, matters, organizations, users } from "./index";
@@ -13,16 +14,13 @@ import { drafts } from "./phase5";
 
 /**
  * Phase 10 — SYNTH/dev firm operations. These tables support in-app time, draft invoices from
- * posted minutes (not money), pasted inbound email filed to a matter with human confirm, and
- * in-app notifications. They are not Microsoft Graph, SMTP transport, or a payment processor.
+ * posted minutes with optional fee assistance (not payment collection or trust accounting),
+ * pasted inbound email filed to a matter with human confirm, and in-app notifications.
+ * They are not Microsoft Graph, SMTP transport, or a payment processor.
  */
 
 export const timeEntrySourceEnum = pgEnum("time_entry_source", ["manual", "chat", "draft"]);
-export const timeEntryStatusEnum = pgEnum("time_entry_status", [
-  "suggested",
-  "posted",
-  "rejected",
-]);
+export const timeEntryStatusEnum = pgEnum("time_entry_status", ["suggested", "posted", "rejected"]);
 export const invoiceStatusEnum = pgEnum("invoice_status", ["draft", "issued", "void"]);
 export const inboundEmailStatusEnum = pgEnum("inbound_email_status", [
   "pending",
@@ -59,6 +57,8 @@ export const timeEntries = pgTable(
     status: timeEntryStatusEnum("status").notNull().default("suggested"),
     description: text("description").notNull(),
     minutes: integer("minutes").notNull(),
+    billable: boolean("billable").notNull().default(true),
+    hourlyRateCents: integer("hourly_rate_cents"),
     conversationId: uuid("conversation_id").references(() => conversations.id, {
       onDelete: "set null",
     }),
@@ -88,6 +88,8 @@ export const invoices = pgTable(
     invoiceNumber: text("invoice_number").notNull(),
     status: invoiceStatusEnum("status").notNull().default("draft"),
     notes: text("notes"),
+    totalMinutes: integer("total_minutes").notNull().default(0),
+    totalCents: integer("total_cents"),
     createdByUserId: uuid("created_by_user_id").references(() => users.id, {
       onDelete: "set null",
     }),
@@ -118,7 +120,11 @@ export const invoiceLineItems = pgTable(
       .references(() => timeEntries.id, { onDelete: "restrict" }),
     description: text("description").notNull(),
     minutes: integer("minutes").notNull(),
+    billable: boolean("billable").notNull().default(true),
+    hourlyRateCents: integer("hourly_rate_cents"),
+    amountCents: integer("amount_cents"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
     uniqueIndex("invoice_line_items_time_entry_uidx").on(table.timeEntryId),

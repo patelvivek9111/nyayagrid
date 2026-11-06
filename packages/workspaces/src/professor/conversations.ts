@@ -412,6 +412,11 @@ export type AskProfessorParams = {
   /** Defaults to searching the shared corpus only for doctrinal questions. */
   includeAuthority?: boolean;
   limit?: number;
+  /** Forwarded to AuthorityHybridRetriever (e.g. includeSyntheticFixtures in integration tests). */
+  authoritySearchOptions?: {
+    includeSyntheticFixtures?: boolean;
+    applyRetainThreshold?: boolean;
+  };
 };
 
 export type AskProfessorResult = {
@@ -549,7 +554,14 @@ export async function askProfessor(params: AskProfessorParams): Promise<AskProfe
   let authorityChunks: ResearchAuthorityChunk[] = [];
   if (wantsAuthority) {
     const retriever = new AuthorityHybridRetriever(params.db, embeddings);
-    const hits = await retriever.search(question, {}, { limit: DEFAULT_AUTHORITY_HIT_LIMIT });
+    const hits = await retriever.search(
+      question,
+      {},
+      {
+        limit: DEFAULT_AUTHORITY_HIT_LIMIT,
+        ...params.authoritySearchOptions,
+      },
+    );
     const texts = await loadAuthorizedAuthorityChunks({
       db: params.db,
       chunkIds: hits.map((hit) => hit.chunkId),

@@ -659,6 +659,8 @@ describe.runIf(runDbTests)("phase 8 professor and guide workspaces integration",
           question: AUTHORITY_QUESTION,
           ai,
           embeddings,
+          // Synthetic fixture authorities are dropped by customer retain unless opted in.
+          authoritySearchOptions: { includeSyntheticFixtures: true },
         });
 
         expect(result.grounded).toBe(true);
@@ -754,8 +756,6 @@ describe.runIf(runDbTests)("phase 8 professor and guide workspaces integration",
       });
 
       expect(record.userId).toBe(guideAId);
-      // Persist/UI contract is GuideConsultationPacketContent (not the AI ConsultationPacket schema):
-      // questionsToAsk → questionsForTheLawyer; keyEvents → timeline entries.
       expect(packet.questionsForTheLawyer.length).toBeGreaterThan(0);
       expect(packet.timeline.some((item) => item.title === "Received notice to vacate")).toBe(true);
       expect(record.packet.limitations.join(" ")).toMatch(/does not reach any legal conclusion/i);

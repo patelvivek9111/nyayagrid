@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { useActiveOrganization } from "@/components/use-active-organization";
 import { EmptyState, ErrorState, LoadingState, StatusLabel } from "@/components/ux";
 import { formatCoverageWarning, humanizeKey } from "@/lib/plain-labels";
-import { WarrantReviewPanel, type SuppressionAnswerView, type SuppressionReviewView } from "@/components/prosecution/warrant-review";
+import {
+  WarrantReviewPanel,
+  type SuppressionAnswerView,
+  type SuppressionReviewView,
+} from "@/components/prosecution/warrant-review";
 
 export const PROSECUTION_SECTIONS = [
   { segment: "", label: "Overview" },
@@ -21,6 +25,8 @@ export const PROSECUTION_SECTIONS = [
   { segment: "hearings", label: "Hearings" },
   { segment: "pleas", label: "Pleas" },
   { segment: "timeline", label: "Timeline" },
+  { segment: "memory", label: "Memory" },
+  { segment: "graph", label: "Graph" },
   { segment: "research", label: "Research" },
   { segment: "tasks", label: "Tasks" },
 ] as const;
@@ -150,11 +156,13 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
     fetch(`/api/v1/prosecution/cases/${caseId}?organizationId=${organizationId}`)
       .then(async (response) => {
         const data = await response.json();
-        if (!response.ok) throw new Error(data?.error?.message ?? "Could not load this criminal case.");
+        if (!response.ok)
+          throw new Error(data?.error?.message ?? "Could not load this criminal case.");
         if (!cancelled) setOverview(data.overview);
       })
       .catch((err: unknown) => {
-        if (!cancelled) setError(err instanceof Error ? err.message : "Could not load this criminal case.");
+        if (!cancelled)
+          setError(err instanceof Error ? err.message : "Could not load this criminal case.");
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
@@ -167,7 +175,12 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
   if (loading) return <LoadingState label="Loading criminal case" />;
   if (error) return <ErrorState message={error} />;
   if (!overview) {
-    return <EmptyState title="Case unavailable" description="This criminal case is not available in your office." />;
+    return (
+      <EmptyState
+        title="Case unavailable"
+        description="This criminal case is not available in your office."
+      />
+    );
   }
 
   return (
@@ -183,8 +196,12 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
       <p className="mt-1 text-sm text-ink/70">
         {overview.case.jurisdiction} · {overview.case.court}
       </p>
-      {overview.case.summary ? <p className="mt-2 max-w-3xl text-sm text-ink/80">{overview.case.summary}</p> : null}
-      <p className="mt-2 text-xs text-ink/55">Nyaya does not return a guilt verdict or recommend charging decisions.</p>
+      {overview.case.summary ? (
+        <p className="mt-2 max-w-3xl text-sm text-ink/80">{overview.case.summary}</p>
+      ) : null}
+      <p className="mt-2 text-xs text-ink/55">
+        Nyaya does not return a guilt verdict or recommend charging decisions.
+      </p>
 
       {section === "" ? <OverviewBody overview={overview} /> : null}
       {section === "charges" ? <ChargesBody overview={overview} /> : null}
@@ -208,7 +225,10 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
       {section === "discovery" ? <DiscoveryBody overview={overview} /> : null}
       {section === "disclosure" ? <DisclosureBody overview={overview} /> : null}
       {section === "warrants" ? (
-        <WarrantReviewPanel review={overview.suppressionReview} answer={overview.suppressionAnswer} />
+        <WarrantReviewPanel
+          review={overview.suppressionReview}
+          answer={overview.suppressionAnswer}
+        />
       ) : null}
       {section === "subpoenas" ? <SubpoenasBody overview={overview} /> : null}
       {section === "motions" ? <MotionsBody overview={overview} /> : null}
@@ -225,10 +245,39 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
           description="Timeline events use prosecution event types and stay tied to this case. Open a large case to page through events."
         />
       ) : null}
+      {section === "memory" ? (
+        <div className="mt-4 space-y-3">
+          <p className="text-sm text-ink/80">
+            Case Memory stores reviewable, provenance-backed notes for this criminal case. Proposed
+            entries are not verified facts until a human approves them.
+          </p>
+          <Link
+            className="font-semibold text-accent underline"
+            href={`/app/prosecution/${caseId}/memory`}
+          >
+            Open case memory
+          </Link>
+        </div>
+      ) : null}
+      {section === "graph" ? (
+        <div className="mt-4 space-y-3">
+          <p className="text-sm text-ink/80">
+            Case Graph persists entities and relationships for this criminal case only. Unreviewed
+            inferred edges stay proposed and are never treated as verified facts.
+          </p>
+          <Link
+            className="font-semibold text-accent underline"
+            href={`/app/prosecution/${caseId}/graph`}
+          >
+            Open case graph
+          </Link>
+        </div>
+      ) : null}
       {section === "research" ? (
         <div className="mt-4 space-y-3">
           <p className="text-sm text-ink/80">
-            Authority lookup uses the shared Nyaya Research workspace. Results remain organization-scoped.
+            Authority lookup uses the shared Nyaya Research workspace. Results remain
+            organization-scoped.
           </p>
           <Link className="font-semibold text-accent underline" href="/app/research">
             Open Nyaya Research
@@ -246,7 +295,10 @@ function OverviewBody({ overview }: { overview: Overview }) {
     <div className="mt-4 grid gap-3 md:grid-cols-2">
       <section className="rounded-md border border-line p-3">
         <h2 className="text-sm font-semibold text-ink">Defendants</h2>
-        <RecordList empty="No defendants recorded." rows={overview.defendants.map((p) => p.displayName)} />
+        <RecordList
+          empty="No defendants recorded."
+          rows={overview.defendants.map((p) => p.displayName)}
+        />
       </section>
       <section className="rounded-md border border-line p-3">
         <h2 className="text-sm font-semibold text-ink">Case snapshot</h2>
@@ -261,8 +313,8 @@ function OverviewBody({ overview }: { overview: Overview }) {
       <section className="rounded-md border border-line p-3 md:col-span-2">
         <h2 className="text-sm font-semibold text-ink">Separated issues</h2>
         <p className="mt-1 text-sm text-ink/70">
-          Charges, procedure issues, and element gaps stay separate. This list is not a guilt finding, and earlier
-          analysis is not current when new evidence or a contradiction appears.
+          Charges, procedure issues, and element gaps stay separate. This list is not a guilt
+          finding, and earlier analysis is not current when new evidence or a contradiction appears.
         </p>
         <RecordList
           empty="No separated issues recorded."
@@ -274,7 +326,8 @@ function OverviewBody({ overview }: { overview: Overview }) {
       <section className="rounded-md border border-line p-3 md:col-span-2">
         <h2 className="text-sm font-semibold text-ink">Evidence scope</h2>
         <p className="mt-1 text-sm text-ink/70">
-          Joint evidence is shared by more than one defendant. Defendant-specific evidence is listed apart from it.
+          Joint evidence is shared by more than one defendant. Defendant-specific evidence is listed
+          apart from it.
         </p>
         {overview.evidenceScope ? (
           <ul className="mt-2 space-y-1 text-sm text-ink/80">
@@ -282,7 +335,8 @@ function OverviewBody({ overview }: { overview: Overview }) {
             <li>Unassigned items: {overview.evidenceScope.unassignedEvidenceIds.length}</li>
             {overview.evidenceScope.byDefendant.map((row) => (
               <li key={row.defendantId}>
-                {row.displayName}: {row.specificEvidenceIds.length} specific, {row.jointEvidenceIds.length} joint
+                {row.displayName}: {row.specificEvidenceIds.length} specific,{" "}
+                {row.jointEvidenceIds.length} joint
               </li>
             ))}
           </ul>
@@ -293,7 +347,10 @@ function OverviewBody({ overview }: { overview: Overview }) {
       <section className="rounded-md border border-line p-3 md:col-span-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm font-semibold text-ink">Element gaps</h2>
-          <Link className="text-sm font-semibold text-accent underline" href={`/app/prosecution/${overview.case.id}/elements`}>
+          <Link
+            className="text-sm font-semibold text-accent underline"
+            href={`/app/prosecution/${overview.case.id}/elements`}
+          >
             Open Elements Matrix
           </Link>
         </div>
@@ -302,7 +359,10 @@ function OverviewBody({ overview }: { overview: Overview }) {
         ) : (
           <ul className="mt-2 space-y-2">
             {weak.map((gap) => (
-              <li key={`${gap.elementText}-${gap.status}`} className="flex flex-wrap items-center gap-2 text-sm">
+              <li
+                key={`${gap.elementText}-${gap.status}`}
+                className="flex flex-wrap items-center gap-2 text-sm"
+              >
                 <StatusLabel label={humanizeKey(gap.status)} tone={elementTone(gap.status)} />
                 <span className="text-ink/80">{gap.elementText}</span>
               </li>
@@ -314,13 +374,16 @@ function OverviewBody({ overview }: { overview: Overview }) {
         <h2 className="text-sm font-semibold text-ink">Upcoming hearings</h2>
         <RecordList
           empty="No hearings scheduled."
-          rows={overview.hearings.map((h) => `${humanizeKey(h.hearingType)}${h.outcome ? ` — ${h.outcome}` : ""}`)}
+          rows={overview.hearings.map(
+            (h) => `${humanizeKey(h.hearingType)}${h.outcome ? ` — ${h.outcome}` : ""}`,
+          )}
         />
       </section>
       <section className="rounded-md border border-line p-3">
         <h2 className="text-sm font-semibold text-ink">Suppression review</h2>
         <p className="mt-1 text-sm text-ink/70">
-          Open Warrants for the separated review. Nyaya does not decide suppression, warrant validity, or guilt.
+          Open Warrants for the separated review. Nyaya does not decide suppression, warrant
+          validity, or guilt.
         </p>
         <RecordList
           empty="No suppression review issues are open."
@@ -329,7 +392,9 @@ function OverviewBody({ overview }: { overview: Overview }) {
               ? overview.suppressionReview.issues.map(
                   (issue) => `${humanizeKey(issue.dimension)} — ${humanizeKey(issue.reviewStatus)}`,
                 )
-              : overview.issueFlags.map((issue) => `${humanizeKey(issue.issueType)} (${humanizeKey(issue.status)})`)
+              : overview.issueFlags.map(
+                  (issue) => `${humanizeKey(issue.issueType)} (${humanizeKey(issue.status)})`,
+                )
           }
         />
       </section>
@@ -397,12 +462,17 @@ function ElementsMatrixBody({ overview }: { overview: Overview }) {
     <div className="mt-4 space-y-3">
       <div className="flex flex-wrap items-center gap-2">
         <p className="text-sm text-ink/70">
-          {rows.length} elements · {rows.filter((r) => r.status !== "SUPPORTED").length} need attention
+          {rows.length} elements · {rows.filter((r) => r.status !== "SUPPORTED").length} need
+          attention
         </p>
         <div className="ml-auto flex gap-1" role="group" aria-label="Element filter">
           <button
             type="button"
-            className={filter === "all" ? "rounded border border-accent px-2 py-1 text-xs font-semibold text-accent" : "rounded border border-line px-2 py-1 text-xs"}
+            className={
+              filter === "all"
+                ? "rounded border border-accent px-2 py-1 text-xs font-semibold text-accent"
+                : "rounded border border-line px-2 py-1 text-xs"
+            }
             onClick={() => setFilter("all")}
             aria-pressed={filter === "all"}
           >
@@ -410,7 +480,11 @@ function ElementsMatrixBody({ overview }: { overview: Overview }) {
           </button>
           <button
             type="button"
-            className={filter === "weak" ? "rounded border border-accent px-2 py-1 text-xs font-semibold text-accent" : "rounded border border-line px-2 py-1 text-xs"}
+            className={
+              filter === "weak"
+                ? "rounded border border-accent px-2 py-1 text-xs font-semibold text-accent"
+                : "rounded border border-line px-2 py-1 text-xs"
+            }
             onClick={() => setFilter("weak")}
             aria-pressed={filter === "weak"}
           >
@@ -451,7 +525,9 @@ function ElementsMatrixBody({ overview }: { overview: Overview }) {
           </tbody>
         </table>
       </div>
-      <p className="text-xs text-ink/55">Guilt conclusion: none. Statuses describe evidence coverage, not probability of guilt.</p>
+      <p className="text-xs text-ink/55">
+        Guilt conclusion: none. Statuses describe evidence coverage, not probability of guilt.
+      </p>
     </div>
   );
 }
@@ -487,7 +563,10 @@ function DiscoveryBody({ overview }: { overview: Overview }) {
           </div>
         ))}
       </div>
-      <p className="text-xs text-ink/55">Disclosure decisions require human confirmation. Nyaya does not make the final disclosure call.</p>
+      <p className="text-xs text-ink/55">
+        Disclosure decisions require human confirmation. Nyaya does not make the final disclosure
+        call.
+      </p>
     </div>
   );
 }
@@ -504,7 +583,8 @@ function DisclosureBody({ overview }: { overview: Overview }) {
             : `${pending} candidate${pending === 1 ? "" : "s"} flagged for human review.`}
         </p>
         <p className="mt-2 text-xs text-ink/55">
-          Final disclose / do-not-disclose determinations are attorney actions with audit history. Confirm before changing status.
+          Final disclose / do-not-disclose determinations are attorney actions with audit history.
+          Confirm before changing status.
         </p>
       </div>
       {pending === 0 ? (
@@ -521,7 +601,10 @@ function SubpoenasBody({ overview }: { overview: Overview }) {
   if (overview.subpoenas.length === 0) {
     return (
       <div className="mt-4">
-        <EmptyState title="No subpoenas" description="Issued subpoenas and return deadlines for this case will appear here." />
+        <EmptyState
+          title="No subpoenas"
+          description="Issued subpoenas and return deadlines for this case will appear here."
+        />
       </div>
     );
   }
@@ -544,17 +627,25 @@ function MotionsBody({ overview }: { overview: Overview }) {
   if (overview.motions.length === 0) {
     return (
       <div className="mt-4">
-        <EmptyState title="No motions" description="Motions filed on this case appear here. Filing still requires a person." />
+        <EmptyState
+          title="No motions"
+          description="Motions filed on this case appear here. Filing still requires a person."
+        />
       </div>
     );
   }
   return (
     <ul className="mt-4 space-y-2 text-sm">
       {overview.motions.map((motion) => (
-        <li key={motion.id} className="flex flex-wrap items-center gap-2 rounded border border-line px-3 py-2">
+        <li
+          key={motion.id}
+          className="flex flex-wrap items-center gap-2 rounded border border-line px-3 py-2"
+        >
           <span className="font-semibold">{humanizeKey(motion.motionType)}</span>
           <StatusLabel label={humanizeKey(motion.status)} />
-          {motion.filingParty ? <span className="text-ink/60">· {humanizeKey(motion.filingParty)}</span> : null}
+          {motion.filingParty ? (
+            <span className="text-ink/60">· {humanizeKey(motion.filingParty)}</span>
+          ) : null}
         </li>
       ))}
     </ul>
@@ -565,7 +656,10 @@ function HearingsBody({ overview }: { overview: Overview }) {
   if (overview.hearings.length === 0) {
     return (
       <div className="mt-4">
-        <EmptyState title="No hearings" description="Schedule hearings to track court dates, participants, and outcomes." />
+        <EmptyState
+          title="No hearings"
+          description="Schedule hearings to track court dates, participants, and outcomes."
+        />
       </div>
     );
   }
@@ -585,14 +679,20 @@ function TasksBody({ overview }: { overview: Overview }) {
   if (overview.openTasks.length === 0) {
     return (
       <div className="mt-4">
-        <EmptyState title="No open tasks" description="Create case tasks for follow-ups, disclosures, and hearing prep." />
+        <EmptyState
+          title="No open tasks"
+          description="Create case tasks for follow-ups, disclosures, and hearing prep."
+        />
       </div>
     );
   }
   return (
     <ul className="mt-4 space-y-2 text-sm">
       {overview.openTasks.map((task) => (
-        <li key={task.id} className="flex flex-wrap items-center gap-2 rounded border border-line px-3 py-2">
+        <li
+          key={task.id}
+          className="flex flex-wrap items-center gap-2 rounded border border-line px-3 py-2"
+        >
           <span>{task.title}</span>
           <StatusLabel label={humanizeKey(task.status)} />
         </li>

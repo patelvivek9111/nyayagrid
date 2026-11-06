@@ -22,7 +22,10 @@ import { sendInviteEmail, type EmailProvider } from "@nyayagrid/platform";
  * Public invitation roles. Supervising and office-admin prosecution roles stay with the owner.
  */
 export const INVITEABLE_ROLE_KEYS = [
+  "admin",
+  "partner",
   "lawyer",
+  "paralegal",
   "staff",
   "client_guest",
   "prosecutor",
@@ -32,7 +35,10 @@ export const INVITEABLE_ROLE_KEYS = [
 ] as const;
 export type InviteableRoleKey = (typeof INVITEABLE_ROLE_KEYS)[number];
 
-export const OWNER_ASSIGNED_ROLE_KEYS = ["prosecution_office_admin", "supervising_prosecutor"] as const;
+export const OWNER_ASSIGNED_ROLE_KEYS = [
+  "prosecution_office_admin",
+  "supervising_prosecutor",
+] as const;
 
 export function isInviteableRoleKey(roleKey: string): roleKey is InviteableRoleKey {
   return (INVITEABLE_ROLE_KEYS as readonly string[]).includes(roleKey);
@@ -46,6 +52,37 @@ export function assertInviteableRoleKey(roleKey: string): InviteableRoleKey {
     );
   }
   return roleKey;
+}
+
+/**
+ * Privilege ranks for invite authority. An inviter may only assign roles at or below their rank.
+ * Prevents partners/staff with `members.invite` from escalating to admin/owner-equivalent roles.
+ */
+export const ROLE_ASSIGNMENT_RANK: Readonly<Record<string, number>> = {
+  owner: 100,
+  admin: 90,
+  prosecution_office_admin: 85,
+  supervising_prosecutor: 75,
+  partner: 70,
+  prosecutor: 55,
+  lawyer: 50,
+  investigator: 45,
+  paralegal: 40,
+  legal_support: 35,
+  staff: 30,
+  prosecution_read_only: 20,
+  client_guest: 10,
+};
+
+export function assertInviterMayAssignRole(inviterRoleKey: string, targetRoleKey: string): void {
+  const inviterRank = ROLE_ASSIGNMENT_RANK[inviterRoleKey] ?? 0;
+  const targetRank = ROLE_ASSIGNMENT_RANK[targetRoleKey] ?? Number.POSITIVE_INFINITY;
+  if (targetRank > inviterRank) {
+    throw new InviteError(
+      "FORBIDDEN",
+      `Cannot invite role "${targetRoleKey}" — exceeds inviter authority (${inviterRoleKey})`,
+    );
+  }
 }
 
 export function normalizeInviteEmail(email: string): string {
@@ -183,6 +220,23 @@ export async function createOrganizationInvite(
     throw new InviteError("NOT_FOUND", "Role not found in this organization");
   }
   assertInviteableRoleKey(role.key);
+
+  const [inviterMembership] = await db
+    .select({ roleKey: roles.key })
+    .from(memberships)
+    .innerJoin(roles, eq(memberships.roleId, roles.id))
+    .where(
+      and(
+        eq(memberships.organizationId, params.organizationId),
+        eq(memberships.userId, params.invitedByUserId),
+        eq(memberships.status, "active"),
+      ),
+    )
+    .limit(1);
+  if (!inviterMembership) {
+    throw new InviteError("FORBIDDEN", "Inviter is not an active member of this organization");
+  }
+  assertInviterMayAssignRole(inviterMembership.roleKey, role.key);
 
   const token = randomBytes(INVITE_TOKEN_BYTES).toString("base64url");
   const tokenHash = hashInviteToken(token);

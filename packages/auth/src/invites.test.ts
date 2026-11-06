@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { Database } from "@nyayagrid/database";
 import {
   acceptOrganizationInvite,
+  assertInviterMayAssignRole,
   createOrganizationInvite,
   InviteError,
   listOrganizationInvites,
@@ -16,7 +17,17 @@ import {
  */
 function chain(result: unknown) {
   const handler: Record<string, unknown> = {};
-  for (const method of ["from", "where", "limit", "orderBy", "set", "values", "returning"]) {
+  for (const method of [
+    "from",
+    "where",
+    "limit",
+    "orderBy",
+    "set",
+    "values",
+    "returning",
+    "innerJoin",
+    "leftJoin",
+  ]) {
     handler[method] = vi.fn(() => handler);
   }
   handler.then = (resolve: (v: unknown) => unknown, reject?: (e: unknown) => unknown) =>
@@ -37,6 +48,15 @@ function fakeDb(selectResults: unknown[][], overrides: Record<string, unknown> =
 
 const ORG_ROW = { id: "org_1", name: "Acme Legal" };
 const ROLE_ROW = { id: "role_1", organizationId: "org_1", key: "member" };
+
+describe("assertInviterMayAssignRole", () => {
+  it("allows equal or lower privilege assignments and blocks escalation", () => {
+    expect(() => assertInviterMayAssignRole("partner", "lawyer")).not.toThrow();
+    expect(() => assertInviterMayAssignRole("admin", "admin")).not.toThrow();
+    expect(() => assertInviterMayAssignRole("partner", "admin")).toThrow(InviteError);
+    expect(() => assertInviterMayAssignRole("lawyer", "partner")).toThrow(InviteError);
+  });
+});
 
 describe("createOrganizationInvite", () => {
   it("throws NOT_FOUND when the organization does not exist", async () => {
@@ -78,6 +98,19 @@ describe("createOrganizationInvite", () => {
     ).rejects.toMatchObject({ code: "ROLE_NOT_INVITEABLE" });
   });
 
+  it("blocks inviting a higher-privilege role than the inviter holds", async () => {
+    const db = fakeDb([[ORG_ROW], [{ ...ROLE_ROW, key: "admin" }], [{ roleKey: "partner" }]]);
+    await expect(
+      createOrganizationInvite({
+        db,
+        organizationId: "org_1",
+        email: "person@example.com",
+        roleId: "role_1",
+        invitedByUserId: "user_1",
+      }),
+    ).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+
   it("still returns the one-time token when invite email delivery throws", async () => {
     const inviteRow = {
       id: "inv_1",
@@ -93,10 +126,11 @@ describe("createOrganizationInvite", () => {
       insert: vi.fn(() => chain([inviteRow])),
     };
     const db = fakeDb(
-      [[ORG_ROW], [{ ...ROLE_ROW, key: "staff" }], [{ name: "Ada" }]],
+      [[ORG_ROW], [{ ...ROLE_ROW, key: "staff" }], [{ roleKey: "owner" }], [{ name: "Ada" }]],
       {
-      transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
-    });
+        transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
+      },
+    );
     const emailProvider = {
       name: "smtp",
       send: vi.fn(async () => {
@@ -132,10 +166,11 @@ describe("createOrganizationInvite", () => {
       insert: vi.fn(() => chain([inviteRow])),
     };
     const db = fakeDb(
-      [[ORG_ROW], [{ ...ROLE_ROW, key: "staff" }], [{ name: "Ada" }]],
+      [[ORG_ROW], [{ ...ROLE_ROW, key: "staff" }], [{ roleKey: "owner" }], [{ name: "Ada" }]],
       {
-      transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
-    });
+        transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
+      },
+    );
     const emailProvider = {
       name: "smtp",
       send: vi.fn(async () => ({ provider: "smtp", delivered: true })),
@@ -239,12 +274,9 @@ describe("acceptOrganizationInvite", () => {
     const insert = vi.fn(() => chain([{ id: "mem_1" }]));
     const update = vi.fn(() => chain([]));
     const tx = { select: vi.fn(() => chain([])), insert, update };
-    const db = fakeDb(
-      [[inviteRow], [{ email: "invitee@example.com" }]],
-      {
-        transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
-      },
-    );
+    const db = fakeDb([[inviteRow], [{ email: "invitee@example.com" }]], {
+      transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
+    });
     const result = await acceptOrganizationInvite({ db, token: "t", userId: "user_1" });
     expect(result.organizationId).toBe("org_a");
     expect(result.roleId).toBe("role_lawyer");
@@ -279,18 +311,38 @@ describe("lookupLiveOrganizationInviteByToken", () => {
   });
 
   it("rejects invalid, consumed, and expired tokens before Clerk signup starts", async () => {
-    await expect(lookupLiveOrganizationInviteByToken(fakeDb([[]]), "missing")).rejects.toMatchObject({
+    await expect(
+      lookupLiveOrganizationInviteByToken(fakeDb([[]]), "missing"),
+    ).rejects.toMatchObject({
       code: "NOT_FOUND",
     });
     await expect(
       lookupLiveOrganizationInviteByToken(
-        fakeDb([[{ id: "inv_1", revokedAt: null, acceptedAt: new Date(), expiresAt: new Date(Date.now() + 1000) }]]),
+        fakeDb([
+          [
+            {
+              id: "inv_1",
+              revokedAt: null,
+              acceptedAt: new Date(),
+              expiresAt: new Date(Date.now() + 1000),
+            },
+          ],
+        ]),
         "used",
       ),
     ).rejects.toMatchObject({ code: "ALREADY_ACCEPTED" });
     await expect(
       lookupLiveOrganizationInviteByToken(
-        fakeDb([[{ id: "inv_1", revokedAt: null, acceptedAt: null, expiresAt: new Date(Date.now() - 1000) }]]),
+        fakeDb([
+          [
+            {
+              id: "inv_1",
+              revokedAt: null,
+              acceptedAt: null,
+              expiresAt: new Date(Date.now() - 1000),
+            },
+          ],
+        ]),
         "old",
       ),
     ).rejects.toMatchObject({ code: "EXPIRED" });

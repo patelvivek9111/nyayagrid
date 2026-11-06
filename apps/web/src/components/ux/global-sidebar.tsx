@@ -22,6 +22,7 @@ export function GlobalSidebar() {
   const complianceCap = useOrgCapability(organizationId, "compliance.manage");
   const prosecutionView = useOrgCapability(organizationId, "prosecution.view");
   const prosecutionAdmin = useOrgCapability(organizationId, "organization.manage");
+  const auditView = useOrgCapability(organizationId, "audit.view");
   const [cases, setCases] = useState<CaseRow[]>([]);
   const [chats, setChats] = useState<ChatRow[]>([]);
   const [switchOpen, setSwitchOpen] = useState(false);
@@ -278,6 +279,12 @@ export function GlobalSidebar() {
           active={pathname.startsWith("/app/clients")}
         />
         <WorkspaceNavLink
+          href="/app/contacts"
+          label="Contacts"
+          title="People who are not clients — counsel, witnesses, experts"
+          active={pathname.startsWith("/app/contacts")}
+        />
+        <WorkspaceNavLink
           href="/app/calendar"
           label="Calendar"
           title="Upcoming deadlines and tasks"
@@ -313,12 +320,23 @@ export function GlobalSidebar() {
           title="Search legal sources"
           active={pathname.startsWith("/app/research")}
         />
-        {(prosecutionView.allowed || prosecutionAdmin.allowed) ? (
+        {prosecutionView.allowed || prosecutionAdmin.allowed ? (
           <WorkspaceNavLink
             href="/app/prosecution"
             label="Prosecution"
             title="Criminal cases, charges, and evidence"
-            active={pathname.startsWith("/app/prosecution")}
+            active={
+              pathname.startsWith("/app/prosecution") &&
+              !pathname.startsWith("/app/prosecution/audit")
+            }
+          />
+        ) : null}
+        {(prosecutionView.allowed || prosecutionAdmin.allowed) && auditView.allowed ? (
+          <WorkspaceNavLink
+            href="/app/prosecution/audit"
+            label="Audit"
+            title="Authorized prosecution office audit trail"
+            active={pathname.startsWith("/app/prosecution/audit")}
           />
         ) : null}
         {complianceCap.allowed ? (

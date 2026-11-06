@@ -24,7 +24,51 @@ export const OWNER_CAPABILITIES: Capability[] = [
   "prosecution.review",
 ];
 
-const PROSECUTION_VIEW = ["prosecution.view", "documents.view"] as const satisfies readonly Capability[];
+/** Firm administrator — org/membership control without needing to be the Owner. */
+export const ADMIN_CAPABILITIES: Capability[] = [
+  "organization.manage",
+  "members.invite",
+  "members.remove",
+  "clients.view",
+  "clients.edit",
+  "matters.create",
+  "matters.view",
+  "matters.edit",
+  "matters.close",
+  "documents.upload",
+  "documents.view",
+  "documents.edit",
+  "documents.delete",
+  "timeline.manage",
+  "research.run",
+  "drafts.create",
+  "audit.view",
+  "compliance.manage",
+];
+
+/** Supervising lawyer — full matter work plus invite and close. */
+export const PARTNER_CAPABILITIES: Capability[] = [
+  "members.invite",
+  "clients.view",
+  "clients.edit",
+  "matters.create",
+  "matters.view",
+  "matters.edit",
+  "matters.close",
+  "documents.upload",
+  "documents.view",
+  "documents.edit",
+  "documents.delete",
+  "timeline.manage",
+  "research.run",
+  "drafts.create",
+  "audit.view",
+];
+
+const PROSECUTION_VIEW = [
+  "prosecution.view",
+  "documents.view",
+] as const satisfies readonly Capability[];
 const PROSECUTION_WORK = [
   "prosecution.view",
   "prosecution.edit",
@@ -49,8 +93,8 @@ export const PROSECUTION_ROLE_DEFINITIONS = [
   {
     key: "supervising_prosecutor",
     name: "Supervising prosecutor",
-    description: "Review prosecutors' work, including disclosure review",
-    capabilities: [...PROSECUTION_WORK, "prosecution.review"] as Capability[],
+    description: "Review prosecutors' work, including disclosure review and office audit",
+    capabilities: [...PROSECUTION_WORK, "prosecution.review", "audit.view"] as Capability[],
   },
   {
     key: "prosecutor",
@@ -67,8 +111,10 @@ export const PROSECUTION_ROLE_DEFINITIONS = [
   {
     key: "legal_support",
     name: "Legal support",
-    description: "Prepare files and discovery intake without final disclosure authority",
-    capabilities: ["prosecution.view", "prosecution.edit", "documents.view", "documents.upload"] as Capability[],
+    description:
+      "Prepare files and discovery intake without charge edit or final disclosure authority",
+    // Must NOT include prosecution.edit — consequential case edits stay with prosecutors/reviewers.
+    capabilities: ["prosecution.view", "documents.view", "documents.upload"] as Capability[],
   },
   {
     key: "prosecution_read_only",
@@ -92,6 +138,20 @@ export const LAWYER_CAPABILITIES: Capability[] = [
   "drafts.create",
 ];
 
+/** Paralegal — matter/document support without org admin or matter create/close. */
+export const PARALEGAL_CAPABILITIES: Capability[] = [
+  "clients.view",
+  "clients.edit",
+  "matters.view",
+  "matters.edit",
+  "documents.upload",
+  "documents.view",
+  "documents.edit",
+  "timeline.manage",
+  "research.run",
+  "drafts.create",
+];
+
 export const STAFF_CAPABILITIES: Capability[] = [
   "clients.view",
   "matters.view",
@@ -101,6 +161,10 @@ export const STAFF_CAPABILITIES: Capability[] = [
 
 export const CLIENT_GUEST_CAPABILITIES: Capability[] = ["matters.view", "documents.view"];
 
+/**
+ * Professional system roles per product requirement:
+ * Owner / Administrator / Partner / Lawyer / Paralegal / Staff / Client Guest.
+ */
 export const SYSTEM_ROLE_DEFINITIONS = [
   {
     key: "owner",
@@ -109,10 +173,28 @@ export const SYSTEM_ROLE_DEFINITIONS = [
     capabilities: OWNER_CAPABILITIES,
   },
   {
+    key: "admin",
+    name: "Administrator",
+    description: "Administer firm membership, matters, and compliance",
+    capabilities: ADMIN_CAPABILITIES,
+  },
+  {
+    key: "partner",
+    name: "Partner",
+    description: "Supervising lawyer with matter close and invite authority",
+    capabilities: PARTNER_CAPABILITIES,
+  },
+  {
     key: "lawyer",
     name: "Lawyer",
     description: "Matter and document work",
     capabilities: LAWYER_CAPABILITIES,
+  },
+  {
+    key: "paralegal",
+    name: "Paralegal",
+    description: "Matter and document support without org administration",
+    capabilities: PARALEGAL_CAPABILITIES,
   },
   {
     key: "staff",

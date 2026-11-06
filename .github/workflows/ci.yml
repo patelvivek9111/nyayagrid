@@ -147,7 +147,7 @@ jobs:
           echo "GOLDEN_MATTER_ID=$MATTER_ID" >> "$GITHUB_ENV"
           echo "Seeded GOLDEN_MATTER_ID=$MATTER_ID"
 
-      # Playwright starts its own `next dev` + Inngest (see playwright.config.ts webServer) against
+      # Playwright starts its own `next start` + Inngest (see playwright.config.ts webServer) against
       # the Postgres service and MinIO started above. GOLDEN_MATTER_ID comes from the seed step.
       - name: End-to-end tests (Playwright)
         run: npm run test:e2e

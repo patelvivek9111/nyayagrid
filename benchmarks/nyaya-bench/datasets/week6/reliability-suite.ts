@@ -34,7 +34,6 @@ const JOB_INVENTORY = [
   "matter.extract_entities",
   "research.ingest_authority",
   "agent.execute_run",
-  "guide.ingest_document",
 ] as const;
 
 export type RetryPolicy = {

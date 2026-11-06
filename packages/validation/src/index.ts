@@ -21,7 +21,10 @@ export const createOrganizationSchema = z.object({
 export const inviteMembershipSchema = z.object({
   email: z.string().email(),
   roleKey: z.enum([
+    "admin",
+    "partner",
     "lawyer",
+    "paralegal",
     "staff",
     "client_guest",
     "prosecutor",
@@ -101,12 +104,7 @@ export const updateClientSchema = createClientSchema
     status: z.enum(["active", "archived"]).optional(),
   });
 
-export const jurisdictionModeSchema = z.enum([
-  "state",
-  "federal",
-  "multi_jurisdiction",
-  "unknown",
-]);
+export const jurisdictionModeSchema = z.enum(["state", "federal", "multi_jurisdiction", "unknown"]);
 export const forumTypeSchema = z.enum(["state", "federal", "administrative", "other"]);
 export const choiceOfLawStatusSchema = z.enum([
   "none_known",
@@ -159,12 +157,7 @@ export const executionStrategySchema = z.enum(["auto", "fast", "deep"]);
 
 /** Ask-or-task entry point: `mode` controls whether the request is routed as Q&A, a forced agent
  * run, or auto-classified. Defaults to "auto" so existing ask-only callers keep working. */
-export const sourceScopeSchema = z.enum([
-  "case",
-  "legal_research",
-  "web",
-  "case_plus_legal",
-]);
+export const sourceScopeSchema = z.enum(["case", "legal_research", "web", "case_plus_legal"]);
 
 export type SourceScopeInput = z.infer<typeof sourceScopeSchema>;
 
@@ -200,7 +193,6 @@ export const runAgentTaskSchema = z.object({
   execute: z.boolean().optional(),
   conversationId: z.string().uuid().optional().nullable(),
 });
-
 
 export const reviewAgentApprovalSchema = z.object({
   action: z.enum(["approve", "edit_and_approve", "reject"]),
@@ -909,7 +901,13 @@ export const createTimeEntrySchema = z.object({
   organizationId: z.string().uuid(),
   matterId: z.string().uuid(),
   description: z.string().trim().min(1).max(2000),
-  minutes: z.number().int().min(1).max(24 * 60),
+  minutes: z
+    .number()
+    .int()
+    .min(1)
+    .max(24 * 60),
+  billable: z.boolean().optional(),
+  hourlyRateCents: z.number().int().min(0).max(10_000_00).optional().nullable(),
   source: z.enum(["manual", "chat", "draft"]).optional(),
   conversationId: z.string().uuid().optional().nullable(),
   draftId: z.string().uuid().optional().nullable(),
@@ -919,7 +917,12 @@ export const suggestTimeFromChatSchema = z.object({
   organizationId: z.string().uuid(),
   matterId: z.string().uuid(),
   conversationId: z.string().uuid(),
-  minutes: z.number().int().min(1).max(24 * 60).optional(),
+  minutes: z
+    .number()
+    .int()
+    .min(1)
+    .max(24 * 60)
+    .optional(),
 });
 
 export const reviewTimeEntrySchema = z.object({
@@ -930,6 +933,20 @@ export const createInvoiceFromTimeSchema = z.object({
   organizationId: z.string().uuid(),
   matterId: z.string().uuid(),
   notes: z.string().trim().max(4000).optional().nullable(),
+});
+
+export const updateDraftInvoiceSchema = z.object({
+  notes: z.string().trim().max(4000).optional().nullable(),
+  lineItems: z
+    .array(
+      z.object({
+        id: z.string().uuid(),
+        description: z.string().trim().min(1).max(2000).optional(),
+        hourlyRateCents: z.number().int().min(0).max(10_000_00).optional().nullable(),
+      }),
+    )
+    .max(500)
+    .optional(),
 });
 
 export const reviewInvoiceSchema = z.object({
@@ -1069,6 +1086,94 @@ export const updateNoteSchema = z.object({
   title: z.string().trim().min(1).max(300).optional(),
   content: z.string().trim().min(1).max(200000).optional(),
   expectedVersionId: z.string().uuid().optional(),
+});
+
+const prosecutionCaseMemoryTypeSchema = z.enum([
+  "confirmed_fact",
+  "disputed_fact",
+  "allegation",
+  "admission",
+  "legal_issue",
+  "open_question",
+  "procedural_context",
+  "evidence_note",
+  "strategy_note",
+  "other",
+]);
+
+const prosecutionMemoryProvenanceSchema = z
+  .object({
+    documentId: z.string().uuid().nullable().optional(),
+    authorityId: z.string().uuid().nullable().optional(),
+    sourceSpan: z.string().trim().max(8000).nullable().optional(),
+    sourcePage: z.number().int().nullable().optional(),
+    section: z.string().trim().max(200).nullable().optional(),
+    extractionOrigin: z
+      .enum(["human", "import", "deterministic_fixture", "source_metadata"])
+      .optional(),
+    humanEntered: z.boolean().optional(),
+  })
+  .refine(
+    (value) =>
+      value.humanEntered === true ||
+      value.extractionOrigin === "human" ||
+      Boolean(value.documentId || value.authorityId || value.sourceSpan),
+    { message: "Provenance requires a document, authority, source span, or human origin." },
+  );
+
+export const createProsecutionCaseMemorySchema = z.object({
+  organizationId: z.string().uuid(),
+  memoryType: prosecutionCaseMemoryTypeSchema,
+  content: z.string().trim().min(1).max(8000),
+  evidenceItemId: z.string().uuid().optional().nullable(),
+  origin: z.enum(["ai", "manual"]).optional(),
+  status: z.enum(["proposed", "approved"]).optional(),
+  confidence: z.enum(["low", "medium", "high"]).optional().nullable(),
+  provenance: prosecutionMemoryProvenanceSchema,
+  supersedesId: z.string().uuid().optional().nullable(),
+});
+
+export const reviewProsecutionCaseMemorySchema = z.object({
+  organizationId: z.string().uuid(),
+  action: z.enum(["approve", "reject", "edit", "supersede"]),
+  content: z.string().trim().min(1).max(8000).optional().nullable(),
+  memoryType: prosecutionCaseMemoryTypeSchema.optional().nullable(),
+  evidenceItemId: z.string().uuid().optional().nullable(),
+  rejectionReason: z.string().trim().max(2000).optional().nullable(),
+  provenance: prosecutionMemoryProvenanceSchema.optional().nullable(),
+});
+
+/** PROF-CONTACT-01 — organization contacts (distinct from clients). */
+export const createContactSchema = z.object({
+  organizationId: z.string().uuid(),
+  displayName: z.string().trim().min(1).max(300),
+  email: z.string().email().optional().nullable().or(z.literal("")),
+  phone: z.string().trim().max(60).optional().nullable(),
+  title: z.string().trim().max(200).optional().nullable(),
+  notes: z.string().max(10000).optional().nullable(),
+});
+
+export const updateContactSchema = createContactSchema.omit({ organizationId: true }).partial();
+
+export const linkClientContactSchema = z.object({
+  clientId: z.string().uuid().optional(),
+  contactId: z.string().uuid().optional(),
+  relationshipRole: z.string().trim().min(1).max(80).default("other"),
+});
+
+/** PROF-FOLDER-01 — matter document folders. */
+export const createDocumentFolderSchema = z.object({
+  name: z.string().trim().min(1).max(200),
+  parentFolderId: z.string().uuid().optional().nullable(),
+});
+
+export const updateDocumentFolderSchema = z.object({
+  name: z.string().trim().min(1).max(200).optional(),
+  parentFolderId: z.string().uuid().nullable().optional(),
+});
+
+export const moveDocumentToFolderSchema = z.object({
+  folderId: z.string().uuid().nullable(),
 });
 
 export { z };

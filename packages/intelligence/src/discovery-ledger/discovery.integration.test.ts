@@ -11,12 +11,12 @@ import {
   eq,
   isGraphNodeType,
   matters,
+  matterCommunications,
   matterEntities,
   matterMembers,
   memberships,
   users,
   civilEvidenceItems,
-  matterCommunications,
   tasks,
 } from "@nyayagrid/database";
 import { AuthorizationError } from "@nyayagrid/permissions";

@@ -1,4 +1,15 @@
-import { boolean, date, index, integer, jsonb, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  date,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { matters, organizations, users } from "./index";
 import { legalAuthorities } from "./phase6";
@@ -13,6 +24,17 @@ export type RecordProvenance = {
   humanEntered?: boolean;
 };
 
+/** Append-only custody transfer records for prosecution evidence (jsonb array). */
+export type ProsecutionCustodyTransfer = {
+  actor: string;
+  timestamp: string;
+  from: string | null;
+  to: string;
+  location?: string | null;
+  source: RecordProvenance;
+  notes?: string | null;
+};
+
 const timestamps = {
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
@@ -25,7 +47,9 @@ export const legalStandards = pgTable(
     organizationId: uuid("organization_id")
       .notNull()
       .references(() => organizations.id, { onDelete: "cascade" }),
-    authorityId: uuid("authority_id").references(() => legalAuthorities.id, { onDelete: "set null" }),
+    authorityId: uuid("authority_id").references(() => legalAuthorities.id, {
+      onDelete: "set null",
+    }),
     issueId: uuid("issue_id"),
     ruleText: text("rule_text").notNull(),
     standardType: text("standard_type").notNull(),
@@ -97,7 +121,11 @@ export const legalIssueAuthorities = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
-    uniqueIndex("legal_issue_authorities_edge_uidx").on(table.issueId, table.authorityId, table.relation),
+    uniqueIndex("legal_issue_authorities_edge_uidx").on(
+      table.issueId,
+      table.authorityId,
+      table.relation,
+    ),
     index("legal_issue_authorities_org_idx").on(table.organizationId),
   ],
 );
@@ -226,7 +254,10 @@ export const prosecutionDefendants = pgTable(
     notes: text("notes"),
     status: text("status").notNull().default("active"),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
-    privacy: jsonb("privacy").$type<{ dobRestricted: boolean }>().notNull().default({ dobRestricted: true }),
+    privacy: jsonb("privacy")
+      .$type<{ dobRestricted: boolean }>()
+      .notNull()
+      .default({ dobRestricted: true }),
     ...timestamps,
   },
   (table) => [
@@ -275,7 +306,9 @@ export const prosecutionCharges = pgTable(
       .notNull()
       .references(() => prosecutionDefendants.id, { onDelete: "cascade" }),
     countNumber: text("count_number").notNull(),
-    statuteAuthorityId: uuid("statute_authority_id").references(() => legalAuthorities.id, { onDelete: "set null" }),
+    statuteAuthorityId: uuid("statute_authority_id").references(() => legalAuthorities.id, {
+      onDelete: "set null",
+    }),
     statuteCitation: text("statute_citation"),
     offenseName: text("offense_name").notNull(),
     offenseClassification: text("offense_classification"),
@@ -289,7 +322,11 @@ export const prosecutionCharges = pgTable(
   },
   (table) => [
     index("prosecution_charges_case_idx").on(table.criminalCaseId),
-    uniqueIndex("prosecution_charges_count_uidx").on(table.criminalCaseId, table.defendantId, table.countNumber),
+    uniqueIndex("prosecution_charges_count_uidx").on(
+      table.criminalCaseId,
+      table.defendantId,
+      table.countNumber,
+    ),
   ],
 );
 
@@ -309,7 +346,9 @@ export const prosecutionChargeElements = pgTable(
     elementOrder: integer("element_order").notNull(),
     elementText: text("element_text").notNull(),
     elementType: text("element_type").notNull(),
-    legalStandardId: uuid("legal_standard_id").references(() => legalStandards.id, { onDelete: "set null" }),
+    legalStandardId: uuid("legal_standard_id").references(() => legalStandards.id, {
+      onDelete: "set null",
+    }),
     supportingEvidenceIds: jsonb("supporting_evidence_ids").$type<string[]>().notNull().default([]),
     contraryEvidenceIds: jsonb("contrary_evidence_ids").$type<string[]>().notNull().default([]),
     uncertainEvidenceIds: jsonb("uncertain_evidence_ids").$type<string[]>().notNull().default([]),
@@ -343,7 +382,10 @@ export const prosecutionEvidenceItems = pgTable(
     collector: text("collector"),
     collectionDate: date("collection_date"),
     storageReference: text("storage_reference"),
-    chainOfCustody: jsonb("chain_of_custody").$type<string[]>().notNull().default([]),
+    chainOfCustody: jsonb("chain_of_custody")
+      .$type<ProsecutionCustodyTransfer[]>()
+      .notNull()
+      .default([]),
     relatedDefendantIds: jsonb("related_defendant_ids").$type<string[]>().notNull().default([]),
     relatedChargeIds: jsonb("related_charge_ids").$type<string[]>().notNull().default([]),
     relatedElementIds: jsonb("related_element_ids").$type<string[]>().notNull().default([]),
@@ -421,7 +463,10 @@ export const prosecutionWitnessStatements = pgTable(
     sourceSpan: text("source_span"),
     interviewer: text("interviewer"),
     eventContext: text("event_context"),
-    claims: jsonb("claims").$type<Array<{ key: string; value: string; kind?: string }>>().notNull().default([]),
+    claims: jsonb("claims")
+      .$type<Array<{ key: string; value: string; kind?: string }>>()
+      .notNull()
+      .default([]),
     confidence: text("confidence").notNull().default("low"),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -520,7 +565,10 @@ export const prosecutionWarrants = pgTable(
     sourceFactIds: jsonb("source_fact_ids").$type<string[]>().notNull().default([]),
     seizedEvidenceIds: jsonb("seized_evidence_ids").$type<string[]>().notNull().default([]),
     returnNotes: text("return_notes"),
-    relatedSuppressionIssueIds: jsonb("related_suppression_issue_ids").$type<string[]>().notNull().default([]),
+    relatedSuppressionIssueIds: jsonb("related_suppression_issue_ids")
+      .$type<string[]>()
+      .notNull()
+      .default([]),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
     ...timestamps,
   },
@@ -751,6 +799,86 @@ export const prosecutionTasks = pgTable(
   (table) => [index("prosecution_tasks_case_idx").on(table.criminalCaseId)],
 );
 
+/** Case-scoped Prosecution Memory — reviewable; proposed ≠ verified fact. No guilt/charging fields. */
+export const PROSECUTION_CASE_MEMORY_TYPES = [
+  "confirmed_fact",
+  "disputed_fact",
+  "allegation",
+  "admission",
+  "legal_issue",
+  "open_question",
+  "procedural_context",
+  "evidence_note",
+  "strategy_note",
+  "other",
+] as const;
+
+export type ProsecutionCaseMemoryType = (typeof PROSECUTION_CASE_MEMORY_TYPES)[number];
+
+export const PROSECUTION_CASE_MEMORY_STATUSES = [
+  "proposed",
+  "approved",
+  "rejected",
+  "superseded",
+] as const;
+
+export type ProsecutionCaseMemoryStatus = (typeof PROSECUTION_CASE_MEMORY_STATUSES)[number];
+
+export const prosecutionCaseMemories = pgTable(
+  "prosecution_case_memories",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    organizationId: uuid("organization_id")
+      .notNull()
+      .references(() => organizations.id, { onDelete: "cascade" }),
+    criminalCaseId: uuid("criminal_case_id")
+      .notNull()
+      .references(() => criminalCases.id, { onDelete: "cascade" }),
+    evidenceItemId: uuid("evidence_item_id").references(() => prosecutionEvidenceItems.id, {
+      onDelete: "set null",
+    }),
+    memoryType: text("memory_type").notNull().default("other"),
+    content: text("content").notNull(),
+    status: text("status").notNull().default("proposed"),
+    origin: text("origin").notNull().default("manual"),
+    confidence: text("confidence"),
+    provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
+    supersededBy: uuid("superseded_by"),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id),
+    reviewedByUserId: uuid("reviewed_by_user_id").references(() => users.id),
+    ...timestamps,
+  },
+  (table) => [
+    index("prosecution_case_memories_case_idx").on(table.criminalCaseId),
+    index("prosecution_case_memories_org_idx").on(table.organizationId),
+    index("prosecution_case_memories_status_idx").on(table.organizationId, table.status),
+    index("prosecution_case_memories_case_status_idx").on(table.criminalCaseId, table.status),
+    index("prosecution_case_memories_evidence_idx").on(table.evidenceItemId),
+  ],
+);
+
+export const PROSECUTION_GRAPH_NODE_KINDS = [
+  "criminal_case",
+  "defendant",
+  "charge",
+  "charge_element",
+  "evidence",
+  "witness",
+  "warrant",
+  "motion",
+  "hearing",
+  "legal_issue",
+  "other",
+] as const;
+export type ProsecutionGraphNodeKind = (typeof PROSECUTION_GRAPH_NODE_KINDS)[number];
+
+export const PROSECUTION_GRAPH_REVIEW_STATUSES = ["proposed", "approved", "rejected"] as const;
+export type ProsecutionGraphReviewStatus = (typeof PROSECUTION_GRAPH_REVIEW_STATUSES)[number];
+
+/**
+ * Case-scoped prosecution graph — separate from matter graph_nodes to preserve
+ * criminal-case isolation (never invent a matter just to store prosecution relationships).
+ */
 export const prosecutionGraphNodes = pgTable(
   "prosecution_graph_nodes",
   {
@@ -761,14 +889,26 @@ export const prosecutionGraphNodes = pgTable(
     criminalCaseId: uuid("criminal_case_id")
       .notNull()
       .references(() => criminalCases.id, { onDelete: "cascade" }),
-    nodeType: text("node_type").notNull(),
-    refId: text("ref_id").notNull(),
+    nodeKind: text("node_kind").notNull(),
+    canonicalEntityType: text("canonical_entity_type").notNull(),
+    canonicalEntityId: uuid("canonical_entity_id").notNull(),
+    displayName: text("display_name").notNull(),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
-    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    origin: text("origin").notNull().default("manual"),
+    status: text("status").notNull().default("approved"),
+    metadata: jsonb("metadata").$type<Record<string, unknown>>().notNull().default({}),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id),
+    ...timestamps,
   },
   (table) => [
-    uniqueIndex("prosecution_graph_nodes_ref_uidx").on(table.criminalCaseId, table.nodeType, table.refId),
+    uniqueIndex("prosecution_graph_nodes_canonical_uidx").on(
+      table.criminalCaseId,
+      table.canonicalEntityType,
+      table.canonicalEntityId,
+    ),
     index("prosecution_graph_nodes_case_idx").on(table.criminalCaseId),
+    index("prosecution_graph_nodes_org_idx").on(table.organizationId),
+    index("prosecution_graph_nodes_kind_idx").on(table.criminalCaseId, table.nodeKind),
   ],
 );
 
@@ -782,13 +922,30 @@ export const prosecutionGraphEdges = pgTable(
     criminalCaseId: uuid("criminal_case_id")
       .notNull()
       .references(() => criminalCases.id, { onDelete: "cascade" }),
-    fromRef: text("from_ref").notNull(),
-    toRef: text("to_ref").notNull(),
-    relationship: text("relationship").notNull(),
+    fromNodeId: uuid("from_node_id")
+      .notNull()
+      .references(() => prosecutionGraphNodes.id, { onDelete: "cascade" }),
+    toNodeId: uuid("to_node_id")
+      .notNull()
+      .references(() => prosecutionGraphNodes.id, { onDelete: "cascade" }),
+    relationshipType: text("relationship_type").notNull(),
     provenance: jsonb("provenance").$type<RecordProvenance>().notNull(),
-    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    origin: text("origin").notNull().default("manual"),
+    status: text("status").notNull().default("proposed"),
+    confidence: text("confidence"),
+    createdByUserId: uuid("created_by_user_id").references(() => users.id),
+    reviewedByUserId: uuid("reviewed_by_user_id").references(() => users.id),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    rejectionReason: text("rejection_reason"),
+    ...timestamps,
   },
-  (table) => [index("prosecution_graph_edges_case_idx").on(table.criminalCaseId)],
+  (table) => [
+    index("prosecution_graph_edges_case_idx").on(table.criminalCaseId),
+    index("prosecution_graph_edges_org_idx").on(table.organizationId),
+    index("prosecution_graph_edges_from_idx").on(table.fromNodeId),
+    index("prosecution_graph_edges_to_idx").on(table.toNodeId),
+    index("prosecution_graph_edges_status_idx").on(table.criminalCaseId, table.status),
+  ],
 );
 
 export const prosecutionElementStatusCheck = sql`status in ('SUPPORTED','PARTIALLY_SUPPORTED','CONFLICTED','NO_EVIDENCE_FOUND','UNKNOWN')`;

@@ -176,6 +176,62 @@
       "when": 1788200000000,
       "tag": "0024_citation_target_classification",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1788300000000,
+      "tag": "0025_prosecution_case_memories",
+      "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1788400000000,
+      "tag": "0026_prosecution_case_graph",
+      "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1788500000000,
+      "tag": "0027_professional_contacts_folders",
+      "breakpoints": true
+    },
+    {
+      "idx": 28,
+      "version": "7",
+      "when": 1788600000000,
+      "tag": "0028_firm_time_billing_rates",
+      "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1788700000000,
+      "tag": "0029_repair_journaled_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1788800000000,
+      "tag": "0030_repair_prosecution_graph_0026",
+      "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1788900000000,
+      "tag": "0031_migration_safety_assertions",
+      "breakpoints": true
+    },
+    {
+      "idx": 32,
+      "version": "7",
+      "when": 1789000000000,
+      "tag": "0032_prosecution_graph_integrity_contract",
+      "breakpoints": true
     }
   ]
 }
