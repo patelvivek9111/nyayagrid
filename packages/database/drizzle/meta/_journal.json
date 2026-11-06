@@ -218,6 +218,13 @@
       "when": 1788800000000,
       "tag": "0030_repair_prosecution_graph_0026",
       "breakpoints": true
+    },
+    {
+      "idx": 31,
+      "version": "7",
+      "when": 1788900000000,
+      "tag": "0031_migration_safety_assertions",
+      "breakpoints": true
     }
   ]
 }

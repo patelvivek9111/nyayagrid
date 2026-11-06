@@ -1,8 +1,8 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_POST_PR08_PRODUCT_VERIFICATION",
+  "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
   "generatedAt": "2026-11-06T01:07:08.561Z",
-  "head": "2453d874403b0ee6379c0974487e0cc541ae0849",
+  "head": "pending-pr09-tip",
   "branch": "verify/post-pr08-product-verification",
   "remoteCi": {
     "run": "41689403691",
@@ -264,7 +264,9 @@
         "POST_PR08: disposable nyaya_mig_smoke_0028 full migrate verified billable columns then dropped",
         "Not trust accounting / payment processing",
         "Windows vitest junction: suite discovery flaky; CI Linux remains authoritative for vitest",
-        "Authenticated UI E2E still DEFERRED_OPERATOR_ACTION (Clerk MFA)"
+        "Authenticated UI E2E still DEFERRED_OPERATOR_ACTION (Clerk MFA)",
+        "PR09_REMED: Playwright firm-workspace billing locator fixed; notice keeps not payment collection + This is not trust accounting",
+        "PR09_REMED: migration matrix A–E+G PASS via scripts/migration-safety/pr09-matrix.mjs"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "pending-pr",
@@ -1571,5 +1573,22 @@
       "schemaRepairs": ["0029 contacts/memory/billing", "0030 graph 0026 upgrade"],
       "smokes": ["verify-prosecution-graph-custody-db.mjs ok"]
     }
+  },
+  "pr09Remediation": {
+    "classification": "NYAYAGRID_PR09_RELEASE_BLOCKER_REMEDIATION",
+    "playwrightFix": "e2e/firm-workspace.spec.ts asserts not payment collection + trust accounting; billing notice restored explicit not trust accounting",
+    "failedRun": 42144881311,
+    "migrationRootCauseDoc": "docs/audits/PR09_MIGRATION_JOURNAL_ROOT_CAUSE.md",
+    "matrixScript": "scripts/migration-safety/pr09-matrix.mjs",
+    "matrix": {
+      "A_fresh": "PASS",
+      "B_fully_migrated_retry": "PASS",
+      "C_journaled_missing_objects": "PASS",
+      "D_partial_schema_fail_closed": "PASS",
+      "E_populated_preservation": "PASS",
+      "G_stub_graph_upgrade": "PASS"
+    },
+    "migrationsAdded": ["0031_migration_safety_assertions"],
+    "drizzleWhenGate": "hash never rechecked; created_at < when only"
   }
 }

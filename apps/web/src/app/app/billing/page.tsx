@@ -107,7 +107,7 @@ export default function BillingPage() {
       <div className="mt-4">
         <FirmNotice>
           Draft invoices from posted billable time. Fee totals are assistance only — not payment
-          collection or trust accounting.
+          collection. This is not trust accounting.
         </FirmNotice>
       </div>
       {error ? (
