@@ -211,6 +211,13 @@
       "when": 1788700000000,
       "tag": "0029_repair_journaled_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 30,
+      "version": "7",
+      "when": 1788800000000,
+      "tag": "0030_repair_prosecution_graph_0026",
+      "breakpoints": true
     }
   ]
 }

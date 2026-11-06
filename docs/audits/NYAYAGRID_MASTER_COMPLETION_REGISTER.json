@@ -73,21 +73,20 @@
   "totals": {
     "requirementsInventoried": 54,
     "note": "POST_PR08 recount from requirement entries; VERIFIED counted with VERIFIED_COMPLETE in verifiedComplete. Do not upgrade solely because PRs merged.",
-    "verifiedComplete": 17,
-    "verifiedCompleteStrict": 16,
-    "verifiedAlias": 1,
+    "verifiedComplete": 15,
+    "verifiedCompleteStrict": 15,
+    "verifiedAlias": 0,
     "implementedUnverified": 11,
-    "partial": 23,
+    "partial": 25,
     "missing": 0,
     "broken": 0,
     "blocked": 2,
     "outOfScope": 1,
     "byStatus": {
       "IMPLEMENTED_UNVERIFIED": 11,
-      "VERIFIED_COMPLETE": 16,
-      "PARTIAL": 23,
+      "VERIFIED_COMPLETE": 15,
+      "PARTIAL": 25,
       "BLOCKED": 2,
-      "VERIFIED": 1,
       "OUT_OF_SCOPE": 1
     },
     "p0": 13,
@@ -217,7 +216,8 @@
         "WP-03A: local certification DB access recovered + live census complete; research go-live still blocked (843 cases, synthetic majority, thin citation graph)",
         "WP-03C: Neon has 5621 text-backed cases but product research binds DATABASE_URL (local cert DB is not Neon); research go-live blocked",
         "WP-03D implementation complete (partial): guarded corpus adapter + quote safety; live Neon RO cert blocked on SELECT-only credential",
-        "WP-03E: ROLE_DESIGNED; CREDENTIAL_PROVISIONING_REQUIRED; live staging acceptance not run; 10k acquisition not closed"
+        "WP-03E: ROLE_DESIGNED; CREDENTIAL_PROVISIONING_REQUIRED; live staging acceptance not run; 10k acquisition not closed",
+        "POST_PR08_INV: WP-03E remains ROLE/CREDENTIAL provisioning required; no Neon RO live cert this session"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "b428b87",
@@ -238,7 +238,8 @@
         "POST_PR08: scripts/verify-draft-helpers.mjs DRAFT_HELPERS_OK (assertion filter, quote neutralize, source guard, insufficient source)",
         "POST_PR08: e2e/professional.spec.ts Draft generate shows sources or insufficient then saves a version (Clerk auth deferred)",
         "POST_PR08: APIs matters/[matterId]/drafts + versions/restore/transform + status PATCH",
-        "Human review required; no send/file from draft UI"
+        "Human review required; no send/file from draft UI",
+        "POST_PR08_INV: no draft export route/UI; review is in_review only (no final); draft.* audit rows untested; authorityWarnings not surfaced in UI"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "c2c3d09",
@@ -390,18 +391,20 @@
       "subsystem": "Evidence",
       "feature": "Chain of custody",
       "requirement": "Evidence inventory + CoC provenance",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
       "evidence": [
         "ProsecutionCustodyTransfer typed jsonb (was string[])",
         "normalizeCustody on evidence create",
         "appendProsecutionEvidenceCustody append-only API",
-        "chain-of-custody.test.ts"
+        "chain-of-custody.test.ts",
+        "POST_PR08_INV: custody API append-only; no CoC UI; no prior RUN_DB custody suite",
+        "POST_PR08_INV: scripts/verify-prosecution-graph-custody-db.mjs custodyLength 2 + cross-office deny"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "pending",
-      "nextAction": "CI verify on feat/prosecution-memory-graph-coc; human UX for CoC still thin"
+      "nextAction": "Add RUN_DB custody append tests to CI; CoC UI still thin; authenticated E2E deferred"
     },
     {
       "id": "PROS-DIS-01",
@@ -490,7 +493,7 @@
       "subsystem": "Graph",
       "feature": "Persisted prosecution graph",
       "requirement": "Writable graph_nodes/edges for criminal cases",
-      "status": "VERIFIED",
+      "status": "PARTIAL",
       "severity": "P2",
       "releaseBlocker": false,
       "evidence": [
@@ -502,11 +505,14 @@
         "0026 archives 0018 stub rows then backfills UUID refs as proposed projections",
         "Disposable smoke: 3 archive / 2 proposed nodes / 1 proposed edge; non-UUID archive-only",
         "Rollback restores stub rows from archives; post-0026 reviewable rows discarded (documented)",
-        "Merged origin/main 1549eb5 (PR #6) into PR #7 without conflict"
+        "Merged origin/main 1549eb5 (PR #6) into PR #7 without conflict",
+        "POST_PR08_INV: Draft/Prosecution inventory — no dedicated graph RUN_DB isolation suite; migration/UI present",
+        "POST_PR08_INV: scripts/verify-prosecution-graph-custody-db.mjs ok (sync projection + cross-office deny)",
+        "POST_PR08_INV: local docker had stub node_type schema despite 0026 journal — healed by applying 0026 + 0030 repair"
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "f09034b5db3852140f68f0b5b626172233f16442",
-      "nextAction": "Confirm CI after data-preserving 0026; operator merge PR #7; then PR #8"
+      "nextAction": "Add CI RUN_DB graph isolation suite; authenticated E2E; keep PARTIAL until then"
     },
     {
       "id": "PROS-AUD-01",
@@ -525,12 +531,13 @@
         "Unit + integration tests added; local vitest junction broken — CI authoritative",
         "audit-browser read-only (no ensureProsecutionRoles)",
         "admin POST /api/v1/organizations/:id/system-roles provision path",
-        "metadata redaction + invite privilege rank"
+        "metadata redaction + invite privilege rank",
+        "POST_PR08_INV: RUN_DB audit listing/redaction/isolation in prosecution.integration.test.ts; no Playwright E2E"
       ],
       "confidence": "MEDIUM",
       "lastVerifiedSha": "7420710b13198813434c3c8b1a23126fa985f708",
       "priority": "P2",
-      "nextAction": "Confirm CI on security remediation tip; operator merge PR #6"
+      "nextAction": "Authenticated prosecution audit E2E after Clerk MFA"
     },
     {
       "id": "PROS-BENCH-01",
@@ -606,7 +613,7 @@
       "subsystem": "External bench scorers",
       "feature": "LegalCite abstention/fabrication",
       "requirement": "Accurate abstention + fabrication detection without false P0",
-      "status": "VERIFIED_COMPLETE",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "severity": "P0",
       "releaseBlocker": false,
       "evidence": [
@@ -614,11 +621,12 @@
         "adversarial scorer tests (20+ controls) + offline replay 37 LB + 9 Cite",
         "12576371 FP cleared: fabricatedAuthority false, abstention detected; gold still unmet",
         "internal prosecution 39/39; external-bench 221 tests",
-        "remote CI 41665323949 SUCCESS at 8075f47"
+        "remote CI 41665323949 SUCCESS at 8075f47",
+        "POST_PR08_INV: WP-03E inventory — citation-utils.ts / benchmarks/external / 28/28 WP-01 LegalCite scorers NOT_IN_WORKTREE; do not treat prior VERIFIED_COMPLETE as reproducible here"
       ],
-      "confidence": "HIGH",
+      "confidence": "MEDIUM",
       "lastVerifiedSha": "8075f47",
-      "remediation": "Closed by WP-01; do not treat offline rescore as new live Cite accuracy; 71 Cite still unexecuted"
+      "remediation": "Restore external scorer tree or regenerate evidence on this tip before reclaiming VERIFIED_COMPLETE"
     },
     {
       "id": "CORPUS-01",
@@ -1001,7 +1009,8 @@
       "lastVerifiedSha": "b428b87",
       "evidence": [
         "classifyAuthorityEligibility + GuardedAuthorityRetriever; identity-only cannot quote; conflicting flags conservative",
-        "Unit tests 7 eligibility + 3 guarded retriever"
+        "Unit tests 7 eligibility + 3 guarded retriever",
+        "POST_PR08_INV: GuardedAuthorityRetriever / classifyAuthorityEligibility symbols absent in this worktree; AuthorityHybridRetriever on DATABASE_URL only — register/code drift"
       ]
     },
     {
@@ -1553,6 +1562,14 @@
     },
     "prosecutionMemory": {
       "dbSmokeOk": true
+    },
+    "inventoryFollowUp": {
+      "agents": ["Draft/Prosecution inventory", "WP-03E research inventory"],
+      "graphStatusCorrectedTo": "PARTIAL",
+      "evidenceCustodyCorrectedTo": "PARTIAL",
+      "aiExtScorerDowngradedTo": "IMPLEMENTED_UNVERIFIED",
+      "schemaRepairs": ["0029 contacts/memory/billing", "0030 graph 0026 upgrade"],
+      "smokes": ["verify-prosecution-graph-custody-db.mjs ok"]
     }
   }
 }
