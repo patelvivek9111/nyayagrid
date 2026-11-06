@@ -476,10 +476,13 @@
         "integration: case-memory.integration.test.ts (RUN_DB_TESTS) isolation + audits",
         "audit actions prosecution.memory_*; no guilt/charging fields",
         "local vitest suite load broken on Windows junctions — CI authoritative; helpers verified via tsx",
-        "0025 forward/rollback disposable smoke re-verified post-PR#6 main merge"
+        "0025 forward/rollback disposable smoke re-verified post-PR#6 main merge",
+        "POST_PR08: scripts/verify-prosecution-memory-db.mjs ok proposed->approved + cross-office deny",
+        "POST_PR08: local 0025 applied via 0029 repair (journal-without-SQL recovered)"
       ],
-      "confidence": "MEDIUM",
-      "lastVerifiedSha": "464e358"
+      "confidence": "HIGH",
+      "lastVerifiedSha": "464e358",
+      "nextAction": "Authenticated E2E deferred; keep IMPLEMENTED_UNVERIFIED until staging/Clerk"
     },
     {
       "id": "PROS-GRAPH-01",
@@ -1547,6 +1550,9 @@
     "draft": {
       "status": "IMPLEMENTED_UNVERIFIED",
       "helpersOk": true
+    },
+    "prosecutionMemory": {
+      "dbSmokeOk": true
     }
   }
 }
