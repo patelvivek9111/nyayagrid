@@ -10,3 +10,4 @@ export * from "./download";
 export * from "./retry";
 export * from "./ingest-gate";
 export * from "./ingest-job";
+export * from "./folders";

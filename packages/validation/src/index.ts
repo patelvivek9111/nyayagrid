@@ -1127,4 +1127,37 @@ export const reviewProsecutionCaseMemorySchema = z.object({
   provenance: prosecutionMemoryProvenanceSchema.optional().nullable(),
 });
 
+/** PROF-CONTACT-01 — organization contacts (distinct from clients). */
+export const createContactSchema = z.object({
+  organizationId: z.string().uuid(),
+  displayName: z.string().trim().min(1).max(300),
+  email: z.string().email().optional().nullable().or(z.literal("")),
+  phone: z.string().trim().max(60).optional().nullable(),
+  title: z.string().trim().max(200).optional().nullable(),
+  notes: z.string().max(10000).optional().nullable(),
+});
+
+export const updateContactSchema = createContactSchema.omit({ organizationId: true }).partial();
+
+export const linkClientContactSchema = z.object({
+  clientId: z.string().uuid().optional(),
+  contactId: z.string().uuid().optional(),
+  relationshipRole: z.string().trim().min(1).max(80).default("other"),
+});
+
+/** PROF-FOLDER-01 — matter document folders. */
+export const createDocumentFolderSchema = z.object({
+  name: z.string().trim().min(1).max(200),
+  parentFolderId: z.string().uuid().optional().nullable(),
+});
+
+export const updateDocumentFolderSchema = z.object({
+  name: z.string().trim().min(1).max(200).optional(),
+  parentFolderId: z.string().uuid().nullable().optional(),
+});
+
+export const moveDocumentToFolderSchema = z.object({
+  folderId: z.string().uuid().nullable(),
+});
+
 export { z };

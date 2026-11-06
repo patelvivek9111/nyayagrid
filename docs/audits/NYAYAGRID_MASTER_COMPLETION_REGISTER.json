@@ -1,9 +1,9 @@
 {
   "artifact": "NYAYAGRID_MASTER_COMPLETION_REGISTER",
-  "classification": "NYAYAGRID_PR07_POST_PR06_INTEGRATION",
+  "classification": "NYAYAGRID_PR08_INTEGRATION_AND_PROFESSIONAL_COMPLETION",
   "generatedAt": "2026-11-03T22:57:29.530Z",
   "head": "7420710b13198813434c3c8b1a23126fa985f708",
-  "branch": "feat/prosecution-memory-graph-coc",
+  "branch": "feat/professional-contacts-folders",
   "remoteCi": {
     "run": "41689403691",
     "conclusion": "SUCCESS"
@@ -279,11 +279,17 @@
         "apps/web/src/app/api/v1/clients/[clientId]/contacts/route.ts",
         "clients.view / clients.edit capability gates + contact.* audit events",
         "unit: contacts-folders-schema.test.ts",
-        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS) org isolation"
+        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS) org isolation",
+        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)",
+        "UI: /app/contacts workspace + client link/unlink",
+        "UI: matter Documents folders panel + document move",
+        "DELETE contact client-link API",
+        "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
+        "PR #8 retargeted to main after PR #7 merge 71989c1"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending",
-      "nextAction": "CI + RUN_DB_TESTS migrate 0027; UI for contacts still optional"
+      "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
+      "nextAction": "Confirm CI on PR #8 tip; operator merge after green CI"
     },
     {
       "id": "PROF-FOLDER-01",
@@ -303,11 +309,17 @@
         "packages/documents/src/folders.ts cycle prevention",
         "matter access + documents.view/edit; safe rename/move; no cycles",
         "unit: folders.test.ts + contacts-folders-schema.test.ts",
-        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS)"
+        "integration: contacts-folders.integration.test.ts (RUN_DB_TESTS)",
+        "PR #8 CI SUCCESS 42099502106 @ 9a8bf8e (pre-sync)",
+        "UI: /app/contacts workspace + client link/unlink",
+        "UI: matter Documents folders panel + document move",
+        "DELETE contact client-link API",
+        "0027 disposable forward/rollback smoke on nyaya_mig_smoke",
+        "PR #8 retargeted to main after PR #7 merge 71989c1"
       ],
       "confidence": "HIGH",
-      "lastVerifiedSha": "pending",
-      "nextAction": "CI + RUN_DB_TESTS migrate 0027; folder UI still optional"
+      "lastVerifiedSha": "6336a7b63010c6af9c378162199ae47fbf6d9b79",
+      "nextAction": "Confirm CI on PR #8 tip; operator merge after green CI"
     },
     {
       "id": "PROS-RBAC-01",
@@ -458,7 +470,7 @@
       ],
       "confidence": "HIGH",
       "lastVerifiedSha": "f09034b5db3852140f68f0b5b626172233f16442",
-      "nextAction": "Confirm CI after data-preserving 0026; operator merge PR #7"
+      "nextAction": "Confirm CI after data-preserving 0026; operator merge PR #7; then PR #8"
     },
     {
       "id": "PROS-AUD-01",
@@ -1415,7 +1427,7 @@
     "liveStagingStopped": true,
     "nextAction": "Human approve + Neon Console role + Step B grants + verify.sql as restricted login; set staging CORPUS_DATABASE_URL; resume live Phases 4–7. Do not auto-start WP-04."
   },
-  "updatedAt": "2026-11-05T21:09:29.919Z",
+  "updatedAt": "2026-11-05T22:43:14.162Z",
   "productContinuation": {
     "pr6": {
       "url": "https://github.com/patelvivek9111/nyayagrid/pull/6",

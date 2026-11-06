@@ -44,6 +44,7 @@ import {
   uploadPhaseLabel,
   type DocumentUploadItem,
 } from "@/lib/document-upload-queue";
+import { MatterFoldersPanel, moveDocumentToFolder } from "@/components/matter-folders-panel";
 
 type Doc = {
   id: string;
@@ -54,6 +55,7 @@ type Doc = {
   latestVersionId: string | null;
   intelligenceStatus?: string | null;
   createdAt?: string;
+  folderId?: string | null;
 };
 
 const FAILED_STATES = new Set([
@@ -184,13 +186,17 @@ function MatterDocumentsPageInner() {
   const [openingId, setOpeningId] = useState<string | null>(null);
   const [uploadOpen, setUploadOpen] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
+  const [activeFolderId, setActiveFolderId] = useState<string | null>(null);
+  const [folderOptions, setFolderOptions] = useState<Array<{ id: string; name: string }>>([]);
   const nextCursorRef = useRef<string | null>(null);
   const uploadQueueRef = useRef<Array<DocumentUploadItem & { file: File }>>([]);
   const drainLockRef = useRef(false);
   const listRefreshTimerRef = useRef<number | null>(null);
   const dragDepthRef = useRef(0);
 
-  const readyDocs = docs.filter((d) => Boolean(d.latestVersionId));
+  const folderFilteredDocs =
+    activeFolderId == null ? docs : docs.filter((d) => (d.folderId ?? null) === activeFolderId);
+  const readyDocs = folderFilteredDocs.filter((d) => Boolean(d.latestVersionId));
   const hasActiveFind = Boolean(q) || Boolean(status);
   const hasFindControls = hasActiveFind || sort !== "newest" || Boolean(qInput);
   const countLabel = documentListCountLabel({
@@ -288,6 +294,21 @@ function MatterDocumentsPageInner() {
     nextCursorRef.current = null;
     setNextCursor(null);
     setLoading(true);
+    setActiveFolderId(null);
+  }, [matterId]);
+
+  useEffect(() => {
+    void fetch(`/api/v1/matters/${matterId}/folders`)
+      .then((r) => r.json())
+      .then((data) => {
+        setFolderOptions(
+          (data.folders ?? []).map((f: { id: string; name: string }) => ({
+            id: f.id,
+            name: f.name,
+          })),
+        );
+      })
+      .catch(() => setFolderOptions([]));
   }, [matterId]);
 
   useEffect(() => {
@@ -597,6 +618,27 @@ function MatterDocumentsPageInner() {
           </div>
         }
       />
+
+      <MatterFoldersPanel
+        matterId={matterId}
+        canEdit={canUpload}
+        activeFolderId={activeFolderId}
+        onActiveFolderChange={setActiveFolderId}
+        onFoldersChanged={() => {
+          void fetch(`/api/v1/matters/${matterId}/folders`)
+            .then((r) => r.json())
+            .then((data) => {
+              setFolderOptions(
+                (data.folders ?? []).map((f: { id: string; name: string }) => ({
+                  id: f.id,
+                  name: f.name,
+                })),
+              );
+            })
+            .catch(() => undefined);
+        }}
+      />
+
       {showProcessingSummary && processingSummary ? (
         <div className="flex flex-wrap items-center gap-2">
           <p className="text-xs text-ink/55">
@@ -821,7 +863,7 @@ function MatterDocumentsPageInner() {
               className="divide-y divide-line overflow-hidden rounded-xl border border-line bg-white"
               aria-busy={listBusy}
             >
-              {docs.map((doc) => {
+              {folderFilteredDocs.map((doc) => {
                 const kind = fileKindLabel(doc.title);
                 const uploaded = doc.createdAt
                   ? new Date(doc.createdAt).toLocaleDateString(undefined, {
@@ -846,6 +888,37 @@ function MatterDocumentsPageInner() {
                           .filter(Boolean)
                           .join(" · ")}
                       </p>
+                      {canUpload ? (
+                        <label className="mt-1 flex flex-wrap items-center gap-2 text-xs text-ink/65">
+                          <span>Folder</span>
+                          <select
+                            className="rounded border border-line bg-white px-1.5 py-1"
+                            value={doc.folderId ?? ""}
+                            aria-label={`Folder for ${doc.title}`}
+                            onChange={(event) => {
+                              const next = event.target.value || null;
+                              void moveDocumentToFolder({
+                                matterId,
+                                documentId: doc.id,
+                                folderId: next,
+                              })
+                                .then(() => refreshDocs())
+                                .catch((err) =>
+                                  setError(
+                                    err instanceof Error ? err.message : "Could not move document",
+                                  ),
+                                );
+                            }}
+                          >
+                            <option value="">Unfiled</option>
+                            {folderOptions.map((folder) => (
+                              <option key={folder.id} value={folder.id}>
+                                {folder.name}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      ) : null}
                       {doc.processingError ? (
                         <p className="mt-1 text-xs text-[var(--ng-danger)]">
                           {doc.processingError}
