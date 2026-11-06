@@ -88,10 +88,20 @@ function buildTruncatedJournalFolder(dest) {
 
 function deepeningSqlFromGit(tag) {
   // Staging-deployed Deepening lineage lives on add3af3 (WP-05), not deepening-v2 tip.
-  return execFileSync("git", ["show", `add3af3:packages/database/drizzle/${tag}.sql`], {
-    cwd: ROOT,
-    encoding: "utf8",
-  });
+  // Pass safe.directory per-invocation (do not mutate global git config).
+  return execFileSync(
+    "git",
+    [
+      "-c",
+      `safe.directory=${ROOT.replace(/\\/g, "/")}`,
+      "show",
+      `add3af3:packages/database/drizzle/${tag}.sql`,
+    ],
+    {
+      cwd: ROOT,
+      encoding: "utf8",
+    },
+  );
 }
 
 async function applySqlFile(sql, text) {

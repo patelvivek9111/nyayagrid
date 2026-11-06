@@ -87,7 +87,11 @@ export function assertMigrateIdentity(input) {
           "Refusing to migrate: EXPECTED_NEON_ENDPOINT_ID required to bind URL host to attested Neon identity",
         );
       }
-      if (!parsed.neonEndpointId || parsed.neonEndpointId !== endpointId) {
+      const normalizeEndpoint = (ep) => ep.replace(/-pooler$/i, "");
+      if (
+        !parsed.neonEndpointId ||
+        normalizeEndpoint(parsed.neonEndpointId) !== normalizeEndpoint(endpointId)
+      ) {
         return fail(
           "NEON_ENDPOINT_MISMATCH",
           "Refusing to migrate: DATABASE_URL Neon endpoint does not match EXPECTED_NEON_ENDPOINT_ID",

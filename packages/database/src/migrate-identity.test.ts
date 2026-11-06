@@ -182,6 +182,20 @@ describe("migrate identity gates", () => {
     }
   });
 
+  it("accepts pooler URL when expected endpoint omits -pooler suffix", () => {
+    const r = assertMigrateIdentity({
+      appEnv: "staging",
+      databaseUrl: NEON_URL,
+      expectedDbName: "neondb",
+      expectedNeonEndpointId: "ep-lively-lake-auyeia5m",
+      expectedNeonProjectId: "odd-moon-90379900",
+      expectedNeonBranchId: "br-fancy-king-auaii21k",
+      corpusDatabaseUrl: CORPUS_URL,
+      allowNeondbProduct: true,
+    });
+    expect(r.ok).toBe(true);
+  });
+
   it("refuses incorrect URL db name vs expected", () => {
     const r = assertMigrateIdentity({
       appEnv: "staging",
